@@ -28,7 +28,7 @@ class _MyTasksState extends State<MyTasks> {
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
