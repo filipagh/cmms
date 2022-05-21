@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:open_cmms/widgets/customAppBar.dart';
 
+import '../widgets/customAppBar.dart';
 import '../widgets/mainMenuWidget.dart';
 
-class MyTasks extends StatefulWidget {
-  const MyTasks({Key? key, required }) : super(key: key);
+class Assets extends StatefulWidget {
+  const Assets({Key? key, }) : super(key: key);
 
 
 
   @override
-  State<MyTasks> createState() => _MyTasksState();
+  State<Assets> createState() => _AssetsState();
 }
 
-class _MyTasksState extends State<MyTasks> {
+class _AssetsState extends State<Assets> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(),
       body: Row(
-        children: [
+        children:  [
           MainMenuWidget(),
           VerticalDivider(),
+
           Expanded(
             child: Column(
               children: [
-                Text(
-                  "My Tasks",
-                  textScaleFactor: 5,
-                ),
+                Text("Assets",textScaleFactor: 5,),
+                Text("mapa"),
+                Expanded(child: Placeholder()),
               ],
             ),
           )

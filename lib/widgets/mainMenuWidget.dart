@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:open_cmms/pages/assets.dart';
 import 'package:open_cmms/pages/dashboard.dart';
 import 'package:open_cmms/pages/myTasks.dart';
+import 'package:open_cmms/pages/roadSegments.dart';
 
 class MainMenuWidget extends StatefulWidget {
   MainMenuWidget({
@@ -43,14 +45,14 @@ class _MainMenuWidgetState extends State<MainMenuWidget> with AutomaticKeepAlive
             message: "road segments",
             child: IconButton(
               icon: const Icon(Icons.edit_road),
-              onPressed: () {},
+              onPressed: () => Get.off(() => RoadSegments(),transition: Transition.noTransition),
             ),
           ),
           Tooltip(
             message: "assets",
             child: IconButton(
               icon: const Icon(Icons.settings_input_component),
-              onPressed: () {},
+              onPressed: () => Get.off(() => Assets(),transition: Transition.noTransition),
             ),
           ),
           Tooltip(

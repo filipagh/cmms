@@ -13,10 +13,10 @@ class CustomAppBar extends AppBar {
 }
 
 class _MainMenuWidgetState extends State<CustomAppBar> {
-  String aa = "xxxx";
+
   @override
   Widget build(BuildContext context) {
-    return AppBar(title: Text(aa),);
+    return AppBar(title: Text("openCMMS"),);
 
   }
 }

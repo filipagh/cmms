@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/customAppBar.dart';
 import '../widgets/mainMenuWidget.dart';
 
 class Dashboard extends StatefulWidget {
@@ -15,9 +16,7 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("OpenCMMS"),
-      ),
+      appBar: CustomAppBar(),
       body: Row(
         children:  [
           MainMenuWidget(),
