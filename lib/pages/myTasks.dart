@@ -4,9 +4,7 @@ import 'package:open_cmms/widgets/customAppBar.dart';
 import '../widgets/mainMenuWidget.dart';
 
 class MyTasks extends StatefulWidget {
-  const MyTasks({Key? key, required }) : super(key: key);
-
-
+  const MyTasks({Key? key, required}) : super(key: key);
 
   @override
   State<MyTasks> createState() => _MyTasksState();
