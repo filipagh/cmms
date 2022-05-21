@@ -15,7 +15,7 @@ COPY  ./server/server.sh ./build/web/server.sh
 
 
 # Record the exposed port
-EXPOSE 5000
+EXPOSE 22222
 
 RUN ["chmod", "+x", "./build/web/server.sh"]
 ENTRYPOINT [ "./build/web/server.sh"]
