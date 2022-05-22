@@ -12,7 +12,7 @@ RUN apt-get clean
 # Copy files to container and build
 COPY ./build/web /build/web
 COPY  ./server/server.sh ./build/web/server.sh
-
+COPY  ./server/server.py ./build/web/server.py
 
 # Record the exposed port
 EXPOSE 22222
