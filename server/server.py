@@ -8,6 +8,8 @@ class xxxxx(SimpleHTTPRequestHandler):
         if f:
             try:
                 self.copyfile(f, self.wfile)
+                f.close()
+                return
             except:
                 self.path = '/'
                 f = self.send_head()
