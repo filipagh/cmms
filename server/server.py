@@ -12,14 +12,15 @@ class xxxxx(SimpleHTTPRequestHandler):
                 self.path = '/'
                 f = self.send_head()
                 self.copyfile(f, self.wfile)
-            finally:
                 f.close()
                 return
+
+
 
         self.path = '/'
         f = self.send_head()
         self.copyfile(f, self.wfile)
-
+        f.close()
 
 
 def run(server_class=HTTPServer, handler_class=xxxxx):
