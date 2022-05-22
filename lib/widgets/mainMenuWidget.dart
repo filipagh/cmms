@@ -27,14 +27,14 @@ class _MainMenuWidgetState extends State<MainMenuWidget> with AutomaticKeepAlive
             child: IconButton(
               icon: const Icon(Icons.widgets_outlined),
               onPressed: () =>
-                  Get.off(() => Dashboard(), transition: Transition.noTransition),
+                  Get.offAll(() => Dashboard(), transition: Transition.noTransition),
             ),
           ),
           Tooltip(
             message: "My tasks",
             child: IconButton(
                 icon: const Icon(Icons.note_outlined),
-                onPressed: () => Get.off(() => MyTasks(),transition: Transition.noTransition)),
+                onPressed: () => Get.offAll(() => MyTasks(),transition: Transition.noTransition)),
           ),
           Container(
               width: 50,
@@ -45,14 +45,14 @@ class _MainMenuWidgetState extends State<MainMenuWidget> with AutomaticKeepAlive
             message: "road segments",
             child: IconButton(
               icon: const Icon(Icons.edit_road),
-              onPressed: () => Get.off(() => RoadSegments(),transition: Transition.noTransition),
+              onPressed: () => Get.offAll(() => RoadSegments(),transition: Transition.noTransition),
             ),
           ),
           Tooltip(
             message: "assets",
             child: IconButton(
               icon: const Icon(Icons.settings_input_component),
-              onPressed: () => Get.off(() => Assets(),transition: Transition.noTransition),
+              onPressed: () => Get.offAll(() => Assets(),transition: Transition.noTransition),
             ),
           ),
           Tooltip(

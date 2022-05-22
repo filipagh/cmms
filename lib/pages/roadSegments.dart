@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:open_cmms/models/road_segment_model.dart';
 
+
+import 'package:get/get.dart';
+import 'package:open_cmms/pages/roadSegment.dart';
+import '../models/road_segment_model.dart';
 import '../widgets/customAppBar.dart';
 import '../widgets/mainMenuWidget.dart';
 
@@ -18,6 +21,7 @@ class _RoadSegmentsState extends State<RoadSegments> {
     List<DataRow> list = [];
     for (var i in dummyRoadSegments) {
       list.add(DataRow(
+        onSelectChanged: (dd) {Get.toNamed("/RoadSegment/"+i.id);},
         cells: [
           DataCell(Text(i.name)),
           DataCell(Text(i.text)),
@@ -46,7 +50,16 @@ class _RoadSegmentsState extends State<RoadSegments> {
                 Divider(),
                 SizedBox(
                   width: double.infinity,
-                  child: DataTable(columns: [
+                  child: DataTable(
+                    showCheckboxColumn: false,
+                    dataRowColor: MaterialStateProperty.resolveWith<Color?>((Set<MaterialState> states) {
+
+                      if (states.contains(MaterialState.hovered)) {
+                        return Colors.blue.shade200;
+                      }
+                      return Colors.transparent;  // Use the default value.
+                    }),
+                      columns: [
                     DataColumn(label: Text("Road segment name")),
                     DataColumn(label: Text("text")),
                     DataColumn(label: Text("ssud")),
