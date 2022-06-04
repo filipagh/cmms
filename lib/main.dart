@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:open_cmms/pages/asset.dart';
+import 'package:open_cmms/pages/assets.dart';
 import 'package:open_cmms/pages/dashboard.dart';
 import 'package:open_cmms/pages/roadSegment.dart';
 import 'package:open_cmms/pages/unknownPage.dart';
@@ -24,6 +26,18 @@ class MyApp extends StatelessWidget {
           name: '/RoadSegment/:id',
           page: () {
             return RoadSegment(segmentId: Get.parameters["id"]!);
+          },
+        ),
+        GetPage(
+          name: '/Assets',
+          page: () {
+            return Assets();
+          },
+        ),
+        GetPage(
+          name: '/Assets/:id',
+          page: () {
+            return Asset(assetId: Get.parameters["id"]!);
           },
         ),
       ],

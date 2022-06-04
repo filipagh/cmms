@@ -74,6 +74,13 @@ class _MainMenuWidgetState extends State<MainMenuWidget> with AutomaticKeepAlive
               child: const Divider(
                 thickness: 1.0,
               )),
+          Tooltip(
+            message: "asset management",
+            child: IconButton(
+              icon: const Icon(Icons.post_add),
+              onPressed: () {},
+            ),
+          ),
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () {Get.defaultDialog(confirm: TextButton(onPressed: () {setState(() {

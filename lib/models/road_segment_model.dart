@@ -12,5 +12,9 @@ class RoadSegmentModel {
 List<RoadSegmentModel> dummyRoadSegments = [RoadSegmentModel("1","aaa", "text"), RoadSegmentModel("2","BBB", "text")];
 
 RoadSegmentModel? getDummyRoadSegmentsById(String id) {
-  return dummyRoadSegments.singleWhere((element) => element.id == id);
+  var i = dummyRoadSegments.where((element) => element.id == id);
+  if (i.isEmpty) {
+    return null;
+  }
+  return i.first;
 }

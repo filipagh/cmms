@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:open_cmms/models/road_segment_model.dart';
+import 'package:open_cmms/models/asset_model.dart';
+
 
 import '../widgets/customAppBar.dart';
 import '../widgets/mainMenuWidget.dart';
 
-class RoadSegment extends StatefulWidget {
-  final String segmentId;
-  const RoadSegment({
+class Asset extends StatefulWidget {
+  final String assetId;
+  const Asset({
     Key? key,
-    required this.segmentId,
+    required this.assetId,
   }) : super(key: key);
 
   @override
-  State<RoadSegment> createState() => _RoadSegmentState();
+  State<Asset> createState() => _AssetState();
 }
 
-class _RoadSegmentState extends State<RoadSegment> {
-  RoadSegmentModel? roadSegmentModel;
+class _AssetState extends State<Asset> {
+  AssetModel? roadSegmentModel;
   bool isModelLoaded = false;
   @override
 
   void initState() {
-     roadSegmentModel = getDummyRoadSegmentsById(widget.segmentId);
+     roadSegmentModel = getDummyRoadSegmentsById(widget.assetId);
     super.initState();
   }
 
@@ -52,7 +53,7 @@ class _RoadSegmentState extends State<RoadSegment> {
     return Column(
             children: [
               Text(
-                "Road Segment "+ roadSegmentModel!.id,
+                "Asset "+ roadSegmentModel!.id,
                 textScaleFactor: 5,
               ),
               Divider(),
@@ -61,6 +62,6 @@ class _RoadSegmentState extends State<RoadSegment> {
   }
 
   Widget buildMissingRoadSegment() {
-    return Center(child: Text("Missing data for Road Segment ID: "+ widget.segmentId,textScaleFactor: 2,));
+    return Center(child: Text("Missing data for Asset ID: "+ widget.assetId,textScaleFactor: 2,));
   }
 }
