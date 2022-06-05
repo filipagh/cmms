@@ -23,7 +23,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       defaultTransition: Transition.noTransition,
-      // initialRoute: '/',
       getPages: [
         GetPage(
           name: '/RoadSegments/:id',
@@ -32,9 +31,9 @@ class MyApp extends StatelessWidget {
           },
         ),
         GetPage(
-          name: '/RoadSegments/',
+          name: '/RoadSegments',
           page: () {
-            return const RoadSegments();
+            return RoadSegments();
           },
         ),
         GetPage(
@@ -61,12 +60,17 @@ class MyApp extends StatelessWidget {
             return Asset(assetId: Get.parameters["id"]!);
           },
         ),
+        GetPage(
+          name: '/',
+          page: () {
+            return Dashboard();
+          },
+        ),
       ],
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const Dashboard(),
       unknownRoute: GetPage(
           transition: Transition.noTransition,
           name: '/badpage/',
