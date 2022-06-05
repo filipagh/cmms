@@ -38,13 +38,13 @@ class MyApp extends StatelessWidget {
           },
         ),
         GetPage(
-          name: '/Assets',
+          name: '/Assets/',
           page: () {
             return Assets();
           },
         ),
         GetPage(
-          name: '/Tasks',
+          name: '/Tasks/',
           page: () {
             return Tasks();
           },
@@ -69,7 +69,7 @@ class MyApp extends StatelessWidget {
       home: const Dashboard(),
       unknownRoute: GetPage(
           transition: Transition.noTransition,
-          name: '/badpage',
+          name: '/badpage/',
           page: () {
             return const UnknownPage();
           }),
