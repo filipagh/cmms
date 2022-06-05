@@ -9,7 +9,7 @@ class RoadSegmentModel {
 
 
 
-List<RoadSegmentModel> dummyRoadSegments = [RoadSegmentModel("1","aaa", "text"), RoadSegmentModel("2","BBB", "text")];
+List<RoadSegmentModel> dummyRoadSegments = [RoadSegmentModel("1","D1", "text"), RoadSegmentModel("2","D4", "text")];
 
 RoadSegmentModel? getDummyRoadSegmentsById(String id) {
   var i = dummyRoadSegments.where((element) => element.id == id);

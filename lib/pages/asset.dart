@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:open_cmms/models/asset_model.dart';
 
-
 import '../widgets/customAppBar.dart';
 import '../widgets/mainMenuWidget.dart';
 
 class Asset extends StatefulWidget {
   final String assetId;
+
   const Asset({
     Key? key,
     required this.assetId,
@@ -19,10 +19,10 @@ class Asset extends StatefulWidget {
 class _AssetState extends State<Asset> {
   AssetModel? roadSegmentModel;
   bool isModelLoaded = false;
-  @override
 
+  @override
   void initState() {
-     roadSegmentModel = getDummyRoadSegmentsById(widget.assetId);
+    roadSegmentModel = getDummyAssetById(widget.assetId);
     super.initState();
   }
 
@@ -31,7 +31,6 @@ class _AssetState extends State<Asset> {
       return buildRoadSegment();
     }
     return buildMissingRoadSegment();
-
   }
 
   Widget build(BuildContext context) {
@@ -51,17 +50,38 @@ class _AssetState extends State<Asset> {
 
   Column buildRoadSegment() {
     return Column(
-            children: [
-              Text(
-                "Asset "+ roadSegmentModel!.id,
-                textScaleFactor: 5,
+      children: [
+        Text(
+          "Asset " + roadSegmentModel!.id,
+          textScaleFactor: 5,
+        ),
+        Divider(),
+        Expanded(
+            child: Row(
+          children: [
+            SizedBox(
+              width: 200,
+              child: Column(
+                children: [Text("assets tabs"), Expanded(child: Placeholder())],
               ),
-              Divider(),
-            ],
-          );
+            ),
+            VerticalDivider(),
+            Expanded(
+              child: Column(
+                children: [Text("tab context"), Expanded(child: Placeholder())],
+              ),
+            ),
+          ],
+        ))
+      ],
+    );
   }
 
   Widget buildMissingRoadSegment() {
-    return Center(child: Text("Missing data for Asset ID: "+ widget.assetId,textScaleFactor: 2,));
+    return Center(
+        child: Text(
+      "Missing data for Asset ID: " + widget.assetId,
+      textScaleFactor: 2,
+    ));
   }
 }

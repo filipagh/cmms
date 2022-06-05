@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:open_cmms/models/asset_model.dart';
+import 'package:open_cmms/models/road_segment_asset_connector_model.dart';
 import 'package:open_cmms/models/road_segment_model.dart';
+import 'package:open_cmms/widgets/assets_list.dart';
 
 import '../widgets/customAppBar.dart';
 import '../widgets/mainMenuWidget.dart';
 
 class RoadSegment extends StatefulWidget {
   final String segmentId;
+
   const RoadSegment({
     Key? key,
     required this.segmentId,
@@ -17,11 +21,14 @@ class RoadSegment extends StatefulWidget {
 
 class _RoadSegmentState extends State<RoadSegment> {
   RoadSegmentModel? roadSegmentModel;
+  List<AssetModel> stationsList = [];
   bool isModelLoaded = false;
-  @override
 
+  @override
   void initState() {
-     roadSegmentModel = getDummyRoadSegmentsById(widget.segmentId);
+    roadSegmentModel = getDummyRoadSegmentsById(widget.segmentId);
+    stationsList =
+        getDummyAssetByIds(getAssetsIdsByRoadSegmentId(roadSegmentModel!.id));
     super.initState();
   }
 
@@ -30,7 +37,6 @@ class _RoadSegmentState extends State<RoadSegment> {
       return buildRoadSegment();
     }
     return buildMissingRoadSegment();
-
   }
 
   Widget build(BuildContext context) {
@@ -50,17 +56,46 @@ class _RoadSegmentState extends State<RoadSegment> {
 
   Column buildRoadSegment() {
     return Column(
+      children: [
+        Text(
+          "Road Segment " + roadSegmentModel!.name,
+          textScaleFactor: 5,
+        ),
+        Divider(),
+        Expanded(
+          child: Row(
             children: [
-              Text(
-                "Road Segment "+ roadSegmentModel!.id,
-                textScaleFactor: 5,
+              Expanded(
+                child: Column(
+                  children: [
+                    Text("Stations", textScaleFactor: 3),
+                    Divider(),
+                    AssetsList(list: stationsList),
+                  ],
+                ),
               ),
-              Divider(),
+              VerticalDivider(),
+              SizedBox(
+                width: 300,
+                child: Column(
+                  children: [
+                    Text("road segment detail"),
+                    Expanded(child: Placeholder()),
+                  ],
+                ),
+              )
             ],
-          );
+          ),
+        )
+      ],
+    );
   }
 
   Widget buildMissingRoadSegment() {
-    return Center(child: Text("Missing data for Road Segment ID: "+ widget.segmentId,textScaleFactor: 2,));
+    return Center(
+        child: Text(
+      "Missing data for Road Segment ID: " + widget.segmentId,
+      textScaleFactor: 2,
+    ));
   }
 }

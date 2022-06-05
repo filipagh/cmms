@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:open_cmms/pages/roadSegment.dart';
+import 'package:open_cmms/widgets/create_form.dart';
 import '../models/road_segment_model.dart';
 import '../widgets/customAppBar.dart';
 import '../widgets/mainMenuWidget.dart';
@@ -21,7 +22,7 @@ class _RoadSegmentsState extends State<RoadSegments> {
     List<DataRow> list = [];
     for (var i in dummyRoadSegments) {
       list.add(DataRow(
-        onSelectChanged: (dd) {Get.toNamed("/RoadSegment/"+i.id);},
+        onSelectChanged: (dd) {Get.toNamed("/RoadSegments/"+i.id);},
         cells: [
           DataCell(Text(i.name)),
           DataCell(Text(i.text)),
@@ -46,6 +47,22 @@ class _RoadSegmentsState extends State<RoadSegments> {
                 Text(
                   "Road Segments",
                   textScaleFactor: 5,
+                ),
+                Divider(),
+                Row(
+                  children: [
+                    Placeholder(
+                      child: SizedBox(width: 300, child: Text("searchbar")),
+                    ),
+                    Placeholder(
+                      child: Icon(Icons.filter_list_alt),
+                    ),
+                    Spacer(),
+                    ElevatedButton(
+                      onPressed: () {showdialog();},
+                      child: Text("create road segment"),
+                    ),
+                  ],
                 ),
                 Divider(),
                 SizedBox(

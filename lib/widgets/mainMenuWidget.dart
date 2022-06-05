@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/pages/assets.dart';
 import 'package:open_cmms/pages/dashboard.dart';
-import 'package:open_cmms/pages/myTasks.dart';
+import 'package:open_cmms/pages/tasks.dart';
 import 'package:open_cmms/pages/roadSegments.dart';
 
 class MainMenuWidget extends StatefulWidget {
@@ -34,7 +34,7 @@ class _MainMenuWidgetState extends State<MainMenuWidget> with AutomaticKeepAlive
             message: "My tasks",
             child: IconButton(
                 icon: const Icon(Icons.note_outlined),
-                onPressed: () => Get.offAll(() => MyTasks(),transition: Transition.noTransition)),
+                onPressed: () => Get.offAll(() => Tasks(),transition: Transition.noTransition)),
           ),
           Container(
               width: 50,
@@ -75,6 +75,8 @@ class _MainMenuWidgetState extends State<MainMenuWidget> with AutomaticKeepAlive
                 thickness: 1.0,
               )),
           Tooltip(
+            verticalOffset: -10,
+            margin: EdgeInsets.only(left: 50),
             message: "asset management",
             child: IconButton(
               icon: const Icon(Icons.post_add),

@@ -10,10 +10,17 @@ class AssetModel {
 
 List<AssetModel> dummyAssets = [AssetModel("1"), AssetModel("2")];
 
-AssetModel? getDummyRoadSegmentsById(String id) {
+AssetModel? getDummyAssetById(String id) {
   var i = dummyAssets.where((element) => element.id == id);
   if (i.isEmpty) {
     return null;
   }
   return i.first;
+}
+List<AssetModel> getDummyAssetByIds(List<String> ids) {
+  var i = dummyAssets.where((element) => ids.contains(element.id));
+  if (i.isEmpty) {
+    return [];
+  }
+  return i.toList();
 }

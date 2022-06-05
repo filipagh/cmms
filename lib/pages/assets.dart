@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/models/asset_model.dart';
+import 'package:open_cmms/widgets/assets_list.dart';
+import 'package:open_cmms/widgets/create_form.dart';
 
 import '../widgets/customAppBar.dart';
 import '../widgets/mainMenuWidget.dart';
@@ -40,32 +42,13 @@ class _AssetsState extends State<Assets> {
                     ),
                     Spacer(),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {showdialog();},
                       child: Text("add asset"),
                     ),
                   ],
                 ),
                 Divider(),
-                Expanded(
-                  child: ListView.builder(
-                    addRepaintBoundaries: true,
-                      padding: const EdgeInsets.all(8),
-                      itemCount: dummyAssets.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Card(
-
-                          child: ListTile(
-                            onTap: () {Get.toNamed("/Assets/${dummyAssets[index].id}");},
-                            hoverColor: Colors.blue.shade200,
-                            title: Container(
-                              child: Center(
-                                  child:
-                                      Text('asset id: ${dummyAssets[index].id}')),
-                            ),
-                          ),
-                        );
-                      }),
-                ),
+                AssetsList(list: dummyAssets),
               ],
             ),
           )
@@ -74,3 +57,4 @@ class _AssetsState extends State<Assets> {
     );
   }
 }
+

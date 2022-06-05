@@ -4,6 +4,9 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:open_cmms/pages/asset.dart';
 import 'package:open_cmms/pages/assets.dart';
 import 'package:open_cmms/pages/dashboard.dart';
+import 'package:open_cmms/pages/roadSegments.dart';
+import 'package:open_cmms/pages/task.dart';
+import 'package:open_cmms/pages/tasks.dart';
 import 'package:open_cmms/pages/roadSegment.dart';
 import 'package:open_cmms/pages/unknownPage.dart';
 import 'package:url_strategy/url_strategy.dart';
@@ -23,15 +26,33 @@ class MyApp extends StatelessWidget {
       // initialRoute: '/',
       getPages: [
         GetPage(
-          name: '/RoadSegment/:id',
+          name: '/RoadSegments/:id',
           page: () {
             return RoadSegment(segmentId: Get.parameters["id"]!);
+          },
+        ),
+        GetPage(
+          name: '/RoadSegments/',
+          page: () {
+            return const RoadSegments();
           },
         ),
         GetPage(
           name: '/Assets',
           page: () {
             return Assets();
+          },
+        ),
+        GetPage(
+          name: '/Tasks',
+          page: () {
+            return Tasks();
+          },
+        ),
+        GetPage(
+          name: '/Tasks/:id',
+          page: () {
+            return Task(taskId: Get.parameters["id"]!,);
           },
         ),
         GetPage(
