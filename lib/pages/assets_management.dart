@@ -3,9 +3,11 @@ import 'package:get/get.dart';
 import 'package:open_cmms/models/asset_model.dart';
 import 'package:open_cmms/widgets/assets_list.dart';
 import 'package:open_cmms/widgets/create_form.dart';
+import 'package:open_cmms/widgets/forms/asset_management/assets_managment_form.dart';
 
 import '../widgets/assets_types_list.dart';
 import '../widgets/customAppBar.dart';
+import '../widgets/dialog_form.dart';
 import '../widgets/mainMenuWidget.dart';
 
 class AssetsManagement extends StatefulWidget {
@@ -43,7 +45,7 @@ class _AssetsManagementState extends State<AssetsManagement> {
                     ),
                     Spacer(),
                     ElevatedButton(
-                      onPressed: () {showdialog();},
+                      onPressed: () {showFormDialog(AssetManagementForm());},
                       child: Text("add asset type"),
                     ),
                   ],

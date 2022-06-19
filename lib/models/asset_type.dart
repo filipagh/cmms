@@ -1,15 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:open_cmms/widgets/dialog_form.dart';
+import 'package:open_cmms/widgets/forms/asset_management/assets_managment_form.dart';
 
 abstract class AssetTypeListView {
   Widget toListItem();
 }
 
-class AssetType implements AssetTypeListView {
+abstract class AbstractAssetType {
   late String id;
   late String name;
   late String text;
-  late String assetBaseTypeId;
+  late String? assetBaseTypeId;
+  late bool isCategory;
+}
+
+class AssetType implements AssetTypeListView, AbstractAssetType {
+  late String id;
+  late String name;
+  late String text;
+  late String? assetBaseTypeId;
   late int inStorage;
+
+  bool isCategory = false;
 
   AssetType(this.id, this.assetBaseTypeId,
       [this.name = "name", this.text = "text", this.inStorage = 0]);
@@ -19,14 +31,15 @@ class AssetType implements AssetTypeListView {
     return Card(
       child: ListTile(
         onTap: () {
-          // Get.toNamed("/Assets/${list[index].id}");
+          showFormDialog(AssetManagementForm(
+            item: this,
+          ));
         },
         hoverColor: Colors.blue.shade200,
         title: Row(
           children: [
             Spacer(),
             Text(name),
-
             Spacer(),
             Text("in storage: " + inStorage.toString()),
             Spacer(),
@@ -37,13 +50,16 @@ class AssetType implements AssetTypeListView {
       ),
     );
   }
+
+
 }
 
-class AssetBaseType implements AssetTypeListView {
+class AssetBaseType implements AssetTypeListView, AbstractAssetType {
   late String id;
   late String name;
   late String text;
   late String? assetBaseTypeId;
+  bool isCategory = true;
 
   AssetBaseType(this.id,
       [this.name = "name", this.text = "text", this.assetBaseTypeId]);
@@ -53,7 +69,9 @@ class AssetBaseType implements AssetTypeListView {
     return Card(
       child: ListTile(
         onTap: () {
-          // Get.toNamed("/Assets/${list[index].id}");
+          showFormDialog(AssetManagementForm(
+            item: this,
+          ));
         },
         hoverColor: Colors.blue.shade200,
         title: assetBaseTypeId == null
@@ -78,18 +96,10 @@ List<AssetBaseType> dummyAssetBaseType = [
 
 List<AssetType> dummyAssetType = [
   AssetType("1", '1', "RA 40", 'text', 0),
-  AssetType("1", '1', "ROSA", 'text', 10),
-  AssetType("1", '3', "teplomer 2000Digi", 'text', 2),
-  AssetType("2", '4', "teplomer 2000Analog", 'text', 0)
+  AssetType("2", '1', "ROSA", 'text', 10),
+  AssetType("3", '3', "teplomer 2000Digi", 'text', 2),
+  AssetType("4", '4', "teplomer 2000Analog", 'text', 0)
 ];
-//
-// AssetType? getAssetTypeById(String id) {
-//   var i = dummyAssets.where((element) => element.id == id);
-//   if (i.isEmpty) {
-//     return null;
-//   }
-//   return i.first;
-// }
 
 List<AssetBaseType> getMainAssetBaseTypes() {
   Iterable<AssetBaseType> i =
@@ -102,6 +112,9 @@ List<AssetBaseType> getMainAssetBaseTypes() {
 
 AssetBaseType? getAssetBaseTypeById(String id) {
   return dummyAssetBaseType.firstWhere((element) => element.id == id);
+}
+AssetType? getAssetTypeById(String id) {
+  return dummyAssetType.firstWhere((element) => element.id == id);
 }
 
 List<AssetBaseType> getAssetBaseTypeByParentId(String id) {
@@ -120,6 +133,24 @@ List<AssetType> getAssetTypeByParentId(String id) {
     return [];
   }
   return i.toList();
+}
+
+AssetBaseType? getMainAssetBaseTypeByItem(AbstractAssetType item) {
+  if (item.assetBaseTypeId == null) {
+    return null;
+  }
+  dynamic parent = item.isCategory ? getAssetBaseTypeById(item.id) : getAssetTypeById(item.id);
+  while (parent.assetBaseTypeId != null) {
+    parent = getAssetBaseTypeById(parent!.assetBaseTypeId!);
+  }
+  return getAssetBaseTypeById(parent!.id);
+
+  // Iterable<AssetType> i =
+  //     dummyAssetBaseType.where((element) => element.assetBaseTypeId == id);
+  // if (i.isEmpty) {
+  //   return [];
+  // }
+  // return i.toList();
 }
 
 // List<AssetType> getDummyAssetByIds(List<String> ids) {
