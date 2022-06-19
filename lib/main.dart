@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:open_cmms/pages/asset.dart';
 import 'package:open_cmms/pages/assets.dart';
+import 'package:open_cmms/pages/assets_management.dart';
 import 'package:open_cmms/pages/dashboard.dart';
 import 'package:open_cmms/pages/roadSegments.dart';
 import 'package:open_cmms/pages/task.dart';
@@ -28,6 +29,12 @@ class MyApp extends StatelessWidget {
           name: '/RoadSegments/:id',
           page: () {
             return RoadSegment(segmentId: Get.parameters["id"]!);
+          },
+        ),
+        GetPage(
+          name: '/AssetManagement',
+          page: () {
+            return AssetsManagement();
           },
         ),
         GetPage(

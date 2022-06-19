@@ -75,12 +75,10 @@ class _MainMenuWidgetState extends State<MainMenuWidget> with AutomaticKeepAlive
                 thickness: 1.0,
               )),
           Tooltip(
-            verticalOffset: -10,
-            margin: EdgeInsets.only(left: 50),
             message: "asset management",
             child: IconButton(
               icon: const Icon(Icons.post_add),
-              onPressed: () {},
+              onPressed: () => Get.offAllNamed("/AssetManagement"),
             ),
           ),
           IconButton(
