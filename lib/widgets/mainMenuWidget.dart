@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:open_cmms/pages/assets.dart';
-import 'package:open_cmms/pages/dashboard.dart';
-import 'package:open_cmms/pages/tasks.dart';
-import 'package:open_cmms/pages/roadSegments.dart';
+import 'package:open_cmms/states/state_asset_types.dart';
 
 class MainMenuWidget extends StatefulWidget {
   MainMenuWidget({
     Key? key,
   }) : super(key: key);
   String aa = "xxxx";
+
   @override
   State<MainMenuWidget> createState() => _MainMenuWidgetState();
 }
 
-class _MainMenuWidgetState extends State<MainMenuWidget> with AutomaticKeepAliveClientMixin<MainMenuWidget> {
-
+class _MainMenuWidgetState extends State<MainMenuWidget>
+    with AutomaticKeepAliveClientMixin<MainMenuWidget> {
   @override
   Widget build(BuildContext context) {
+    final StateAssetTypes c = Get.find();
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -32,7 +31,7 @@ class _MainMenuWidgetState extends State<MainMenuWidget> with AutomaticKeepAlive
           Tooltip(
             message: "My tasks",
             child: IconButton(
-                icon: const Icon(Icons.note_outlined),
+              icon: const Icon(Icons.note_outlined),
               onPressed: () => Get.offAllNamed("/Tasks"),
             ),
           ),
@@ -83,16 +82,27 @@ class _MainMenuWidgetState extends State<MainMenuWidget> with AutomaticKeepAlive
           ),
           IconButton(
             icon: const Icon(Icons.settings),
-            onPressed: () {Get.defaultDialog(confirm: TextButton(onPressed: () {setState(() {
-              widget.aa = "LLLLL";
-            }); Get.back();}, child: Text("aaa")));},
+            onPressed: () {
+              Get.defaultDialog(
+                  confirm: TextButton(
+                      onPressed: () {
+                        setState(() {
+                          widget.aa = "LLLLL";
+                        });
+                        c.addMainType();
+                        Get.back();
+                      },
+                      child: Text("aaa")));
+            },
           ),
-          Text(widget.aa),
+          // GetX<StateAssetTypes>(
+          //     builder: (_) => Text(
+          //       'clicks: ${ctrl.getll().toString()} ${ctrl2.counter.toString()}',
+          //     )),
         ],
       ),
     );
   }
-
 
   @override
   bool get wantKeepAlive => true;

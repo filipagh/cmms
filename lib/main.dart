@@ -10,6 +10,7 @@ import 'package:open_cmms/pages/task.dart';
 import 'package:open_cmms/pages/tasks.dart';
 import 'package:open_cmms/pages/roadSegment.dart';
 import 'package:open_cmms/pages/unknownPage.dart';
+import 'package:open_cmms/states/state_asset_types.dart';
 import 'package:url_strategy/url_strategy.dart';
 
 void main() {
@@ -22,6 +23,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    Get.put(StateAssetTypes());
     return GetMaterialApp(
       defaultTransition: Transition.noTransition,
       getPages: [
@@ -87,3 +90,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+

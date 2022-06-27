@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:open_cmms/states/state_asset_types.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 import 'package:open_cmms/widgets/forms/asset_management/assets_managment_form.dart';
 
@@ -66,6 +68,7 @@ class AssetBaseType implements AssetTypeListView, AbstractAssetType {
 
   @override
   Widget toListItem() {
+    final StateAssetTypes assetTypes = Get.find();
     return Card(
       child: ListTile(
         onTap: () {
@@ -81,7 +84,7 @@ class AssetBaseType implements AssetTypeListView, AbstractAssetType {
             ? null
             : Center(
                 child: Text(
-                    'Main Category: ${getAssetBaseTypeById(assetBaseTypeId!)!.name}')),
+                    'Main Category: ${assetTypes.getAssetBaseTypeById(assetBaseTypeId!)!.name}')),
       ),
     );
   }
@@ -101,62 +104,3 @@ List<AssetType> dummyAssetType = [
   AssetType("4", '4', "teplomer 2000Analog", 'text', 0)
 ];
 
-List<AssetBaseType> getMainAssetBaseTypes() {
-  Iterable<AssetBaseType> i =
-      dummyAssetBaseType.where((element) => element.assetBaseTypeId == null);
-  if (i.isEmpty) {
-    return [];
-  }
-  return i.toList();
-}
-
-AssetBaseType? getAssetBaseTypeById(String id) {
-  return dummyAssetBaseType.firstWhere((element) => element.id == id);
-}
-AssetType? getAssetTypeById(String id) {
-  return dummyAssetType.firstWhere((element) => element.id == id);
-}
-
-List<AssetBaseType> getAssetBaseTypeByParentId(String id) {
-  Iterable<AssetBaseType> i =
-      dummyAssetBaseType.where((element) => element.assetBaseTypeId == id);
-  if (i.isEmpty) {
-    return [];
-  }
-  return i.toList();
-}
-
-List<AssetType> getAssetTypeByParentId(String id) {
-  Iterable<AssetType> i =
-      dummyAssetType.where((element) => element.assetBaseTypeId == id);
-  if (i.isEmpty) {
-    return [];
-  }
-  return i.toList();
-}
-
-AssetBaseType? getMainAssetBaseTypeByItem(AbstractAssetType item) {
-  if (item.assetBaseTypeId == null) {
-    return null;
-  }
-  dynamic parent = item.isCategory ? getAssetBaseTypeById(item.id) : getAssetTypeById(item.id);
-  while (parent.assetBaseTypeId != null) {
-    parent = getAssetBaseTypeById(parent!.assetBaseTypeId!);
-  }
-  return getAssetBaseTypeById(parent!.id);
-
-  // Iterable<AssetType> i =
-  //     dummyAssetBaseType.where((element) => element.assetBaseTypeId == id);
-  // if (i.isEmpty) {
-  //   return [];
-  // }
-  // return i.toList();
-}
-
-// List<AssetType> getDummyAssetByIds(List<String> ids) {
-//   var i = dummyAssets.where((element) => ids.contains(element.id));
-//   if (i.isEmpty) {
-//     return [];
-//   }
-//   return i.toList();
-// }

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'forms/asset_management/assets_managment_form.dart';
+
 abstract class hasFormTitle {
   String getTitle();
 
   StatefulWidget getInstance();
+
 }
 
 void showFormDialog(hasFormTitle form) {
@@ -21,9 +24,12 @@ void showFormDialog(hasFormTitle form) {
           ),
         ),
       ),
-      confirm: TextButton(
-          onPressed: () {
-            Get.back();
-          },
-          child: Text("submit")));
+      // confirm: TextButton(
+      //     onPressed: () {
+      //
+      //       form.submit() ? Get.back() : null;
+      //
+      //     },
+      //     child: Text("submit"))
+  );
 }
