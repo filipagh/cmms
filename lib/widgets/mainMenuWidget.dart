@@ -16,7 +16,6 @@ class _MainMenuWidgetState extends State<MainMenuWidget>
     with AutomaticKeepAliveClientMixin<MainMenuWidget> {
   @override
   Widget build(BuildContext context) {
-    final StateAssetTypes c = Get.find();
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -89,7 +88,6 @@ class _MainMenuWidgetState extends State<MainMenuWidget>
                         setState(() {
                           widget.aa = "LLLLL";
                         });
-                        c.addMainType();
                         Get.back();
                       },
                       child: Text("aaa")));

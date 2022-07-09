@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:open_cmms/models/asset_type.dart';
+
 
 import '../states/state_asset_types.dart';
 
