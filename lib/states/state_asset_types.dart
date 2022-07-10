@@ -17,10 +17,17 @@ class StateAssetTypes extends GetxController {
     var atep = createNewType(tep, true, "analogovy teplomer", 'text');
     createNewType(atep, false, "teplomer 2000Analog", 'text');
 
-    // TODO: implement onInit
     super.onInit();
   }
 
+  void editType(String id, String name, String description) {
+    var i = _types.singleWhere((element) => element.id == id);
+    _types.remove(i);
+    i.name = name;
+    i.text = description;
+    _types.add(i);
+
+  }
   String createNewType(String? parentId, bool isCategory,
       [String name = "name", String text = "text"]) {
     String newId = _getMaxId();
