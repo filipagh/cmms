@@ -6,10 +6,12 @@ import 'package:open_cmms/pages/assets.dart';
 import 'package:open_cmms/pages/assets_management.dart';
 import 'package:open_cmms/pages/dashboard.dart';
 import 'package:open_cmms/pages/roadSegments.dart';
+import 'package:open_cmms/pages/storage.dart';
 import 'package:open_cmms/pages/task.dart';
 import 'package:open_cmms/pages/tasks.dart';
 import 'package:open_cmms/pages/roadSegment.dart';
 import 'package:open_cmms/pages/unknownPage.dart';
+import 'package:open_cmms/states/items_types_state.dart';
 import 'package:open_cmms/states/state_asset_types.dart';
 import 'package:url_strategy/url_strategy.dart';
 
@@ -25,6 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     Get.put(StateAssetTypes());
+    Get.put(ItemsState());
     return GetMaterialApp(
       defaultTransition: Transition.noTransition,
       getPages: [
@@ -44,6 +47,12 @@ class MyApp extends StatelessWidget {
           name: '/RoadSegments',
           page: () {
             return RoadSegments();
+          },
+        ),
+        GetPage(
+          name: '/Storage',
+          page: () {
+            return const Storage();
           },
         ),
         GetPage(

@@ -57,7 +57,7 @@ class _MainMenuWidgetState extends State<MainMenuWidget>
             message: "storage",
             child: IconButton(
               icon: const Icon(Icons.storefront),
-              onPressed: () {},
+              onPressed: () => Get.offAllNamed("/Storage"),
             ),
           ),
           Tooltip(
