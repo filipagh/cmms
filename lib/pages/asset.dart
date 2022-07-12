@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:open_cmms/models/asset_model.dart';
+import 'package:open_cmms/pages/station/station_base_page.dart';
 
 import '../widgets/customAppBar.dart';
 import '../widgets/mainMenuWidget.dart';
@@ -56,23 +57,7 @@ class _AssetState extends State<Asset> {
           textScaleFactor: 5,
         ),
         Divider(),
-        Expanded(
-            child: Row(
-          children: [
-            SizedBox(
-              width: 200,
-              child: Column(
-                children: [Text("assets tabs"), Expanded(child: Placeholder())],
-              ),
-            ),
-            VerticalDivider(),
-            Expanded(
-              child: Column(
-                children: [Text("tab context"), Expanded(child: Placeholder())],
-              ),
-            ),
-          ],
-        ))
+        StationBasePage(),
       ],
     );
   }
