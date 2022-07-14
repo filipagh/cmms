@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:open_cmms/pages/asset.dart';
 import 'package:open_cmms/pages/assets.dart';
 import 'package:open_cmms/pages/assets_management.dart';
 import 'package:open_cmms/pages/dashboard.dart';
 import 'package:open_cmms/pages/roadSegments.dart';
+import 'package:open_cmms/pages/station/station_base_page.dart';
 import 'package:open_cmms/pages/storage.dart';
 import 'package:open_cmms/pages/task.dart';
 import 'package:open_cmms/pages/tasks.dart';
@@ -76,9 +76,16 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/Assets/:id',
           page: () {
-            return Asset(assetId: Get.parameters["id"]!);
+            return StationBasePage(assetId: Get.parameters["id"]!, contextPageEnum: StationBaseContextPageEnum.info,);
           },
         ),
+        GetPage(
+          name: '/Assets/:id/Info/',
+          page: () {
+            return StationBasePage(assetId: Get.parameters["id"]!, contextPageEnum: StationBaseContextPageEnum.info,);
+          },
+        ),
+
         GetPage(
           name: '/',
           page: () {
