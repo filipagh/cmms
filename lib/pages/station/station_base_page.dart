@@ -11,7 +11,10 @@ class StationBasePage extends StatefulWidget {
   static const String ENDPOINT = '/Assets';
   final String assetId;
   final StationBaseContextPageEnum contextPageEnum;
-  const StationBasePage({Key? key, required this.contextPageEnum, required this.assetId}) : super(key: key);
+
+  const StationBasePage(
+      {Key? key, required this.contextPageEnum, required this.assetId})
+      : super(key: key);
 
   @override
   State<StationBasePage> createState() => _StationBasePageState();
@@ -49,7 +52,7 @@ class _StationBasePageState extends State<StationBasePage> {
     );
   }
 
-  Column buildRoadSegment() {
+  Widget buildRoadSegment() {
     Widget? contextWidget;
     switch (widget.contextPageEnum) {
       case StationBaseContextPageEnum.info:
@@ -69,18 +72,20 @@ class _StationBasePageState extends State<StationBasePage> {
           textScaleFactor: 5,
         ),
         Divider(),
-        Row(
-        children: [
-        SizedBox(
-    width: 200,
-    child: StationTabMenu(stationId: widget.assetId),
-    ),
-    VerticalDivider(),
-    Expanded(
-    child: contextWidget,
-    ),
-    ],
-    )
+        Expanded(
+          child: Row(
+            children: [
+              SizedBox(
+                width: 200,
+                child: StationTabMenu(stationId: widget.assetId),
+              ),
+              VerticalDivider(),
+              Expanded(
+                child: contextWidget,
+              ),
+            ],
+          ),
+        )
         // StationBasePage(contextPage:  widget.contextPage(roadSegmentModel),contextPageEnum: widget.contextPageEnum,),
       ],
     );
@@ -89,18 +94,17 @@ class _StationBasePageState extends State<StationBasePage> {
   Widget buildMissingRoadSegment() {
     return Center(
         child: Text(
-          "Missing data for Asset ID: " + widget.assetId,
-          textScaleFactor: 2,
-        ));
+      "Missing data for Asset ID: " + widget.assetId,
+      textScaleFactor: 2,
+    ));
   }
-
-
 }
 
 abstract class StationBaseContextPage extends Widget {
   final AssetModel station;
 
-  const StationBaseContextPage({Key? key, required this.station}) : super(key: key);
+  const StationBaseContextPage({Key? key, required this.station})
+      : super(key: key);
 }
 
 enum StationBaseContextPageEnum {
