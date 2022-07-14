@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:open_cmms/pages/station/station_base_page.dart';
+import 'package:open_cmms/pages/station/station_components_page.dart';
+import 'package:open_cmms/pages/station/station_info_page.dart';
 
 class StationTabMenu extends StatelessWidget {
-  StationTabMenu({Key? key}) : super(key: key);
+  final String stationId;
+
+  StationTabMenu({Key? key, required this.stationId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -10,17 +16,20 @@ class StationTabMenu extends StatelessWidget {
 
   Column buildColumn() {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: getButtons()
-    );
+        crossAxisAlignment: CrossAxisAlignment.stretch, children: getButtons());
   }
 
   List<Widget> getButtons() {
     List<Widget> list = [];
     buttonList.forEach((element) {
       list.add(ElevatedButton.icon(
-        style: ButtonStyle(padding: MaterialStateProperty.all(EdgeInsets.all(10)),),
-        onPressed: () {},
+        style: ButtonStyle(
+          padding: MaterialStateProperty.all(EdgeInsets.all(10)),
+        ),
+        onPressed: () {
+          Get.offAndToNamed(
+              StationBasePage.ENDPOINT + '/' + stationId + element.endpoint);
+        },
         label: Text(element.label),
         icon: element.icon,
       ));
@@ -30,8 +39,9 @@ class StationTabMenu extends StatelessWidget {
   }
 
   List<StationButton> buttonList = [
-    StationButton("Base Info", const Icon(Icons.info), ""),
-    StationButton("Components", const Icon(Icons.settings), ""),
+    StationButton(
+        "Base Info", const Icon(Icons.info), StationInfoPage.ENDPOINT),
+    StationButton("Components", const Icon(Icons.settings), StationComponentsPage.ENDPOINT),
     StationButton("Tasks", const Icon(Icons.task), ""),
     StationButton("History", const Icon(Icons.history), ""),
   ];

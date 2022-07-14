@@ -7,17 +7,16 @@ import '../../models/asset_model.dart';
 
 
 
-class StationInfoPage extends StatelessWidget implements StationBaseContextPage {
-  static const String ENDPOINT = '/Info';
+class StationComponentsPage extends StatelessWidget implements StationBaseContextPage {
+  static const String ENDPOINT = '/Components';
   final AssetModel station;
-  const StationInfoPage({Key? key, required this.station}) : super(key: key);
+  const StationComponentsPage({Key? key, required this.station}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text("name: " + station.name),
-        Text("description: " + station.text),
+        Text("wip components"),
       ],
     );
   }

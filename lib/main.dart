@@ -6,6 +6,7 @@ import 'package:open_cmms/pages/assets_management.dart';
 import 'package:open_cmms/pages/dashboard.dart';
 import 'package:open_cmms/pages/roadSegments.dart';
 import 'package:open_cmms/pages/station/station_base_page.dart';
+import 'package:open_cmms/pages/station/station_components_page.dart';
 import 'package:open_cmms/pages/storage.dart';
 import 'package:open_cmms/pages/task.dart';
 import 'package:open_cmms/pages/tasks.dart';
@@ -83,6 +84,12 @@ class MyApp extends StatelessWidget {
           name: '/Assets/:id/Info/',
           page: () {
             return StationBasePage(assetId: Get.parameters["id"]!, contextPageEnum: StationBaseContextPageEnum.info,);
+          },
+        ),
+        GetPage(
+          name: '/Assets/:id'+StationComponentsPage.ENDPOINT,
+          page: () {
+            return StationBasePage(assetId: Get.parameters["id"]!, contextPageEnum: StationBaseContextPageEnum.components,);
           },
         ),
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:open_cmms/models/asset_model.dart';
+import 'package:open_cmms/pages/station/station_components_page.dart';
 import 'package:open_cmms/pages/station/station_info_page.dart';
 import 'package:open_cmms/pages/station/station_tab_menu.dart';
 
@@ -7,6 +8,7 @@ import '../../widgets/customAppBar.dart';
 import '../../widgets/mainMenuWidget.dart';
 
 class StationBasePage extends StatefulWidget {
+  static const String ENDPOINT = '/Assets';
   final String assetId;
   final StationBaseContextPageEnum contextPageEnum;
   const StationBasePage({Key? key, required this.contextPageEnum, required this.assetId}) : super(key: key);
@@ -49,8 +51,16 @@ class _StationBasePageState extends State<StationBasePage> {
 
   Column buildRoadSegment() {
     Widget? contextWidget;
-    if (widget.contextPageEnum == StationBaseContextPageEnum.info) {
-      contextWidget = StationInfoPage(station: roadSegmentModel!);
+    switch (widget.contextPageEnum) {
+      case StationBaseContextPageEnum.info:
+        {
+          contextWidget = StationInfoPage(station: roadSegmentModel!);
+        }
+        break;
+      case StationBaseContextPageEnum.components:
+        {
+          contextWidget = StationComponentsPage(station: roadSegmentModel!);
+        }
     }
     return Column(
       children: [
@@ -63,11 +73,11 @@ class _StationBasePageState extends State<StationBasePage> {
         children: [
         SizedBox(
     width: 200,
-    child: StationTabMenu(),
+    child: StationTabMenu(stationId: widget.assetId),
     ),
     VerticalDivider(),
     Expanded(
-    child: contextWidget!,
+    child: contextWidget,
     ),
     ],
     )
@@ -95,4 +105,5 @@ abstract class StationBaseContextPage extends Widget {
 
 enum StationBaseContextPageEnum {
   info,
+  components,
 }
