@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../states/state_asset_types.dart';
+import '../states/asset_types_state.dart';
 
 class AssetsTypeList extends StatelessWidget {
   // final List<AssetTypeListView> list;

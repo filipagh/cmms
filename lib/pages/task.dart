@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:open_cmms/models/task_model.dart';
 
-
-import '../widgets/customAppBar.dart';
-import '../widgets/mainMenuWidget.dart';
+import '../widgets/custom_app_bar.dart';
+import '../widgets/main_menu_widget.dart';
 
 class Task extends StatefulWidget {
   final String taskId;

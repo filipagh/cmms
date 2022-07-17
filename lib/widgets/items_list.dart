@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:open_cmms/states/items_types_state.dart';
-import 'package:open_cmms/states/state_asset_types.dart';
+import 'package:open_cmms/states/asset_types_state.dart';
+import 'package:open_cmms/states/items_state.dart';
 
 class ItemsList extends StatelessWidget {
 

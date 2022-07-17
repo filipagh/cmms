@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/customAppBar.dart';
-import '../widgets/mainMenuWidget.dart';
+import '../widgets/custom_app_bar.dart';
+import '../widgets/main_menu_widget.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key, }) : super(key: key);

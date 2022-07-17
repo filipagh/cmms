@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-
-
 import 'package:get/get.dart';
-import 'package:open_cmms/pages/roadSegment.dart';
 import 'package:open_cmms/widgets/create_form.dart';
+
 import '../models/road_segment_model.dart';
-import '../widgets/customAppBar.dart';
-import '../widgets/mainMenuWidget.dart';
+import '../widgets/custom_app_bar.dart';
+import '../widgets/main_menu_widget.dart';
 
 class RoadSegments extends StatefulWidget {
   const RoadSegments({

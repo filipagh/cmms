@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:open_cmms/widgets/forms/asset_management/category_form.dart';
 
 import '../widgets/assets_types_list.dart';
-import '../widgets/customAppBar.dart';
+import '../widgets/custom_app_bar.dart';
 import '../widgets/dialog_form.dart';
-import '../widgets/mainMenuWidget.dart';
+import '../widgets/main_menu_widget.dart';
 
 class AssetsManagement extends StatefulWidget {
   const AssetsManagement({

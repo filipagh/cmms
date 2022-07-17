@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:open_cmms/widgets/create_form.dart';
 import 'package:open_cmms/widgets/items_list.dart';
 
-import '../widgets/customAppBar.dart';
-import '../widgets/mainMenuWidget.dart';
+import '../widgets/custom_app_bar.dart';
+import '../widgets/main_menu_widget.dart';
 
 class Storage extends StatefulWidget {
   const Storage({

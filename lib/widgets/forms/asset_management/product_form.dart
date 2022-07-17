@@ -4,7 +4,7 @@ import 'package:open_cmms/models/asset_type.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 
 import '../../../models/asset_type.dart';
-import '../../../states/state_asset_types.dart';
+import '../../../states/asset_types_state.dart';
 
 const EMPTY_CATEGORY = "NEW_CATEGORY";
 

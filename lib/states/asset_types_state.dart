@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:open_cmms/models/asset_type.dart';
 import 'package:open_cmms/models/item.dart';
-import 'package:open_cmms/states/items_types_state.dart';
+import 'package:open_cmms/states/items_state.dart';
 
 import '../helper.dart';
 

@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:open_cmms/states/items_types_state.dart';
-import 'package:open_cmms/states/state_asset_types.dart';
-import 'package:open_cmms/widgets/dialog_form.dart';
-import 'package:open_cmms/widgets/forms/asset_management/assets_managment_form.dart';
-import 'package:open_cmms/widgets/forms/asset_management/category_form.dart';
-import 'package:open_cmms/widgets/forms/asset_management/product_form.dart';
+import 'package:open_cmms/states/asset_types_state.dart';
 
 // abstract class AssetTypeListView {
 //   Widget toListItem();

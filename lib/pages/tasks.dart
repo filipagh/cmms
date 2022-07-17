@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/models/task_model.dart';
 import 'package:open_cmms/widgets/create_form.dart';
-import 'package:open_cmms/widgets/customAppBar.dart';
+import 'package:open_cmms/widgets/custom_app_bar.dart';
 
-import '../widgets/mainMenuWidget.dart';
+import '../widgets/main_menu_widget.dart';
 
 class Tasks extends StatefulWidget {
   const Tasks({Key? key, required}) : super(key: key);

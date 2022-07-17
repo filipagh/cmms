@@ -6,8 +6,8 @@ import 'package:open_cmms/models/station.dart';
 import 'package:open_cmms/states/stations_state.dart';
 import 'package:open_cmms/widgets/assets_list.dart';
 
-import '../widgets/customAppBar.dart';
-import '../widgets/mainMenuWidget.dart';
+import '../widgets/custom_app_bar.dart';
+import '../widgets/main_menu_widget.dart';
 
 class RoadSegment extends StatefulWidget {
   final String segmentId;

@@ -6,8 +6,8 @@ import 'package:open_cmms/pages/station/station_info_page.dart';
 import 'package:open_cmms/pages/station/station_tab_menu.dart';
 import 'package:open_cmms/states/stations_state.dart';
 
-import '../../widgets/customAppBar.dart';
-import '../../widgets/mainMenuWidget.dart';
+import '../../widgets/custom_app_bar.dart';
+import '../../widgets/main_menu_widget.dart';
 
 class StationBasePage extends StatefulWidget {
   static const String ENDPOINT = '/Assets';
