@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:open_cmms/models/asset_model.dart';
+import 'package:get/get.dart';
+import 'package:open_cmms/models/station.dart';
 import 'package:open_cmms/pages/station/station_components_page.dart';
 import 'package:open_cmms/pages/station/station_info_page.dart';
 import 'package:open_cmms/pages/station/station_tab_menu.dart';
+import 'package:open_cmms/states/stations_state.dart';
 
 import '../../widgets/customAppBar.dart';
 import '../../widgets/mainMenuWidget.dart';
@@ -21,12 +23,13 @@ class StationBasePage extends StatefulWidget {
 }
 
 class _StationBasePageState extends State<StationBasePage> {
-  AssetModel? roadSegmentModel;
+  StationsState stationsState = Get.find();
+  Station? roadSegmentModel;
   bool isModelLoaded = false;
 
   @override
   void initState() {
-    roadSegmentModel = getDummyAssetById(widget.assetId);
+    roadSegmentModel = stationsState.station[widget.assetId];
     super.initState();
   }
 
@@ -101,7 +104,7 @@ class _StationBasePageState extends State<StationBasePage> {
 }
 
 abstract class StationBaseContextPage extends Widget {
-  final AssetModel station;
+  final Station station;
 
   const StationBaseContextPage({Key? key, required this.station})
       : super(key: key);

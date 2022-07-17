@@ -1,9 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:open_cmms/models/asset_model.dart';
-import 'package:open_cmms/widgets/assets_list.dart';
-import 'package:open_cmms/widgets/create_form.dart';
-import 'package:open_cmms/widgets/forms/asset_management/assets_managment_form.dart';
 import 'package:open_cmms/widgets/forms/asset_management/category_form.dart';
 
 import '../widgets/assets_types_list.dart';

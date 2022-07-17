@@ -4,16 +4,18 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:open_cmms/pages/assets.dart';
 import 'package:open_cmms/pages/assets_management.dart';
 import 'package:open_cmms/pages/dashboard.dart';
+import 'package:open_cmms/pages/roadSegment.dart';
 import 'package:open_cmms/pages/roadSegments.dart';
 import 'package:open_cmms/pages/station/station_base_page.dart';
 import 'package:open_cmms/pages/station/station_components_page.dart';
 import 'package:open_cmms/pages/storage.dart';
 import 'package:open_cmms/pages/task.dart';
 import 'package:open_cmms/pages/tasks.dart';
-import 'package:open_cmms/pages/roadSegment.dart';
 import 'package:open_cmms/pages/unknownPage.dart';
+import 'package:open_cmms/states/assigned_component_state.dart';
 import 'package:open_cmms/states/items_types_state.dart';
 import 'package:open_cmms/states/state_asset_types.dart';
+import 'package:open_cmms/states/stations_state.dart';
 import 'package:url_strategy/url_strategy.dart';
 
 void main() {
@@ -29,6 +31,8 @@ class MyApp extends StatelessWidget {
 
     Get.put(StateAssetTypes());
     Get.put(ItemsState());
+    Get.put(AssignedComponentState());
+    Get.put(StationsState());
     return GetMaterialApp(
       defaultTransition: Transition.noTransition,
       getPages: [

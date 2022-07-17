@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:open_cmms/models/asset_model.dart';
+import 'package:open_cmms/models/station.dart';
 import 'package:open_cmms/states/state_asset_types.dart';
 
 class AssetsList extends StatelessWidget {
-  final List<AssetModel> list;
+  final List<Station> list;
 
   const AssetsList({
     Key? key,

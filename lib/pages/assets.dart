@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:open_cmms/models/asset_model.dart';
+import 'package:open_cmms/states/stations_state.dart';
 import 'package:open_cmms/widgets/assets_list.dart';
 import 'package:open_cmms/widgets/create_form.dart';
 
@@ -19,6 +19,7 @@ class Assets extends StatefulWidget {
 class _AssetsState extends State<Assets> {
   @override
   Widget build(BuildContext context) {
+    StationsState stationsState = Get.find();
     return Scaffold(
       appBar: CustomAppBar(),
       body: Row(
@@ -48,7 +49,7 @@ class _AssetsState extends State<Assets> {
                   ],
                 ),
                 Divider(),
-                AssetsList(list: dummyAssets),
+                AssetsList(list: stationsState.station.values.toList(),),
               ],
             ),
           )

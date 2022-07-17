@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 import '../states/state_asset_types.dart';
 
 class AssetsTypeList extends StatelessWidget {
@@ -14,7 +13,6 @@ class AssetsTypeList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final StateAssetTypes assetTypes = Get.find();
-
     return GetX<StateAssetTypes>(
         builder: (_) { var list =  assetTypes.getData();
           return list.isEmpty

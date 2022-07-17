@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:open_cmms/states/state_asset_types.dart';
 
 class MainMenuWidget extends StatefulWidget {
   MainMenuWidget({
