@@ -31,8 +31,8 @@ class MyApp extends StatelessWidget {
 
     Get.put(StateAssetTypes());
     Get.put(ItemsState());
-    Get.put(AssignedComponentState());
     Get.put(StationsState());
+    Get.put(AssignedComponentState());
     return GetMaterialApp(
       defaultTransition: Transition.noTransition,
       getPages: [

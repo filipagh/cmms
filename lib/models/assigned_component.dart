@@ -9,7 +9,6 @@ class AssignedComponent {
   late DateTime? installed;
   late DateTime created;
   late DateTime? removed;
-  late String? taskId;
   late AssignedComponentStateEnum actualState;
 
   AssignedComponent(
@@ -19,7 +18,6 @@ class AssignedComponent {
     this.created, [
     this.installed,
     this.removed,
-    this.taskId,
     this.actualState = AssignedComponentStateEnum.awaiting,
   ]);
 }

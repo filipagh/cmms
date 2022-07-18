@@ -23,4 +23,9 @@ static String productTEPLODIGIID = '';
 static String productTEPLOANALOGID = '';
 }
 
+abstract class HelpStation {
+  static String station0 = '';
+  static String station1 = '';
+}
+
 
