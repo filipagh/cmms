@@ -1,7 +1,7 @@
 name: Automatic Rebase
 on:
     release:
-        types: [ deleted ]
+        types: [deleted]
 jobs:
     rebase:
         name: Rebase
