@@ -9,5 +9,4 @@ jobs:
         steps:
             - name: Mark version as ready to deleted
               run: |
-                echo refs/tags/<tag_name>
                 echo ${{refs/tags/<tag_name>}}
