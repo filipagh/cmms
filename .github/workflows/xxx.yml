@@ -1,0 +1,14 @@
+name: Automatic Rebase
+on:
+    release:
+        types: [ deleted ]
+jobs:
+    rebase:
+        name: Rebase
+        if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase')
+        runs-on: ubuntu-latest
+        steps:
+            - name: Mark version as ready to deleted
+              run: |
+                echo refs/tags/<tag_name>
+                echo ${{refs/tags/<tag_name>}}
