@@ -1,25 +1,45 @@
 import 'package:get/get.dart';
 import 'package:open_cmms/helper.dart';
 import 'package:open_cmms/models/assigned_component.dart';
+import 'package:open_cmms/states/asset_types_state.dart';
 
 class AssignedComponentState extends GetxController {
-  int stationSequence = 0;
+  int _stationSequence = 0;
+  StateAssetTypes _stateAssetTypes = Get.find();
+
+  // <stationId<AssignedComponentId, AssignedComponent>>
   Map<String, Map<String, AssignedComponent>> components =
       <String, Map<String, AssignedComponent>>{}.obs;
 
   @override
   void onInit() {
     addAlreadyInstalledComponent(
-        HelpStation.station0, HelpProduct.productROSAID, DateTime.now());
+        HelpStation.station0,
+        HelpProduct.productROSAID,
+        DateTime.now().subtract(Duration(days: 10)),AssignedComponentStateEnum.installed); // instaled
     addAlreadyInstalledComponent(
-        HelpStation.station0, HelpProduct.productTEPLOANALOGID, DateTime.now());
+        HelpStation.station0,
+        HelpProduct.productTEPLOANALOGID,
+        DateTime.now().subtract(Duration(days: 10)),AssignedComponentStateEnum.willBeRemoved); //instaled tobeuninstaled
+    addAlreadyInstalledComponent(HelpStation.station0,
+        HelpProduct.productTEPLODIGIID, DateTime.now(),AssignedComponentStateEnum.awaiting); // awaiting
     super.onInit();
   }
 
   String _getNewId() {
-    var id = stationSequence.toString();
-    stationSequence++;
+    var id = _stationSequence.toString();
+    _stationSequence++;
     return id;
+  }
+
+  List<AssignedComponent> getInstalledComponentsByStationId(String stationId) {
+    var list = <AssignedComponent>[];
+    components[stationId]?.values.forEach((element) {
+      if (element.actualState != AssignedComponentStateEnum.removed) {
+        list.add(element);
+      }
+    });
+    return list;
   }
 
   void editType(
@@ -49,10 +69,18 @@ class AssignedComponentState extends GetxController {
   }
 
   void addAlreadyInstalledComponent(
-      String stationId, productId, DateTime installed,
+      String stationId, productId, DateTime installed, AssignedComponentStateEnum state,
       [DateTime? removed]) {
     var id = _getNewId();
-    _addItem(AssignedComponent(id, productId, stationId, DateTime.now()));
+    _addItem(AssignedComponent(
+        id,
+        productId,
+        stationId,
+        DateTime.now(),
+        installed,
+        removed,
+        state));
+    _stateAssetTypes.addUsedComponent(productId);
   }
 //
 // List<Item> getItems() {

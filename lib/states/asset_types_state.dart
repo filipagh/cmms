@@ -118,4 +118,8 @@ class StateAssetTypes extends GetxController {
     }
     return i;
   }
+
+  void addUsedComponent(productId) {
+  //  todo
+  }
 }

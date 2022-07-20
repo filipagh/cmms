@@ -1,6 +1,6 @@
 import 'dart:core';
 
-enum AssignedComponentStateEnum { awaiting, installed, removed }
+enum AssignedComponentStateEnum { awaiting, installed,willBeRemoved, removed }
 
 class AssignedComponent {
   late String assignedComponentId;
