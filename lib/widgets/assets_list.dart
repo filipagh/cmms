@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/models/station.dart';
+import 'package:open_cmms/pages/station/station_base_page.dart';
 import 'package:open_cmms/states/asset_types_state.dart';
 
 class AssetsList extends StatelessWidget {
@@ -25,7 +26,7 @@ class AssetsList extends StatelessWidget {
                   return Card(
                     child: ListTile(
                       onTap: () {
-                        Get.toNamed("/Assets/${list[index].id}");
+                        Get.toNamed(StationBasePage.ENDPOINT+"/${list[index].id}");
                       },
                       hoverColor: Colors.blue.shade200,
                       title:

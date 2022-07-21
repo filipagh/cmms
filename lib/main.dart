@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:open_cmms/pages/assets.dart';
 import 'package:open_cmms/pages/assets_management.dart';
 import 'package:open_cmms/pages/dashboard.dart';
 import 'package:open_cmms/pages/road_segment.dart';
 import 'package:open_cmms/pages/road_segments.dart';
 import 'package:open_cmms/pages/station/station_base_page.dart';
 import 'package:open_cmms/pages/station/station_components_page.dart';
+import 'package:open_cmms/pages/stations.dart';
 import 'package:open_cmms/pages/storage.dart';
 import 'package:open_cmms/pages/task.dart';
 import 'package:open_cmms/pages/tasks.dart';
@@ -61,9 +61,9 @@ class MyApp extends StatelessWidget {
           },
         ),
         GetPage(
-          name: '/Assets/',
+          name: Stations.ENDPOINT,
           page: () {
-            return Assets();
+            return Stations();
           },
         ),
         GetPage(
@@ -79,19 +79,19 @@ class MyApp extends StatelessWidget {
           },
         ),
         GetPage(
-          name: '/Assets/:id',
+          name: StationBasePage.ENDPOINT+'/:id',
           page: () {
             return StationBasePage(assetId: Get.parameters["id"]!, contextPageEnum: StationBaseContextPageEnum.info,);
           },
         ),
         GetPage(
-          name: '/Assets/:id/Info/',
+          name: StationBasePage.ENDPOINT+'/:id/Info/',
           page: () {
             return StationBasePage(assetId: Get.parameters["id"]!, contextPageEnum: StationBaseContextPageEnum.info,);
           },
         ),
         GetPage(
-          name: '/Assets/:id'+StationComponentsPage.ENDPOINT,
+          name: StationBasePage.ENDPOINT+'/:id'+StationComponentsPage.ENDPOINT,
           page: () {
             return StationBasePage(assetId: Get.parameters["id"]!, contextPageEnum: StationBaseContextPageEnum.components,);
           },

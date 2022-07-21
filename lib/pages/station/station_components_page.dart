@@ -57,13 +57,19 @@ class StationComponentsPage extends StatelessWidget
                             tileColor: getColor(components[index]),
                             hoverColor: Colors.blue.shade200,
                             title: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(stateAssetTypes
-                                    .getAssetTypeById(
-                                        components[index].productId)!
-                                    .name),
+                                Container(
+                                  width: 100,
+                                  child: Text(stateAssetTypes
+                                      .getAssetTypeById(
+                                          components[index].productId)!
+                                      .name),
+                                ),
                                 Spacer(),
-                                buildContextOfComponent(components[index])!
+                                buildContextOfComponent(components[index])!,
+                                Spacer(),
+                                Text('ACTIONS')
                                 // Text(components[index].assignedComponentId),
                               ],
 

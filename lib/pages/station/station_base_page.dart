@@ -10,7 +10,7 @@ import '../../widgets/custom_app_bar.dart';
 import '../../widgets/main_menu_widget.dart';
 
 class StationBasePage extends StatefulWidget {
-  static const String ENDPOINT = '/Assets';
+  static const String ENDPOINT = '/Station';
   final String assetId;
   final StationBaseContextPageEnum contextPageEnum;
 
@@ -71,7 +71,7 @@ class _StationBasePageState extends State<StationBasePage> {
     return Column(
       children: [
         Text(
-          "Asset " + roadSegmentModel!.id,
+          "Station: " + roadSegmentModel!.id,
           textScaleFactor: 5,
         ),
         Divider(),

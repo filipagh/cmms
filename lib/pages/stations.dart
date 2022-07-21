@@ -7,16 +7,18 @@ import 'package:open_cmms/widgets/create_form.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/main_menu_widget.dart';
 
-class Assets extends StatefulWidget {
-  const Assets({
+class Stations extends StatefulWidget {
+  static const ENDPOINT = '/Stations';
+
+  const Stations({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<Assets> createState() => _AssetsState();
+  State<Stations> createState() => _StationsState();
 }
 
-class _AssetsState extends State<Assets> {
+class _StationsState extends State<Stations> {
   @override
   Widget build(BuildContext context) {
     StationsState stationsState = Get.find();
@@ -30,7 +32,7 @@ class _AssetsState extends State<Assets> {
             child: Column(
               children: [
                 Text(
-                  "Assets",
+                  "Statios",
                   textScaleFactor: 5,
                 ),
                 Row(
@@ -44,7 +46,7 @@ class _AssetsState extends State<Assets> {
                     Spacer(),
                     ElevatedButton(
                       onPressed: () {showdialog();},
-                      child: Text("add asset"),
+                      child: Text("add station"),
                     ),
                   ],
                 ),

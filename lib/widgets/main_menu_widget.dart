@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:open_cmms/pages/stations.dart';
 
 class MainMenuWidget extends StatefulWidget {
   MainMenuWidget({
@@ -46,10 +47,10 @@ class _MainMenuWidgetState extends State<MainMenuWidget>
             ),
           ),
           Tooltip(
-            message: "assets",
+            message: "Stations",
             child: IconButton(
               icon: const Icon(Icons.settings_input_component),
-              onPressed: () => Get.offAllNamed("/Assets"),
+              onPressed: () => Get.offAllNamed(Stations.ENDPOINT),
             ),
           ),
           Tooltip(
