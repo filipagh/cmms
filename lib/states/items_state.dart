@@ -6,6 +6,7 @@ import '../models/item.dart';
 
 class ItemsState extends GetxController {
   List<Item> _items = <Item>[].obs;
+  Map<String, Item> _itemsMap = <String, Item>{}.obs;
 
   @override
   void onInit() {
@@ -30,7 +31,7 @@ class ItemsState extends GetxController {
       printError(info: "product duplicity insert to items");
       return;
     }
-    _items.add(item);
+    _itemsMap[item.productId] = item;
   }
 
   void addNewItems(Item item, int newItemsCount) {
@@ -38,21 +39,36 @@ class ItemsState extends GetxController {
       printError(info: "product duplicity insert to items");
       return;
     }
-    _items.add(item);
+    _itemsMap[item.productId] = item;
   }
 
   List<Item> getItems() {
-    return _items;
+    return _itemsMap.values.toList();
   }
 
 
   bool _isProductInState(String productId) {
-    return _items.indexWhere((element) => element.productId == productId) >= 0;
+    return _itemsMap.containsKey(productId);
   }
 
   Item getById(String id) {
-    return _items.firstWhere((element) => element.productId == id);
+    return _itemsMap[id]!;
 
+  }
+
+  void addUsedComponent(productId) {
+    _itemsMap[productId]!.used++;
+  }
+  void addAllocatedComponent(productId) {
+    _itemsMap[productId]!.allocated++;
+  }
+
+  void removeAllocated(String productId) {
+    _itemsMap[productId]!.allocated--;
+  }
+
+  void removeUsed(String productId) {
+    _itemsMap[productId]!.used--;
   }
   //
   // List<AssetType> getMainCategories() {
