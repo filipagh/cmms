@@ -8,7 +8,7 @@ import 'package:open_cmms/states/asset_types_state.dart';
 
 // class Item implements AssetTypeListView {
 class Item {
-  StateAssetTypes _typeState = Get.find();
+  AssetTypesState _typeState = Get.find();
   late String productId;
   late int inStorage;
   late int allocated;

@@ -14,7 +14,7 @@ class AssetsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final StateAssetTypes cc= Get.find();
+    final AssetTypesState cc= Get.find();
     return list.isEmpty
         ? Expanded(child: Center(child: Text("no stations",textScaleFactor: 3,)))
         : Expanded(

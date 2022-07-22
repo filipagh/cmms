@@ -13,17 +13,17 @@ class AssignedComponentState extends GetxController {
 
   @override
   void onInit() {
-    _initAssignedComponent(
+    HelpAssignedcomponent.stat0rosa = _initAssignedComponent(
         HelpStation.station0,
         HelpProduct.productROSAID,
         DateTime.now().subtract(Duration(days: 10)),
         AssignedComponentStateEnum.installed); // instaled
-    _initAssignedComponent(
+    HelpAssignedcomponent.stat0tepanalog = _initAssignedComponent(
         HelpStation.station0,
         HelpProduct.productTEPLOANALOGID,
         DateTime.now().subtract(Duration(days: 10)),
         AssignedComponentStateEnum.willBeRemoved); //instaled tobeuninstaled
-    _initAssignedComponent(HelpStation.station0, HelpProduct.productTEPLODIGIID,
+    HelpAssignedcomponent.stat0tepdialog = _initAssignedComponent(HelpStation.station0, HelpProduct.productTEPLODIGIID,
         DateTime.now(), AssignedComponentStateEnum.awaiting); // awaiting
     super.onInit();
   }
@@ -70,7 +70,7 @@ class AssignedComponentState extends GetxController {
     // _items.add(item);
   }
 
-  void _initAssignedComponent(String stationId, productId, DateTime installed,
+  String _initAssignedComponent(String stationId, productId, DateTime installed,
       AssignedComponentStateEnum state,
       [DateTime? removed]) {
     var id = _getNewId();
@@ -90,6 +90,7 @@ class AssignedComponentState extends GetxController {
       case AssignedComponentStateEnum.removed:
         break;
     }
+    return id;
   }
 
   void addAlreadyInstalledComponent(String stationId, productId,

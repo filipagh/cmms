@@ -24,17 +24,17 @@ class StationBasePage extends StatefulWidget {
 
 class _StationBasePageState extends State<StationBasePage> {
   StationsState stationsState = Get.find();
-  Station? roadSegmentModel;
+  Station? station;
   bool isModelLoaded = false;
 
   @override
   void initState() {
-    roadSegmentModel = stationsState.station[widget.assetId];
+    station = stationsState.getByStationId(widget.assetId);
     super.initState();
   }
 
   Widget buildContent() {
-    if (roadSegmentModel != null) {
+    if (station != null) {
       return buildRoadSegment();
     }
     return buildMissingRoadSegment();
@@ -60,18 +60,18 @@ class _StationBasePageState extends State<StationBasePage> {
     switch (widget.contextPageEnum) {
       case StationBaseContextPageEnum.info:
         {
-          contextWidget = StationInfoPage(station: roadSegmentModel!);
+          contextWidget = StationInfoPage(station: station!);
         }
         break;
       case StationBaseContextPageEnum.components:
         {
-          contextWidget = StationComponentsPage(station: roadSegmentModel!);
+          contextWidget = StationComponentsPage(station: station!);
         }
     }
     return Column(
       children: [
         Text(
-          "Station: " + roadSegmentModel!.id,
+          "Station: " + station!.id,
           textScaleFactor: 5,
         ),
         Divider(),

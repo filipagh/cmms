@@ -29,7 +29,7 @@ class AssetManagementForm extends StatefulWidget implements hasFormTitle {
 }
 
 class AssetManagementFormState extends State<AssetManagementForm> {
-  final StateAssetTypes assetTypes = Get.find();
+  final AssetTypesState assetTypes = Get.find();
   final _formKey = GlobalKey<FormState>();
   AssetType? _mainCategoryAssetType;
   AssetType? _subCategoryAssetType;
@@ -149,7 +149,7 @@ class AssetManagementFormState extends State<AssetManagementForm> {
   }
 
   List<DropdownMenuItem<String>> getMainCat() {
-    final StateAssetTypes assetTypes = Get.find();
+    final AssetTypesState assetTypes = Get.find();
     List<DropdownMenuItem<String>> list = [];
 
     list.add(DropdownMenuItem(

@@ -13,7 +13,7 @@ class ItemsList extends StatelessWidget {
   Widget build(BuildContext context) {
     final ItemsState items = Get.find();
 
-    return GetX<StateAssetTypes>(
+    return GetX<AssetTypesState>(
         builder: (_) { var list =  items.getItems();
         return list.isEmpty
             ? const Expanded(

@@ -1,27 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:open_cmms/models/task_model.dart';
+import 'package:get/get.dart';
 
+import '../models/task.dart';
+import '../states/tasks_state.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/main_menu_widget.dart';
 
-class Task extends StatefulWidget {
+class TaskPage extends StatefulWidget {
   final String taskId;
-  const Task({
+  const TaskPage({
     Key? key,
     required this.taskId,
   }) : super(key: key);
 
   @override
-  State<Task> createState() => _TaskState();
+  State<TaskPage> createState() => _TaskPageState();
 }
 
-class _TaskState extends State<Task> {
-  TaskModel? taskModel;
+class _TaskPageState extends State<TaskPage> {
+  TasksState _tasksState = Get.find();
+  Task? taskModel;
   bool isModelLoaded = false;
   @override
 
   void initState() {
-     taskModel = getDummyTaskById(widget.taskId);
+     taskModel = _tasksState.tasks[widget.taskId];
     super.initState();
   }
 

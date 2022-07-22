@@ -9,7 +9,7 @@ import '../../../states/asset_types_state.dart';
 const EMPTY_CATEGORY = "NEW_CATEGORY";
 
 class CategoryForm extends StatefulWidget implements hasFormTitle {
-  final StateAssetTypes assetTypes = Get.find();
+  final AssetTypesState assetTypes = Get.find();
   late final AssetType? editItem;
   late final AssetType? parent;
 
@@ -43,7 +43,7 @@ class CategoryForm extends StatefulWidget implements hasFormTitle {
 }
 
 class CategoryFormState extends State<CategoryForm> {
-  final StateAssetTypes assetTypes = Get.find();
+  final AssetTypesState assetTypes = Get.find();
   final _formKey = GlobalKey<FormState>();
 
   String name = "";

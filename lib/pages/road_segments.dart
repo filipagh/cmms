@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:open_cmms/states/road_segment_state.dart';
 import 'package:open_cmms/widgets/create_form.dart';
 
-import '../models/road_segment_model.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/main_menu_widget.dart';
 
@@ -16,9 +16,10 @@ class RoadSegments extends StatefulWidget {
 }
 
 class _RoadSegmentsState extends State<RoadSegments> {
+  RoadSegmentState _roadSegmentState = Get.find();
   List<DataRow> getRows() {
     List<DataRow> list = [];
-    for (var i in dummyRoadSegments) {
+    for (var i in _roadSegmentState.segments.values) {
       list.add(DataRow(
         onSelectChanged: (dd) {Get.toNamed("/RoadSegments/"+i.id);},
         cells: [

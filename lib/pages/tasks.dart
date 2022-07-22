@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:open_cmms/models/task_model.dart';
+import 'package:open_cmms/states/tasks_state.dart';
 import 'package:open_cmms/widgets/create_form.dart';
 import 'package:open_cmms/widgets/custom_app_bar.dart';
 
@@ -39,31 +39,37 @@ class _TasksState extends State<Tasks> {
                     ),
                     Spacer(),
                     ElevatedButton(
-                      onPressed: () {showdialog();},
+                      onPressed: () {
+                        showdialog();
+                      },
                       child: Text("create task"),
                     ),
                   ],
                 ),
                 Divider(),
-                Expanded(
-                  child: ListView.builder(
-                      addRepaintBoundaries: true,
-                      padding: const EdgeInsets.all(8),
-                      itemCount: dummyTasks.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Card(
-
-                          child: ListTile(
-                            onTap: () {Get.toNamed("/Tasks/${dummyTasks[index].id}");},
-                            hoverColor: Colors.blue.shade200,
-                            title: Text(dummyTasks[index].name),
-                            subtitle: Container(
-                              child: Text('task id: ${dummyTasks[index].id}'),
+                Expanded(child: GetX<TasksState>(
+                  builder: (_) {
+                    var list =  _.tasks.values.toList();
+                    return ListView.builder(
+                        addRepaintBoundaries: true,
+                        padding: const EdgeInsets.all(8),
+                        itemCount: list.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Card(
+                            child: ListTile(
+                              onTap: () {
+                                Get.toNamed("/Tasks/${list[index].id}");
+                              },
+                              hoverColor: Colors.blue.shade200,
+                              title: Text(list[index].name),
+                              subtitle: Container(
+                                child: Text('task id: ${list[index].id}'),
+                              ),
                             ),
-                          ),
-                        );
-                      }),
-                ),
+                          );
+                        });
+                  },
+                )),
               ],
             ),
           )

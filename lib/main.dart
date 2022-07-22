@@ -12,10 +12,14 @@ import 'package:open_cmms/pages/storage.dart';
 import 'package:open_cmms/pages/task.dart';
 import 'package:open_cmms/pages/tasks.dart';
 import 'package:open_cmms/pages/unknownPage.dart';
+import 'package:open_cmms/states/action_state.dart';
 import 'package:open_cmms/states/asset_types_state.dart';
 import 'package:open_cmms/states/assigned_component_state.dart';
 import 'package:open_cmms/states/items_state.dart';
+import 'package:open_cmms/states/road_segment_state.dart';
 import 'package:open_cmms/states/stations_state.dart';
+import 'package:open_cmms/states/task_component_state.dart';
+import 'package:open_cmms/states/tasks_state.dart';
 import 'package:url_strategy/url_strategy.dart';
 
 void main() {
@@ -29,10 +33,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    Get.put(StateAssetTypes());
-    Get.put(ItemsState());
+    Get.put(RoadSegmentState());
     Get.put(StationsState());
+    Get.put(AssetTypesState());
+    Get.put(ItemsState());
     Get.put(AssignedComponentState());
+    Get.put(TasksState());
+    Get.put(ActionState());
+    Get.put(TaskComponentState());
     return GetMaterialApp(
       defaultTransition: Transition.noTransition,
       getPages: [
@@ -75,7 +83,7 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/Tasks/:id',
           page: () {
-            return Task(taskId: Get.parameters["id"]!,);
+            return TaskPage(taskId: Get.parameters["id"]!,);
           },
         ),
         GetPage(

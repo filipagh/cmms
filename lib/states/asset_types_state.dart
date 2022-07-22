@@ -6,7 +6,7 @@ import 'package:open_cmms/states/items_state.dart';
 
 import '../helper.dart';
 
-class StateAssetTypes extends GetxController {
+class AssetTypesState extends GetxController {
   int _assetTypeSequence = 0;
   Map<String, AssetType> _typesMap = <String, AssetType>{}.obs;
 
@@ -86,7 +86,7 @@ class StateAssetTypes extends GetxController {
   }
 
   List<AssetTypeListView> getData() {
-    final StateAssetTypes assetTypes = Get.find();
+    final AssetTypesState assetTypes = Get.find();
     List<AssetTypeListView> listItems = [];
 
     assetTypes.getMainCategories().forEach((element) {

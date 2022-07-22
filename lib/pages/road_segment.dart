@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:open_cmms/models/road_segment_asset_connector_model.dart';
 import 'package:open_cmms/models/road_segment_model.dart';
 import 'package:open_cmms/models/station.dart';
+import 'package:open_cmms/states/road_segment_state.dart';
 import 'package:open_cmms/states/stations_state.dart';
 import 'package:open_cmms/widgets/assets_list.dart';
 
@@ -22,6 +22,7 @@ class RoadSegment extends StatefulWidget {
 }
 
 class _RoadSegmentState extends State<RoadSegment> {
+  RoadSegmentState _roadSegmentState = Get.find();
   StationsState stationsState = Get.find();
   RoadSegmentModel? roadSegmentModel;
   List<Station> stationsList = [];
@@ -29,15 +30,9 @@ class _RoadSegmentState extends State<RoadSegment> {
 
   @override
   void initState() {
-    roadSegmentModel = getDummyRoadSegmentsById(widget.segmentId);
+    roadSegmentModel = _roadSegmentState.segments[widget.segmentId];
 
-    stationsList = [];
-    var ids = getAssetsIdsByRoadSegmentId(roadSegmentModel!.id);
-    stationsState.station.forEach((key, value) {
-      if (ids.contains(value.id)) {
-        stationsList.add(value);
-      }
-    });
+    stationsList = stationsState.station[roadSegmentModel!.id]?.values.toList() ?? [];
     super.initState();
   }
 

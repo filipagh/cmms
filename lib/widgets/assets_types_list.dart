@@ -12,8 +12,8 @@ class AssetsTypeList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final StateAssetTypes assetTypes = Get.find();
-    return GetX<StateAssetTypes>(
+    final AssetTypesState assetTypes = Get.find();
+    return GetX<AssetTypesState>(
         builder: (_) { var list =  assetTypes.getData();
           return list.isEmpty
             ? const Expanded(

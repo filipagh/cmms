@@ -36,7 +36,7 @@ class StationComponentsPage extends StatelessWidget
   }
 
   Widget buildComponentList() {
-    StateAssetTypes stateAssetTypes = Get.find();
+    AssetTypesState stateAssetTypes = Get.find();
     return GetX<AssignedComponentState>(builder: (_) {
       var components = _.getInstalledComponentsByStationId(station.id);
       return components.isEmpty
