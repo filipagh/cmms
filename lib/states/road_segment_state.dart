@@ -27,4 +27,8 @@ class RoadSegmentState extends GetxController {
   void editRoadSegment(String id, String name, String description, String ssud) {
     segments[id] = new RoadSegmentModel(id, name, description, ssud);
   }
+
+  void remove(String segmentId) {
+    segments.remove(segmentId);
+  }
 }

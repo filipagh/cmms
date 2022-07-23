@@ -74,6 +74,7 @@ class _RoadSegmentState extends State<RoadSegment> {
                   children: [
                     Text("Stations", textScaleFactor: 3),
                     Divider(),
+                    stationsList.isEmpty ? buildEmptyStationList():
                     AssetsList(list: stationsList),
                   ],
                 ),
@@ -93,6 +94,16 @@ class _RoadSegmentState extends State<RoadSegment> {
         )
       ],
     );
+  }
+
+  Widget buildEmptyStationList() {
+    return Expanded(child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("No Stations"),
+                      ElevatedButton(onPressed: (){Get.back(); _roadSegmentState.remove(widget.segmentId);},child: Text("remove this Road Segment"),),
+                    ],
+                  ));
   }
 
   Widget buildMissingRoadSegment() {
