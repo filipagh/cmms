@@ -23,4 +23,8 @@ class RoadSegmentState extends GetxController {
     _sequence++;
     return id;
   }
+
+  void editRoadSegment(String id, String name, String description, String ssud) {
+    segments[id] = new RoadSegmentModel(id, name, description, ssud);
+  }
 }
