@@ -5,7 +5,6 @@ import 'package:open_cmms/helper.dart';
 import '../models/item.dart';
 
 class ItemsState extends GetxController {
-  List<Item> _items = <Item>[].obs;
   Map<String, Item> _itemsMap = <String, Item>{}.obs;
 
   @override
@@ -69,6 +68,11 @@ class ItemsState extends GetxController {
 
   void removeUsed(String productId) {
     _itemsMap[productId]!.used--;
+  }
+
+  void addToStorage(String productId) {
+    _itemsMap[productId]!.inStorage++;
+    update([productId]);
   }
   //
   // List<AssetType> getMainCategories() {

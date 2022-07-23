@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/states/asset_types_state.dart';
+import 'package:open_cmms/states/items_state.dart';
 
 // abstract class AssetTypeListView {
 //   Widget toListItem();
@@ -32,19 +33,26 @@ class Item {
     return ListTile(
 
       hoverColor: Colors.blue.shade200,
-      title: Row(
-        children: [
-          Text(product!.name),
-          Spacer(),
-          Text("in storage: " + inStorage.toString()),
-          VerticalDivider(),
-          Text("used: " + used.toString()),
-          VerticalDivider(),
-          Text("allocated: " + allocated.toString()),
-        ],
-      ),
+      title: GetBuilder<ItemsState>(
+        id: productId,
+        builder: (_) {var item= _.getById(productId); return IntrinsicHeight(
+        child: Row(
+          children: [
+            Text(product!.name),
+            Spacer(),
+            Text("in storage: " + item.inStorage.toString()),
+            VerticalDivider(),
+            Text("used: " + item.used.toString()),
+            VerticalDivider(),
+            Text("allocated: " + item.allocated.toString()),
+            VerticalDivider(),
+            ElevatedButton(onPressed: (){_.addToStorage(productId);}, child: Text("add 1 to storage"))
+
+          ],
+        ),
+      );},
       // subtitle:
       // Center(child: Text('station Id: ${list[index].id}')),
-    );
+    ));
   }
 }
