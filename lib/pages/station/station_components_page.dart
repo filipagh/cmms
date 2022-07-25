@@ -4,6 +4,8 @@ import 'package:open_cmms/models/assigned_component.dart';
 import 'package:open_cmms/pages/station/station_base_page.dart';
 import 'package:open_cmms/states/asset_types_state.dart';
 import 'package:open_cmms/states/assigned_component_state.dart';
+import 'package:open_cmms/widgets/dialog_form.dart';
+import 'package:open_cmms/widgets/forms/components/components_form.dart';
 
 import '../../models/station.dart';
 
@@ -22,11 +24,7 @@ class StationComponentsPage extends StatelessWidget
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            ElevatedButton(onPressed: () {}, child: Text('add components')),
-            ElevatedButton(onPressed: () {}, child: Text('remove components')),
-            ElevatedButton(
-                onPressed: () {},
-                child: Text('add already installed component')),
+            ElevatedButton(onPressed: () {showFormDialog(StationComponentsForm.editComponents(editItem: station));}, child: Text('edit components')),
           ],
         ),
         Divider(),
