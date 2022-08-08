@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'forms/asset_management/assets_managment_form.dart';
-
 abstract class hasFormTitle {
   String getTitle();
 
@@ -10,9 +8,11 @@ abstract class hasFormTitle {
 
 }
 
-void showFormDialog(hasFormTitle form) {
-  Get.defaultDialog(
+Future<T?> showFormDialog<T>(hasFormTitle form) async {
+  return await Get.defaultDialog(
+
       title: form.getTitle(),
+
       content: ConstrainedBox(
         constraints: BoxConstraints(maxHeight: Get.height-150, minWidth: 800),
 

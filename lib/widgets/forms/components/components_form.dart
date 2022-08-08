@@ -7,6 +7,7 @@ import 'package:open_cmms/states/asset_types_state.dart';
 import 'package:open_cmms/states/assigned_component_state.dart';
 import 'package:open_cmms/states/items_state.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
+import 'package:open_cmms/widgets/forms/components/add_component.dart';
 
 import '../../../models/item.dart';
 
@@ -36,9 +37,9 @@ class StationComponentsFormState extends State<StationComponentsForm> {
   final AssignedComponentState _assignedComponentState = Get.find();
   final ItemsState _itemsState = Get.find();
   List<AssignedComponent> actualComponents = [];
-  List<Item> additems = [];
-  List<AssignedComponent> removeComponents = [];
-  List<FormItem> editItems = <FormItem>[].obs;
+  List<Item> additems = <Item>[].obs;
+  List<AssignedComponent> removeComponents = <AssignedComponent>[].obs;
+  final _ComponentFormState _componentFormState = Get.put(_ComponentFormState());
 
   @override
   void initState() {
@@ -58,15 +59,24 @@ class StationComponentsFormState extends State<StationComponentsForm> {
         key: _formKey,
         child: Column(
           children: [
-            ElevatedButton(onPressed: () {}, child: Text('add component')),
+            ElevatedButton(
+                onPressed: () {
+                  showFormDialog<Item>(
+                          AddComponentForm(editItem: widget.station))
+                      .then((value) {
+                    _componentFormState.addNewComponent(value!.productId);
+                    additems.add(value);
+                  });
+                },
+                child: Text('add component')),
             Container(
               width: 500,
               height: 600,
-              child: Obx(() {
+              child: GetBuilder<_ComponentFormState>(builder: (_) {
                 return ListView.builder(
-                    itemCount: editItems.length,
+                    itemCount: _.editItems.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return buildCardFromFormItem(editItems[index]);
+                      return buildCardFromFormItem(_.editItems[index]);
                     });
               }),
             ),
@@ -98,19 +108,40 @@ class StationComponentsFormState extends State<StationComponentsForm> {
             //   decoration: InputDecoration(labelText: 'ssud'),
             // ),
 
-            TextButton(
-                onPressed: () {
-                  // if (_formKey.currentState!.validate()) {
-                  //   _formKey.currentState?.save();
-                  //   if (widget.editItem != null) {
-                  //     widget._roadSegmentState.editRoadSegment(widget.editItem!.id, name, description,ssud);
-                  //   } else {
-                  //     widget._roadSegmentState.createNewRoadSegment( name, description,ssud);
-                  //   }
-                  //   Get.back();
-                  // }
-                },
-                child: Text("submit")),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(children: [
+                  ElevatedButton(onPressed: () {Get.back();}, child: Text("Back")),
+                ],),
+                Row(
+
+                  children: [
+                    Obx(() {
+                      return Row(children: [
+                      Text("added: "+additems.length.toString()),
+                      VerticalDivider(),
+                      Text("removed: "+removeComponents.length.toString()),
+                      VerticalDivider(),
+                      ],);
+                    }),
+                    ElevatedButton(
+                        onPressed: () {
+                          // if (_formKey.currentState!.validate()) {
+                          //   _formKey.currentState?.save();
+                          //   if (widget.editItem != null) {
+                          //     widget._roadSegmentState.editRoadSegment(widget.editItem!.id, name, description,ssud);
+                          //   } else {
+                          //     widget._roadSegmentState.createNewRoadSegment( name, description,ssud);
+                          //   }
+                          //   Get.back();
+                          // }
+                        },
+                        child: Text("submit")),
+                  ],
+                ),
+              ],
+            ),
           ],
         ),
       ),
@@ -123,6 +154,7 @@ class StationComponentsFormState extends State<StationComponentsForm> {
         return Card(
           color: Colors.white,
           child: ListTile(
+            trailing: IconButton(onPressed: ()=>removeItem(item), icon: Icon(Icons.delete),),
             title: Text(item.assetType.name),
           ),
         );
@@ -144,13 +176,16 @@ class StationComponentsFormState extends State<StationComponentsForm> {
         return Card(
           color: Colors.green[400],
           child: ListTile(
+            trailing: IconButton(onPressed: ()=>removeNowAddedItem(item), icon: Icon(Icons.close),),
             title: Text(item.assetType.name),
+
           ),
         );
       case FormItemStatus.nowremoved:
         return Card(
           color: Colors.red[400],
           child: ListTile(
+            trailing: IconButton(onPressed: ()=>rollBackRemove(item), icon: Icon(Icons.rotate_left),),
             title: Text(item.assetType.name),
           ),
         );
@@ -174,8 +209,25 @@ class StationComponentsFormState extends State<StationComponentsForm> {
         case AssignedComponentStateEnum.removed:
           return;
       }
-      editItems.add(FormItem(element.productId, status));
+      _componentFormState.addInstalledComponent(element.productId, status, element);
     });
+  }
+
+  removeItem(FormItem item) {
+    removeComponents.add(item.assignedComponent!);
+    _componentFormState.removeItem(item);
+
+  }
+
+  removeNowAddedItem(FormItem item) {
+    additems.remove(_itemsState.getById(item.productId));
+    _componentFormState.removeNowAddedItem(item);
+  }
+
+  rollBackRemove(FormItem item) {
+    removeComponents.remove(item.assignedComponent!);
+    _componentFormState.rollbackItem(item);
+
   }
 }
 
@@ -188,12 +240,48 @@ enum FormItemStatus {
 }
 
 class FormItem {
+  late int id;
   final AssetTypesState _assetTypesState = Get.find();
   late String productId;
+  late AssignedComponent? assignedComponent;
   late FormItemStatus status;
   late AssetType assetType;
 
-  FormItem(this.productId, this.status) {
+  FormItem(this.id, this.productId, this.status, [this.assignedComponent]) {
     assetType = _assetTypesState.getAssetTypeById(productId)!;
+  }
+}
+
+
+
+class _ComponentFormState extends GetxController {
+  List<FormItem> editItems = <FormItem>[].obs;
+  int _sequence = 0;
+
+  void removeItem(FormItem item) {
+    editItems[editItems.indexWhere((element) => element.id == item.id)].status=FormItemStatus.nowremoved;
+    update();
+  }
+
+  void addInstalledComponent(
+      String productId, status, AssignedComponent element) {
+    editItems.add(FormItem(_sequence, productId, status, element));
+    _sequence++;
+  }
+
+  void addNewComponent(String productId) {
+    editItems.add(FormItem(_sequence, productId, FormItemStatus.nowadded));
+    _sequence++;
+    update();
+  }
+
+  void rollbackItem(FormItem item) {
+    editItems[editItems.indexWhere((element) => element.id == item.id)].status=FormItemStatus.instaled;
+    update();
+  }
+
+  void removeNowAddedItem(FormItem item) {
+    editItems.removeWhere((element) => element.id == item.id);
+    update();
   }
 }
