@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 abstract class hasFormTitle {
   String getTitle();
 
-  StatefulWidget getInstance();
+  Widget getInstance();
 
 }
 
@@ -14,7 +14,7 @@ Future<T?> showFormDialog<T>(hasFormTitle form) async {
       title: form.getTitle(),
 
       content: ConstrainedBox(
-        constraints: BoxConstraints(maxHeight: Get.height-150, minWidth: 800),
+        constraints: BoxConstraints(maxHeight: Get.height-150,maxWidth: Get.width-200, minWidth: 800),
 
         child: SingleChildScrollView(
           child: Column(

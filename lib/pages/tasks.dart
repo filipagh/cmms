@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/states/tasks_state.dart';
-import 'package:open_cmms/widgets/create_form.dart';
 import 'package:open_cmms/widgets/custom_app_bar.dart';
+import 'package:open_cmms/widgets/dialog_form.dart';
+import 'package:open_cmms/widgets/forms/station/station_picker.dart';
 
+import '../models/station.dart';
+import '../widgets/forms/tasks/create_task.dart';
 import '../widgets/main_menu_widget.dart';
 
 class Tasks extends StatefulWidget {
@@ -39,8 +42,9 @@ class _TasksState extends State<Tasks> {
                     ),
                     Spacer(),
                     ElevatedButton(
-                      onPressed: () {
-                        showdialog();
+                      onPressed: () async {
+                       Station station =  await showFormDialog(StationPickerForm());
+                       showFormDialog(CreateTaskForm(station: station));
                       },
                       child: Text("create task"),
                     ),
