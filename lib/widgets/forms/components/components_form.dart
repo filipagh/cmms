@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:open_cmms/models/aggregates/task.dart';
 import 'package:open_cmms/models/asset_type.dart';
 import 'package:open_cmms/models/assigned_component.dart';
 import 'package:open_cmms/models/station.dart';
@@ -12,18 +13,24 @@ import 'package:open_cmms/widgets/forms/components/add_component.dart';
 import '../../../models/item.dart';
 
 class StationComponentsForm extends StatefulWidget implements hasFormTitle {
-  late final Station station;
+  late final TaskAggregate task;
 
-  StationComponentsForm.editComponents({Key? key, required Station editItem})
+
+
+  StationComponentsForm.editComponentsInStation({Key? key, required Station editItem})
       : super(key: key) {
-    this.station = editItem;
+    this.task = TaskAggregate(editItem);
+  }
+  StationComponentsForm.editComponentsInTask({Key? key, required TaskAggregate task})
+      : super(key: key) {
+    this.task = task;
   }
 
   @override
   State<StationComponentsForm> createState() => StationComponentsFormState();
 
   String getTitle() {
-    return "Edit components of : ${station.name}";
+    return "Edit components of : ${task.station.name}";
   }
 
   @override
@@ -44,7 +51,7 @@ class StationComponentsFormState extends State<StationComponentsForm> {
   @override
   void initState() {
     actualComponents = _assignedComponentState
-            .components[widget.station.id]?.values
+            .components[widget.task.station.id]?.values
             .toList() ??
         [];
     this.buildEditItems();
@@ -62,7 +69,7 @@ class StationComponentsFormState extends State<StationComponentsForm> {
             ElevatedButton(
                 onPressed: () {
                   showFormDialog<Item>(
-                          AddComponentForm(editItem: widget.station))
+                          AddComponentForm(editItem: widget.task.station))
                       .then((value) {
                     _componentFormState.addNewComponent(value!.productId);
                     additems.add(value);

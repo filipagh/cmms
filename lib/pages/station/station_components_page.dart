@@ -24,7 +24,7 @@ class StationComponentsPage extends StatelessWidget
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            ElevatedButton(onPressed: () {showFormDialog(StationComponentsForm.editComponents(editItem: station));}, child: Text('edit components')),
+            ElevatedButton(onPressed: () {showFormDialog(StationComponentsForm.editComponentsInStation(editItem: station));}, child: Text('edit components')),
           ],
         ),
         Divider(),

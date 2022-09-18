@@ -11,16 +11,15 @@ import 'package:open_cmms/widgets/dialog_form.dart';
 import '../../../states/asset_types_state.dart';
 
 class CreateTaskForm extends StatelessWidget implements hasFormTitle {
-  final Station station;
   late TaskAggregate task;
 
   final ItemsState _itemsState = Get.find();
   final AssetTypesState _typeState = Get.find();
 
 
-  CreateTaskForm({Key? key, required this.station, TaskAggregate? task})
+  CreateTaskForm({Key? key, required Station station, TaskAggregate? task})
       : super(key: key) {
-    this.task = task ?? TaskAggregate();
+    this.task = task ?? TaskAggregate(station);
   }
 
 
@@ -48,7 +47,7 @@ class CreateTaskForm extends StatelessWidget implements hasFormTitle {
 
   @override
   String getTitle() {
-    return "Create new task for station: ${station.name}";
+    return "Create new task for station: ${task.station.name}";
   }
 
   Widget buildTaskActionList() {
@@ -74,7 +73,6 @@ class CreateTaskForm extends StatelessWidget implements hasFormTitle {
           title: Text("install this components:"),
           subtitle: buildComponentsString(task.taskComponents[action.id]),
         );
-        break;
       case ActionJob.remove:
         return ListTile(
           title: Text("remove this components:"),
