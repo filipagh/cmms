@@ -5,6 +5,7 @@ import 'package:open_cmms/widgets/custom_app_bar.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 import 'package:open_cmms/widgets/forms/station/station_picker.dart';
 
+import '../models/aggregates/task.dart';
 import '../models/station.dart';
 import '../widgets/forms/tasks/create_task.dart';
 import '../widgets/main_menu_widget.dart';
@@ -43,8 +44,11 @@ class _TasksState extends State<Tasks> {
                     Spacer(),
                     ElevatedButton(
                       onPressed: () async {
-                       Station station =  await showFormDialog(StationPickerForm());
-                       showFormDialog(CreateTaskForm(station: station));
+                        Station station =
+                            await showFormDialog(StationPickerForm());
+                        showFormDialog(CreateTaskForm(
+                          task: TaskAggregate(station),
+                        ));
                       },
                       child: Text("create task"),
                     ),
@@ -53,7 +57,7 @@ class _TasksState extends State<Tasks> {
                 Divider(),
                 Expanded(child: GetX<TasksState>(
                   builder: (_) {
-                    var list =  _.tasks.values.toList();
+                    var list = _.tasks.values.toList();
                     return ListView.builder(
                         addRepaintBoundaries: true,
                         padding: const EdgeInsets.all(8),

@@ -9,19 +9,20 @@ import 'package:open_cmms/states/assigned_component_state.dart';
 import 'package:open_cmms/states/items_state.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 import 'package:open_cmms/widgets/forms/components/add_component.dart';
+import 'package:open_cmms/widgets/forms/tasks/create_task.dart';
 
 import '../../../models/item.dart';
 
 class StationComponentsForm extends StatefulWidget implements hasFormTitle {
   late final TaskAggregate task;
 
-
-
-  StationComponentsForm.editComponentsInStation({Key? key, required Station editItem})
+  StationComponentsForm.editComponentsInStation(
+      {Key? key, required Station editItem})
       : super(key: key) {
     this.task = TaskAggregate(editItem);
   }
-  StationComponentsForm.editComponentsInTask({Key? key, required TaskAggregate task})
+  StationComponentsForm.editComponentsInTask(
+      {Key? key, required TaskAggregate task})
       : super(key: key) {
     this.task = task;
   }
@@ -46,7 +47,8 @@ class StationComponentsFormState extends State<StationComponentsForm> {
   List<AssignedComponent> actualComponents = [];
   List<Item> additems = <Item>[].obs;
   List<AssignedComponent> removeComponents = <AssignedComponent>[].obs;
-  final _ComponentFormState _componentFormState = Get.put(_ComponentFormState());
+  final _ComponentFormState _componentFormState =
+      Get.put(_ComponentFormState());
 
   @override
   void initState() {
@@ -118,22 +120,40 @@ class StationComponentsFormState extends State<StationComponentsForm> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(children: [
-                  ElevatedButton(onPressed: () {Get.back();}, child: Text("Back")),
-                ],),
                 Row(
-
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          Get.back();
+                        },
+                        child: Text("Back")),
+                  ],
+                ),
+                Row(
                   children: [
                     Obx(() {
-                      return Row(children: [
-                      Text("added: "+additems.length.toString()),
-                      VerticalDivider(),
-                      Text("removed: "+removeComponents.length.toString()),
-                      VerticalDivider(),
-                      ],);
+                      return Row(
+                        children: [
+                          Text("added: " + additems.length.toString()),
+                          VerticalDivider(),
+                          Text(
+                              "removed: " + removeComponents.length.toString()),
+                          VerticalDivider(),
+                        ],
+                      );
                     }),
                     ElevatedButton(
                         onPressed: () {
+                          for (var i in additems) {
+                            widget.task.installComponent(i);
+                          }
+                          for (var i in removeComponents) {
+                            widget.task.removeComponent(i);
+                          }
+
+                          showFormDialog(CreateTaskForm(
+                            task: widget.task,
+                          ));
                           // if (_formKey.currentState!.validate()) {
                           //   _formKey.currentState?.save();
                           //   if (widget.editItem != null) {
@@ -161,7 +181,10 @@ class StationComponentsFormState extends State<StationComponentsForm> {
         return Card(
           color: Colors.white,
           child: ListTile(
-            trailing: IconButton(onPressed: ()=>removeItem(item), icon: Icon(Icons.delete),),
+            trailing: IconButton(
+              onPressed: () => removeItem(item),
+              icon: Icon(Icons.delete),
+            ),
             title: Text(item.assetType.name),
           ),
         );
@@ -183,16 +206,21 @@ class StationComponentsFormState extends State<StationComponentsForm> {
         return Card(
           color: Colors.green[400],
           child: ListTile(
-            trailing: IconButton(onPressed: ()=>removeNowAddedItem(item), icon: Icon(Icons.close),),
+            trailing: IconButton(
+              onPressed: () => removeNowAddedItem(item),
+              icon: Icon(Icons.close),
+            ),
             title: Text(item.assetType.name),
-
           ),
         );
       case FormItemStatus.nowremoved:
         return Card(
           color: Colors.red[400],
           child: ListTile(
-            trailing: IconButton(onPressed: ()=>rollBackRemove(item), icon: Icon(Icons.rotate_left),),
+            trailing: IconButton(
+              onPressed: () => rollBackRemove(item),
+              icon: Icon(Icons.rotate_left),
+            ),
             title: Text(item.assetType.name),
           ),
         );
@@ -203,7 +231,6 @@ class StationComponentsFormState extends State<StationComponentsForm> {
     this.actualComponents.forEach((element) {
       var status;
       switch (element.actualState) {
-
         case AssignedComponentStateEnum.awaiting:
           status = FormItemStatus.tobeinstaled;
           break;
@@ -216,14 +243,14 @@ class StationComponentsFormState extends State<StationComponentsForm> {
         case AssignedComponentStateEnum.removed:
           return;
       }
-      _componentFormState.addInstalledComponent(element.productId, status, element);
+      _componentFormState.addInstalledComponent(
+          element.productId, status, element);
     });
   }
 
   removeItem(FormItem item) {
     removeComponents.add(item.assignedComponent!);
     _componentFormState.removeItem(item);
-
   }
 
   removeNowAddedItem(FormItem item) {
@@ -234,7 +261,6 @@ class StationComponentsFormState extends State<StationComponentsForm> {
   rollBackRemove(FormItem item) {
     removeComponents.remove(item.assignedComponent!);
     _componentFormState.rollbackItem(item);
-
   }
 }
 
@@ -259,14 +285,13 @@ class FormItem {
   }
 }
 
-
-
 class _ComponentFormState extends GetxController {
   List<FormItem> editItems = <FormItem>[].obs;
   int _sequence = 0;
 
   void removeItem(FormItem item) {
-    editItems[editItems.indexWhere((element) => element.id == item.id)].status=FormItemStatus.nowremoved;
+    editItems[editItems.indexWhere((element) => element.id == item.id)].status =
+        FormItemStatus.nowremoved;
     update();
   }
 
@@ -283,7 +308,8 @@ class _ComponentFormState extends GetxController {
   }
 
   void rollbackItem(FormItem item) {
-    editItems[editItems.indexWhere((element) => element.id == item.id)].status=FormItemStatus.instaled;
+    editItems[editItems.indexWhere((element) => element.id == item.id)].status =
+        FormItemStatus.instaled;
     update();
   }
 

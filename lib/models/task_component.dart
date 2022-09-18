@@ -12,5 +12,6 @@ class TaskComponent {
   late String? assignedComponentId;
   late TaskComponentStatus status;
 
-  TaskComponent(this.id, this.actionId, this.productId, this.status);
+  TaskComponent(this.id, this.actionId, this.productId, this.status,
+      [this.assignedComponentId]);
 }
