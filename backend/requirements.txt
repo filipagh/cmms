@@ -1,3 +1,4 @@
 uvicorn
 sqlalchemy
 fastapi
+eventsourcing[postgres]
