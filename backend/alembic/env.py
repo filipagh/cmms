@@ -7,8 +7,6 @@ from sqlalchemy import pool
 from alembic import context
 
 import alembic_model_import
-import assetmanager.infrastructure.persistance.asset_repo
-import base.database
 
 
 def get_db_link():

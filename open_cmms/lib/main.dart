@@ -20,10 +20,10 @@ import 'package:open_cmms/states/road_segment_state.dart';
 import 'package:open_cmms/states/stations_state.dart';
 import 'package:open_cmms/states/task_component_state.dart';
 import 'package:open_cmms/states/tasks_state.dart';
-import 'package:url_strategy/url_strategy.dart';
+
 
 void main() {
-  setPathUrlStrategy();
+
   runApp(const MyApp());
 }
 

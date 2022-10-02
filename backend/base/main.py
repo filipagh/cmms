@@ -1,35 +1,28 @@
 import os
 import uuid
+from multiprocessing import Process
+from threading import Thread
+from time import sleep
 from uuid import UUID
 
 from fastapi import FastAPI
 
-import alembic.config
 from sqlalchemy.orm import Session
 
-from assetmanager.infrastructure.persistance.asset_repo import Verification
+import assetmanager.infrastructure.rest_router
+from assetmanager.infrastructure.persistance.asset_category_repo import AssetCategoryModel
 
-os.chdir(os.path.dirname(__file__)+'/../')
-alembicArgs = [
-    '-c', 'alembic.ini',
-    '--raiseerr',
-    'upgrade', 'head',
-]
-alembic.config.main(argv=alembicArgs)
+os.chdir(os.path.dirname(__file__) + '/../')
+os.system('alembic upgrade head')
 
-app = FastAPI()
-
+app = FastAPI(debug=True)
+app.include_router(assetmanager.infrastructure.rest_router.asset_manager)
 
 @app.get("/")
 async def root():
-    v =Verification(asset_category_id=uuid.uuid4(),name="aaa", description="aaaa")
-    import database
-    db: Session = next(database.get_db())
-    db.add(v)
-    db.commit()
     return {"message": "Hello World"}
+#
 
-
-@app.get("/hello/{name}")
-async def say_hello(name: str):
-    return {"message": f"Hello {name}"}
+# @app.get("/hello/{name}")
+# async def say_hello(name: str):
+#     return {"message": f"Hello {name}"}
