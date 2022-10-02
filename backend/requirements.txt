@@ -2,3 +2,5 @@ uvicorn
 sqlalchemy
 fastapi
 eventsourcing[postgres]
+alembic
+sqlalchemy_utils

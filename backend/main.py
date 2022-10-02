@@ -1,5 +1,13 @@
 from fastapi import FastAPI
 from sqlalchemy import  Column
+
+import alembic.config
+alembicArgs = [
+    '--raiseerr',
+    'upgrade', 'head',
+]
+alembic.config.main(argv=alembicArgs)
+
 app = FastAPI()
 
 
