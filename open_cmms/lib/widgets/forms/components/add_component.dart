@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/models/station.dart';
-import 'package:open_cmms/states/asset_types_state.dart';
+import 'package:open_cmms/states/asset_types_state_dummy.dart';
 import 'package:open_cmms/states/items_state.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 
@@ -41,7 +41,7 @@ class AddComponentFormState extends State<AddComponentForm> {
   @override
   Widget build(BuildContext context) {
     ItemsState _itemState = Get.find();
-    AssetTypesState _assetTypes = Get.find();
+    AssetTypesStateDummy _assetTypes = Get.find();
     var items = _itemState.getItems();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,

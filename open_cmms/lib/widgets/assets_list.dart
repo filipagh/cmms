@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/models/station.dart';
 import 'package:open_cmms/pages/station/station_base_page.dart';
-import 'package:open_cmms/states/asset_types_state.dart';
+import 'package:open_cmms/states/asset_types_state_dummy.dart';
 
 class AssetsList extends StatelessWidget {
   final List<Station> list;
@@ -14,7 +14,7 @@ class AssetsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AssetTypesState cc= Get.find();
+    final AssetTypesStateDummy cc= Get.find();
     return list.isEmpty
         ? Expanded(child: Center(child: Text("no stations",textScaleFactor: 3,)))
         : Expanded(

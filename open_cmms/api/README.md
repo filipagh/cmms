@@ -41,13 +41,13 @@ import 'package:BackendAPI/api.dart';
 
 
 final api_instance = AssetManagerApi();
-final assetCategoryNewSchema = AssetCategoryNewSchema(); // AssetCategoryNewSchema | 
+final assetNewSchema = AssetNewSchema(); // AssetNewSchema | 
 
 try {
-    final result = api_instance.createNewMainCategoryAssetManagerNewCategoryPost(assetCategoryNewSchema);
+    final result = api_instance.createNewAssetAssetManagerNewAssetPost(assetNewSchema);
     print(result);
 } catch (e) {
-    print('Exception when calling AssetManagerApi->createNewMainCategoryAssetManagerNewCategoryPost: $e\n');
+    print('Exception when calling AssetManagerApi->createNewAssetAssetManagerNewAssetPost: $e\n');
 }
 
 ```
@@ -58,13 +58,21 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*AssetManagerApi* | [**createNewMainCategoryAssetManagerNewCategoryPost**](doc//AssetManagerApi.md#createnewmaincategoryassetmanagernewcategorypost) | **POST** /assetManager/newCategory | Create New Main Category
+*AssetManagerApi* | [**createNewAssetAssetManagerNewAssetPost**](doc//AssetManagerApi.md#createnewassetassetmanagernewassetpost) | **POST** /assetManager/newAsset | Create New Asset
+*AssetManagerApi* | [**createNewCategoryAssetManagerNewCategoryPost**](doc//AssetManagerApi.md#createnewcategoryassetmanagernewcategorypost) | **POST** /assetManager/newCategory | Create New Category
+*AssetManagerApi* | [**getAssetCategoriesAssetManagerAssetCategoriesGet**](doc//AssetManagerApi.md#getassetcategoriesassetmanagerassetcategoriesget) | **GET** /assetManager/asset-categories | Get Asset Categories
+*AssetManagerApi* | [**getAssetsAssetManagerAssetsGet**](doc//AssetManagerApi.md#getassetsassetmanagerassetsget) | **GET** /assetManager/assets | Get Assets
 *DefaultApi* | [**rootGet**](doc//DefaultApi.md#rootget) | **GET** / | Root
 
 
 ## Documentation For Models
 
  - [AssetCategoryNewSchema](doc//AssetCategoryNewSchema.md)
+ - [AssetCategorySchema](doc//AssetCategorySchema.md)
+ - [AssetCategotyIdSchema](doc//AssetCategotyIdSchema.md)
+ - [AssetIdSchema](doc//AssetIdSchema.md)
+ - [AssetNewSchema](doc//AssetNewSchema.md)
+ - [AssetSchema](doc//AssetSchema.md)
  - [HTTPValidationError](doc//HTTPValidationError.md)
  - [ValidationError](doc//ValidationError.md)
 

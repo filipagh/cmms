@@ -3,7 +3,12 @@
 README.md
 analysis_options.yaml
 doc/AssetCategoryNewSchema.md
+doc/AssetCategorySchema.md
+doc/AssetCategotyIdSchema.md
+doc/AssetIdSchema.md
 doc/AssetManagerApi.md
+doc/AssetNewSchema.md
+doc/AssetSchema.md
 doc/DefaultApi.md
 doc/HTTPValidationError.md
 doc/ValidationError.md
@@ -20,6 +25,11 @@ lib/auth/http_basic_auth.dart
 lib/auth/http_bearer_auth.dart
 lib/auth/oauth.dart
 lib/model/asset_category_new_schema.dart
+lib/model/asset_category_schema.dart
+lib/model/asset_categoty_id_schema.dart
+lib/model/asset_id_schema.dart
+lib/model/asset_new_schema.dart
+lib/model/asset_schema.dart
 lib/model/http_validation_error.dart
 lib/model/validation_error.dart
 pubspec.yaml

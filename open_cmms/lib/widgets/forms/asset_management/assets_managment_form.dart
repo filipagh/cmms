@@ -4,7 +4,7 @@ import 'package:open_cmms/models/asset_type.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 
 import '../../../models/asset_type.dart';
-import '../../../states/asset_types_state.dart';
+import '../../../states/asset_types_state_dummy.dart';
 
 const EMPTY_CATEGORY = "NEW_CATEGORY";
 
@@ -29,7 +29,7 @@ class AssetManagementForm extends StatefulWidget implements hasFormTitle {
 }
 
 class AssetManagementFormState extends State<AssetManagementForm> {
-  final AssetTypesState assetTypes = Get.find();
+  final AssetTypesStateDummy assetTypes = Get.find();
   final _formKey = GlobalKey<FormState>();
   AssetType? _mainCategoryAssetType;
   AssetType? _subCategoryAssetType;
@@ -149,7 +149,7 @@ class AssetManagementFormState extends State<AssetManagementForm> {
   }
 
   List<DropdownMenuItem<String>> getMainCat() {
-    final AssetTypesState assetTypes = Get.find();
+    final AssetTypesStateDummy assetTypes = Get.find();
     List<DropdownMenuItem<String>> list = [];
 
     list.add(DropdownMenuItem(

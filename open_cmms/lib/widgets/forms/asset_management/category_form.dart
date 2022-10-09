@@ -1,3 +1,4 @@
+import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/models/asset_type.dart';
@@ -5,26 +6,27 @@ import 'package:open_cmms/widgets/dialog_form.dart';
 
 import '../../../models/asset_type.dart';
 import '../../../states/asset_types_state.dart';
+import '../../../states/asset_types_state_dummy.dart';
 
 const EMPTY_CATEGORY = "NEW_CATEGORY";
 
 class CategoryForm extends StatefulWidget implements hasFormTitle {
   final AssetTypesState assetTypes = Get.find();
-  late final AssetType? editItem;
-  late final AssetType? parent;
+  late final AssetCategorySchema? editItem;
+  late final AssetCategorySchema? parent;
 
-  CategoryForm.createNewSub({Key? key, required this.parent}) : super(key: key) {
-    this.editItem = null;
+  CategoryForm.createNewSub({Key? key, required AssetCategorySchema this.parent}) : super(key: key) {
+    editItem = null;
   }
   CategoryForm.createNewMain({Key? key}) : super(key: key) {
-    this.editItem = null;
-    this.parent = null;
+    editItem = null;
+    parent = null;
   }
 
-  CategoryForm.editItem({Key? key, required AssetType editItem})
+  CategoryForm.editItem({Key? key, required AssetCategorySchema editItem})
       : super(key: key) {
     this.editItem = editItem;
-    this.parent = assetTypes.getAssetTypeById(editItem.parent!)!;
+    this.parent = assetTypes.getAssetTypeById(editItem.parentId!)!;
   }
 
   @override
@@ -79,7 +81,7 @@ class CategoryFormState extends State<CategoryForm> {
                 description = value!;
               },
               initialValue:
-                  widget.editItem == null ? "" : widget.editItem!.text,
+                  widget.editItem == null ? "" : widget.editItem!.name,
               decoration: InputDecoration(labelText: 'description'),
             ),
 

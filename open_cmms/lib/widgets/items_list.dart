@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:open_cmms/states/asset_types_state.dart';
+import 'package:open_cmms/states/asset_types_state_dummy.dart';
 import 'package:open_cmms/states/items_state.dart';
 
 class ItemsList extends StatelessWidget {
@@ -13,7 +13,7 @@ class ItemsList extends StatelessWidget {
   Widget build(BuildContext context) {
     final ItemsState items = Get.find();
 
-    return GetX<AssetTypesState>(
+    return GetX<AssetTypesStateDummy>(
         builder: (_) { var list =  items.getItems();
         return list.isEmpty
             ? const Expanded(

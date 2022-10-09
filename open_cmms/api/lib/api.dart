@@ -31,6 +31,11 @@ part 'api/asset_manager_api.dart';
 part 'api/default_api.dart';
 
 part 'model/asset_category_new_schema.dart';
+part 'model/asset_category_schema.dart';
+part 'model/asset_categoty_id_schema.dart';
+part 'model/asset_id_schema.dart';
+part 'model/asset_new_schema.dart';
+part 'model/asset_schema.dart';
 part 'model/http_validation_error.dart';
 part 'model/validation_error.dart';
 

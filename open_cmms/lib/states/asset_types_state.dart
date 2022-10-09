@@ -1,113 +1,123 @@
+import 'package:BackendAPI/api.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:open_cmms/models/asset_type.dart';
 import 'package:open_cmms/models/item.dart';
+import 'package:open_cmms/service/backend_api/assetManager.dart';
 import 'package:open_cmms/states/items_state.dart';
+import 'package:uuid/uuid.dart';
 
 import '../helper.dart';
 
 class AssetTypesState extends GetxController {
-  int _assetTypeSequence = 0;
-  Map<String, AssetType> _typesMap = <String, AssetType>{}.obs;
+  Map<String, AssetCategorySchema> _categoriesTypes =
+      <String, AssetCategorySchema>{}.obs;
+  Map<String, AssetSchema> _products = <String, AssetSchema>{}.obs;
 
   @override
   void onInit() {
-
-    HelpAsset.assetRJId =  _initType(null, true, "riadiaca jednotka", 'text');
-    HelpProduct.productRAID =_initType(HelpAsset.assetRJId, false, "RA 40", 'text');
-    HelpProduct.productROSAID =_initType(HelpAsset.assetRJId, false, "ROSA", 'text');
-    HelpAsset.assetTEPLOMERId = _initType(null, true, "teplomer", 'text');
-    HelpProduct.productTEPLOULTID = _initType(HelpAsset.assetTEPLOMERId, false, "teplomer ULTIMATE", 'text');
-    HelpAsset.assetTEPLOMERDIGId = _initType(HelpAsset.assetTEPLOMERId, true, "digitalny teplomer", 'text');
-    HelpProduct.productTEPLODIGIID = _initType(HelpAsset.assetTEPLOMERDIGId, false, "teplomer 2000Digi", 'text');
-    HelpAsset.assetTEPLOMERANALOGId = _initType(HelpAsset.assetTEPLOMERId, true, "analogovy teplomer", 'text');
-    HelpProduct.productTEPLOANALOGID = _initType(HelpAsset.assetTEPLOMERANALOGId, false, "teplomer 2000Analog", 'text');
-
+    reloadData();
     super.onInit();
   }
 
+  void reloadData() {
+    _categoriesTypes.clear();
+    _products.clear();
+    AssetManagerService()
+        .getAssetCategoriesAssetManagerAssetCategoriesGet()
+        .then((value) {
+      value?.forEach((element) {
+        _categoriesTypes[element.id] = element;
+      });
+    });
+    AssetManagerService().getAssetsAssetManagerAssetsGet().then((value) {
+      value?.forEach((element) {
+        _products[element.id] = element;
+      });
+    });
+  }
+
   void editType(String id, String name, String description) {
-    _typesMap[id]!.name = name;
-    _typesMap[id]!.text = description;
+    // todo
+    // _categoriesTypes[id]!.name = name;
+    // _categoriesTypes[id]!.text = description;
   }
 
-  String createNewType(String? parentId, bool isCategory,
+  void createNewType(String? parentId, bool isCategory,
       [String name = "name", String text = "text"]) {
-    ItemsState itemsState = Get.find();
-    String newId = _getNewId();
-    _typesMap[newId] = AssetType(newId, parentId, isCategory, name, text);
-    if (!isCategory) {
-      itemsState.addItem(Item(newId, 0, 0, 0));
+    if (isCategory) {
+      var model;
+      if (parentId == null) {
+        model = AssetCategoryNewSchema(name: name, description: text);
+      } else {
+        model = AssetCategoryNewSchema(
+            parentId: parentId, name: name, description: text);
+      }
+      AssetManagerService()
+          .createNewCategoryAssetManagerNewCategoryPost(model)
+          .then((value) => reloadData());
+    } else {
+      AssetManagerService()
+          .createNewAssetAssetManagerNewAssetPost(AssetNewSchema(
+          categoryId: parentId!, name: name, description: text))
+          .then((value) => reloadData());
     }
-    return newId;
   }
 
-  String _initType(String? parentId, bool isCategory,
-      [String name = "name", String text = "text"]) {
-    String newId = _getNewId();
-    _typesMap[newId] = AssetType(newId, parentId, isCategory, name, text);
-    return newId;
-  }
-
-  String _getNewId() {
-    var id = _assetTypeSequence;
-    _assetTypeSequence++;
-    return id.toString();
-  }
-
-  List<AssetType> getMainCategories() {
-    Iterable<AssetType> i = _typesMap.values.where((element) => element.parent == null);
+  List<AssetCategorySchema> getMainCategories() {
+    Iterable<AssetCategorySchema> i =
+        _categoriesTypes.values.where((element) => element.parentId == null);
     if (i.isEmpty) {
       return [];
     }
     return i.toList();
   }
 
-  AssetType? getAssetTypeById(String id) {
-    return _typesMap[id];
+  AssetCategorySchema? getAssetTypeById(String id) {
+    return _categoriesTypes[id];
   }
 
-  List<AssetType> getSubCategoriesOfType(String typeId) {
-    Iterable<AssetType> i = _typesMap.values.where(
-        (element) => element.parent == typeId && element.isCategory == true);
+  List<AssetCategorySchema> getSubCategoriesOfType(String typeId) {
+    Iterable<AssetCategorySchema> i = _categoriesTypes.values.where(
+        (element) => element.parentId == typeId);
     if (i.isEmpty) {
       return [];
     }
     return i.toList();
   }
 
-  List<AssetType> getProductOfType(String typeId) {
-    Iterable<AssetType> i = _typesMap.values.where(
-        (element) => element.parent == typeId && element.isCategory == false);
+  List<AssetSchema> getProductOfType(String categoryId) {
+    Iterable<AssetSchema> i = _products.values.where(
+        (element) => element.categoryId == categoryId);
     if (i.isEmpty) {
       return [];
     }
     return i.toList();
   }
+//
+  List getData() {
 
-  List<AssetTypeListView> getData() {
-    final AssetTypesState assetTypes = Get.find();
-    List<AssetTypeListView> listItems = [];
+    List listItems = [];
 
-    assetTypes.getMainCategories().forEach((element) {
+    getMainCategories().forEach((element) {
       listItems.add(element);
-      assetTypes.getProductOfType(element.id).forEach((element) {
+      getProductOfType(element.id).forEach((element) {
         listItems.add(element);
       });
-      assetTypes.getSubCategoriesOfType(element.id).forEach((element) {
+      getSubCategoriesOfType(element.id).forEach((element) {
         listItems.add(element);
-        assetTypes.getProductOfType(element.id).forEach((element) {
+        getProductOfType(element.id).forEach((element) {
           listItems.add(element);
         });
       });
     });
     return listItems;
   }
-
-  AssetType? getMainCategoryOfType(AssetType assetType) {
+//
+  AssetCategorySchema? getMainCategoryOfType(AssetCategorySchema assetType) {
     var i = assetType;
-    while (i.parent != null) {
-      i = getAssetTypeById(i.parent!)!;
+    while (i.parentId != null) {
+      i = getAssetTypeById(i.parentId!)!;
     }
     return i;
   }

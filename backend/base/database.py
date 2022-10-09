@@ -11,7 +11,7 @@ def get_db_link():
            f'{os.environ["POSTGRES_USER"]}:' \
            f'{os.environ["POSTGRES_PASSWORD"]}@' \
            f'{os.environ["POSTGRES_HOST"]}:' \
-           f'{os.environ["POSTGRES_PORT"]}/' \
+           f'{os.environ["POSTGRES_REPLICA_PORT"]}/' \
            f'{os.environ["POSTGRES_DBNAME"]}'
 
 

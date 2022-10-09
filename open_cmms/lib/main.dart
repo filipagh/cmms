@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:open_cmms/pages/assets_management.dart';
@@ -12,8 +13,10 @@ import 'package:open_cmms/pages/storage.dart';
 import 'package:open_cmms/pages/task.dart';
 import 'package:open_cmms/pages/tasks.dart';
 import 'package:open_cmms/pages/unknownPage.dart';
+import 'package:open_cmms/service/secrets_manager_service.dart';
 import 'package:open_cmms/states/action_state.dart';
 import 'package:open_cmms/states/asset_types_state.dart';
+import 'package:open_cmms/states/asset_types_state_dummy.dart';
 import 'package:open_cmms/states/assigned_component_state.dart';
 import 'package:open_cmms/states/items_state.dart';
 import 'package:open_cmms/states/road_segment_state.dart';
@@ -22,8 +25,8 @@ import 'package:open_cmms/states/task_component_state.dart';
 import 'package:open_cmms/states/tasks_state.dart';
 
 
-void main() {
-
+void main() async {
+  await checkOrLoadEnv();
   runApp(const MyApp());
 }
 
@@ -35,6 +38,7 @@ class MyApp extends StatelessWidget {
 
     Get.put(RoadSegmentState());
     Get.put(StationsState());
+    Get.put(AssetTypesStateDummy());
     Get.put(AssetTypesState());
     Get.put(ItemsState());
     Get.put(AssignedComponentState());

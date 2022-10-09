@@ -1,5 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="backend" type="Python.FastAPI">
+    <option name="additionalOptions" value="--reload --reload-dir ./.." />
     <option name="file" value="$PROJECT_DIR$/backend/base/main.py" />
     <module name="backend" />
     <option name="INTERPRETER_OPTIONS" value="" />

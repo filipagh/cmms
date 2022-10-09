@@ -9,13 +9,57 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createNewMainCategoryAssetManagerNewCategoryPost**](AssetManagerApi.md#createnewmaincategoryassetmanagernewcategorypost) | **POST** /assetManager/newCategory | Create New Main Category
+[**createNewAssetAssetManagerNewAssetPost**](AssetManagerApi.md#createnewassetassetmanagernewassetpost) | **POST** /assetManager/newAsset | Create New Asset
+[**createNewCategoryAssetManagerNewCategoryPost**](AssetManagerApi.md#createnewcategoryassetmanagernewcategorypost) | **POST** /assetManager/newCategory | Create New Category
+[**getAssetCategoriesAssetManagerAssetCategoriesGet**](AssetManagerApi.md#getassetcategoriesassetmanagerassetcategoriesget) | **GET** /assetManager/asset-categories | Get Asset Categories
+[**getAssetsAssetManagerAssetsGet**](AssetManagerApi.md#getassetsassetmanagerassetsget) | **GET** /assetManager/assets | Get Assets
 
 
-# **createNewMainCategoryAssetManagerNewCategoryPost**
-> Object createNewMainCategoryAssetManagerNewCategoryPost(assetCategoryNewSchema)
+# **createNewAssetAssetManagerNewAssetPost**
+> AssetIdSchema createNewAssetAssetManagerNewAssetPost(assetNewSchema)
 
-Create New Main Category
+Create New Asset
+
+### Example
+```dart
+import 'package:BackendAPI/api.dart';
+
+final api_instance = AssetManagerApi();
+final assetNewSchema = AssetNewSchema(); // AssetNewSchema | 
+
+try {
+    final result = api_instance.createNewAssetAssetManagerNewAssetPost(assetNewSchema);
+    print(result);
+} catch (e) {
+    print('Exception when calling AssetManagerApi->createNewAssetAssetManagerNewAssetPost: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **assetNewSchema** | [**AssetNewSchema**](AssetNewSchema.md)|  | 
+
+### Return type
+
+[**AssetIdSchema**](AssetIdSchema.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **createNewCategoryAssetManagerNewCategoryPost**
+> AssetCategotyIdSchema createNewCategoryAssetManagerNewCategoryPost(assetCategoryNewSchema)
+
+Create New Category
 
 ### Example
 ```dart
@@ -25,10 +69,10 @@ final api_instance = AssetManagerApi();
 final assetCategoryNewSchema = AssetCategoryNewSchema(); // AssetCategoryNewSchema | 
 
 try {
-    final result = api_instance.createNewMainCategoryAssetManagerNewCategoryPost(assetCategoryNewSchema);
+    final result = api_instance.createNewCategoryAssetManagerNewCategoryPost(assetCategoryNewSchema);
     print(result);
 } catch (e) {
-    print('Exception when calling AssetManagerApi->createNewMainCategoryAssetManagerNewCategoryPost: $e\n');
+    print('Exception when calling AssetManagerApi->createNewCategoryAssetManagerNewCategoryPost: $e\n');
 }
 ```
 
@@ -40,7 +84,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Object**](Object.md)
+[**AssetCategotyIdSchema**](AssetCategotyIdSchema.md)
 
 ### Authorization
 
@@ -49,6 +93,80 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getAssetCategoriesAssetManagerAssetCategoriesGet**
+> List<AssetCategorySchema> getAssetCategoriesAssetManagerAssetCategoriesGet()
+
+Get Asset Categories
+
+### Example
+```dart
+import 'package:BackendAPI/api.dart';
+
+final api_instance = AssetManagerApi();
+
+try {
+    final result = api_instance.getAssetCategoriesAssetManagerAssetCategoriesGet();
+    print(result);
+} catch (e) {
+    print('Exception when calling AssetManagerApi->getAssetCategoriesAssetManagerAssetCategoriesGet: $e\n');
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**List<AssetCategorySchema>**](AssetCategorySchema.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getAssetsAssetManagerAssetsGet**
+> List<AssetSchema> getAssetsAssetManagerAssetsGet()
+
+Get Assets
+
+### Example
+```dart
+import 'package:BackendAPI/api.dart';
+
+final api_instance = AssetManagerApi();
+
+try {
+    final result = api_instance.getAssetsAssetManagerAssetsGet();
+    print(result);
+} catch (e) {
+    print('Exception when calling AssetManagerApi->getAssetsAssetManagerAssetsGet: $e\n');
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**List<AssetSchema>**](AssetSchema.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

@@ -8,13 +8,13 @@ import 'package:open_cmms/models/task_component.dart';
 import 'package:open_cmms/states/items_state.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 
-import '../../../states/asset_types_state.dart';
+import '../../../states/asset_types_state_dummy.dart';
 
 class CreateTaskForm extends StatelessWidget implements hasFormTitle {
   late TaskAggregate task;
 
   final ItemsState _itemsState = Get.find();
-  final AssetTypesState _typeState = Get.find();
+  final AssetTypesStateDummy _typeState = Get.find();
 
 
   CreateTaskForm({Key? key, required Station station, TaskAggregate? task})

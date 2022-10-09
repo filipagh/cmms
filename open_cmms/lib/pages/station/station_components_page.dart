@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/models/assigned_component.dart';
 import 'package:open_cmms/pages/station/station_base_page.dart';
-import 'package:open_cmms/states/asset_types_state.dart';
+import 'package:open_cmms/states/asset_types_state_dummy.dart';
 import 'package:open_cmms/states/assigned_component_state.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 import 'package:open_cmms/widgets/forms/components/components_form.dart';
@@ -34,7 +34,7 @@ class StationComponentsPage extends StatelessWidget
   }
 
   Widget buildComponentList() {
-    AssetTypesState stateAssetTypes = Get.find();
+    AssetTypesStateDummy stateAssetTypes = Get.find();
     return GetX<AssignedComponentState>(builder: (_) {
       var components = _.getInstalledComponentsByStationId(station.id);
       return components.isEmpty

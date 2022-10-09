@@ -4,7 +4,7 @@ import 'package:open_cmms/models/aggregates/task.dart';
 import 'package:open_cmms/models/asset_type.dart';
 import 'package:open_cmms/models/assigned_component.dart';
 import 'package:open_cmms/models/station.dart';
-import 'package:open_cmms/states/asset_types_state.dart';
+import 'package:open_cmms/states/asset_types_state_dummy.dart';
 import 'package:open_cmms/states/assigned_component_state.dart';
 import 'package:open_cmms/states/items_state.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
@@ -248,7 +248,7 @@ enum FormItemStatus {
 
 class FormItem {
   late int id;
-  final AssetTypesState _assetTypesState = Get.find();
+  final AssetTypesStateDummy _assetTypesState = Get.find();
   late String productId;
   late AssignedComponent? assignedComponent;
   late FormItemStatus status;

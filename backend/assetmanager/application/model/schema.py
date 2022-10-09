@@ -16,3 +16,25 @@ class AssetCategorySchema(AssetCategorySchemaBASE):
 
 class AssetCategoryNewSchema(AssetCategorySchemaBASE):
     pass
+
+class AssetCategotyIdSchema(BaseModel):
+    id: uuid.UUID
+
+
+class AssetIdSchema(BaseModel):
+    id: uuid.UUID
+
+
+class AssetBaseSchema(BaseModel):
+    category_id: uuid.UUID
+    name: str
+    description: Optional[str]
+
+
+class AssetNewSchema(AssetBaseSchema):
+    pass
+
+
+class AssetSchema(AssetBaseSchema):
+    id: uuid.UUID
+    pass

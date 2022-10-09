@@ -13,9 +13,11 @@ def save_new(asset_category: AssetCategoryNewSchema):
         parent_id=asset_category.parent_id,
         name=asset_category.name,
         description=asset_category.description)
-    db = next(base.database.get_db())
+    db = _get_db()
     db.add(model)
     db.commit()
+    db.refresh(model)
+    return model.id
 
 
 class AssetCategoryModel(Base):
@@ -25,3 +27,11 @@ class AssetCategoryModel(Base):
     parent_id = Column(postgresql.UUID(as_uuid=True), ForeignKey('assets_category.id'), nullable=True)
     name = Column(String)
     description = Column(String)
+
+
+def _get_db():
+    return next(base.database.get_db())
+
+
+def get_asset_category() -> list[AssetCategoryModel]:
+    return _get_db().query(AssetCategoryModel).all()

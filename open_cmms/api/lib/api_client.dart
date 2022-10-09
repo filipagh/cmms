@@ -192,6 +192,16 @@ class ApiClient {
           return valueString == 'true' || valueString == '1';
         case 'AssetCategoryNewSchema':
           return AssetCategoryNewSchema.fromJson(value);
+        case 'AssetCategorySchema':
+          return AssetCategorySchema.fromJson(value);
+        case 'AssetCategotyIdSchema':
+          return AssetCategotyIdSchema.fromJson(value);
+        case 'AssetIdSchema':
+          return AssetIdSchema.fromJson(value);
+        case 'AssetNewSchema':
+          return AssetNewSchema.fromJson(value);
+        case 'AssetSchema':
+          return AssetSchema.fromJson(value);
         case 'HTTPValidationError':
           return HTTPValidationError.fromJson(value);
         case 'ValidationError':
