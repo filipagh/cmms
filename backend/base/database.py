@@ -23,11 +23,7 @@ if not database_exists(engine.url):
 
 Base = declarative_base()
 Base.metadata.create_all(bind=engine)
+def get_sesionmaker():
+    return SessionLocal()
 
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()

@@ -17,15 +17,15 @@ class StorageItemModel(Base):
 
 
 def _get_db():
-    return next(base.database.get_db())
+    return base.database.get_sesionmaker()
 
 
 def get_storage_items():
-    db = _get_db()
-    return db.query(StorageItemModel).all()
+    with _get_db() as db:
+        return db.query(StorageItemModel).all()
 
 
 def save_new(storage_item: StorageItemModel):
-    db = next(base.database.get_db())
-    db.add(storage_item)
-    db.commit()
+    with _get_db() as db:
+        db.add(storage_item)
+        db.commit()

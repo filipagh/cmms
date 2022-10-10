@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:open_cmms/widgets/forms/asset_management/category_form.dart';
 
+import '../states/asset_types_state.dart';
 import '../widgets/assets_types_list.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/dialog_form.dart';
 import '../widgets/main_menu_widget.dart';
 
 class AssetsManagement extends StatefulWidget {
-  const AssetsManagement({
+  final AssetTypesState _assetTypes = Get.find();
+  AssetsManagement({
     Key? key,
   }) : super(key: key);
 
@@ -27,9 +30,15 @@ class _AssetsManagementState extends State<AssetsManagement> {
           Expanded(
             child: Column(
               children: [
-                Text(
-                  "Assets Management",
-                  textScaleFactor: 5,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Assets Management",
+                      textScaleFactor: 5,
+                    ),
+                    IconButton(onPressed: () {widget._assetTypes.reloadData();}, icon: const Icon(Icons.refresh), iconSize: 50,)
+                  ],
                 ),
                 Row(
                   children: [

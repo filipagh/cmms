@@ -30,8 +30,9 @@ class AssetCategoryModel(Base):
 
 
 def _get_db():
-    return next(base.database.get_db())
+    return base.database.get_sesionmaker()
 
 
 def get_asset_category() -> list[AssetCategoryModel]:
-    return _get_db().query(AssetCategoryModel).all()
+    with _get_db() as db:
+        return db.query(AssetCategoryModel).all()

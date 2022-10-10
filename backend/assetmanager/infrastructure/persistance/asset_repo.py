@@ -17,16 +17,16 @@ class AssetModel(Base):
 
 
 def _get_db():
-    return next(base.database.get_db())
+    return base.database.get_sesionmaker()
 
 
 def save_new(asset: AssetModel):
-    db = next(base.database.get_db())
-    db.add(asset)
-    db.commit()
-    db.refresh(asset)
+    with _get_db() as db:
+        db.add(asset)
+        db.commit()
+        db.refresh(asset)
 
 
 def get_assets():
-    db = _get_db()
-    return db.query(AssetModel).all()
+    with _get_db() as db:
+        return db.query(AssetModel).all()
