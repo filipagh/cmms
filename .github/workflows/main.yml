@@ -28,14 +28,10 @@ jobs:
         with:
           flutter-version: '3.0.0'
           channel: 'stable'
-
-      - run: ls
-      - run: pwd
-      - run: cd ./open_cmms
-      - run: pwd
       - run: flutter pub get
 #       - run: flutter test
       - run: flutter build web
+        working-directory: ./open_cmms
       - name: Run a multi-line script
         run: |
           echo ${{ secrets.DOCKER_USERNAME }}
