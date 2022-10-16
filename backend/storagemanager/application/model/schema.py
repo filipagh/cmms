@@ -5,14 +5,14 @@ from pydantic import BaseModel
 
 
 class StorageItemSchemaBASE(BaseModel):
-    parent_id: Optional[uuid.UUID]
-    name: str
-    description: str
+    asset_id: Optional[uuid.UUID]
+    in_storage: int
+    allocated: int
 
 
 class StorageItemIdSchema(StorageItemSchemaBASE):
     id: uuid.UUID
 
 
-class StorageItemSchema(StorageItemSchemaBASE, StorageItemIdSchema):
+class StorageItemSchema(StorageItemIdSchema):
     pass

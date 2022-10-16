@@ -12,6 +12,8 @@ from sqlalchemy.orm import Session
 from starlette.middleware.cors import CORSMiddleware
 
 import assetmanager.infrastructure.rest_router
+import storagemanager.infrastructure.rest_router
+
 from assetmanager.application.asset_projector import AssetProjector
 from assetmanager.application.asset_service import AssetService
 from storagemanager.application.storage_item_projector import StorageItemProjector
@@ -27,6 +29,7 @@ runner.start()
 
 app = FastAPI(debug=True)
 app.include_router(assetmanager.infrastructure.rest_router.asset_manager)
+app.include_router(storagemanager.infrastructure.rest_router.storage_manager)
 
 origins = [
     "http://localhost:5000",

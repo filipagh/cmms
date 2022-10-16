@@ -1,10 +1,9 @@
 import uuid
 
-from sqlalchemy import Column, ForeignKey, String, DateTime, func, Integer, Text, Boolean, Date, Enum
+from sqlalchemy import Column, Integer
 from sqlalchemy.dialects import postgresql
-from sqlalchemy.orm import relationship
+
 import base.database
-from assetmanager.application.model.schema import AssetCategoryNewSchema
 from base.database import Base
 
 
@@ -20,7 +19,7 @@ def _get_db():
     return base.database.get_sesionmaker()
 
 
-def get_storage_items():
+def get_storage_items() -> list[StorageItemModel]:
     with _get_db() as db:
         return db.query(StorageItemModel).all()
 
