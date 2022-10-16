@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/states/asset_types_state_dummy.dart';
-import 'package:open_cmms/states/items_state.dart';
+import 'package:open_cmms/states/items_state_dummy.dart';
 
 // abstract class AssetTypeListView {
 //   Widget toListItem();
@@ -33,7 +33,7 @@ class Item {
     return ListTile(
 
       hoverColor: Colors.blue.shade200,
-      title: GetBuilder<ItemsState>(
+      title: GetBuilder<ItemsState_dummy>(
         id: productId,
         builder: (_) {var item= _.getById(productId); return IntrinsicHeight(
         child: Row(

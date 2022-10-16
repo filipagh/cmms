@@ -6,7 +6,7 @@ import 'package:open_cmms/models/assigned_component.dart';
 import 'package:open_cmms/models/station.dart';
 import 'package:open_cmms/states/asset_types_state_dummy.dart';
 import 'package:open_cmms/states/assigned_component_state.dart';
-import 'package:open_cmms/states/items_state.dart';
+import 'package:open_cmms/states/items_state_dummy.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 import 'package:open_cmms/widgets/forms/components/add_component.dart';
 
@@ -42,7 +42,7 @@ class StationComponentsForm extends StatefulWidget implements hasFormTitle {
 class StationComponentsFormState extends State<StationComponentsForm> {
   final _formKey = GlobalKey<FormState>();
   final AssignedComponentState _assignedComponentState = Get.find();
-  final ItemsState _itemsState = Get.find();
+  final ItemsState_dummy _itemsState = Get.find();
   List<AssignedComponent> actualComponents = [];
   List<Item> additems = <Item>[].obs;
   List<AssignedComponent> removeComponents = <AssignedComponent>[].obs;

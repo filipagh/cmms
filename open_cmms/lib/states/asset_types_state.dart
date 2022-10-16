@@ -4,7 +4,7 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:open_cmms/models/asset_type.dart';
 import 'package:open_cmms/models/item.dart';
 import 'package:open_cmms/service/backend_api/assetManager.dart';
-import 'package:open_cmms/states/items_state.dart';
+import 'package:open_cmms/states/items_state_dummy.dart';
 import 'package:uuid/uuid.dart';
 
 import '../helper.dart';

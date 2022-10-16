@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
 import 'package:open_cmms/helper.dart';
 import 'package:open_cmms/models/assigned_component.dart';
-import 'package:open_cmms/states/items_state.dart';
+import 'package:open_cmms/states/items_state_dummy.dart';
 
 class AssignedComponentState extends GetxController {
   int _stationSequence = 0;
-  ItemsState _itemsState = Get.find();
+  ItemsState_dummy _itemsState = Get.find();
 
   // <stationId<AssignedComponentId, AssignedComponent>>
   Map<String, Map<String, AssignedComponent>> components =

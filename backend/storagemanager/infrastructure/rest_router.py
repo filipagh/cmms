@@ -12,7 +12,7 @@ storage_manager = APIRouter(
 )
 
 @storage_manager.get("/all-storage-data", response_model=list[schema.StorageItemSchema])
-def get_assets():
+def get_all_storage_items():
     storage_items = []
     for i in storage_manager_loader.load_all_storage_items():
         storage_items.append(schema.StorageItemSchema(**i.__dict__))

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/models/station.dart';
 import 'package:open_cmms/states/asset_types_state_dummy.dart';
-import 'package:open_cmms/states/items_state.dart';
+import 'package:open_cmms/states/items_state_dummy.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 
 class AddComponentForm extends StatefulWidget implements hasFormTitle {
@@ -40,7 +40,7 @@ class AddComponentFormState extends State<AddComponentForm> {
 
   @override
   Widget build(BuildContext context) {
-    ItemsState _itemState = Get.find();
+    ItemsState_dummy _itemState = Get.find();
     AssetTypesStateDummy _assetTypes = Get.find();
     var items = _itemState.getItems();
     return Column(

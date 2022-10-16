@@ -3,7 +3,7 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:open_cmms/models/asset_type.dart';
 import 'package:open_cmms/models/item.dart';
 import 'package:open_cmms/service/backend_api/assetManager.dart';
-import 'package:open_cmms/states/items_state.dart';
+import 'package:open_cmms/states/items_state_dummy.dart';
 
 import '../helper.dart';
 
@@ -33,7 +33,7 @@ class AssetTypesStateDummy extends GetxController {
 
   void createNewType(String? parentId, bool isCategory,
       [String name = "name", String text = "text"]) {
-    ItemsState itemsState = Get.find();
+    ItemsState_dummy itemsState = Get.find();
     String newId = _getNewId();
     _typesMap[newId] = AssetType(newId, parentId, isCategory, name, text);
     if (!isCategory) {

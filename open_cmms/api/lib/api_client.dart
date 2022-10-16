@@ -204,6 +204,8 @@ class ApiClient {
           return AssetSchema.fromJson(value);
         case 'HTTPValidationError':
           return HTTPValidationError.fromJson(value);
+        case 'StorageItemSchema':
+          return StorageItemSchema.fromJson(value);
         case 'ValidationError':
           return ValidationError.fromJson(value);
         default:
