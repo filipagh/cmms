@@ -19,7 +19,7 @@ class ItemsList extends StatelessWidget {
             ? const Expanded(
             child: Center(
                 child: Text(
-                  "No Items",
+                  "Žiadne komponenty",
                   textScaleFactor: 3,
                 )))
             : Expanded(

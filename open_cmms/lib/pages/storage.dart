@@ -27,22 +27,18 @@ class _StorageState extends State<Storage> {
             child: Column(
               children: [
                 Text(
-                  "Storage",
+                  "Sklad",
                   textScaleFactor: 5,
                 ),
                 Row(
                   children: [
                     Placeholder(
-                      child: SizedBox(width: 300, child: Text("searchbar")),
+                      child: SizedBox(width: 300, child: Text("Vyhľadávač")),
                     ),
                     Placeholder(
                       child: Icon(Icons.filter_list_alt),
                     ),
                     Spacer(),
-                    ElevatedButton(
-                      onPressed: () {showdialog();},
-                      child: Text("add asset"),
-                    ),
                   ],
                 ),
                 Divider(),

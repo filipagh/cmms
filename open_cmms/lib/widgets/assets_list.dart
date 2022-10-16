@@ -16,7 +16,7 @@ class AssetsList extends StatelessWidget {
   Widget build(BuildContext context) {
     final AssetTypesStateDummy cc= Get.find();
     return list.isEmpty
-        ? Expanded(child: Center(child: Text("no stations",textScaleFactor: 3,)))
+        ? Expanded(child: Center(child: Text("Žiadna stanica",textScaleFactor: 3,)))
         : Expanded(
             child: ListView.builder(
                 addRepaintBoundaries: true,
@@ -30,9 +30,9 @@ class AssetsList extends StatelessWidget {
                       },
                       hoverColor: Colors.blue.shade200,
                       title:
-                          Center(child: Text('station: ${list[index].name}')),
+                          Center(child: Text('Stanica: ${list[index].name}')),
                       subtitle:
-                          Center(child: Text('station Id: ${list[index].id}')),
+                          Center(child: Text('Stanica Id: ${list[index].id}')),
                     ),
                   );
                 }),

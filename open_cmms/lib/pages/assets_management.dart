@@ -34,7 +34,7 @@ class _AssetsManagementState extends State<AssetsManagement> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Assets Management",
+                      "Manažment komponentov",
                       textScaleFactor: 5,
                     ),
                     IconButton(onPressed: () {widget._assetTypes.reloadData();}, icon: const Icon(Icons.refresh), iconSize: 50,)
@@ -43,7 +43,7 @@ class _AssetsManagementState extends State<AssetsManagement> {
                 Row(
                   children: [
                     Placeholder(
-                      child: SizedBox(width: 300, child: Text("searchbar")),
+                      child: SizedBox(width: 300, child: Text("Vyhľadávač")),
                     ),
                     Placeholder(
                       child: Icon(Icons.filter_list_alt),
@@ -51,7 +51,7 @@ class _AssetsManagementState extends State<AssetsManagement> {
                     Spacer(),
                     ElevatedButton(
                       onPressed: () {showFormDialog(CategoryForm.createNewMain());},
-                      child: Text("add Main category"),
+                      child: Text("Pridať hlavnú kategóriu"),
                     ),
                   ],
                 ),

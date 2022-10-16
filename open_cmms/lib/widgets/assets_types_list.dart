@@ -25,7 +25,7 @@ class AssetsTypeList extends StatelessWidget {
             ? const Expanded(
                 child: Center(
                     child: Text(
-                "No Asset Types",
+                "Žiadne komponenty",
                 textScaleFactor: 3,
               )))
             : Expanded(
@@ -81,14 +81,14 @@ class AssetsTypeList extends StatelessWidget {
               onPressed: () {
                 showFormDialog(CategoryForm.createNewSub(parent: element));
               },
-              child: Text("add category")),
+              child: Text("Pridať kategóriu")),
         ElevatedButton(
             onPressed: () {
               showFormDialog(ProductForm.createNew(
                 parent: element,
               ));
             },
-            child: Text("add product"))
+            child: Text("Pridať produkt"))
       ],
     );
   }

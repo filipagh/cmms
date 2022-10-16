@@ -1,10 +1,8 @@
-import uuid
-
 from eventsourcing.dispatch import singledispatchmethod
 from eventsourcing.system import ProcessApplication
 
 from storagemanager.domain.model.sotrageitem import StorageItem
-from storagemanager.persistance import storage_item_repo
+from storagemanager.infrastructure.persistance import storage_item_repo
 
 
 class StorageItemProjector(ProcessApplication):
