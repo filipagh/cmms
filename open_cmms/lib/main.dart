@@ -18,6 +18,7 @@ import 'package:open_cmms/states/action_state.dart';
 import 'package:open_cmms/states/asset_types_state.dart';
 import 'package:open_cmms/states/asset_types_state_dummy.dart';
 import 'package:open_cmms/states/assigned_component_state.dart';
+import 'package:open_cmms/states/items_state.dart';
 import 'package:open_cmms/states/items_state_dummy.dart';
 import 'package:open_cmms/states/road_segment_state.dart';
 import 'package:open_cmms/states/stations_state.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
     Get.put(AssetTypesStateDummy());
     Get.put(AssetTypesState());
     Get.put(ItemsState_dummy());
+    Get.put(ItemsState());
     Get.put(AssignedComponentState());
     Get.put(TasksState());
     Get.put(ActionState());

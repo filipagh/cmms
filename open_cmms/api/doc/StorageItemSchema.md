@@ -8,7 +8,7 @@ import 'package:BackendAPI/api.dart';
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**assetId** | **String** |  | [optional] 
+**assetId** | **String** |  | 
 **inStorage** | **int** |  | 
 **allocated** | **int** |  | 
 **id** | **String** |  | 

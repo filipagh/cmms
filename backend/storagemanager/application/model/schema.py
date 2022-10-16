@@ -5,7 +5,7 @@ from pydantic import BaseModel
 
 
 class StorageItemSchemaBASE(BaseModel):
-    asset_id: Optional[uuid.UUID]
+    asset_id: uuid.UUID
     in_storage: int
     allocated: int
 

@@ -16,10 +16,10 @@ class StorageManagerApi {
 
   final ApiClient apiClient;
 
-  /// Get Assets
+  /// Get All Storage Items
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> getAssetsStorageManagerAllStorageDataGetWithHttpInfo() async {
+  Future<Response> getAllStorageItemsStorageManagerAllStorageDataGetWithHttpInfo() async {
     // ignore: prefer_const_declarations
     final path = r'/storage-manager/all-storage-data';
 
@@ -44,9 +44,9 @@ class StorageManagerApi {
     );
   }
 
-  /// Get Assets
-  Future<List<StorageItemSchema>?> getAssetsStorageManagerAllStorageDataGet() async {
-    final response = await getAssetsStorageManagerAllStorageDataGetWithHttpInfo();
+  /// Get All Storage Items
+  Future<List<StorageItemSchema>?> getAllStorageItemsStorageManagerAllStorageDataGet() async {
+    final response = await getAllStorageItemsStorageManagerAllStorageDataGetWithHttpInfo();
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }

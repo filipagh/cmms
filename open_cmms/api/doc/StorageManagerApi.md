@@ -9,13 +9,13 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getAssetsStorageManagerAllStorageDataGet**](StorageManagerApi.md#getassetsstoragemanagerallstoragedataget) | **GET** /storage-manager/all-storage-data | Get Assets
+[**getAllStorageItemsStorageManagerAllStorageDataGet**](StorageManagerApi.md#getallstorageitemsstoragemanagerallstoragedataget) | **GET** /storage-manager/all-storage-data | Get All Storage Items
 
 
-# **getAssetsStorageManagerAllStorageDataGet**
-> List<StorageItemSchema> getAssetsStorageManagerAllStorageDataGet()
+# **getAllStorageItemsStorageManagerAllStorageDataGet**
+> List<StorageItemSchema> getAllStorageItemsStorageManagerAllStorageDataGet()
 
-Get Assets
+Get All Storage Items
 
 ### Example
 ```dart
@@ -24,10 +24,10 @@ import 'package:BackendAPI/api.dart';
 final api_instance = StorageManagerApi();
 
 try {
-    final result = api_instance.getAssetsStorageManagerAllStorageDataGet();
+    final result = api_instance.getAllStorageItemsStorageManagerAllStorageDataGet();
     print(result);
 } catch (e) {
-    print('Exception when calling StorageManagerApi->getAssetsStorageManagerAllStorageDataGet: $e\n');
+    print('Exception when calling StorageManagerApi->getAllStorageItemsStorageManagerAllStorageDataGet: $e\n');
 }
 ```
 

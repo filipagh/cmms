@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:open_cmms/states/items_state.dart';
 import 'package:open_cmms/widgets/create_form.dart';
 import 'package:open_cmms/widgets/items_list.dart';
 
@@ -15,6 +17,8 @@ class Storage extends StatefulWidget {
 }
 
 class _StorageState extends State<Storage> {
+  final ItemsState items = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,9 +30,15 @@ class _StorageState extends State<Storage> {
           Expanded(
             child: Column(
               children: [
-                Text(
-                  "Sklad",
-                  textScaleFactor: 5,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Sklad",
+                      textScaleFactor: 5,
+                    ),
+                    IconButton(onPressed: () {items.reloadData();}, icon: const Icon(Icons.refresh), iconSize: 50,)
+                  ],
                 ),
                 Row(
                   children: [

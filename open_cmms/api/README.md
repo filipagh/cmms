@@ -63,7 +63,7 @@ Class | Method | HTTP request | Description
 *AssetManagerApi* | [**getAssetCategoriesAssetManagerAssetCategoriesGet**](doc//AssetManagerApi.md#getassetcategoriesassetmanagerassetcategoriesget) | **GET** /assetManager/asset-categories | Get Asset Categories
 *AssetManagerApi* | [**getAssetsAssetManagerAssetsGet**](doc//AssetManagerApi.md#getassetsassetmanagerassetsget) | **GET** /assetManager/assets | Get Assets
 *DefaultApi* | [**rootGet**](doc//DefaultApi.md#rootget) | **GET** / | Root
-*StorageManagerApi* | [**getAssetsStorageManagerAllStorageDataGet**](doc//StorageManagerApi.md#getassetsstoragemanagerallstoragedataget) | **GET** /storage-manager/all-storage-data | Get Assets
+*StorageManagerApi* | [**getAllStorageItemsStorageManagerAllStorageDataGet**](doc//StorageManagerApi.md#getallstorageitemsstoragemanagerallstoragedataget) | **GET** /storage-manager/all-storage-data | Get All Storage Items
 
 
 ## Documentation For Models

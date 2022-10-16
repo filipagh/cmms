@@ -76,6 +76,9 @@ class AssetTypesState extends GetxController {
   AssetCategorySchema? getAssetTypeById(String id) {
     return _categoriesTypes[id];
   }
+  AssetSchema? getAssetById(String id) {
+    return _products[id];
+  }
 
   List<AssetCategorySchema> getSubCategoriesOfType(String typeId) {
     Iterable<AssetCategorySchema> i = _categoriesTypes.values.where(

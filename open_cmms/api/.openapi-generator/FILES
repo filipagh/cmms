@@ -37,5 +37,3 @@ lib/model/http_validation_error.dart
 lib/model/storage_item_schema.dart
 lib/model/validation_error.dart
 pubspec.yaml
-test/storage_item_schema_test.dart
-test/storage_manager_api_test.dart

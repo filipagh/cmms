@@ -13,19 +13,13 @@ part of openapi.api;
 class StorageItemSchema {
   /// Returns a new [StorageItemSchema] instance.
   StorageItemSchema({
-    this.assetId,
+    required this.assetId,
     required this.inStorage,
     required this.allocated,
     required this.id,
   });
 
-  ///
-  /// Please note: This property should have been non-nullable! Since the specification file
-  /// does not include a default value (using the "default:" property), however, the generated
-  /// source code must fall back to having a nullable type.
-  /// Consider adding a "default:" property in the specification file to hide this note.
-  ///
-  String? assetId;
+  String assetId;
 
   int inStorage;
 
@@ -43,7 +37,7 @@ class StorageItemSchema {
   @override
   int get hashCode =>
     // ignore: unnecessary_parenthesis
-    (assetId == null ? 0 : assetId!.hashCode) +
+    (assetId.hashCode) +
     (inStorage.hashCode) +
     (allocated.hashCode) +
     (id.hashCode);
@@ -53,9 +47,7 @@ class StorageItemSchema {
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-    if (assetId != null) {
       _json[r'asset_id'] = assetId;
-    }
       _json[r'in_storage'] = inStorage;
       _json[r'allocated'] = allocated;
       _json[r'id'] = id;
@@ -81,7 +73,7 @@ class StorageItemSchema {
       }());
 
       return StorageItemSchema(
-        assetId: mapValueOfType<String>(json, r'asset_id'),
+        assetId: mapValueOfType<String>(json, r'asset_id')!,
         inStorage: mapValueOfType<int>(json, r'in_storage')!,
         allocated: mapValueOfType<int>(json, r'allocated')!,
         id: mapValueOfType<String>(json, r'id')!,
@@ -134,6 +126,7 @@ class StorageItemSchema {
 
   /// The list of required keys that must be present in a JSON.
   static const requiredKeys = <String>{
+    'asset_id',
     'in_storage',
     'allocated',
     'id',

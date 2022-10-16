@@ -10,7 +10,7 @@ class StorageManagerService extends StorageManagerApi {
   @override
   late final ApiClient apiClient;
 
-  AssetManagerService() {
+  StorageManagerService() {
     apiClient = getApiClient();
   }
 }
