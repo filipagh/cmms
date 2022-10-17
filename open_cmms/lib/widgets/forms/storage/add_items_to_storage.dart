@@ -37,7 +37,7 @@ class AddItemsToStorage extends StatelessWidget implements hasFormTitle {
                 _items.add(item);
               }
             },
-            child: const Text("Pridat komponent")),
+            child: const Text("Pridať komponent")),
         SizedBox(
             width: 500,
             height: 600,
@@ -55,7 +55,7 @@ class AddItemsToStorage extends StatelessWidget implements hasFormTitle {
 
   @override
   String getTitle() {
-    return "Naskladnit komponenty";
+    return "Naskladniť komponenty";
   }
 
   buildComponentsString(List<TaskComponent>? taskComponent) {
