@@ -89,9 +89,7 @@ class AddItemsToStorage extends StatelessWidget implements hasFormTitle {
                   keyboardType: TextInputType.number,
                     inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                   onChanged: (value) {
-                    element.count = int.parse(value);
-                    print(element);
-                    print(element.count);
+                    element.count = int.tryParse(value)?? 0;
                   },
                 ),
               ),
