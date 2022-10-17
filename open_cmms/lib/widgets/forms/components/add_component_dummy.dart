@@ -6,28 +6,43 @@ import 'package:open_cmms/states/asset_types_state_dummy.dart';
 import 'package:open_cmms/states/items_state_dummy.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 
-import '../../../states/asset_types_state.dart';
-import '../../../states/items_state.dart';
-
-class AddComponentForm extends StatelessWidget implements hasFormTitle {
+class AddComponentForm_dummy extends StatefulWidget implements hasFormTitle {
   late final Station station;
 
-  AddComponentForm({Key? key})
-      : super(key: key);
-
-  String getTitle() {
-    return "Vybrat komponent";
+  AddComponentForm_dummy({Key? key, required Station editItem})
+      : super(key: key) {
+    this.station = editItem;
   }
 
   @override
-  Widget getInstance() {
+  State<AddComponentForm_dummy> createState() => AddComponentForm_dummyState();
+
+  String getTitle() {
+    return "add component to : ${station.name}";
+  }
+
+  @override
+  StatefulWidget getInstance() {
     return this;
   }
+}
+
+class AddComponentForm_dummyState extends State<AddComponentForm_dummy> {
+  final _formKey = GlobalKey<FormState>();
+
+  // final AssignedComponentState _assignedComponentState = Get.find();
+  // final ItemsState _itemsState = Get.find();
+  // List<AssignedComponent> actualComponents = [];
+  // List<Item> additems = [];
+  // List<AssignedComponent> removeComponents = [];
+  // List<FormItem> editItems = <FormItem>[].obs;
+
 
   @override
   Widget build(BuildContext context) {
-    AssetTypesState _assetTypes = Get.find();
-    var items = _assetTypes.getAllProducts();
+    ItemsState_dummy _itemState = Get.find();
+    AssetTypesStateDummy _assetTypes = Get.find();
+    var items = _itemState.getItems();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -40,11 +55,11 @@ class AddComponentForm extends StatelessWidget implements hasFormTitle {
           child: ListView.builder(
             itemCount: items.length,
             itemBuilder: (BuildContext context, int index) {
-              var i = items[index];
+              var product = _assetTypes.getAssetTypeById(items[index].productId);
               return Card(
                 child: ListTile(
-                  onTap: () => Get.back(result: i),
-                  title: Center(child: Text(i.name)),
+                  onTap: () => Get.back(result: items[index]),
+                  title: Center(child: Text(product!.name)),
                 ),
               );
             },),

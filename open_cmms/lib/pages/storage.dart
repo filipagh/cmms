@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/states/items_state.dart';
 import 'package:open_cmms/widgets/create_form.dart';
+import 'package:open_cmms/widgets/dialog_form.dart';
+import 'package:open_cmms/widgets/forms/storage/add_items_to_storage.dart';
 import 'package:open_cmms/widgets/items_list.dart';
 
 import '../widgets/custom_app_bar.dart';
@@ -49,6 +51,7 @@ class _StorageState extends State<Storage> {
                       child: Icon(Icons.filter_list_alt),
                     ),
                     Spacer(),
+                    ElevatedButton(onPressed: () {showFormDialog(AddItemsToStorage());}, child: Text("Pridat do skladu"))
                   ],
                 ),
                 Divider(),

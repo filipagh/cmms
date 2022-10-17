@@ -124,4 +124,8 @@ class AssetTypesState extends GetxController {
     }
     return i;
   }
+
+  List<AssetSchema> getAllProducts() {
+    return _products.values.toList();
+  }
 }

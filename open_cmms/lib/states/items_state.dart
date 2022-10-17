@@ -34,6 +34,10 @@ class ItemsState extends GetxController {
     return _itemsMap[itemId];
   }
 
+  StorageItemSchema? getByAssetId(String assetId) {
+    return _itemsMap.values.singleWhere((element) => element.assetId==assetId);
+  }
+
 
   //
   // Item getById(String id) {

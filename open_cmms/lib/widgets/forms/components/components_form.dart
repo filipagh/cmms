@@ -8,7 +8,7 @@ import 'package:open_cmms/states/asset_types_state_dummy.dart';
 import 'package:open_cmms/states/assigned_component_state.dart';
 import 'package:open_cmms/states/items_state_dummy.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
-import 'package:open_cmms/widgets/forms/components/add_component.dart';
+import 'package:open_cmms/widgets/forms/components/add_component_dummy.dart';
 
 import '../../../models/item.dart';
 
@@ -69,7 +69,7 @@ class StationComponentsFormState extends State<StationComponentsForm> {
             ElevatedButton(
                 onPressed: () {
                   showFormDialog<Item>(
-                          AddComponentForm(editItem: widget.task.station))
+                          AddComponentForm_dummy(editItem: widget.task.station))
                       .then((value) {
                     _componentFormState.addNewComponent(value!.productId);
                     additems.add(value);
