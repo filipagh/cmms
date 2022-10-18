@@ -13,7 +13,7 @@ def get_db_link():
     return f'postgresql://' \
            f'{os.environ["POSTGRES_USER"]}:' \
            f'{os.environ["POSTGRES_PASSWORD"]}@' \
-           f'{os.environ["POSTGRES_HOST"]}:' \
+           f'{os.environ["POSTGRES_REPLICA_HOST"]}:' \
            f'{os.environ["POSTGRES_REPLICA_PORT"]}/' \
            f'{os.environ["POSTGRES_DBNAME"]}'
 # this is the Alembic Config object, which provides

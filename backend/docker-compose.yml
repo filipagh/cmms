@@ -2,15 +2,30 @@ version: '3.0'
 services:
   postgres-test:
     image: postgres:14.1-alpine
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
-      POSTGRES_DB: $POSTGRES_DBNAME
-  postgres-eventstore:
-    image: postgres:14.1-alpine
+    env_file:
+      - .env
     ports:
       - "5433:5432"
     environment:
-      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
-      POSTGRES_DB: $POSTGRES_DBNAME
+      POSTGRES_HOST: "*"
+  postgres-eventstore:
+    image: postgres:14.1-alpine
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_HOST: "*"
+  be:
+    image: sha256:11c2153402f99e077947016ccdc01349fe41c7312892c5d8fb2e774bf46920d7
+    depends_on:
+      - postgres-test
+      - postgres-eventstore
+    env_file:
+      - .env
+    environment:
+      POSTGRES_REPLICA_HOST: postgres-test
+      POSTGRES_HOST: postgres-eventstore
+    links:
+      - "postgres-eventstore"
+      - "postgres-test"
