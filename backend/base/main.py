@@ -19,6 +19,8 @@ from assetmanager.application.asset_service import AssetService
 from storagemanager.application.storage_item_projector import StorageItemProjector
 from storagemanager.application.storage_item_service import StorageItemService
 
+#
+
 os.chdir(os.path.dirname(__file__) + '/../')
 os.system('alembic upgrade head')
 
