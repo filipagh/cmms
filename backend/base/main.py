@@ -9,7 +9,7 @@ from eventsourcing.system import System, MultiThreadedRunner, SingleThreadedRunn
 from fastapi import FastAPI
 
 from sqlalchemy.orm import Session
-from starlette.middleware.cors import CORSMiddleware
+from fastapi.middleware.cors import CORSMiddleware
 
 import assetmanager.infrastructure.rest_router
 import storagemanager.infrastructure.rest_router
