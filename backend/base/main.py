@@ -38,6 +38,7 @@ origins = [
     "http://localhost:22222",
     "http://pumec.zapto.org:5000"
     "http://pumec.zapto.org:22222"
+    "http://192.168.1.3:22222"
 ]
 app.add_middleware(
     CORSMiddleware,
