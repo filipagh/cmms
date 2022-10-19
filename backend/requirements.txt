@@ -5,3 +5,4 @@ eventsourcing[postgres]~=9.2.16
 alembic~=1.8.1
 sqlalchemy_utils
 pydantic
+starlette~=0.17.1
