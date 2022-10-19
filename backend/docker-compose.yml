@@ -28,7 +28,7 @@ services:
       - common-net
 
   be:
-    image: sha256:3761cf30fa9a85c4cbcac264ef92722718dd9e07d20835401474a9b2fc6bc139
+    image: pumec/open_cmms-backend:master
     depends_on:
       - postgres-test
       - postgres-eventstore
