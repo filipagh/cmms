@@ -10,9 +10,9 @@ RUN apt-get clean
 #RUN #flutter doctor -v
 
 # Copy files to container and build
-COPY ./build/web /build/web
-COPY  ./server/server.sh ./build/web/server.sh
-COPY  ./server/server.py ./build/web/server.py
+COPY ./open_cmms/build/web /build/web
+COPY  ./open_cmms/server/server.sh ./build/web/server.sh
+COPY  ./open_cmms/server/server.py ./build/web/server.py
 
 # Record the exposed port
 EXPOSE 22222
