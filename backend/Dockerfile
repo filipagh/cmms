@@ -6,13 +6,13 @@ ENV BE_PORT ${BE_PORT}
 
 WORKDIR /backend
 
-COPY ./requirements.txt /backend/requirements.txt
+COPY ./backend/requirements.txt /backend/requirements.txt
 
 RUN pip install --no-cache-dir --upgrade -r /backend/requirements.txt
 RUN pip install --no-cache-dir --upgrade attrs
 RUN pip install --no-cache-dir --upgrade python-dateutil
 
-COPY . /backend
-RUN rm /bbackend/.env
+COPY ./backend /backend
+RUN rm /backend/.env
 
 CMD ./run.sh
