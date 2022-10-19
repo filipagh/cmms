@@ -1,31 +1,59 @@
 version: '3.0'
 services:
   postgres-test:
+    container_name: postgres-test
     image: postgres:14.1-alpine
-    env_file:
-      - .env
-    ports:
-      - "5433:5432"
-    environment:
-      POSTGRES_HOST: "*"
-  postgres-eventstore:
-    image: postgres:14.1-alpine
+    volumes:
+      - replica:/var/lib/postgresql
     env_file:
       - .env
     ports:
       - "5432:5432"
     environment:
       POSTGRES_HOST: "*"
+    networks:
+      - common-net
+  postgres-eventstore:
+    container_name: postgres-eventstore
+    image: postgres:14.1-alpine
+    volumes:
+      - eventstore:/var/lib/postgresql
+    env_file:
+      - .env
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_HOST: "*"
+    networks:
+      - common-net
+
   be:
-    image: sha256:11c2153402f99e077947016ccdc01349fe41c7312892c5d8fb2e774bf46920d7
+    image: sha256:3761cf30fa9a85c4cbcac264ef92722718dd9e07d20835401474a9b2fc6bc139
     depends_on:
       - postgres-test
       - postgres-eventstore
     env_file:
       - .env
+    ports:
+      - "8080:8080"
     environment:
       POSTGRES_REPLICA_HOST: postgres-test
       POSTGRES_HOST: postgres-eventstore
-    links:
-      - "postgres-eventstore"
-      - "postgres-test"
+      POSTGRES_PORT: 5432
+      POSTGRES_REPLICA_PORT: 5432
+    networks:
+      - common-net
+  fe:
+    image: pumec/open_cmms:master
+    ports:
+      - "22222:22222"
+    environment:
+      BACKEND_URI: http://localhost:8080
+
+volumes:
+  eventstore:
+  replica:
+
+
+networks:
+  common-net: {}

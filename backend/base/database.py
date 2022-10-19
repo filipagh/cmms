@@ -19,7 +19,7 @@ engine = create_engine(get_db_link())
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 if not database_exists(engine.url):
-    sys.exit(f'Database "{os.environ["POSTGRES_DBNAME"]} " on port "{os.environ["POSTGRES_REPLICA_PORT"]}" was not initialized with alembic')
+    sys.exit(f'Database "{os.environ["POSTGRES_DBNAME"]} " on "{os.environ["POSTGRES_REPLICA_HOST"]} ":"{os.environ["POSTGRES_REPLICA_PORT"]}" was not initialized with alembic')
 
 Base = declarative_base()
 Base.metadata.create_all(bind=engine)

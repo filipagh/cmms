@@ -13,5 +13,6 @@ RUN pip install --no-cache-dir --upgrade attrs
 RUN pip install --no-cache-dir --upgrade python-dateutil
 
 COPY . /backend
+RUN rm /bbackend/.env
 
 CMD ./run.sh

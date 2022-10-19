@@ -52,10 +52,26 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
+          file: ./open_cmms/Dockerfile
           context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+      - name: Extract metadata (tags, labels) for Docker Backend
+        id: metabackend
+        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        with:
+          images: pumec/open_cmms-backend
+      - name: Build and push Docker image
+        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        with:
+          file: ./backend/Dockerfile
+          context: .
+          push: true
+          tags: ${{ steps.metabackend.outputs.tags }}
+          labels: ${{ steps.metabackend.outputs.labels }}
+
+
 
       - name: Azure Pipelines Action
         uses: Azure/pipelines@v1.2

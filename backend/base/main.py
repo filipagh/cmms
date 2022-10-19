@@ -33,7 +33,9 @@ app.include_router(storagemanager.infrastructure.rest_router.storage_manager)
 
 origins = [
     "http://localhost:5000",
+    "http://localhost:22222",
     "http://pumec.zapto.org:5000"
+    "http://pumec.zapto.org:22222"
 ]
 app.add_middleware(
     CORSMiddleware,
