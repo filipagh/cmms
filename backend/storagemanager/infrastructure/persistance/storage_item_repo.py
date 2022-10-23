@@ -2,6 +2,7 @@ import uuid
 
 from sqlalchemy import Column, Integer
 from sqlalchemy.dialects import postgresql
+from sqlalchemy.orm import Session
 
 import base.database
 from base.database import Base
@@ -24,7 +25,13 @@ def get_storage_items() -> list[StorageItemModel]:
         return db.query(StorageItemModel).all()
 
 
-def save_new(storage_item: StorageItemModel):
+def save(storage_item: StorageItemModel):
     with _get_db() as db:
         db.add(storage_item)
         db.commit()
+
+
+def get_by_id(id: uuid.UUID):
+    db: Session
+    with _get_db() as db:
+        return db.query(StorageItemModel).get(id)

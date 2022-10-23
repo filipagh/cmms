@@ -1,5 +1,4 @@
 import uuid
-from typing import Optional
 
 from pydantic import BaseModel
 
@@ -16,3 +15,8 @@ class StorageItemIdSchema(StorageItemSchemaBASE):
 
 class StorageItemSchema(StorageItemIdSchema):
     pass
+
+
+class AssetItemToAdd(BaseModel):
+    storage_item_id: uuid.UUID
+    count_to_add: int

@@ -15,4 +15,11 @@ class StorageItemProjector(ProcessApplication):
         model = storage_item_repo.StorageItemModel(id=domain_event.originator_id, asset_id=domain_event.asset_id,
                                                    in_storage=0,
                                                    allocated=0)
-        storage_item_repo.save_new(model)
+        storage_item_repo.save(model)\
+
+    @policy.register(StorageItem.AssetAddedToStorage)
+    def _(self, domain_event: StorageItem.AssetAddedToStorage, process_event):
+        model: storage_item_repo.StorageItemModel = storage_item_repo.get_by_id(domain_event.originator_id)
+        model.in_storage += domain_event.count_number
+
+        storage_item_repo.save(model)
