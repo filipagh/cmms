@@ -64,6 +64,7 @@ Class | Method | HTTP request | Description
 *AssetManagerApi* | [**getAssetsAssetManagerAssetsGet**](doc//AssetManagerApi.md#getassetsassetmanagerassetsget) | **GET** /assetManager/assets | Get Assets
 *DefaultApi* | [**rootGet**](doc//DefaultApi.md#rootget) | **GET** / | Root
 *StorageManagerApi* | [**getAllStorageItemsStorageManagerAllStorageDataGet**](doc//StorageManagerApi.md#getallstorageitemsstoragemanagerallstoragedataget) | **GET** /storage-manager/all-storage-data | Get All Storage Items
+*StorageManagerApi* | [**storeNewAssetsStorageManagerStoreNewAssetsPost**](doc//StorageManagerApi.md#storenewassetsstoragemanagerstorenewassetspost) | **POST** /storage-manager/store-new-assets | Store New Assets
 
 
 ## Documentation For Models
@@ -72,6 +73,7 @@ Class | Method | HTTP request | Description
  - [AssetCategorySchema](doc//AssetCategorySchema.md)
  - [AssetCategotyIdSchema](doc//AssetCategotyIdSchema.md)
  - [AssetIdSchema](doc//AssetIdSchema.md)
+ - [AssetItemToAdd](doc//AssetItemToAdd.md)
  - [AssetNewSchema](doc//AssetNewSchema.md)
  - [AssetSchema](doc//AssetSchema.md)
  - [HTTPValidationError](doc//HTTPValidationError.md)

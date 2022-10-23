@@ -198,6 +198,8 @@ class ApiClient {
           return AssetCategotyIdSchema.fromJson(value);
         case 'AssetIdSchema':
           return AssetIdSchema.fromJson(value);
+        case 'AssetItemToAdd':
+          return AssetItemToAdd.fromJson(value);
         case 'AssetNewSchema':
           return AssetNewSchema.fromJson(value);
         case 'AssetSchema':

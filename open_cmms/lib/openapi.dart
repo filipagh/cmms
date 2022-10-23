@@ -3,7 +3,7 @@ import 'package:openapi_generator_annotations/openapi_generator_annotations.dart
 @Openapi(
     additionalProperties:
     AdditionalProperties(pubName: 'BackendAPI'),
-    inputSpecFile: 'http://localhost:8000/openapi.json',
+    inputSpecFile: 'http://localhost:8080/openapi.json',
     overwriteExistingFiles: true,
     alwaysRun: true,
     generatorName: Generator.dart,

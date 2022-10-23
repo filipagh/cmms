@@ -10,6 +10,7 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**getAllStorageItemsStorageManagerAllStorageDataGet**](StorageManagerApi.md#getallstorageitemsstoragemanagerallstoragedataget) | **GET** /storage-manager/all-storage-data | Get All Storage Items
+[**storeNewAssetsStorageManagerStoreNewAssetsPost**](StorageManagerApi.md#storenewassetsstoragemanagerstorenewassetspost) | **POST** /storage-manager/store-new-assets | Store New Assets
 
 
 # **getAllStorageItemsStorageManagerAllStorageDataGet**
@@ -45,6 +46,47 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **storeNewAssetsStorageManagerStoreNewAssetsPost**
+> List<AssetItemToAdd> storeNewAssetsStorageManagerStoreNewAssetsPost(assetItemToAdd)
+
+Store New Assets
+
+### Example
+```dart
+import 'package:BackendAPI/api.dart';
+
+final api_instance = StorageManagerApi();
+final assetItemToAdd = [List<AssetItemToAdd>()]; // List<AssetItemToAdd> | 
+
+try {
+    final result = api_instance.storeNewAssetsStorageManagerStoreNewAssetsPost(assetItemToAdd);
+    print(result);
+} catch (e) {
+    print('Exception when calling StorageManagerApi->storeNewAssetsStorageManagerStoreNewAssetsPost: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **assetItemToAdd** | [**List<AssetItemToAdd>**](AssetItemToAdd.md)|  | 
+
+### Return type
+
+[**List<AssetItemToAdd>**](AssetItemToAdd.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
