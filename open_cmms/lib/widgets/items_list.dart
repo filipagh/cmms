@@ -18,7 +18,7 @@ class ItemsList extends StatelessWidget {
   Widget build(BuildContext context) {
 
 
-    return GetX<ItemsState>(
+    return GetX<ItemsStorageState>(
         builder: (_) { var list =  _.getItems();
         return list.isEmpty
             ? const Expanded(
@@ -42,7 +42,7 @@ class ItemsList extends StatelessWidget {
     return Card(
       child: ListTile(
           hoverColor: Colors.blue.shade200,
-          title: GetBuilder<ItemsState>(
+          title: GetBuilder<ItemsStorageState>(
             id: item.id,
             builder: (_) {var itemActual= _.getById(item.id);
               return IntrinsicHeight(

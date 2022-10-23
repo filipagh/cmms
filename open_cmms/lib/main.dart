@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
     Get.put(AssetTypesStateDummy());
     Get.put(AssetTypesState());
     Get.put(ItemsState_dummy());
-    Get.put(ItemsState());
+    Get.put(ItemsStorageState());
     Get.put(AssignedComponentState());
     Get.put(TasksState());
     Get.put(ActionState());

@@ -19,7 +19,7 @@ class Storage extends StatefulWidget {
 }
 
 class _StorageState extends State<Storage> {
-  final ItemsState items = Get.find();
+  final ItemsStorageState items = Get.find();
 
   @override
   Widget build(BuildContext context) {

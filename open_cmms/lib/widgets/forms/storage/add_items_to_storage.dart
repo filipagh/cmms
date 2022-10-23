@@ -19,7 +19,7 @@ class _Item {
 }
 
 class AddItemsToStorage extends StatelessWidget implements hasFormTitle {
-  final ItemsState _itemsState = Get.find();
+  final ItemsStorageState _itemsState = Get.find();
   final AssetTypesState _typeState = Get.find();
 
   final List<_Item> _items = <_Item>[].obs;
@@ -44,6 +44,16 @@ class AddItemsToStorage extends StatelessWidget implements hasFormTitle {
             child: Obx(() {
               return ListView(children: _buildList());
             })),
+        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          ElevatedButton(onPressed: () {Get.back();}, child: Text("Zrusit")),
+          ElevatedButton(onPressed: () {
+            List<AssetItemToAdd> items = [];
+            _items.forEach((e) => {items.add(AssetItemToAdd(storageItemId: e.storageItem.id, countToAdd: e.count))});
+            _itemsState.addToStorage(items).then((value) => _itemsState.reloadData());
+            Get.back();
+          }, child: Text("Potvrdit")),
+        ],)
       ],
     );
   }

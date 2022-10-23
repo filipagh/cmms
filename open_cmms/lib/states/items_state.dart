@@ -6,7 +6,7 @@ import 'package:open_cmms/service/backend_api/storageManager.dart';
 
 import '../models/item.dart';
 
-class ItemsState extends GetxController {
+class ItemsStorageState extends GetxController {
   Map<String, StorageItemSchema> _itemsMap = <String, StorageItemSchema>{}.obs;
 
   @override
@@ -36,6 +36,10 @@ class ItemsState extends GetxController {
 
   StorageItemSchema? getByAssetId(String assetId) {
     return _itemsMap.values.singleWhere((element) => element.assetId==assetId);
+  }
+
+  Future<List<AssetItemToAdd>?> addToStorage(List<AssetItemToAdd> list) async {
+   return await StorageManagerService().storeNewAssetsStorageManagerStoreNewAssetsPost(list);
   }
 
 
