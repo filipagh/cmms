@@ -3,8 +3,8 @@ import uuid
 from eventsourcing.dispatch import singledispatchmethod
 from eventsourcing.system import ProcessApplication
 
-from stationmanager.application.model import schema
-from stationmanager.domain.model.roadsegment import RoadSegment
+from roadsegmentmanager.application.model import schema
+from roadsegmentmanager.domain.model.roadsegment import RoadSegment
 
 
 class RoadSegmentService(ProcessApplication):

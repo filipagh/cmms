@@ -13,9 +13,12 @@ from fastapi.middleware.cors import CORSMiddleware
 
 import assetmanager.infrastructure.rest_router
 import storagemanager.infrastructure.rest_router
+import roadsegmentmanager.infrastructure.rest_router
 
 from assetmanager.application.asset_projector import AssetProjector
 from assetmanager.application.asset_service import AssetService
+from roadsegmentmanager.application.road_segment_projector import RoadSegmentProjector
+from roadsegmentmanager.application.road_segment_service import RoadSegmentService
 from storagemanager.application.storage_item_projector import StorageItemProjector
 from storagemanager.application.storage_item_service import StorageItemService
 
@@ -24,14 +27,19 @@ from storagemanager.application.storage_item_service import StorageItemService
 os.chdir(os.path.dirname(__file__) + '/../')
 os.system('alembic upgrade head')
 
-system = System(pipes=[[AssetService, AssetProjector], [AssetService, StorageItemService],
-                       [StorageItemService, StorageItemProjector]])
+system = System(pipes=[[AssetService, AssetProjector],
+                       [AssetService, StorageItemService],
+                       [StorageItemService, StorageItemProjector],
+                       [RoadSegmentService, RoadSegmentProjector],
+
+                       ])
 runner = SingleThreadedRunner(system)
 runner.start()
 
 app = FastAPI(debug=True)
 app.include_router(assetmanager.infrastructure.rest_router.asset_manager)
 app.include_router(storagemanager.infrastructure.rest_router.storage_manager)
+app.include_router(roadsegmentmanager.infrastructure.rest_router.road_segment_manager)
 
 origins = [
     "http://localhost:5000",

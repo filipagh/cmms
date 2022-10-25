@@ -5,7 +5,8 @@ from eventsourcing.domain import Aggregate, event
 
 class RoadSegment(Aggregate):
     class CreatedEvent(Aggregate.Created):
-        asset_id: uuid.UUID
+        name: str
+        ssud: str
 
     # class AssetAddedToStorage(Aggregate.Event):
     #     count_number: int
