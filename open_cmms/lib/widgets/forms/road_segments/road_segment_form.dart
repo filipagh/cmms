@@ -1,28 +1,26 @@
+import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/models/road_segment_model.dart';
-import 'package:open_cmms/states/road_segment_state.dart';
+import 'package:open_cmms/service/backend_api/RoadSegmentManager.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 
-const EMPTY_CATEGORY = "NEW_CATEGORY";
-
 class RoadSegmentForm extends StatefulWidget implements hasFormTitle {
-  final RoadSegmentState _roadSegmentState = Get.find();
   late final RoadSegmentModel? editItem;
 
   RoadSegmentForm.createNew({Key? key}) : super(key: key) {
-    this.editItem = null;
+    editItem = null;
   }
 
   RoadSegmentForm.editItem({Key? key, required RoadSegmentModel editItem})
       : super(key: key) {
-    this.editItem = editItem;
-
+    editItem = editItem;
   }
 
   @override
   State<RoadSegmentForm> createState() => RoadSegmentFormState();
 
+  @override
   String getTitle() {
     return editItem == null
         ? "Create new Road Segment"
@@ -45,7 +43,7 @@ class RoadSegmentFormState extends State<RoadSegmentForm> {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: BoxConstraints(maxWidth: 500),
+      constraints: const BoxConstraints(maxWidth: 500),
       child: Form(
         key: _formKey,
         child: Column(
@@ -56,26 +54,27 @@ class RoadSegmentFormState extends State<RoadSegmentForm> {
               },
               initialValue:
                   widget.editItem == null ? "" : widget.editItem!.name,
-              decoration: InputDecoration(labelText: 'name'),
+              decoration: const InputDecoration(labelText: 'name'),
               validator: (value) {
                 return value == null || value.isEmpty ? "add name" : null;
               },
             ),
-            TextFormField(
-              onSaved: (value) {
-                description = value!;
-              },
-              initialValue:
-                  widget.editItem == null ? "" : widget.editItem!.text,
-              decoration: InputDecoration(labelText: 'description'),
-            ),
+            //todo
+            // TextFormField(
+            //   onSaved: (value) {
+            //     description = value!;
+            //   },
+            //   initialValue:
+            //       widget.editItem == null ? "" : widget.editItem!.text,
+            //   decoration: InputDecoration(labelText: 'description'),
+            // ),
             TextFormField(
               onSaved: (value) {
                 ssud = value!;
               },
               initialValue:
                   widget.editItem == null ? "" : widget.editItem!.ssud,
-              decoration: InputDecoration(labelText: 'ssud'),
+              decoration: const InputDecoration(labelText: 'ssud'),
             ),
 
             TextButton(
@@ -83,14 +82,17 @@ class RoadSegmentFormState extends State<RoadSegmentForm> {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState?.save();
                     if (widget.editItem != null) {
-                      widget._roadSegmentState.editRoadSegment(widget.editItem!.id, name, description,ssud);
+                      //todo edit
+                      // widget._roadSegmentState.editRoadSegment(widget.editItem!.id, name, description,ssud);
                     } else {
-                      widget._roadSegmentState.createNewRoadSegment( name, description,ssud);
+                      RoadSegmentService()
+                          .createRoadSegmentRoadSegmentManagerCreateRoadSegmentPost(
+                              RoadSegmentNewSchema(name: name, ssud: ssud));
                     }
                     Get.back();
                   }
                 },
-                child: Text("submit")),
+                child: const Text("submit")),
           ],
         ),
       ),

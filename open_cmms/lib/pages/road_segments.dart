@@ -78,7 +78,8 @@ class RoadSegments extends StatelessWidget {
                     const Spacer(),
                     ElevatedButton(
                       onPressed: () {
-                        showFormDialog(RoadSegmentForm.createNew());
+                        showFormDialog(RoadSegmentForm.createNew())
+                            .then((value) => reloadRoadSegments());
                       },
                       child: const Text("create road segment"),
                     ),
