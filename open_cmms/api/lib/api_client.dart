@@ -206,6 +206,10 @@ class ApiClient {
           return AssetSchema.fromJson(value);
         case 'HTTPValidationError':
           return HTTPValidationError.fromJson(value);
+        case 'RoadSegmentNewSchema':
+          return RoadSegmentNewSchema.fromJson(value);
+        case 'RoadSegmentSchema':
+          return RoadSegmentSchema.fromJson(value);
         case 'StorageItemSchema':
           return StorageItemSchema.fromJson(value);
         case 'ValidationError':

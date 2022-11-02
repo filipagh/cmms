@@ -29,6 +29,7 @@ part 'auth/http_bearer_auth.dart';
 
 part 'api/asset_manager_api.dart';
 part 'api/default_api.dart';
+part 'api/road_segment_manager_api.dart';
 part 'api/storage_manager_api.dart';
 
 part 'model/asset_category_new_schema.dart';
@@ -39,6 +40,8 @@ part 'model/asset_item_to_add.dart';
 part 'model/asset_new_schema.dart';
 part 'model/asset_schema.dart';
 part 'model/http_validation_error.dart';
+part 'model/road_segment_new_schema.dart';
+part 'model/road_segment_schema.dart';
 part 'model/storage_item_schema.dart';
 part 'model/validation_error.dart';
 
