@@ -210,6 +210,10 @@ class ApiClient {
           return RoadSegmentNewSchema.fromJson(value);
         case 'RoadSegmentSchema':
           return RoadSegmentSchema.fromJson(value);
+        case 'StationNewSchema':
+          return StationNewSchema.fromJson(value);
+        case 'StationSchema':
+          return StationSchema.fromJson(value);
         case 'StorageItemSchema':
           return StorageItemSchema.fromJson(value);
         case 'ValidationError':
