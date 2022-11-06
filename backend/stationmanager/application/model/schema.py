@@ -16,5 +16,5 @@ class StationIdSchema(StationSchemaBASE):
     id: uuid.UUID
 
 
-class StationSchema(StationSchemaBASE):
+class StationSchema(StationIdSchema):
     pass
