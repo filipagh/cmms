@@ -20,7 +20,7 @@ station_router = APIRouter(
                      response_model=uuid.UUID)
 def create_station(new_station: schema.StationNewSchema):
     segment_service = main.runner.get(StationService)
-    return segment_service.create_road_segment(new_station)
+    return segment_service.create_station(new_station)
 
 
 @station_router.get("/station",
