@@ -21,8 +21,11 @@ class StationProjector(ProcessApplication):
             road_segment_id=domain_event.road_segment_id)
         station_repo.save(model)
 
-    def get_by_id(self, segment_id: uuid.UUID) -> StationModel:
-        return station_repo.get_by_id(segment_id)
+    def get_by_id(self, id: uuid.UUID) -> StationModel:
+        return station_repo.get_by_id(id)
+
+    def get_by_road_segment(self, segment_id: uuid.UUID) -> list[StationModel]:
+        return station_repo.get_by_road_segment(segment_id)
 
     def get_all(self) -> list[StationModel]:
         return station_repo.get_road_segments()

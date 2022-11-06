@@ -34,3 +34,9 @@ def get_by_id(id: uuid.UUID):
     db: Session
     with _get_db() as db:
         return db.query(StationModel).get(id)
+
+
+def get_by_road_segment(road_segment_id: uuid.UUID) -> list[StationModel]:
+    db: Session
+    with _get_db() as db:
+        return db.query(StationModel).where(StationModel.road_segment_id == road_segment_id).get(id)

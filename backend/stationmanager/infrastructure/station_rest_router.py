@@ -1,4 +1,5 @@
 import uuid
+from typing import Optional
 
 from fastapi import APIRouter
 
@@ -30,11 +31,17 @@ def get_by_id(segment_id: uuid.UUID):
     return schema.StationSchema(**projector.get_by_id(segment_id).__dict__)
 
 
-@station_router.get("/segments",
+@station_router.get("/stations",
                     response_model=list[schema.StationSchema])
-def get_all():
+def get_all(
+        road_segment_id: Optional[uuid.UUID] = None
+):
     projector = main.runner.get(StationProjector)
     col = []
-    for i in projector.get_all():
+    if road_segment_id:
+        stations = projector.get_by_road_segment(road_segment_id)
+    else:
+        stations = projector.get_all()
+    for i in stations:
         col.append(schema.StationSchema(**i.__dict__))
     return col
