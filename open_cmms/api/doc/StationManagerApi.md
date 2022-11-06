@@ -10,7 +10,7 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createStationStationCreateStationPost**](StationManagerApi.md#createstationstationcreatestationpost) | **POST** /station/create_station | Create Station
-[**getAllStationSegmentsGet**](StationManagerApi.md#getallstationsegmentsget) | **GET** /station/segments | Get All
+[**getAllStationStationsGet**](StationManagerApi.md#getallstationstationsget) | **GET** /station/stations | Get All
 [**getByIdStationStationGet**](StationManagerApi.md#getbyidstationstationget) | **GET** /station/station | Get By Id
 
 
@@ -55,8 +55,8 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **getAllStationSegmentsGet**
-> List<StationSchema> getAllStationSegmentsGet()
+# **getAllStationStationsGet**
+> List<StationSchema> getAllStationStationsGet(roadSegmentId)
 
 Get All
 
@@ -65,17 +65,21 @@ Get All
 import 'package:BackendAPI/api.dart';
 
 final api_instance = StationManagerApi();
+final roadSegmentId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-    final result = api_instance.getAllStationSegmentsGet();
+    final result = api_instance.getAllStationStationsGet(roadSegmentId);
     print(result);
 } catch (e) {
-    print('Exception when calling StationManagerApi->getAllStationSegmentsGet: $e\n');
+    print('Exception when calling StationManagerApi->getAllStationStationsGet: $e\n');
 }
 ```
 
 ### Parameters
-This endpoint does not need any parameter.
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **roadSegmentId** | **String**|  | [optional] 
 
 ### Return type
 

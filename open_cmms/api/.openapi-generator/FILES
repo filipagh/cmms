@@ -51,6 +51,3 @@ lib/model/station_schema.dart
 lib/model/storage_item_schema.dart
 lib/model/validation_error.dart
 pubspec.yaml
-test/station_manager_api_test.dart
-test/station_new_schema_test.dart
-test/station_schema_test.dart

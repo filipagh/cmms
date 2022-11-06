@@ -71,9 +71,13 @@ class StationManagerApi {
   /// Get All
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> getAllStationSegmentsGetWithHttpInfo() async {
+  ///
+  /// Parameters:
+  ///
+  /// * [String] roadSegmentId:
+  Future<Response> getAllStationStationsGetWithHttpInfo({ String? roadSegmentId, }) async {
     // ignore: prefer_const_declarations
-    final path = r'/station/segments';
+    final path = r'/station/stations';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -81,6 +85,10 @@ class StationManagerApi {
     final queryParams = <QueryParam>[];
     final headerParams = <String, String>{};
     final formParams = <String, String>{};
+
+    if (roadSegmentId != null) {
+      queryParams.addAll(_queryParams('', 'road_segment_id', roadSegmentId));
+    }
 
     const contentTypes = <String>[];
 
@@ -97,8 +105,12 @@ class StationManagerApi {
   }
 
   /// Get All
-  Future<List<StationSchema>?> getAllStationSegmentsGet() async {
-    final response = await getAllStationSegmentsGetWithHttpInfo();
+  ///
+  /// Parameters:
+  ///
+  /// * [String] roadSegmentId:
+  Future<List<StationSchema>?> getAllStationStationsGet({ String? roadSegmentId, }) async {
+    final response = await getAllStationStationsGetWithHttpInfo( roadSegmentId: roadSegmentId, );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
