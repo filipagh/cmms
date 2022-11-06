@@ -19,6 +19,7 @@ from assetmanager.application.asset_projector import AssetProjector
 from assetmanager.application.asset_service import AssetService
 from roadsegmentmanager.application.road_segment_projector import RoadSegmentProjector
 from roadsegmentmanager.application.road_segment_service import RoadSegmentService
+from stationmanager.infrastructure.station_rest_router import station_router
 from storagemanager.application.storage_item_projector import StorageItemProjector
 from storagemanager.application.storage_item_service import StorageItemService
 
@@ -40,6 +41,7 @@ app = FastAPI(debug=True)
 app.include_router(assetmanager.infrastructure.rest_router.asset_manager)
 app.include_router(storagemanager.infrastructure.rest_router.storage_manager)
 app.include_router(roadsegmentmanager.infrastructure.rest_router.road_segment_manager)
+app.include_router(station_router)
 
 origins = [
     "http://localhost:5000",
