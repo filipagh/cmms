@@ -1,7 +1,10 @@
+import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/models/road_segment_model.dart';
 import 'package:open_cmms/models/station.dart';
+import 'package:open_cmms/service/backend_api/RoadSegmentManager.dart';
+import 'package:open_cmms/service/backend_api/station_service.dart';
 import 'package:open_cmms/states/road_segment_state.dart';
 import 'package:open_cmms/states/stations_state.dart';
 import 'package:open_cmms/widgets/assets_list.dart';
@@ -9,36 +12,33 @@ import 'package:open_cmms/widgets/assets_list.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/main_menu_widget.dart';
 
-class RoadSegment extends StatefulWidget {
+class RoadSegment extends StatelessWidget {
   final String segmentId;
+  RoadSegmentSchema? _roadSegment;
+  late List<StationSchema> _station = <StationSchema>[].obs;
+  RxBool loaded = false.obs;
 
-  const RoadSegment({
+  RoadSegment({
     Key? key,
     required this.segmentId,
-  }) : super(key: key);
-
-  @override
-  State<RoadSegment> createState() => _RoadSegmentState();
-}
-
-class _RoadSegmentState extends State<RoadSegment> {
-  RoadSegmentState _roadSegmentState = Get.find();
-  StationsState stationsState = Get.find();
-  RoadSegmentModel? roadSegmentModel;
-  List<Station> stationsList = [];
-  bool isModelLoaded = false;
-
-  @override
-  void initState() {
-    roadSegmentModel = _roadSegmentState.segments[widget.segmentId];
-
-    stationsList = stationsState.station[roadSegmentModel!.id]?.values.toList() ?? [];
-    super.initState();
+  }) : super(key: key) {
+    RoadSegmentService()
+        .getByIdRoadSegmentManagerSegmentGet(segmentId)
+        .then((value) {
+      _roadSegment = value;
+      loaded.value = true;
+      StationService()
+          .getAllStationStationsGet(roadSegmentId: segmentId)
+          .then((stations) => _station.addAll(stations!));
+    });
   }
 
   Widget buildContent() {
-    if (roadSegmentModel != null) {
+    if (_roadSegment != null) {
       return buildRoadSegment();
+    }
+    if (loaded.value) {
+      return CircularProgressIndicator();
     }
     return buildMissingRoadSegment();
   }
@@ -51,7 +51,9 @@ class _RoadSegmentState extends State<RoadSegment> {
           MainMenuWidget(),
           VerticalDivider(),
           Expanded(
-            child: buildContent(),
+            child: Obx(() {
+              return buildContent();
+            }),
           )
         ],
       ),
@@ -62,7 +64,7 @@ class _RoadSegmentState extends State<RoadSegment> {
     return Column(
       children: [
         Text(
-          "Road Segment " + roadSegmentModel!.name,
+          "Road Segment " + _roadSegment!.name,
           textScaleFactor: 5,
         ),
         Divider(),
@@ -72,10 +74,20 @@ class _RoadSegmentState extends State<RoadSegment> {
               Expanded(
                 child: Column(
                   children: [
-                    Text("Stations", textScaleFactor: 3),
+                    Stack(
+                      children: [
+                        Align(
+                            alignment: Alignment.centerRight,
+                            child: ElevatedButton(
+                                onPressed: () {},
+                                child: Text("Pridat stanicu"))),
+                        Align(child: Text("Stations", textScaleFactor: 3)),
+                      ],
+                    ),
                     Divider(),
-                    stationsList.isEmpty ? buildEmptyStationList():
-                    AssetsList(list: stationsList),
+                    _station.isEmpty
+                        ? buildEmptyStationList()
+                        : AssetsList(list: _station),
                   ],
                 ),
               ),
@@ -97,19 +109,26 @@ class _RoadSegmentState extends State<RoadSegment> {
   }
 
   Widget buildEmptyStationList() {
-    return Expanded(child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("No Stations"),
-                      ElevatedButton(onPressed: (){Get.back(); _roadSegmentState.remove(widget.segmentId);},child: Text("remove this Road Segment"),),
-                    ],
-                  ));
+    return Expanded(
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text("No Stations"),
+        ElevatedButton(
+          onPressed: () {
+            Get.back();
+            // _roadSegment.remove(segmentId);
+          },
+          child: Text("remove this Road Segment"),
+        ),
+      ],
+    ));
   }
 
   Widget buildMissingRoadSegment() {
     return Center(
         child: Text(
-      "Missing data for Road Segment ID: " + widget.segmentId,
+      "Missing data for Road Segment ID: " + segmentId,
       textScaleFactor: 2,
     ));
   }

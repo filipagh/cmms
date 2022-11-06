@@ -1,6 +1,7 @@
 import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:open_cmms/pages/road_segment.dart';
 import 'package:open_cmms/service/backend_api/RoadSegmentManager.dart';
 
 import '../widgets/custom_app_bar.dart';
@@ -29,7 +30,8 @@ class RoadSegments extends StatelessWidget {
     for (var i in roadSegments) {
       list.add(DataRow(
         onSelectChanged: (dd) {
-          Get.toNamed("/RoadSegments/" + i.id);
+          // Get.toNamed("/RoadSegments/" + i.id);
+          Get.to(RoadSegment(segmentId: i.id,));
         },
         cells: [
           DataCell(Text(i.name)),

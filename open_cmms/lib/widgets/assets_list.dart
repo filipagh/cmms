@@ -1,3 +1,4 @@
+import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/models/station.dart';
@@ -5,7 +6,7 @@ import 'package:open_cmms/pages/station/station_base_page.dart';
 import 'package:open_cmms/states/asset_types_state_dummy.dart';
 
 class AssetsList extends StatelessWidget {
-  final List<Station> list;
+  final List<StationSchema> list;
 
   const AssetsList({
     Key? key,

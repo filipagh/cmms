@@ -51,7 +51,8 @@ class _StationsState extends State<Stations> {
                   ],
                 ),
                 Divider(),
-                AssetsList(list: stationsState.getAllStations(),),
+                // AssetsList(list: stationsState.getAllStations(),),
+                AssetsList(list: [],),
               ],
             ),
           )
