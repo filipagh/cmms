@@ -15,30 +15,36 @@ class StationSchema {
   StationSchema({
     required this.name,
     required this.roadSegmentId,
+    required this.id,
   });
 
   String name;
 
   String roadSegmentId;
 
+  String id;
+
   @override
   bool operator ==(Object other) => identical(this, other) || other is StationSchema &&
      other.name == name &&
-     other.roadSegmentId == roadSegmentId;
+     other.roadSegmentId == roadSegmentId &&
+     other.id == id;
 
   @override
   int get hashCode =>
     // ignore: unnecessary_parenthesis
     (name.hashCode) +
-    (roadSegmentId.hashCode);
+    (roadSegmentId.hashCode) +
+    (id.hashCode);
 
   @override
-  String toString() => 'StationSchema[name=$name, roadSegmentId=$roadSegmentId]';
+  String toString() => 'StationSchema[name=$name, roadSegmentId=$roadSegmentId, id=$id]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
       _json[r'name'] = name;
       _json[r'road_segment_id'] = roadSegmentId;
+      _json[r'id'] = id;
     return _json;
   }
 
@@ -63,6 +69,7 @@ class StationSchema {
       return StationSchema(
         name: mapValueOfType<String>(json, r'name')!,
         roadSegmentId: mapValueOfType<String>(json, r'road_segment_id')!,
+        id: mapValueOfType<String>(json, r'id')!,
       );
     }
     return null;
@@ -114,6 +121,7 @@ class StationSchema {
   static const requiredKeys = <String>{
     'name',
     'road_segment_id',
+    'id',
   };
 }
 
