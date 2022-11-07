@@ -1,13 +1,11 @@
 import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:open_cmms/models/road_segment_model.dart';
-import 'package:open_cmms/models/station.dart';
 import 'package:open_cmms/service/backend_api/RoadSegmentManager.dart';
 import 'package:open_cmms/service/backend_api/station_service.dart';
-import 'package:open_cmms/states/road_segment_state.dart';
-import 'package:open_cmms/states/stations_state.dart';
 import 'package:open_cmms/widgets/assets_list.dart';
+import 'package:open_cmms/widgets/dialog_form.dart';
+import 'package:open_cmms/widgets/forms/station/station_form.dart';
 
 import '../widgets/custom_app_bar.dart';
 import '../widgets/main_menu_widget.dart';
@@ -15,7 +13,7 @@ import '../widgets/main_menu_widget.dart';
 class RoadSegment extends StatelessWidget {
   final String segmentId;
   RoadSegmentSchema? _roadSegment;
-  late List<StationSchema> _station = <StationSchema>[].obs;
+  final List<StationSchema> _station = <StationSchema>[].obs;
   RxBool loaded = false.obs;
 
   RoadSegment({
@@ -27,11 +25,16 @@ class RoadSegment extends StatelessWidget {
         .then((value) {
       _roadSegment = value;
       loaded.value = true;
-      StationService()
-          .getAllStationStationsGet(roadSegmentId: segmentId)
-          .then((stations) => _station.addAll(stations!));
+      reloadStations();
     });
   }
+
+  reloadStations() {
+    StationService()
+        .getAllStationStationsGet(roadSegmentId: segmentId)
+        .then((stations) {_station.clear(); _station.addAll(stations!);});
+  }
+
 
   Widget buildContent() {
     if (_roadSegment != null) {
@@ -79,9 +82,15 @@ class RoadSegment extends StatelessWidget {
                         Align(
                             alignment: Alignment.centerRight,
                             child: ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {showFormDialog(StationForm(_roadSegment!));},
                                 child: Text("Pridat stanicu"))),
-                        Align(child: Text("Stations", textScaleFactor: 3)),
+                        Align(child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Stations", textScaleFactor: 3),
+                            IconButton(onPressed: () {reloadStations();}, icon: Icon(Icons.refresh))
+                          ],
+                        )),
                       ],
                     ),
                     Divider(),
