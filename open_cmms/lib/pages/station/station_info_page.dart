@@ -1,3 +1,4 @@
+import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:open_cmms/pages/station/station_base_page.dart';
 
@@ -7,7 +8,7 @@ import '../../models/station.dart';
 
 class StationInfoPage extends StatelessWidget implements StationBaseContextPage {
   static const String ENDPOINT = '/Info';
-  final Station station;
+  final StationSchema station;
   const StationInfoPage({Key? key, required this.station}) : super(key: key);
 
   @override
@@ -15,7 +16,7 @@ class StationInfoPage extends StatelessWidget implements StationBaseContextPage 
     return Column(
       children: [
         Text("name: " + station.name),
-        Text("description: " + station.text),
+        Text("description: " + station.id),
       ],
     );
   }

@@ -27,7 +27,8 @@ class StationTabMenu extends StatelessWidget {
           padding: MaterialStateProperty.all(EdgeInsets.all(10)),
         ),
         onPressed: () {
-          Get.offAndToNamed(
+          // Get.offAndToNamed(
+          Get.toNamed(
               StationBasePage.ENDPOINT + '/' + stationId + element.endpoint);
         },
         label: Text(element.label),
