@@ -4,3 +4,4 @@ from assetmanager.infrastructure.persistance.asset_repo import AssetModel  # noq
 from storagemanager.infrastructure.persistance.storage_item_repo import StorageItemModel  # noqa
 from roadsegmentmanager.infrastructure.persistence.road_segment_repo import RoadSegmentModel  # noqa
 from stationmanager.infrastructure.persistence.station_repo import StationModel  # noqa
+from stationmanager.infrastructure.persistence.assigned_component_repo import AssignedComponentModel  # noqa

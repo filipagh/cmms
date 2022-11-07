@@ -11,7 +11,7 @@ from stationmanager.application.station_service import StationService
 
 station_router = APIRouter(
     prefix="/station",
-    tags=["Station Manager"],
+    tags=["Station"],
     responses={404: {"description": "Not found"}},
 )
 

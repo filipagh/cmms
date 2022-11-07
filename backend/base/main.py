@@ -21,6 +21,8 @@ from roadsegmentmanager.application.road_segment_projector import RoadSegmentPro
 from roadsegmentmanager.application.road_segment_service import RoadSegmentService
 from stationmanager.application.station_projector import StationProjector
 from stationmanager.application.station_service import StationService
+
+from stationmanager.infrastructure.assigned_component_rest_router import assigned_component_router
 from stationmanager.infrastructure.station_rest_router import station_router
 from storagemanager.application.storage_item_projector import StorageItemProjector
 from storagemanager.application.storage_item_service import StorageItemService
@@ -45,6 +47,7 @@ app.include_router(assetmanager.infrastructure.rest_router.asset_manager)
 app.include_router(storagemanager.infrastructure.rest_router.storage_manager)
 app.include_router(roadsegmentmanager.infrastructure.rest_router.road_segment_manager)
 app.include_router(station_router)
+app.include_router(assigned_component_router)
 
 origins = [
     "http://localhost:5000",
