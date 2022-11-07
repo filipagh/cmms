@@ -6,7 +6,7 @@ import 'oauthUtil.dart';
 
 
 
-class StationService extends StationManagerApi {
+class StationService extends StationApi {
   @override
   late final ApiClient apiClient;
 
