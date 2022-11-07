@@ -1,42 +1,43 @@
+import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:open_cmms/states/stations_state.dart';
+import 'package:open_cmms/service/backend_api/station_service.dart';
 import 'package:open_cmms/widgets/assets_list.dart';
-import 'package:open_cmms/widgets/create_form.dart';
 
 import '../widgets/custom_app_bar.dart';
 import '../widgets/main_menu_widget.dart';
 
-class Stations extends StatefulWidget {
+class Stations extends StatelessWidget {
   static const ENDPOINT = '/Stations';
 
-  const Stations({
+  final RxList<StationSchema> _stations = <StationSchema>[].obs;
+
+  Stations({
     Key? key,
-  }) : super(key: key);
+  }) : super(key: key) {
+    StationService().getAllStationStationsGet().then((value) {
+      _stations.addAll(value ?? []);
+      _stations.refresh();
+    });
+  }
 
-  @override
-  State<Stations> createState() => _StationsState();
-}
-
-class _StationsState extends State<Stations> {
   @override
   Widget build(BuildContext context) {
-    StationsState stationsState = Get.find();
     return Scaffold(
       appBar: CustomAppBar(),
       body: Row(
         children: [
           MainMenuWidget(),
-          VerticalDivider(),
+          const VerticalDivider(),
           Expanded(
             child: Column(
               children: [
-                Text(
+                const Text(
                   "Statios",
                   textScaleFactor: 5,
                 ),
                 Row(
-                  children: [
+                  children: const [
                     Placeholder(
                       child: SizedBox(width: 300, child: Text("searchbar")),
                     ),
@@ -44,15 +45,21 @@ class _StationsState extends State<Stations> {
                       child: Icon(Icons.filter_list_alt),
                     ),
                     Spacer(),
-                    ElevatedButton(
-                      onPressed: () {showdialog();},
-                      child: Text("add station"),
-                    ),
+                    // ElevatedButton(
+                    //   onPressed: () {showdialog();},
+                    //   child: Text("add station"),
+                    // ),
                   ],
                 ),
-                Divider(),
+                const Divider(),
                 // AssetsList(list: stationsState.getAllStations(),),
-                AssetsList(list: [],),
+                Obx(
+                  () {
+                    return AssetsList(
+                      list: _stations.value,
+                    );
+                  },
+                ),
               ],
             ),
           )
@@ -61,4 +68,3 @@ class _StationsState extends State<Stations> {
     );
   }
 }
-
