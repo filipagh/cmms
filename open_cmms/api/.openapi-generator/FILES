@@ -10,12 +10,14 @@ doc/AssetItemToAdd.md
 doc/AssetManagerApi.md
 doc/AssetNewSchema.md
 doc/AssetSchema.md
+doc/AssignedComponentSchema.md
+doc/AssignedComponentsApi.md
 doc/DefaultApi.md
 doc/HTTPValidationError.md
 doc/RoadSegmentManagerApi.md
 doc/RoadSegmentNewSchema.md
 doc/RoadSegmentSchema.md
-doc/StationManagerApi.md
+doc/StationApi.md
 doc/StationNewSchema.md
 doc/StationSchema.md
 doc/StorageItemSchema.md
@@ -24,9 +26,10 @@ doc/ValidationError.md
 git_push.sh
 lib/api.dart
 lib/api/asset_manager_api.dart
+lib/api/assigned_components_api.dart
 lib/api/default_api.dart
 lib/api/road_segment_manager_api.dart
-lib/api/station_manager_api.dart
+lib/api/station_api.dart
 lib/api/storage_manager_api.dart
 lib/api_client.dart
 lib/api_exception.dart
@@ -43,6 +46,7 @@ lib/model/asset_id_schema.dart
 lib/model/asset_item_to_add.dart
 lib/model/asset_new_schema.dart
 lib/model/asset_schema.dart
+lib/model/assigned_component_schema.dart
 lib/model/http_validation_error.dart
 lib/model/road_segment_new_schema.dart
 lib/model/road_segment_schema.dart
@@ -51,3 +55,6 @@ lib/model/station_schema.dart
 lib/model/storage_item_schema.dart
 lib/model/validation_error.dart
 pubspec.yaml
+test/assigned_component_schema_test.dart
+test/assigned_components_api_test.dart
+test/station_api_test.dart

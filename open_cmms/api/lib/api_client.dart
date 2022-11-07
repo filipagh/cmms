@@ -204,6 +204,8 @@ class ApiClient {
           return AssetNewSchema.fromJson(value);
         case 'AssetSchema':
           return AssetSchema.fromJson(value);
+        case 'AssignedComponentSchema':
+          return AssignedComponentSchema.fromJson(value);
         case 'HTTPValidationError':
           return HTTPValidationError.fromJson(value);
         case 'RoadSegmentNewSchema':

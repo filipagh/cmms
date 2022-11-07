@@ -62,13 +62,14 @@ Class | Method | HTTP request | Description
 *AssetManagerApi* | [**createNewCategoryAssetManagerNewCategoryPost**](doc//AssetManagerApi.md#createnewcategoryassetmanagernewcategorypost) | **POST** /assetManager/newCategory | Create New Category
 *AssetManagerApi* | [**getAssetCategoriesAssetManagerAssetCategoriesGet**](doc//AssetManagerApi.md#getassetcategoriesassetmanagerassetcategoriesget) | **GET** /assetManager/asset-categories | Get Asset Categories
 *AssetManagerApi* | [**getAssetsAssetManagerAssetsGet**](doc//AssetManagerApi.md#getassetsassetmanagerassetsget) | **GET** /assetManager/assets | Get Assets
+*AssignedComponentsApi* | [**getAllAssignedComponentsComponentsGet**](doc//AssignedComponentsApi.md#getallassignedcomponentscomponentsget) | **GET** /assigned_components/components | Get All
 *DefaultApi* | [**rootGet**](doc//DefaultApi.md#rootget) | **GET** / | Root
 *RoadSegmentManagerApi* | [**createRoadSegmentRoadSegmentManagerCreateRoadSegmentPost**](doc//RoadSegmentManagerApi.md#createroadsegmentroadsegmentmanagercreateroadsegmentpost) | **POST** /road-segment-manager/create_road_segment | Create Road Segment
 *RoadSegmentManagerApi* | [**getAllRoadSegmentManagerSegmentsGet**](doc//RoadSegmentManagerApi.md#getallroadsegmentmanagersegmentsget) | **GET** /road-segment-manager/segments | Get All
 *RoadSegmentManagerApi* | [**getByIdRoadSegmentManagerSegmentGet**](doc//RoadSegmentManagerApi.md#getbyidroadsegmentmanagersegmentget) | **GET** /road-segment-manager/segment | Get By Id
-*StationManagerApi* | [**createStationStationCreateStationPost**](doc//StationManagerApi.md#createstationstationcreatestationpost) | **POST** /station/create_station | Create Station
-*StationManagerApi* | [**getAllStationStationsGet**](doc//StationManagerApi.md#getallstationstationsget) | **GET** /station/stations | Get All
-*StationManagerApi* | [**getByIdStationStationGet**](doc//StationManagerApi.md#getbyidstationstationget) | **GET** /station/station | Get By Id
+*StationApi* | [**createStationStationCreateStationPost**](doc//StationApi.md#createstationstationcreatestationpost) | **POST** /station/create_station | Create Station
+*StationApi* | [**getAllStationStationsGet**](doc//StationApi.md#getallstationstationsget) | **GET** /station/stations | Get All
+*StationApi* | [**getByIdStationStationGet**](doc//StationApi.md#getbyidstationstationget) | **GET** /station/station | Get By Id
 *StorageManagerApi* | [**getAllStorageItemsStorageManagerAllStorageDataGet**](doc//StorageManagerApi.md#getallstorageitemsstoragemanagerallstoragedataget) | **GET** /storage-manager/all-storage-data | Get All Storage Items
 *StorageManagerApi* | [**storeNewAssetsStorageManagerStoreNewAssetsPost**](doc//StorageManagerApi.md#storenewassetsstoragemanagerstorenewassetspost) | **POST** /storage-manager/store-new-assets | Store New Assets
 
@@ -82,6 +83,7 @@ Class | Method | HTTP request | Description
  - [AssetItemToAdd](doc//AssetItemToAdd.md)
  - [AssetNewSchema](doc//AssetNewSchema.md)
  - [AssetSchema](doc//AssetSchema.md)
+ - [AssignedComponentSchema](doc//AssignedComponentSchema.md)
  - [HTTPValidationError](doc//HTTPValidationError.md)
  - [RoadSegmentNewSchema](doc//RoadSegmentNewSchema.md)
  - [RoadSegmentSchema](doc//RoadSegmentSchema.md)
