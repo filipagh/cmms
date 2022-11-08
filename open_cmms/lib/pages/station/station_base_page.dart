@@ -5,8 +5,8 @@ import 'package:open_cmms/pages/station/station_components_page.dart';
 import 'package:open_cmms/pages/station/station_info_page.dart';
 import 'package:open_cmms/pages/station/station_tab_menu.dart';
 import 'package:open_cmms/service/backend_api/station_service.dart';
+import 'package:open_cmms/states/station_state.dart';
 import 'package:open_cmms/states/stations_state.dart';
-import 'package:open_cmms/states/test_state.dart';
 
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/main_menu_widget.dart';
@@ -19,16 +19,12 @@ class StationBasePage extends StatelessWidget {
   StationBasePage(
       {Key? key, required this.contextPageEnum, required this.assetId})
       : super(key: key) {
-
     // Get.lazyPut(() => TestState());
-
-
   }
 
   StationsState stationsState = Get.find();
   Rxn<StationSchema> station = Rxn<StationSchema>();
   RxBool isModelLoaded = false.obs;
-
 
   Widget buildContent() {
     if (!isModelLoaded.value) {
@@ -41,14 +37,19 @@ class StationBasePage extends StatelessWidget {
   }
 
   Widget build(BuildContext context) {
-    StationService().getByIdStationStationGet(assetId).then((stationschema) {station.value = stationschema; isModelLoaded.value=true; station.refresh();});
-    TestState ts;
-    try { ts = Get.find(); }catch (e) {
+    StationService().getByIdStationStationGet(assetId).then((stationschema) {
+      station.value = stationschema;
+      isModelLoaded.value = true;
+      station.refresh();
+    });
+    StationState ts;
+    try {
+      ts = Get.find();
+    } catch (e) {
       print("put");
-       ts = Get.put(TestState());
+      ts = Get.put(StationState(assetId));
     }
-    print(ts.getAndInc());
-    print("build");
+    print(ts.station?.id ?? "null");
     return Scaffold(
       appBar: CustomAppBar(),
       body: Row(
@@ -56,7 +57,9 @@ class StationBasePage extends StatelessWidget {
           MainMenuWidget(),
           VerticalDivider(),
           Expanded(
-            child: Obx(() {return buildContent();}),
+            child: Obx(() {
+              return buildContent();
+            }),
           )
         ],
       ),
