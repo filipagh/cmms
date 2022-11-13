@@ -10,54 +10,42 @@
 
 part of openapi.api;
 
-class AssignedComponentSchema {
-  /// Returns a new [AssignedComponentSchema] instance.
-  AssignedComponentSchema({
+class AssignedComponentNewSchema {
+  /// Returns a new [AssignedComponentNewSchema] instance.
+  AssignedComponentNewSchema({
     required this.assetId,
     required this.stationId,
-    required this.id,
-    required this.status,
   });
 
   String assetId;
 
   String stationId;
 
-  String id;
-
-  AssignedComponentState status;
-
   @override
-  bool operator ==(Object other) => identical(this, other) || other is AssignedComponentSchema &&
+  bool operator ==(Object other) => identical(this, other) || other is AssignedComponentNewSchema &&
      other.assetId == assetId &&
-     other.stationId == stationId &&
-     other.id == id &&
-     other.status == status;
+     other.stationId == stationId;
 
   @override
   int get hashCode =>
     // ignore: unnecessary_parenthesis
     (assetId.hashCode) +
-    (stationId.hashCode) +
-    (id.hashCode) +
-    (status.hashCode);
+    (stationId.hashCode);
 
   @override
-  String toString() => 'AssignedComponentSchema[assetId=$assetId, stationId=$stationId, id=$id, status=$status]';
+  String toString() => 'AssignedComponentNewSchema[assetId=$assetId, stationId=$stationId]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
       _json[r'asset_id'] = assetId;
       _json[r'station_id'] = stationId;
-      _json[r'id'] = id;
-      _json[r'status'] = status;
     return _json;
   }
 
-  /// Returns a new [AssignedComponentSchema] instance and imports its values from
+  /// Returns a new [AssignedComponentNewSchema] instance and imports its values from
   /// [value] if it's a [Map], null otherwise.
   // ignore: prefer_constructors_over_static_methods
-  static AssignedComponentSchema? fromJson(dynamic value) {
+  static AssignedComponentNewSchema? fromJson(dynamic value) {
     if (value is Map) {
       final json = value.cast<String, dynamic>();
 
@@ -66,27 +54,25 @@ class AssignedComponentSchema {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key), 'Required key "AssignedComponentSchema[$key]" is missing from JSON.');
-          assert(json[key] != null, 'Required key "AssignedComponentSchema[$key]" has a null value in JSON.');
+          assert(json.containsKey(key), 'Required key "AssignedComponentNewSchema[$key]" is missing from JSON.');
+          assert(json[key] != null, 'Required key "AssignedComponentNewSchema[$key]" has a null value in JSON.');
         });
         return true;
       }());
 
-      return AssignedComponentSchema(
+      return AssignedComponentNewSchema(
         assetId: mapValueOfType<String>(json, r'asset_id')!,
         stationId: mapValueOfType<String>(json, r'station_id')!,
-        id: mapValueOfType<String>(json, r'id')!,
-        status: AssignedComponentState.fromJson(json[r'status'])!,
       );
     }
     return null;
   }
 
-  static List<AssignedComponentSchema>? listFromJson(dynamic json, {bool growable = false,}) {
-    final result = <AssignedComponentSchema>[];
+  static List<AssignedComponentNewSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+    final result = <AssignedComponentNewSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
-        final value = AssignedComponentSchema.fromJson(row);
+        final value = AssignedComponentNewSchema.fromJson(row);
         if (value != null) {
           result.add(value);
         }
@@ -95,12 +81,12 @@ class AssignedComponentSchema {
     return result.toList(growable: growable);
   }
 
-  static Map<String, AssignedComponentSchema> mapFromJson(dynamic json) {
-    final map = <String, AssignedComponentSchema>{};
+  static Map<String, AssignedComponentNewSchema> mapFromJson(dynamic json) {
+    final map = <String, AssignedComponentNewSchema>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = AssignedComponentSchema.fromJson(entry.value);
+        final value = AssignedComponentNewSchema.fromJson(entry.value);
         if (value != null) {
           map[entry.key] = value;
         }
@@ -109,13 +95,13 @@ class AssignedComponentSchema {
     return map;
   }
 
-  // maps a json object with a list of AssignedComponentSchema-objects as value to a dart map
-  static Map<String, List<AssignedComponentSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
-    final map = <String, List<AssignedComponentSchema>>{};
+  // maps a json object with a list of AssignedComponentNewSchema-objects as value to a dart map
+  static Map<String, List<AssignedComponentNewSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
+    final map = <String, List<AssignedComponentNewSchema>>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = AssignedComponentSchema.listFromJson(entry.value, growable: growable,);
+        final value = AssignedComponentNewSchema.listFromJson(entry.value, growable: growable,);
         if (value != null) {
           map[entry.key] = value;
         }
@@ -128,8 +114,6 @@ class AssignedComponentSchema {
   static const requiredKeys = <String>{
     'asset_id',
     'station_id',
-    'id',
-    'status',
   };
 }
 

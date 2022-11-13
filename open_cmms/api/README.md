@@ -62,6 +62,7 @@ Class | Method | HTTP request | Description
 *AssetManagerApi* | [**createNewCategoryAssetManagerNewCategoryPost**](doc//AssetManagerApi.md#createnewcategoryassetmanagernewcategorypost) | **POST** /assetManager/newCategory | Create New Category
 *AssetManagerApi* | [**getAssetCategoriesAssetManagerAssetCategoriesGet**](doc//AssetManagerApi.md#getassetcategoriesassetmanagerassetcategoriesget) | **GET** /assetManager/asset-categories | Get Asset Categories
 *AssetManagerApi* | [**getAssetsAssetManagerAssetsGet**](doc//AssetManagerApi.md#getassetsassetmanagerassetsget) | **GET** /assetManager/assets | Get Assets
+*AssignedComponentsApi* | [**createInstalledComponentAssignedComponentsCreateInstalledComponentPost**](doc//AssignedComponentsApi.md#createinstalledcomponentassignedcomponentscreateinstalledcomponentpost) | **POST** /assigned_components/create_installed_component | Create Installed Component
 *AssignedComponentsApi* | [**getAllAssignedComponentsComponentsGet**](doc//AssignedComponentsApi.md#getallassignedcomponentscomponentsget) | **GET** /assigned_components/components | Get All
 *DefaultApi* | [**rootGet**](doc//DefaultApi.md#rootget) | **GET** / | Root
 *RoadSegmentManagerApi* | [**createRoadSegmentRoadSegmentManagerCreateRoadSegmentPost**](doc//RoadSegmentManagerApi.md#createroadsegmentroadsegmentmanagercreateroadsegmentpost) | **POST** /road-segment-manager/create_road_segment | Create Road Segment
@@ -83,7 +84,9 @@ Class | Method | HTTP request | Description
  - [AssetItemToAdd](doc//AssetItemToAdd.md)
  - [AssetNewSchema](doc//AssetNewSchema.md)
  - [AssetSchema](doc//AssetSchema.md)
+ - [AssignedComponentNewSchema](doc//AssignedComponentNewSchema.md)
  - [AssignedComponentSchema](doc//AssignedComponentSchema.md)
+ - [AssignedComponentState](doc//AssignedComponentState.md)
  - [HTTPValidationError](doc//HTTPValidationError.md)
  - [RoadSegmentNewSchema](doc//RoadSegmentNewSchema.md)
  - [RoadSegmentSchema](doc//RoadSegmentSchema.md)

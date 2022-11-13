@@ -9,8 +9,50 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**createInstalledComponentAssignedComponentsCreateInstalledComponentPost**](AssignedComponentsApi.md#createinstalledcomponentassignedcomponentscreateinstalledcomponentpost) | **POST** /assigned_components/create_installed_component | Create Installed Component
 [**getAllAssignedComponentsComponentsGet**](AssignedComponentsApi.md#getallassignedcomponentscomponentsget) | **GET** /assigned_components/components | Get All
 
+
+# **createInstalledComponentAssignedComponentsCreateInstalledComponentPost**
+> String createInstalledComponentAssignedComponentsCreateInstalledComponentPost(assignedComponentNewSchema)
+
+Create Installed Component
+
+### Example
+```dart
+import 'package:BackendAPI/api.dart';
+
+final api_instance = AssignedComponentsApi();
+final assignedComponentNewSchema = AssignedComponentNewSchema(); // AssignedComponentNewSchema | 
+
+try {
+    final result = api_instance.createInstalledComponentAssignedComponentsCreateInstalledComponentPost(assignedComponentNewSchema);
+    print(result);
+} catch (e) {
+    print('Exception when calling AssignedComponentsApi->createInstalledComponentAssignedComponentsCreateInstalledComponentPost: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **assignedComponentNewSchema** | [**AssignedComponentNewSchema**](AssignedComponentNewSchema.md)|  | 
+
+### Return type
+
+**String**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getAllAssignedComponentsComponentsGet**
 > List<AssignedComponentSchema> getAllAssignedComponentsComponentsGet(stationId)
@@ -36,7 +78,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **stationId** | **String**|  | [optional] 
+ **stationId** | **String**|  | 
 
 ### Return type
 

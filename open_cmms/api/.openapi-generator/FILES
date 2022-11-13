@@ -10,7 +10,9 @@ doc/AssetItemToAdd.md
 doc/AssetManagerApi.md
 doc/AssetNewSchema.md
 doc/AssetSchema.md
+doc/AssignedComponentNewSchema.md
 doc/AssignedComponentSchema.md
+doc/AssignedComponentState.md
 doc/AssignedComponentsApi.md
 doc/DefaultApi.md
 doc/HTTPValidationError.md
@@ -46,7 +48,9 @@ lib/model/asset_id_schema.dart
 lib/model/asset_item_to_add.dart
 lib/model/asset_new_schema.dart
 lib/model/asset_schema.dart
+lib/model/assigned_component_new_schema.dart
 lib/model/assigned_component_schema.dart
+lib/model/assigned_component_state.dart
 lib/model/http_validation_error.dart
 lib/model/road_segment_new_schema.dart
 lib/model/road_segment_schema.dart
@@ -55,6 +59,5 @@ lib/model/station_schema.dart
 lib/model/storage_item_schema.dart
 lib/model/validation_error.dart
 pubspec.yaml
-test/assigned_component_schema_test.dart
-test/assigned_components_api_test.dart
-test/station_api_test.dart
+test/assigned_component_new_schema_test.dart
+test/assigned_component_state_test.dart
