@@ -5,7 +5,7 @@ import 'package:open_cmms/pages/station/station_components_page.dart';
 import 'package:open_cmms/pages/station/station_info_page.dart';
 import 'package:open_cmms/pages/station/station_tab_menu.dart';
 import 'package:open_cmms/service/backend_api/station_service.dart';
-import 'package:open_cmms/states/station_state.dart';
+import 'package:open_cmms/states/station/station_state.dart';
 import 'package:open_cmms/states/stations_state.dart';
 
 import '../../widgets/custom_app_bar.dart';
