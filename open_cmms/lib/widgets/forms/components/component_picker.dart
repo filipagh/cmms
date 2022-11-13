@@ -1,18 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:open_cmms/models/station.dart';
-import 'package:open_cmms/states/asset_types_state_dummy.dart';
-import 'package:open_cmms/states/items_state_dummy.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 
 import '../../../states/asset_types_state.dart';
-import '../../../states/items_state.dart';
 
-class AddComponentForm extends StatelessWidget implements hasFormTitle {
-  late final Station station;
+class ComponentPickerForm extends StatelessWidget implements hasFormTitle {
 
-  AddComponentForm({Key? key})
+  const ComponentPickerForm({Key? key})
       : super(key: key);
 
   String getTitle() {
@@ -31,9 +25,9 @@ class AddComponentForm extends StatelessWidget implements hasFormTitle {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text("searchbar"),
+        const Text("searchbar"),
 
-        SizedBox(height: 50, child: Placeholder()),
+        const SizedBox(height: 50, child: Placeholder()),
         SizedBox(
           width: 500,
           height: 600,

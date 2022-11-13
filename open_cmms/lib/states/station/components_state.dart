@@ -11,11 +11,17 @@ class AssignedComponentsState extends GetxController {
 
   @override
   void onInit() {
-    print("put componets");
+    reload();
+    super.onInit();
+  }
+
+  reload() {
     AssignedComponentService()
         .getAllAssignedComponentsComponentsGet(_stationId)
-        .then((value) => components.addAll(value ?? []));
-    update();
-    super.onInit();
+        .then((value) {
+      components.clear();
+      components.addAll(value ?? []);
+      update();
+    });
   }
 }

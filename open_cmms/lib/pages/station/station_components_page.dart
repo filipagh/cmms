@@ -4,6 +4,10 @@ import 'package:get/get.dart';
 import 'package:open_cmms/pages/station/station_base_page.dart';
 import 'package:open_cmms/states/asset_types_state.dart';
 import 'package:open_cmms/states/station/components_state.dart';
+import 'package:open_cmms/widgets/forms/components/set_components_instation_form.dart';
+
+import '../../widgets/dialog_form.dart';
+import '../../widgets/forms/components/components_form.dart';
 
 class StationComponentsPage extends StatelessWidget
     implements StationBaseContextPage {
@@ -25,13 +29,25 @@ class StationComponentsPage extends StatelessWidget
     return Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            ElevatedButton(
-                onPressed: () {
-                  // showFormDialog(StationComponentsForm.editComponentsInStation(editItem: station));
-                },
-                child: Text('Editovat komponenty')),
+            ElevatedButton.icon(onPressed: () {components.reload();}, icon: Icon(Icons.refresh),label: Text("Nacitat komponenty"),),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ElevatedButton(
+                    onPressed: () {
+                      showFormDialog(SetStationComponentsForm.editComponentsInStation(station: station));
+                    },
+                    child: Text('Nastavit komponenty')),
+                VerticalDivider(),
+                ElevatedButton(
+                    onPressed: () {
+                      // showFormDialog(StationComponentsForm.editComponentsInStation(editItem: station));
+                    },
+                    child: Text('Editovat komponenty')),
+              ],
+            ),
           ],
         ),
         Divider(),
@@ -47,7 +63,7 @@ class StationComponentsPage extends StatelessWidget
         ? const Expanded(
             child: Center(
                 child: Text(
-            "No Components",
+            "Ziadne komponenty",
             textScaleFactor: 3,
           )))
         : Expanded(
