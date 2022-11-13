@@ -66,8 +66,7 @@ class StationComponentsPage extends StatelessWidget
                               Container(
                                 width: 100,
                                 child: Text(stateAssetTypes
-                                    .getAssetTypeById(
-                                        components[index].assetId)!
+                                    .getAssetById(components[index].assetId)!
                                     .name),
                               ),
                               Spacer(),
@@ -85,37 +84,37 @@ class StationComponentsPage extends StatelessWidget
   }
 
   Widget? buildContextOfComponent(AssignedComponentSchema component) {
-    return Text("komponent");
-    // switch (component.actualState) {
-    //   case AssignedComponentStateEnum.awaiting:
-    //     //todo add task link
-    //     return Text("will be instaled in TASK");
-    //   case AssignedComponentStateEnum.installed:
-    //     return Text('installed on: ' + component.installed.toString());
-    //   case AssignedComponentStateEnum.willBeRemoved:
-    //     return Column(
-    //       children: [
-    //         //todo task
-    //         Text('will be removed in TASK'),
-    //         Text('installed on: ' + component.installed.toString()),
-    //       ],
-    //     );
-    //   case AssignedComponentStateEnum.removed:
-    //     return null;
-    // }
+    switch (component.status) {
+      case AssignedComponentState.awaiting:
+        //todo add task link
+        return Text("will be instaled in TASK");
+      case AssignedComponentState.installed:
+        return Text('installed on: DATE');
+      // return Text('installed on: ' + component.installed.toString());
+      case AssignedComponentState.willBeRemoved:
+        return Column(
+          children: [
+            //todo task
+            Text('will be removed in TASK'),
+            Text('installed on: DATE'),
+            // Text('installed on: ' + component.installed.toString()),
+          ],
+        );
+      case AssignedComponentState.removed:
+        return null;
+    }
   }
 
   Color? getColor(AssignedComponentSchema component) {
-    return Colors.green;
-    // switch (component.actualState) {
-    //   case AssignedComponentStateEnum.awaiting:
-    //     return Colors.green[200];
-    //   case AssignedComponentStateEnum.installed:
-    //     return Colors.white;
-    //   case AssignedComponentStateEnum.willBeRemoved:
-    //     return Colors.red[200];
-    //   case AssignedComponentStateEnum.removed:
-    //     return null;
-    // }
+    switch (component.status) {
+      case AssignedComponentState.awaiting:
+        return Colors.green[200];
+      case AssignedComponentState.installed:
+        return Colors.white;
+      case AssignedComponentState.willBeRemoved:
+        return Colors.red[200];
+      case AssignedComponentState.removed:
+        return null;
+    }
   }
 }

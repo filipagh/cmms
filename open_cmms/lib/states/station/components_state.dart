@@ -13,8 +13,9 @@ class AssignedComponentsState extends GetxController {
   void onInit() {
     print("put componets");
     AssignedComponentService()
-        .getAllAssignedComponentsComponentsGet(stationId: _stationId)
+        .getAllAssignedComponentsComponentsGet(_stationId)
         .then((value) => components.addAll(value ?? []));
+    update();
     super.onInit();
   }
 }
