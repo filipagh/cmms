@@ -41,10 +41,10 @@ class StationTabMenu extends StatelessWidget {
 
   List<StationButton> buttonList = [
     StationButton(
-        "Base Info", const Icon(Icons.info), StationInfoPage.ENDPOINT),
-    StationButton("Components", const Icon(Icons.settings), StationComponentsPage.ENDPOINT),
-    StationButton("Tasks", const Icon(Icons.task), ""),
-    StationButton("History", const Icon(Icons.history), ""),
+        "Informacie", const Icon(Icons.info), StationInfoPage.ENDPOINT),
+    StationButton("Komponenty", const Icon(Icons.settings), StationComponentsPage.ENDPOINT),
+    StationButton("Ulohy", const Icon(Icons.task), ""),
+    StationButton("Historia", const Icon(Icons.history), ""),
   ];
 }
 

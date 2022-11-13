@@ -15,8 +15,8 @@ class StationInfoPage extends StatelessWidget implements StationBaseContextPage 
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text("name: " + station.name),
-        Text("description: " + station.id),
+        Text("Meno: " + station.name),
+        Text("ID: " + station.id),
       ],
     );
   }

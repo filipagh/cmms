@@ -82,7 +82,7 @@ class StationBasePage extends StatelessWidget {
     return Column(
       children: [
         Text(
-          "Station: " + station.value!.id,
+          "Stanica: " + station.value!.name,
           textScaleFactor: 5,
         ),
         Divider(),
@@ -108,7 +108,7 @@ class StationBasePage extends StatelessWidget {
   Widget buildMissingRoadSegment() {
     return Center(
         child: Text(
-      "Missing data for Asset ID: " + assetId,
+      "Missing data for Station ID: " + assetId,
       textScaleFactor: 2,
     ));
   }

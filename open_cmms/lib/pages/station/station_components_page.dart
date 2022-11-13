@@ -31,7 +31,7 @@ class StationComponentsPage extends StatelessWidget
                 onPressed: () {
                   // showFormDialog(StationComponentsForm.editComponentsInStation(editItem: station));
                 },
-                child: Text('edit components')),
+                child: Text('Editovat komponenty')),
           ],
         ),
         Divider(),
