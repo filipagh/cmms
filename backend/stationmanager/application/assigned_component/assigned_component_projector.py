@@ -18,7 +18,10 @@ class AssignedComponentProjector(ProcessApplication):
         model = assigned_component_repo.AssignedComponentModel(
             id=domain_event.originator_id,
             asset_id=domain_event.asset_id,
-            station_id=domain_event.station_id)
+            station_id=domain_event.station_id,
+            status=domain_event.status
+
+        )
         assigned_component_repo.save(model)
 
     def get_by_id(self, id: uuid.UUID) -> AssignedComponentModel:

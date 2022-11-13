@@ -2,14 +2,16 @@ import uuid
 
 from pydantic import BaseModel
 
+from stationmanager.domain.model.assigned_component import AssignedComponentState
+
 
 class AssignedComponentSchemaBASE(BaseModel):
     asset_id: uuid.UUID
     station_id: uuid.UUID
 
 
-# class AssignedComponentNewSchema(AssignedComponentSchemaBASE):
-#     pass
+class AssignedComponentNewSchema(AssignedComponentSchemaBASE):
+    pass
 
 
 class AssignedComponentIdSchema(AssignedComponentSchemaBASE):
@@ -17,4 +19,4 @@ class AssignedComponentIdSchema(AssignedComponentSchemaBASE):
 
 
 class AssignedComponentSchema(AssignedComponentIdSchema):
-    pass
+    status: AssignedComponentState

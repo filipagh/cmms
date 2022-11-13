@@ -5,6 +5,7 @@ from fastapi import APIRouter
 
 from base import main
 from stationmanager.application.assigned_component.assigned_component_projector import AssignedComponentProjector
+from stationmanager.application.assigned_component.assigned_component_service import AssignedComponentsService
 from stationmanager.application.assigned_component.model import schema
 
 from stationmanager.application.station_projector import StationProjector
@@ -18,11 +19,11 @@ assigned_component_router = APIRouter(
 )
 
 
-# @assigned_component_router.post("/create_station",
-#                      response_model=uuid.UUID)
-# def create_station(new_station: schema.StationNewSchema):
-#     segment_service = main.runner.get(StationService)
-#     return segment_service.create_station(new_station)
+@assigned_component_router.post("/create_installed_component",
+                     response_model=uuid.UUID)
+def create_installed_component(new_component: schema.AssignedComponentNewSchema):
+    segment_service = main.runner.get(AssignedComponentsService)
+    return segment_service.create_installed_component(new_component.asset_id, new_component.station_id)
 
 #
 # @assigned_component_router.get("/station",
@@ -36,7 +37,7 @@ assigned_component_router = APIRouter(
 @assigned_component_router.get("/components",
                                response_model=list[schema.AssignedComponentSchema])
 def get_all(
-        station_id: uuid.UUID = None
+        station_id: uuid.UUID
 ):
     projector = main.runner.get(AssignedComponentProjector)
     col = []

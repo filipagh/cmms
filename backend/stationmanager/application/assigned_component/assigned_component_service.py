@@ -3,14 +3,16 @@ import uuid
 from eventsourcing.dispatch import singledispatchmethod
 from eventsourcing.system import ProcessApplication
 
-from stationmanager.domain.model.assigned_component import AssignedComponent
+from stationmanager.domain.model.assigned_component import AssignedComponent, AssignedComponentState
 
 
 class AssignedComponentsService(ProcessApplication):
 
-    def create_component(self, asset_id: uuid, station_id: uuid):
-        component: AssignedComponent = AssignedComponent(asset_id=asset_id, station_id=station_id)
+    def create_installed_component(self, asset_id: uuid, station_id: uuid):
+        component: AssignedComponent = AssignedComponent(asset_id=asset_id, station_id=station_id,
+                                                         status=AssignedComponentState.INSTALLED)
         self.save(component)
+        return component.id
 
     @singledispatchmethod
     def policy(self, domain_event, process_event):
