@@ -19,6 +19,8 @@ from assetmanager.application.asset_projector import AssetProjector
 from assetmanager.application.asset_service import AssetService
 from roadsegmentmanager.application.road_segment_projector import RoadSegmentProjector
 from roadsegmentmanager.application.road_segment_service import RoadSegmentService
+from stationmanager.application.assigned_component.assigned_component_projector import AssignedComponentProjector
+from stationmanager.application.assigned_component.assigned_component_service import AssignedComponentsService
 from stationmanager.application.station_projector import StationProjector
 from stationmanager.application.station_service import StationService
 
@@ -37,7 +39,7 @@ system = System(pipes=[[AssetService, AssetProjector],
                        [StorageItemService, StorageItemProjector],
                        [RoadSegmentService, RoadSegmentProjector],
                        [StationService, StationProjector],
-
+                       [AssignedComponentsService, AssignedComponentProjector]
                        ])
 runner = SingleThreadedRunner(system)
 runner.start()
