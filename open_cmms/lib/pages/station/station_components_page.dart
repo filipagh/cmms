@@ -31,13 +31,21 @@ class StationComponentsPage extends StatelessWidget
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            ElevatedButton.icon(onPressed: () {components.reload();}, icon: Icon(Icons.refresh),label: Text("Nacitat komponenty"),),
+            ElevatedButton.icon(
+              onPressed: () {
+                components.reload();
+              },
+              icon: Icon(Icons.refresh),
+              label: Text("Nacitat komponenty"),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 ElevatedButton(
                     onPressed: () {
-                      showFormDialog(SetStationComponentsForm.editComponentsInStation(station: station));
+                      showFormDialog(
+                          SetStationComponentsForm.editComponentsInStation(
+                              station: station));
                     },
                     child: Text('Nastavit komponenty')),
                 VerticalDivider(),
