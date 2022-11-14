@@ -1,4 +1,5 @@
 import uuid
+from datetime import datetime
 
 from eventsourcing.dispatch import singledispatchmethod
 from eventsourcing.system import ProcessApplication
@@ -21,7 +22,7 @@ class AssignedComponentsService(ProcessApplication):
                 pass
             case AssignedComponentState.INSTALLED:
                 component.remove_component(station_id=component.station_id, asset_id=component.asset_id,
-                                           new_status=AssignedComponentState.REMOVED)
+                                           new_status=AssignedComponentState.REMOVED, changed_at=datetime.now())
                 self.save(component)
             case _:
                 raise Exception("NOW CANT REMOVE COMONENT WHICH ARE NOT IN STATE INSTALLED")

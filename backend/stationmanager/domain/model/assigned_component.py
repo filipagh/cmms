@@ -36,6 +36,5 @@ class AssignedComponent(Aggregate):
 
     @event(AssignedComponentRemoved)
     def remove_component(self, station_id, asset_id, new_status,
-                         changed_at: datetime.datetime = datetime.datetime.now()):
+                         changed_at: datetime.datetime):
         self.status = new_status
-        self.changed_at = changed_at
