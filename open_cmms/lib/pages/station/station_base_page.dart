@@ -2,6 +2,7 @@ import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/pages/station/station_components_page.dart';
+import 'package:open_cmms/pages/station/station_history_page.dart';
 import 'package:open_cmms/pages/station/station_info_page.dart';
 import 'package:open_cmms/pages/station/station_tab_menu.dart';
 import 'package:open_cmms/service/backend_api/station_service.dart';
@@ -78,6 +79,12 @@ class StationBasePage extends StatelessWidget {
         {
           contextWidget = StationComponentsPage(station: station.value!);
         }
+        break;
+      case StationBaseContextPageEnum.history:
+        {
+          contextWidget = StationHistoryPage(station: station.value!);
+        }
+        break;
     }
     return Column(
       children: [
@@ -95,7 +102,7 @@ class StationBasePage extends StatelessWidget {
               ),
               VerticalDivider(),
               Expanded(
-                child: contextWidget,
+                child: contextWidget!,
               ),
             ],
           ),
@@ -124,4 +131,5 @@ abstract class StationBaseContextPage extends Widget {
 enum StationBaseContextPageEnum {
   info,
   components,
+  history,
 }

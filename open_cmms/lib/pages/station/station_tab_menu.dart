@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/pages/station/station_base_page.dart';
 import 'package:open_cmms/pages/station/station_components_page.dart';
+import 'package:open_cmms/pages/station/station_history_page.dart';
 import 'package:open_cmms/pages/station/station_info_page.dart';
 
 class StationTabMenu extends StatelessWidget {
@@ -44,7 +45,7 @@ class StationTabMenu extends StatelessWidget {
         "Informacie", const Icon(Icons.info), StationInfoPage.ENDPOINT),
     StationButton("Komponenty", const Icon(Icons.settings), StationComponentsPage.ENDPOINT),
     StationButton("Ulohy", const Icon(Icons.task), ""),
-    StationButton("Historia", const Icon(Icons.history), ""),
+    StationButton("Historia", const Icon(Icons.history), StationHistoryPage.ENDPOINT),
   ];
 }
 
