@@ -1,10 +1,10 @@
 import uuid
 
-from sqlalchemy import Column, ForeignKey, String, DateTime, func, Integer, Text, Boolean, Date, Enum
+from sqlalchemy import Column, String
 from sqlalchemy.dialects import postgresql
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import Session
+
 import base.database
-from assetmanager.application.model.schema import AssetCategoryNewSchema
 from base.database import Base
 
 
@@ -30,3 +30,9 @@ def save_new(asset: AssetModel):
 def get_assets():
     with _get_db() as db:
         return db.query(AssetModel).all()
+
+
+def get_asset_by_id(asset_id) -> AssetModel:
+    db: Session
+    with _get_db() as db:
+        return db.query(AssetModel).get(asset_id)

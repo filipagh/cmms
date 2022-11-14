@@ -15,6 +15,8 @@ class AssignedComponentProjector(ProcessApplication):
 
     @policy.register(AssignedComponent.CreatedEvent)
     def _(self, domain_event: AssignedComponent.CreatedEvent, process_event):
+        obj = None
+        domain_event.mutate(obj)
         model = assigned_component_repo.AssignedComponentModel(
             id=domain_event.originator_id,
             asset_id=domain_event.asset_id,
