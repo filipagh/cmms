@@ -40,14 +40,14 @@ Please follow the [installation procedure](#installation--usage) and then run th
 import 'package:BackendAPI/api.dart';
 
 
-final api_instance = AssetManagerApi();
-final assetNewSchema = AssetNewSchema(); // AssetNewSchema | 
+final api_instance = ActionHistoryApi();
+final stationId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-    final result = api_instance.createNewAssetAssetManagerNewAssetPost(assetNewSchema);
+    final result = api_instance.getByStationActionHistoryByStationGet(stationId);
     print(result);
 } catch (e) {
-    print('Exception when calling AssetManagerApi->createNewAssetAssetManagerNewAssetPost: $e\n');
+    print('Exception when calling ActionHistoryApi->getByStationActionHistoryByStationGet: $e\n');
 }
 
 ```
@@ -58,6 +58,7 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*ActionHistoryApi* | [**getByStationActionHistoryByStationGet**](doc//ActionHistoryApi.md#getbystationactionhistorybystationget) | **GET** /action_history/by_station | Get By Station
 *AssetManagerApi* | [**createNewAssetAssetManagerNewAssetPost**](doc//AssetManagerApi.md#createnewassetassetmanagernewassetpost) | **POST** /assetManager/newAsset | Create New Asset
 *AssetManagerApi* | [**createNewCategoryAssetManagerNewCategoryPost**](doc//AssetManagerApi.md#createnewcategoryassetmanagernewcategorypost) | **POST** /assetManager/newCategory | Create New Category
 *AssetManagerApi* | [**getAssetCategoriesAssetManagerAssetCategoriesGet**](doc//AssetManagerApi.md#getassetcategoriesassetmanagerassetcategoriesget) | **GET** /assetManager/asset-categories | Get Asset Categories
@@ -78,6 +79,7 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
+ - [ActionHistorySchema](doc//ActionHistorySchema.md)
  - [AssetCategoryNewSchema](doc//AssetCategoryNewSchema.md)
  - [AssetCategorySchema](doc//AssetCategorySchema.md)
  - [AssetCategotyIdSchema](doc//AssetCategotyIdSchema.md)

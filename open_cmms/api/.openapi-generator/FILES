@@ -2,6 +2,8 @@
 .travis.yml
 README.md
 analysis_options.yaml
+doc/ActionHistoryApi.md
+doc/ActionHistorySchema.md
 doc/AssetCategoryNewSchema.md
 doc/AssetCategorySchema.md
 doc/AssetCategotyIdSchema.md
@@ -28,6 +30,7 @@ doc/StorageManagerApi.md
 doc/ValidationError.md
 git_push.sh
 lib/api.dart
+lib/api/action_history_api.dart
 lib/api/asset_manager_api.dart
 lib/api/assigned_components_api.dart
 lib/api/default_api.dart
@@ -42,6 +45,7 @@ lib/auth/authentication.dart
 lib/auth/http_basic_auth.dart
 lib/auth/http_bearer_auth.dart
 lib/auth/oauth.dart
+lib/model/action_history_schema.dart
 lib/model/asset_category_new_schema.dart
 lib/model/asset_category_schema.dart
 lib/model/asset_categoty_id_schema.dart
@@ -61,4 +65,5 @@ lib/model/station_schema.dart
 lib/model/storage_item_schema.dart
 lib/model/validation_error.dart
 pubspec.yaml
-test/assigned_component_id_schema_test.dart
+test/action_history_api_test.dart
+test/action_history_schema_test.dart

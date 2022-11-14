@@ -18,6 +18,7 @@ import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 
+part 'api/action_history_api.dart';
 part 'api/asset_manager_api.dart';
 part 'api/assigned_components_api.dart';
 part 'api/default_api.dart';
@@ -32,6 +33,7 @@ part 'auth/authentication.dart';
 part 'auth/http_basic_auth.dart';
 part 'auth/http_bearer_auth.dart';
 part 'auth/oauth.dart';
+part 'model/action_history_schema.dart';
 part 'model/asset_category_new_schema.dart';
 part 'model/asset_category_schema.dart';
 part 'model/asset_categoty_id_schema.dart';

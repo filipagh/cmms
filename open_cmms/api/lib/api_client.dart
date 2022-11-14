@@ -190,6 +190,8 @@ class ApiClient {
           }
           final valueString = '$value'.toLowerCase();
           return valueString == 'true' || valueString == '1';
+        case 'ActionHistorySchema':
+          return ActionHistorySchema.fromJson(value);
         case 'AssetCategoryNewSchema':
           return AssetCategoryNewSchema.fromJson(value);
         case 'AssetCategorySchema':
