@@ -204,6 +204,8 @@ class ApiClient {
           return AssetNewSchema.fromJson(value);
         case 'AssetSchema':
           return AssetSchema.fromJson(value);
+        case 'AssignedComponentIdSchema':
+          return AssignedComponentIdSchema.fromJson(value);
         case 'AssignedComponentNewSchema':
           return AssignedComponentNewSchema.fromJson(value);
         case 'AssignedComponentSchema':

@@ -24,6 +24,12 @@ class AssignedComponentProjector(ProcessApplication):
         )
         assigned_component_repo.save(model)
 
+    @policy.register(AssignedComponent.AssignedComponentRemoved)
+    def _(self, domain_event: AssignedComponent.AssignedComponentRemoved, process_event):
+        component = assigned_component_repo.get_by_id(domain_event.originator_id)
+        component.status = domain_event.new_status
+        assigned_component_repo.save(component)
+
     def get_by_id(self, id: uuid.UUID) -> AssignedComponentModel:
         return assigned_component_repo.get_by_id(id)
 

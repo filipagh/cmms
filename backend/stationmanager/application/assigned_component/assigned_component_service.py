@@ -14,6 +14,19 @@ class AssignedComponentsService(ProcessApplication):
         self.save(component)
         return component.id
 
+    def force_remove_installed_component(self, assigned_component_id: uuid):
+        component: AssignedComponent = self.repository.get(assigned_component_id)
+        match component.status:
+            case AssignedComponentState.REMOVED:
+                pass
+            case AssignedComponentState.INSTALLED:
+                component.remove_component(station_id=component.station_id, asset_id=component.asset_id,
+                                           new_status=AssignedComponentState.REMOVED)
+                self.save(component)
+            case _:
+                raise Exception("NOW CANT REMOVE COMONENT WHICH ARE NOT IN STATE INSTALLED")
+        return component.id
+
     @singledispatchmethod
     def policy(self, domain_event, process_event):
         """Default policy"""

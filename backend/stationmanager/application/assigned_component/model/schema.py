@@ -14,9 +14,9 @@ class AssignedComponentNewSchema(AssignedComponentSchemaBASE):
     pass
 
 
-class AssignedComponentIdSchema(AssignedComponentSchemaBASE):
+class AssignedComponentIdSchema(BaseModel):
     id: uuid.UUID
 
 
-class AssignedComponentSchema(AssignedComponentIdSchema):
+class AssignedComponentSchema(AssignedComponentIdSchema,AssignedComponentSchemaBASE):
     status: AssignedComponentState

@@ -11,10 +11,11 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createInstalledComponentAssignedComponentsCreateInstalledComponentPost**](AssignedComponentsApi.md#createinstalledcomponentassignedcomponentscreateinstalledcomponentpost) | **POST** /assigned_components/create_installed_component | Create Installed Component
 [**getAllAssignedComponentsComponentsGet**](AssignedComponentsApi.md#getallassignedcomponentscomponentsget) | **GET** /assigned_components/components | Get All
+[**removeInstalledComponentAssignedComponentsRemoveInstalledComponentPost**](AssignedComponentsApi.md#removeinstalledcomponentassignedcomponentsremoveinstalledcomponentpost) | **POST** /assigned_components/remove_installed_component | Remove Installed Component
 
 
 # **createInstalledComponentAssignedComponentsCreateInstalledComponentPost**
-> String createInstalledComponentAssignedComponentsCreateInstalledComponentPost(assignedComponentNewSchema)
+> List<String> createInstalledComponentAssignedComponentsCreateInstalledComponentPost(assignedComponentNewSchema)
 
 Create Installed Component
 
@@ -23,7 +24,7 @@ Create Installed Component
 import 'package:BackendAPI/api.dart';
 
 final api_instance = AssignedComponentsApi();
-final assignedComponentNewSchema = AssignedComponentNewSchema(); // AssignedComponentNewSchema | 
+final assignedComponentNewSchema = [List<AssignedComponentNewSchema>()]; // List<AssignedComponentNewSchema> | 
 
 try {
     final result = api_instance.createInstalledComponentAssignedComponentsCreateInstalledComponentPost(assignedComponentNewSchema);
@@ -37,11 +38,11 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **assignedComponentNewSchema** | [**AssignedComponentNewSchema**](AssignedComponentNewSchema.md)|  | 
+ **assignedComponentNewSchema** | [**List<AssignedComponentNewSchema>**](AssignedComponentNewSchema.md)|  | 
 
 ### Return type
 
-**String**
+**List<String>**
 
 ### Authorization
 
@@ -91,6 +92,47 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **removeInstalledComponentAssignedComponentsRemoveInstalledComponentPost**
+> List<String> removeInstalledComponentAssignedComponentsRemoveInstalledComponentPost(assignedComponentIdSchema)
+
+Remove Installed Component
+
+### Example
+```dart
+import 'package:BackendAPI/api.dart';
+
+final api_instance = AssignedComponentsApi();
+final assignedComponentIdSchema = [List<AssignedComponentIdSchema>()]; // List<AssignedComponentIdSchema> | 
+
+try {
+    final result = api_instance.removeInstalledComponentAssignedComponentsRemoveInstalledComponentPost(assignedComponentIdSchema);
+    print(result);
+} catch (e) {
+    print('Exception when calling AssignedComponentsApi->removeInstalledComponentAssignedComponentsRemoveInstalledComponentPost: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **assignedComponentIdSchema** | [**List<AssignedComponentIdSchema>**](AssignedComponentIdSchema.md)|  | 
+
+### Return type
+
+**List<String>**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

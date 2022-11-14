@@ -83,13 +83,26 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
                   }),
                   ElevatedButton(
                       onPressed: () {
+                        List<schema.AssignedComponentNewSchema> col = [];
                         getNewItems().forEach((element) {
+                          col.add(schema.AssignedComponentNewSchema(
+                              assetId: element.assetId, stationId: station.id));
+                        });
+                        if (col.isNotEmpty) {
                           AssignedComponentService()
                               .createInstalledComponentAssignedComponentsCreateInstalledComponentPost(
-                                  schema.AssignedComponentNewSchema(
-                                      assetId: element.assetId,
-                                      stationId: station.id));
+                                  col);
+                        }
+                        List<schema.AssignedComponentIdSchema> colr = [];
+                        getToRemoveItems().forEach((element) {
+                          colr.add(schema.AssignedComponentIdSchema(id: element.assignedComponentId!));
                         });
+                        if (colr.isNotEmpty) {
+                          AssignedComponentService()
+                              .removeInstalledComponentAssignedComponentsRemoveInstalledComponentPost(
+                              colr);
+                        }
+
 
                         Get.back();
                       },

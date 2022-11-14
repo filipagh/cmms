@@ -2,8 +2,6 @@ import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:open_cmms/pages/station/station_base_page.dart';
 
-import '../../models/station.dart';
-
 
 
 class StationInfoPage extends StatelessWidget implements StationBaseContextPage {
@@ -16,7 +14,7 @@ class StationInfoPage extends StatelessWidget implements StationBaseContextPage 
     return Column(
       children: [
         Text("Meno: " + station.name),
-        Text("ID: " + station.id),
+        SelectableText("ID: " + station.id),
       ],
     );
   }

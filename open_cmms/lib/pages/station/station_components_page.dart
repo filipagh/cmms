@@ -7,7 +7,6 @@ import 'package:open_cmms/states/station/components_state.dart';
 import 'package:open_cmms/widgets/forms/components/set_components_instation_form.dart';
 
 import '../../widgets/dialog_form.dart';
-import '../../widgets/forms/components/components_form.dart';
 
 class StationComponentsPage extends StatelessWidget
     implements StationBaseContextPage {
@@ -67,6 +66,7 @@ class StationComponentsPage extends StatelessWidget
 
   Widget buildComponentList(List<AssignedComponentSchema> components) {
     AssetTypesState stateAssetTypes = Get.find();
+    components.removeWhere((element) => element.status == AssignedComponentState.removed);
     return components.isEmpty
         ? const Expanded(
             child: Center(
