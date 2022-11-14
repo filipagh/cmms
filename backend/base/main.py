@@ -1,27 +1,22 @@
 import os
-import uuid
-from multiprocessing import Process
-from threading import Thread
-from time import sleep
-from uuid import UUID
 
-from eventsourcing.system import System, MultiThreadedRunner, SingleThreadedRunner
+from eventsourcing.system import System, SingleThreadedRunner
 from fastapi import FastAPI
-
-from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
 
 import assetmanager.infrastructure.rest_router
-import storagemanager.infrastructure.rest_router
 import roadsegmentmanager.infrastructure.rest_router
-
+import storagemanager.infrastructure.rest_router
 from assetmanager.application.asset_projector import AssetProjector
 from assetmanager.application.asset_service import AssetService
 from roadsegmentmanager.application.road_segment_projector import RoadSegmentProjector
 from roadsegmentmanager.application.road_segment_service import RoadSegmentService
+from stationmanager.application.action_history.action_history_projector import ActionHistoryProjector
+from stationmanager.application.assigned_component.assigned_component_projector import AssignedComponentProjector
+from stationmanager.application.assigned_component.assigned_component_service import AssignedComponentsService
 from stationmanager.application.station_projector import StationProjector
 from stationmanager.application.station_service import StationService
-
+from stationmanager.infrastructure.action_history_rest_router import action_history_router
 from stationmanager.infrastructure.assigned_component_rest_router import assigned_component_router
 from stationmanager.infrastructure.station_rest_router import station_router
 from storagemanager.application.storage_item_projector import StorageItemProjector
@@ -37,7 +32,8 @@ system = System(pipes=[[AssetService, AssetProjector],
                        [StorageItemService, StorageItemProjector],
                        [RoadSegmentService, RoadSegmentProjector],
                        [StationService, StationProjector],
-
+                       [AssignedComponentsService, AssignedComponentProjector],
+                       [AssignedComponentsService, ActionHistoryProjector],
                        ])
 runner = SingleThreadedRunner(system)
 runner.start()
@@ -48,6 +44,7 @@ app.include_router(storagemanager.infrastructure.rest_router.storage_manager)
 app.include_router(roadsegmentmanager.infrastructure.rest_router.road_segment_manager)
 app.include_router(station_router)
 app.include_router(assigned_component_router)
+app.include_router(action_history_router)
 
 origins = [
     "http://localhost:5000",

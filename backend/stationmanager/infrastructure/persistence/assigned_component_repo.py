@@ -1,11 +1,12 @@
 import uuid
 
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, Enum
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import Session
 
 import base.database
 from base.database import Base
+from stationmanager.domain.model.assigned_component import AssignedComponentState
 
 
 class AssignedComponentModel(Base):
@@ -13,6 +14,7 @@ class AssignedComponentModel(Base):
     id = Column(postgresql.UUID(as_uuid=True), primary_key=True, index=True, default=uuid.uuid4)
     station_id = Column(postgresql.UUID(as_uuid=True), index=True, nullable=False)
     asset_id = Column(postgresql.UUID(as_uuid=True), index=True, nullable=False)
+    status = Column('assigned_component_status', Enum(AssignedComponentState), nullable=False)
 
 
 def _get_db():

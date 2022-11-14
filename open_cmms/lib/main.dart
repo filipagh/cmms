@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:open_cmms/pages/assets_management.dart';
@@ -8,6 +7,8 @@ import 'package:open_cmms/pages/road_segment.dart';
 import 'package:open_cmms/pages/road_segments.dart';
 import 'package:open_cmms/pages/station/station_base_page.dart';
 import 'package:open_cmms/pages/station/station_components_page.dart';
+import 'package:open_cmms/pages/station/station_history_page.dart';
+import 'package:open_cmms/pages/station/station_info_page.dart';
 import 'package:open_cmms/pages/stations.dart';
 import 'package:open_cmms/pages/storage.dart';
 import 'package:open_cmms/pages/task.dart';
@@ -17,7 +18,6 @@ import 'package:open_cmms/service/secrets_manager_service.dart';
 import 'package:open_cmms/states/action_state.dart';
 import 'package:open_cmms/states/asset_types_state.dart';
 import 'package:open_cmms/states/asset_types_state_dummy.dart';
-import 'package:open_cmms/states/assigned_component_state.dart';
 import 'package:open_cmms/states/items_state.dart';
 import 'package:open_cmms/states/items_state_dummy.dart';
 import 'package:open_cmms/states/road_segment_state.dart';
@@ -43,7 +43,6 @@ class MyApp extends StatelessWidget {
     Get.put(AssetTypesState());
     Get.put(ItemsState_dummy());
     Get.put(ItemsStorageState());
-    Get.put(AssignedComponentState());
     Get.put(TasksState());
     Get.put(ActionState());
     Get.put(TaskComponentState());
@@ -99,7 +98,7 @@ class MyApp extends StatelessWidget {
           },
         ),
         GetPage(
-          name: StationBasePage.ENDPOINT+'/:id/Info/',
+          name: StationBasePage.ENDPOINT+'/:id'+StationInfoPage.ENDPOINT,
           page: () {
             return StationBasePage(assetId: Get.parameters["id"]!, contextPageEnum: StationBaseContextPageEnum.info,);
           },
@@ -108,6 +107,12 @@ class MyApp extends StatelessWidget {
           name: StationBasePage.ENDPOINT+'/:id'+StationComponentsPage.ENDPOINT,
           page: () {
             return StationBasePage(assetId: Get.parameters["id"]!, contextPageEnum: StationBaseContextPageEnum.components,);
+          },
+        ),
+        GetPage(
+          name: StationBasePage.ENDPOINT+'/:id'+StationHistoryPage.ENDPOINT,
+          page: () {
+            return StationBasePage(assetId: Get.parameters["id"]!, contextPageEnum: StationBaseContextPageEnum.history,);
           },
         ),
 

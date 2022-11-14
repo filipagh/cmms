@@ -1,4 +1,4 @@
-# BackendAPI.model.AssignedComponentSchema
+# BackendAPI.model.AssignedComponentNewSchema
 
 ## Load the model package
 ```dart
@@ -10,8 +10,6 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **assetId** | **String** |  | 
 **stationId** | **String** |  | 
-**id** | **String** |  | 
-**status** | [**AssignedComponentState**](AssignedComponentState.md) |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

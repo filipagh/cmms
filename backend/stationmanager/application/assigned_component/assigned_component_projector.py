@@ -15,11 +15,22 @@ class AssignedComponentProjector(ProcessApplication):
 
     @policy.register(AssignedComponent.CreatedEvent)
     def _(self, domain_event: AssignedComponent.CreatedEvent, process_event):
+        obj = None
+        domain_event.mutate(obj)
         model = assigned_component_repo.AssignedComponentModel(
             id=domain_event.originator_id,
             asset_id=domain_event.asset_id,
-            station_id=domain_event.station_id)
+            station_id=domain_event.station_id,
+            status=domain_event.status
+
+        )
         assigned_component_repo.save(model)
+
+    @policy.register(AssignedComponent.AssignedComponentRemoved)
+    def _(self, domain_event: AssignedComponent.AssignedComponentRemoved, process_event):
+        component = assigned_component_repo.get_by_id(domain_event.originator_id)
+        component.status = domain_event.new_status
+        assigned_component_repo.save(component)
 
     def get_by_id(self, id: uuid.UUID) -> AssignedComponentModel:
         return assigned_component_repo.get_by_id(id)

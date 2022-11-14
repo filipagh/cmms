@@ -1,113 +1,143 @@
+import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:open_cmms/models/assigned_component.dart';
 import 'package:open_cmms/pages/station/station_base_page.dart';
-import 'package:open_cmms/states/asset_types_state_dummy.dart';
-import 'package:open_cmms/states/assigned_component_state.dart';
-import 'package:open_cmms/widgets/dialog_form.dart';
-import 'package:open_cmms/widgets/forms/components/components_form.dart';
+import 'package:open_cmms/states/asset_types_state.dart';
+import 'package:open_cmms/states/station/components_state.dart';
+import 'package:open_cmms/widgets/forms/components/set_components_instation_form.dart';
 
-import '../../models/station.dart';
+import '../../widgets/dialog_form.dart';
 
 class StationComponentsPage extends StatelessWidget
     implements StationBaseContextPage {
   static const String ENDPOINT = '/Components';
-  final Station station;
+  final StationSchema station;
 
   const StationComponentsPage({Key? key, required this.station})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    AssignedComponentsState components;
+    try {
+      components = Get.find();
+    } catch (e) {
+      print("put");
+      components = Get.put(AssignedComponentsState(station.id));
+    }
     return Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            ElevatedButton(onPressed: () {showFormDialog(StationComponentsForm.editComponentsInStation(editItem: station));}, child: Text('edit components')),
+            ElevatedButton.icon(
+              onPressed: () {
+                components.reload();
+              },
+              icon: Icon(Icons.refresh),
+              label: Text("Nacitat komponenty"),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ElevatedButton(
+                    onPressed: () {
+                      showFormDialog(
+                          SetStationComponentsForm.editComponentsInStation(
+                              station: station));
+                    },
+                    child: Text('Nastavit komponenty')),
+                VerticalDivider(),
+                ElevatedButton(
+                    onPressed: () {
+                      // showFormDialog(StationComponentsForm.editComponentsInStation(editItem: station));
+                    },
+                    child: Text('Editovat komponenty')),
+              ],
+            ),
           ],
         ),
         Divider(),
-        buildComponentList(),
+        GetBuilder<AssignedComponentsState>(
+            builder: (_) => buildComponentList(_.components)),
       ],
     );
   }
 
-  Widget buildComponentList() {
-    AssetTypesStateDummy stateAssetTypes = Get.find();
-    return GetX<AssignedComponentState>(builder: (_) {
-      var components = _.getInstalledComponentsByStationId(station.id);
-      return components.isEmpty
-          ? const Expanded(
-              child: Center(
-                  child: Text(
-              "No Components",
-              textScaleFactor: 3,
-            )))
-          : Expanded(
-              child: ListView.builder(
-                  addRepaintBoundaries: true,
-                  padding: const EdgeInsets.all(8),
-                  itemCount: components.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Card(
-                        child: ListTile(
-                            tileColor: getColor(components[index]),
-                            hoverColor: Colors.blue.shade200,
-                            title: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: 100,
-                                  child: Text(stateAssetTypes
-                                      .getAssetTypeById(
-                                          components[index].productId)!
-                                      .name),
-                                ),
-                                Spacer(),
-                                buildContextOfComponent(components[index])!,
-                                Spacer(),
-                                Text('ACTIONS')
-                                // Text(components[index].assignedComponentId),
-                              ],
+  Widget buildComponentList(List<AssignedComponentSchema> components) {
+    AssetTypesState stateAssetTypes = Get.find();
+    components.removeWhere((element) => element.status == AssignedComponentState.removed);
+    return components.isEmpty
+        ? const Expanded(
+            child: Center(
+                child: Text(
+            "Ziadne komponenty",
+            textScaleFactor: 3,
+          )))
+        : Expanded(
+            child: ListView.builder(
+                addRepaintBoundaries: true,
+                padding: const EdgeInsets.all(8),
+                itemCount: components.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Card(
+                      child: ListTile(
+                          tileColor: getColor(components[index]),
+                          hoverColor: Colors.blue.shade200,
+                          title: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: 100,
+                                child: Text(stateAssetTypes
+                                    .getAssetById(components[index].assetId)!
+                                    .name),
+                              ),
+                              Spacer(),
+                              buildContextOfComponent(components[index])!,
+                              Spacer(),
+                              Text('ACTIONS')
+                              // Text(components[index].assignedComponentId),
+                            ],
 
-                              // subtitle:
-                              // Center(child: Text('station Id: ${list[index].id}')),
-                            )));
-                  }),
-            );
-    });
+                            // subtitle:
+                            // Center(child: Text('station Id: ${list[index].id}')),
+                          )));
+                }),
+          );
   }
 
-  Widget? buildContextOfComponent(AssignedComponent component) {
-    switch (component.actualState) {
-      case AssignedComponentStateEnum.awaiting:
+  Widget? buildContextOfComponent(AssignedComponentSchema component) {
+    switch (component.status) {
+      case AssignedComponentState.awaiting:
         //todo add task link
         return Text("will be instaled in TASK");
-      case AssignedComponentStateEnum.installed:
-        return Text('installed on: ' + component.installed.toString());
-      case AssignedComponentStateEnum.willBeRemoved:
+      case AssignedComponentState.installed:
+        return Text('installed on: DATE');
+      // return Text('installed on: ' + component.installed.toString());
+      case AssignedComponentState.willBeRemoved:
         return Column(
           children: [
             //todo task
             Text('will be removed in TASK'),
-            Text('installed on: ' + component.installed.toString()),
+            Text('installed on: DATE'),
+            // Text('installed on: ' + component.installed.toString()),
           ],
         );
-      case AssignedComponentStateEnum.removed:
+      case AssignedComponentState.removed:
         return null;
     }
   }
 
-  Color? getColor(AssignedComponent component) {
-    switch (component.actualState) {
-      case AssignedComponentStateEnum.awaiting:
+  Color? getColor(AssignedComponentSchema component) {
+    switch (component.status) {
+      case AssignedComponentState.awaiting:
         return Colors.green[200];
-      case AssignedComponentStateEnum.installed:
+      case AssignedComponentState.installed:
         return Colors.white;
-      case AssignedComponentStateEnum.willBeRemoved:
+      case AssignedComponentState.willBeRemoved:
         return Colors.red[200];
-      case AssignedComponentStateEnum.removed:
+      case AssignedComponentState.removed:
         return null;
     }
   }

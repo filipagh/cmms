@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/pages/station/station_base_page.dart';
 import 'package:open_cmms/pages/station/station_components_page.dart';
+import 'package:open_cmms/pages/station/station_history_page.dart';
 import 'package:open_cmms/pages/station/station_info_page.dart';
 
 class StationTabMenu extends StatelessWidget {
@@ -27,7 +28,8 @@ class StationTabMenu extends StatelessWidget {
           padding: MaterialStateProperty.all(EdgeInsets.all(10)),
         ),
         onPressed: () {
-          Get.offAndToNamed(
+          // Get.offAndToNamed(
+          Get.toNamed(
               StationBasePage.ENDPOINT + '/' + stationId + element.endpoint);
         },
         label: Text(element.label),
@@ -40,10 +42,10 @@ class StationTabMenu extends StatelessWidget {
 
   List<StationButton> buttonList = [
     StationButton(
-        "Base Info", const Icon(Icons.info), StationInfoPage.ENDPOINT),
-    StationButton("Components", const Icon(Icons.settings), StationComponentsPage.ENDPOINT),
-    StationButton("Tasks", const Icon(Icons.task), ""),
-    StationButton("History", const Icon(Icons.history), ""),
+        "Informacie", const Icon(Icons.info), StationInfoPage.ENDPOINT),
+    StationButton("Komponenty", const Icon(Icons.settings), StationComponentsPage.ENDPOINT),
+    StationButton("Ulohy", const Icon(Icons.task), ""),
+    StationButton("Historia", const Icon(Icons.history), StationHistoryPage.ENDPOINT),
   ];
 }
 

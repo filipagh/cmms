@@ -16,14 +16,69 @@ class AssignedComponentsApi {
 
   final ApiClient apiClient;
 
+  /// Create Installed Component
+  ///
+  /// Note: This method returns the HTTP [Response].
+  ///
+  /// Parameters:
+  ///
+  /// * [List<AssignedComponentNewSchema>] assignedComponentNewSchema (required):
+  Future<Response> createInstalledComponentAssignedComponentsCreateInstalledComponentPostWithHttpInfo(List<AssignedComponentNewSchema> assignedComponentNewSchema,) async {
+    // ignore: prefer_const_declarations
+    final path = r'/assigned_components/create_installed_component';
+
+    // ignore: prefer_final_locals
+    Object? postBody = assignedComponentNewSchema;
+
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
+
+    const contentTypes = <String>['application/json'];
+
+
+    return apiClient.invokeAPI(
+      path,
+      'POST',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      contentTypes.isEmpty ? null : contentTypes.first,
+    );
+  }
+
+  /// Create Installed Component
+  ///
+  /// Parameters:
+  ///
+  /// * [List<AssignedComponentNewSchema>] assignedComponentNewSchema (required):
+  Future<List<String>?> createInstalledComponentAssignedComponentsCreateInstalledComponentPost(List<AssignedComponentNewSchema> assignedComponentNewSchema,) async {
+    final response = await createInstalledComponentAssignedComponentsCreateInstalledComponentPostWithHttpInfo(assignedComponentNewSchema,);
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+      final responseBody = await _decodeBodyBytes(response);
+      return (await apiClient.deserializeAsync(responseBody, 'List<String>') as List)
+        .cast<String>()
+        .toList();
+
+    }
+    return null;
+  }
+
   /// Get All
   ///
   /// Note: This method returns the HTTP [Response].
   ///
   /// Parameters:
   ///
-  /// * [String] stationId:
-  Future<Response> getAllAssignedComponentsComponentsGetWithHttpInfo({ String? stationId, }) async {
+  /// * [String] stationId (required):
+  Future<Response> getAllAssignedComponentsComponentsGetWithHttpInfo(String stationId,) async {
     // ignore: prefer_const_declarations
     final path = r'/assigned_components/components';
 
@@ -34,9 +89,7 @@ class AssignedComponentsApi {
     final headerParams = <String, String>{};
     final formParams = <String, String>{};
 
-    if (stationId != null) {
       queryParams.addAll(_queryParams('', 'station_id', stationId));
-    }
 
     const contentTypes = <String>[];
 
@@ -56,9 +109,9 @@ class AssignedComponentsApi {
   ///
   /// Parameters:
   ///
-  /// * [String] stationId:
-  Future<List<AssignedComponentSchema>?> getAllAssignedComponentsComponentsGet({ String? stationId, }) async {
-    final response = await getAllAssignedComponentsComponentsGetWithHttpInfo( stationId: stationId, );
+  /// * [String] stationId (required):
+  Future<List<AssignedComponentSchema>?> getAllAssignedComponentsComponentsGet(String stationId,) async {
+    final response = await getAllAssignedComponentsComponentsGetWithHttpInfo(stationId,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -69,6 +122,61 @@ class AssignedComponentsApi {
       final responseBody = await _decodeBodyBytes(response);
       return (await apiClient.deserializeAsync(responseBody, 'List<AssignedComponentSchema>') as List)
         .cast<AssignedComponentSchema>()
+        .toList();
+
+    }
+    return null;
+  }
+
+  /// Remove Installed Component
+  ///
+  /// Note: This method returns the HTTP [Response].
+  ///
+  /// Parameters:
+  ///
+  /// * [List<AssignedComponentIdSchema>] assignedComponentIdSchema (required):
+  Future<Response> removeInstalledComponentAssignedComponentsRemoveInstalledComponentPostWithHttpInfo(List<AssignedComponentIdSchema> assignedComponentIdSchema,) async {
+    // ignore: prefer_const_declarations
+    final path = r'/assigned_components/remove_installed_component';
+
+    // ignore: prefer_final_locals
+    Object? postBody = assignedComponentIdSchema;
+
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
+
+    const contentTypes = <String>['application/json'];
+
+
+    return apiClient.invokeAPI(
+      path,
+      'POST',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      contentTypes.isEmpty ? null : contentTypes.first,
+    );
+  }
+
+  /// Remove Installed Component
+  ///
+  /// Parameters:
+  ///
+  /// * [List<AssignedComponentIdSchema>] assignedComponentIdSchema (required):
+  Future<List<String>?> removeInstalledComponentAssignedComponentsRemoveInstalledComponentPost(List<AssignedComponentIdSchema> assignedComponentIdSchema,) async {
+    final response = await removeInstalledComponentAssignedComponentsRemoveInstalledComponentPostWithHttpInfo(assignedComponentIdSchema,);
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+      final responseBody = await _decodeBodyBytes(response);
+      return (await apiClient.deserializeAsync(responseBody, 'List<String>') as List)
+        .cast<String>()
         .toList();
 
     }

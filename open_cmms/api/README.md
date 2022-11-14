@@ -40,14 +40,14 @@ Please follow the [installation procedure](#installation--usage) and then run th
 import 'package:BackendAPI/api.dart';
 
 
-final api_instance = AssetManagerApi();
-final assetNewSchema = AssetNewSchema(); // AssetNewSchema | 
+final api_instance = ActionHistoryApi();
+final stationId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-    final result = api_instance.createNewAssetAssetManagerNewAssetPost(assetNewSchema);
+    final result = api_instance.getByStationActionHistoryByStationGet(stationId);
     print(result);
 } catch (e) {
-    print('Exception when calling AssetManagerApi->createNewAssetAssetManagerNewAssetPost: $e\n');
+    print('Exception when calling ActionHistoryApi->getByStationActionHistoryByStationGet: $e\n');
 }
 
 ```
@@ -58,11 +58,14 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*ActionHistoryApi* | [**getByStationActionHistoryByStationGet**](doc//ActionHistoryApi.md#getbystationactionhistorybystationget) | **GET** /action_history/by_station | Get By Station
 *AssetManagerApi* | [**createNewAssetAssetManagerNewAssetPost**](doc//AssetManagerApi.md#createnewassetassetmanagernewassetpost) | **POST** /assetManager/newAsset | Create New Asset
 *AssetManagerApi* | [**createNewCategoryAssetManagerNewCategoryPost**](doc//AssetManagerApi.md#createnewcategoryassetmanagernewcategorypost) | **POST** /assetManager/newCategory | Create New Category
 *AssetManagerApi* | [**getAssetCategoriesAssetManagerAssetCategoriesGet**](doc//AssetManagerApi.md#getassetcategoriesassetmanagerassetcategoriesget) | **GET** /assetManager/asset-categories | Get Asset Categories
 *AssetManagerApi* | [**getAssetsAssetManagerAssetsGet**](doc//AssetManagerApi.md#getassetsassetmanagerassetsget) | **GET** /assetManager/assets | Get Assets
+*AssignedComponentsApi* | [**createInstalledComponentAssignedComponentsCreateInstalledComponentPost**](doc//AssignedComponentsApi.md#createinstalledcomponentassignedcomponentscreateinstalledcomponentpost) | **POST** /assigned_components/create_installed_component | Create Installed Component
 *AssignedComponentsApi* | [**getAllAssignedComponentsComponentsGet**](doc//AssignedComponentsApi.md#getallassignedcomponentscomponentsget) | **GET** /assigned_components/components | Get All
+*AssignedComponentsApi* | [**removeInstalledComponentAssignedComponentsRemoveInstalledComponentPost**](doc//AssignedComponentsApi.md#removeinstalledcomponentassignedcomponentsremoveinstalledcomponentpost) | **POST** /assigned_components/remove_installed_component | Remove Installed Component
 *DefaultApi* | [**rootGet**](doc//DefaultApi.md#rootget) | **GET** / | Root
 *RoadSegmentManagerApi* | [**createRoadSegmentRoadSegmentManagerCreateRoadSegmentPost**](doc//RoadSegmentManagerApi.md#createroadsegmentroadsegmentmanagercreateroadsegmentpost) | **POST** /road-segment-manager/create_road_segment | Create Road Segment
 *RoadSegmentManagerApi* | [**getAllRoadSegmentManagerSegmentsGet**](doc//RoadSegmentManagerApi.md#getallroadsegmentmanagersegmentsget) | **GET** /road-segment-manager/segments | Get All
@@ -76,6 +79,7 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
+ - [ActionHistorySchema](doc//ActionHistorySchema.md)
  - [AssetCategoryNewSchema](doc//AssetCategoryNewSchema.md)
  - [AssetCategorySchema](doc//AssetCategorySchema.md)
  - [AssetCategotyIdSchema](doc//AssetCategotyIdSchema.md)
@@ -83,7 +87,10 @@ Class | Method | HTTP request | Description
  - [AssetItemToAdd](doc//AssetItemToAdd.md)
  - [AssetNewSchema](doc//AssetNewSchema.md)
  - [AssetSchema](doc//AssetSchema.md)
+ - [AssignedComponentIdSchema](doc//AssignedComponentIdSchema.md)
+ - [AssignedComponentNewSchema](doc//AssignedComponentNewSchema.md)
  - [AssignedComponentSchema](doc//AssignedComponentSchema.md)
+ - [AssignedComponentState](doc//AssignedComponentState.md)
  - [HTTPValidationError](doc//HTTPValidationError.md)
  - [RoadSegmentNewSchema](doc//RoadSegmentNewSchema.md)
  - [RoadSegmentSchema](doc//RoadSegmentSchema.md)

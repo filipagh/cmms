@@ -1,15 +1,11 @@
 import uuid
-from typing import Optional
 
 from fastapi import APIRouter
 
 from base import main
 from stationmanager.application.assigned_component.assigned_component_projector import AssignedComponentProjector
+from stationmanager.application.assigned_component.assigned_component_service import AssignedComponentsService
 from stationmanager.application.assigned_component.model import schema
-
-from stationmanager.application.station_projector import StationProjector
-from stationmanager.application.station_service import StationService
-from stationmanager.infrastructure.station_rest_router import station_router
 
 assigned_component_router = APIRouter(
     prefix="/assigned_components",
@@ -18,11 +14,23 @@ assigned_component_router = APIRouter(
 )
 
 
-# @assigned_component_router.post("/create_station",
-#                      response_model=uuid.UUID)
-# def create_station(new_station: schema.StationNewSchema):
-#     segment_service = main.runner.get(StationService)
-#     return segment_service.create_station(new_station)
+@assigned_component_router.post("/create_installed_component",
+                     response_model=list[uuid.UUID])
+def create_installed_component(new_components: list[schema.AssignedComponentNewSchema]):
+    segment_service = main.runner.get(AssignedComponentsService)
+    ids = []
+    for c in new_components:
+        ids.append(segment_service.create_installed_component(c.asset_id, c.station_id))
+    return ids\
+
+@assigned_component_router.post("/remove_installed_component",
+                     response_model=list[uuid.UUID])
+def remove_installed_component(components_to_remove: list[schema.AssignedComponentIdSchema]):
+    segment_service = main.runner.get(AssignedComponentsService)
+    ids = []
+    for c in components_to_remove:
+        ids.append(segment_service.force_remove_installed_component(c.id))
+    return ids
 
 #
 # @assigned_component_router.get("/station",
@@ -36,7 +44,7 @@ assigned_component_router = APIRouter(
 @assigned_component_router.get("/components",
                                response_model=list[schema.AssignedComponentSchema])
 def get_all(
-        station_id: uuid.UUID = None
+        station_id: uuid.UUID
 ):
     projector = main.runner.get(AssignedComponentProjector)
     col = []

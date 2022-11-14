@@ -1,11 +1,10 @@
-
 import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/models/task_component.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
-import 'package:open_cmms/widgets/forms/components/add_component.dart';
+import 'package:open_cmms/widgets/forms/components/component_picker.dart';
 
 import '../../../states/asset_types_state.dart';
 import '../../../states/items_state.dart';
@@ -32,7 +31,8 @@ class AddItemsToStorage extends StatelessWidget implements hasFormTitle {
       children: [
         ElevatedButton(
             onPressed: () async {
-              var item = _buildItem(await showFormDialog(AddComponentForm()));
+              var item =
+                  _buildItem(await showFormDialog(ComponentPickerForm()));
               if (item != null) {
                 _items.add(item);
               }
@@ -44,16 +44,30 @@ class AddItemsToStorage extends StatelessWidget implements hasFormTitle {
             child: Obx(() {
               return ListView(children: _buildList());
             })),
-        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          ElevatedButton(onPressed: () {Get.back();}, child: Text("Zrusit")),
-          ElevatedButton(onPressed: () {
-            List<AssetItemToAdd> items = [];
-            _items.forEach((e) => {items.add(AssetItemToAdd(storageItemId: e.storageItem.id, countToAdd: e.count))});
-            _itemsState.addToStorage(items).then((value) => _itemsState.reloadData());
-            Get.back();
-          }, child: Text("Potvrdit")),
-        ],)
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            ElevatedButton(
+                onPressed: () {
+                  Get.back();
+                },
+                child: const Text("Zrusit")),
+            ElevatedButton(
+                onPressed: () {
+                  List<AssetItemToAdd> items = [];
+                  _items.forEach((e) => {
+                        items.add(AssetItemToAdd(
+                            storageItemId: e.storageItem.id,
+                            countToAdd: e.count))
+                      });
+                  _itemsState
+                      .addToStorage(items)
+                      .then((value) => _itemsState.reloadData());
+                  Get.back();
+                },
+                child: const Text("Potvrdit")),
+          ],
+        )
       ],
     );
   }
@@ -78,8 +92,9 @@ class AddItemsToStorage extends StatelessWidget implements hasFormTitle {
   }
 
   _Item? _buildItem(AssetSchema product) {
-    var exist =_items.firstWhereOrNull((element) => element.item.id == product.id);
-    if (exist==null) {
+    var exist =
+        _items.firstWhereOrNull((element) => element.item.id == product.id);
+    if (exist == null) {
       return _Item(_itemsState.getByAssetId(product.id)!, product);
     }
     return null;
@@ -97,13 +112,19 @@ class AddItemsToStorage extends StatelessWidget implements hasFormTitle {
               Flexible(
                 child: TextField(
                   keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
                   onChanged: (value) {
-                    element.count = int.tryParse(value)?? 0;
+                    element.count = int.tryParse(value) ?? 0;
                   },
                 ),
               ),
-              IconButton(onPressed: () {_items.remove(element);}, icon: Icon(Icons.delete))
+              IconButton(
+                  onPressed: () {
+                    _items.remove(element);
+                  },
+                  icon: const Icon(Icons.delete))
             ],
           ),
         ),

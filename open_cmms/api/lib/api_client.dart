@@ -190,6 +190,8 @@ class ApiClient {
           }
           final valueString = '$value'.toLowerCase();
           return valueString == 'true' || valueString == '1';
+        case 'ActionHistorySchema':
+          return ActionHistorySchema.fromJson(value);
         case 'AssetCategoryNewSchema':
           return AssetCategoryNewSchema.fromJson(value);
         case 'AssetCategorySchema':
@@ -204,8 +206,14 @@ class ApiClient {
           return AssetNewSchema.fromJson(value);
         case 'AssetSchema':
           return AssetSchema.fromJson(value);
+        case 'AssignedComponentIdSchema':
+          return AssignedComponentIdSchema.fromJson(value);
+        case 'AssignedComponentNewSchema':
+          return AssignedComponentNewSchema.fromJson(value);
         case 'AssignedComponentSchema':
           return AssignedComponentSchema.fromJson(value);
+        case 'AssignedComponentState':
+          return AssignedComponentStateTypeTransformer().decode(value);
         case 'HTTPValidationError':
           return HTTPValidationError.fromJson(value);
         case 'RoadSegmentNewSchema':
