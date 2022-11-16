@@ -11,7 +11,7 @@ class AssignedComponentsService(ProcessApplication):
 
     def create_installed_component(self, asset_id: uuid, station_id: uuid):
         component: AssignedComponent = AssignedComponent(asset_id=asset_id, station_id=station_id,
-                                                         status=AssignedComponentState.INSTALLED)
+                                                         status=AssignedComponentState.INSTALLED,created_at=datetime.now())
         self.save(component)
         return component.id
 
