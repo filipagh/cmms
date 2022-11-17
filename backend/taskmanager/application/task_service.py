@@ -3,11 +3,12 @@ import uuid
 from eventsourcing.dispatch import singledispatchmethod
 from eventsourcing.system import ProcessApplication
 
-from stationmanager.application.model import schema
-from stationmanager.domain.model.station import Station
+from base import main
+from stationmanager.application.station_projector import StationProjector
+from taskmanager.application.model.task import schema
 
 
-class StationService(ProcessApplication):
+class RoadSegmentService(ProcessApplication):
 
     # def add_to_storage(self, assets_list: list[schema.AssetItemToAdd]):
     #     unresolved = []
@@ -22,17 +23,13 @@ class StationService(ProcessApplication):
     #             unresolved.append(i)
     #     return unresolved
 
-    def create_station(self, station: schema.StationNewSchema) -> uuid.UUID:
-        station = Station(name=station.name, road_segment_id=station.road_segment_id)
-        self.save(station)
-        return station.id
-
-    def remove_station(self, station: schema.StationIdSchema):
-        station = self.repository.get(station.id)
-        station.remove()
-        self.save(station)
-
-
+    def create_task(self, new_task: schema.TaskNewSchema) -> uuid.UUID:
+        station_repo: StationProjector = main.runner.get(main.Services.StationProjector)
+        station = station_repo.get_by_id(new_task.station_id)
+        # todo
+        # segment = RoadSegment(name=segment.name, ssud=segment.ssud)
+        # self.save(segment)
+        # return segment.id
 
     @singledispatchmethod
     def policy(self, domain_event, process_event):

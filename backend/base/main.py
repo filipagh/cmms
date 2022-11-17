@@ -1,4 +1,5 @@
 import os
+from enum import Enum
 
 from eventsourcing.system import System, SingleThreadedRunner
 from fastapi import FastAPI
@@ -26,6 +27,12 @@ from storagemanager.application.storage_item_service import StorageItemService
 
 os.chdir(os.path.dirname(__file__) + '/../')
 os.system('alembic upgrade head')
+
+
+class Services(Enum):
+    AssetService = AssetService
+    StationProjector = StationProjector
+
 
 system = System(pipes=[[AssetService, AssetProjector],
                        [AssetService, StorageItemService],

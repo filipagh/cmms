@@ -12,9 +12,9 @@ class StationNewSchema(StationSchemaBASE):
     pass
 
 
-class StationIdSchema(StationSchemaBASE):
+class StationIdSchema(BaseModel):
     id: uuid.UUID
 
 
-class StationSchema(StationIdSchema):
+class StationSchema(StationIdSchema, StationSchemaBASE):
     pass

@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, String
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import Session
 
@@ -30,7 +30,7 @@ def save(station: StationModel):
         db.commit()
 
 
-def get_by_id(id: uuid.UUID):
+def get_by_id(id: uuid.UUID) -> StationModel:
     db: Session
     with _get_db() as db:
         return db.query(StationModel).get(id)
@@ -40,3 +40,10 @@ def get_by_road_segment(road_segment_id: uuid.UUID) -> list[StationModel]:
     db: Session
     with _get_db() as db:
         return db.query(StationModel).where(StationModel.road_segment_id == road_segment_id).all()
+
+
+def remove_by_id(station_id):
+    db: Session
+    with _get_db() as db:
+        db.query(StationModel).filter(StationModel.id == station_id).delete()
+        db.commit()
