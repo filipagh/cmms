@@ -26,7 +26,7 @@ def create_component_task(
 
 
 
-@task_manager_router.get("/load_component_task/{id}",
+@task_manager_router.get("/load_component_task/{task_id}",
                          response_model=schema_change_comp.TaskChangeComponentsSchema)
 def load(task_id: uuid.UUID):
     task_service: TaskService = main.runner.get(main.Services.TaskService.value)
