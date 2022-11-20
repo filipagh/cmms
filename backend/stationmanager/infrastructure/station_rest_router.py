@@ -21,6 +21,7 @@ def create_station(new_station: schema.StationNewSchema):
     segment_service = main.runner.get(StationService)
     return segment_service.create_station(new_station)
 
+
 @station_router.delete("/remove_station")
 def remove_station(station_id: schema.StationIdSchema):
     segment_service = main.runner.get(StationService)

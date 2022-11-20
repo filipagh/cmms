@@ -1,4 +1,5 @@
 import uuid
+from typing import Optional
 
 from eventsourcing.dispatch import singledispatchmethod
 from eventsourcing.system import ProcessApplication
@@ -24,7 +25,7 @@ class StationProjector(ProcessApplication):
     def _(self, domain_event: Station.StationRemoved, process_event):
         station_repo.remove_by_id(domain_event.originator_id)
 
-    def get_by_id(self, id: uuid.UUID) -> StationModel:
+    def get_by_id(self, id: uuid.UUID) -> Optional[StationModel]:
         return station_repo.get_by_id(id)
 
     def get_by_road_segment(self, segment_id: uuid.UUID) -> list[StationModel]:

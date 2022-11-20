@@ -1,17 +1,21 @@
 import uuid
-from typing import Optional
 
 from pydantic import BaseModel
 
-from taskmanager.domain.model.task_component import TaskComponentState
+from taskmanager.domain.model.task_component_state import TaskComponentState
 
 
 class TaskComponentSchemaBASE(BaseModel):
-    asset_id: uuid.UUID
+    pass
 
 
-class TaskComponentNewSchema(TaskComponentSchemaBASE):
-    assigned_component: Optional[uuid.UUID]
+
+class TaskComponentAddNewSchema(TaskComponentSchemaBASE):
+    new_asset_id: uuid.UUID
+    pass
+
+class TaskComponentRemoveNewSchema(TaskComponentSchemaBASE):
+    assigned_component_id: uuid.UUID
     pass
 
 

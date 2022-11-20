@@ -1,41 +1,65 @@
+import datetime
 import uuid
+from typing import Optional
 
+from eventsourcing.application import AggregateNotFound
 from eventsourcing.dispatch import singledispatchmethod
 from eventsourcing.system import ProcessApplication
 
+import taskmanager.application.model.task_change_component.schema
 from base import main
 from stationmanager.application.station_projector import StationProjector
-from taskmanager.application.model.task import schema
+from taskmanager.application.model.task_change_component import schema
+from taskmanager.application.model.task_change_component.schema import TaskComponentAddNewSchema
+from taskmanager.application.model.task_component.schema import TaskComponentRemoveNewSchema
+from taskmanager.domain.model.task_component_state import TaskComponentState
+from taskmanager.domain.model.task_state import TaskState
+from taskmanager.domain.model.tasks.task_change_components import TaskChangeComponents, AddComponentRequest, \
+    RemoveComponentRequest
 
 
-class RoadSegmentService(ProcessApplication):
+class TaskService(ProcessApplication):
 
-    # def add_to_storage(self, assets_list: list[schema.AssetItemToAdd]):
-    #     unresolved = []
-    #     for i in assets_list:
-    #         try:
-    #             if i.count_to_add < 1:
-    #                 continue
-    #             storage_item: StorageItem = self.repository.get(i.storage_item_id)
-    #             storage_item.add_to_storage(i.count_to_add)
-    #             self.save(storage_item)
-    #         except eventsourcing.application.AggregateNotFound:
-    #             unresolved.append(i)
-    #     return unresolved
-
-    def create_task(self, new_task: schema.TaskNewSchema) -> uuid.UUID:
-        station_repo: StationProjector = main.runner.get(main.Services.StationProjector)
+    def create_component_task(self,
+                              new_task: taskmanager.application.model.task_change_component.schema.TaskChangeComponentsNewSchema) -> uuid.UUID:
+        station_repo: StationProjector = main.runner.get(StationProjector)
         station = station_repo.get_by_id(new_task.station_id)
-        # todo
-        # segment = RoadSegment(name=segment.name, ssud=segment.ssud)
-        # self.save(segment)
-        # return segment.id
+        if station is None:
+            raise AttributeError("station does not exist")
+
+        def add_com_to_domain_model(com: TaskComponentAddNewSchema):
+            return AddComponentRequest(uuid.uuid4(), com.new_asset_id, TaskComponentState.AWAITING)
+
+        def remove_com_to_domain_model(com: TaskComponentRemoveNewSchema):
+            return RemoveComponentRequest(uuid.uuid4(), TaskComponentState.INSTALLED, com.assigned_component_id)
+
+        add = list(map(lambda x: add_com_to_domain_model(x), new_task.add))
+        remove = list(map(lambda x: remove_com_to_domain_model(x), new_task.remove))
+
+        task = TaskChangeComponents(new_task.name, new_task.description, new_task.station_id, TaskState.OPEN,
+                                    add, remove, datetime.datetime.now())
+        self.save(task)
+        print(task.id)
+
+        return task.id
+
+    def load_component_task(self, task_id: uuid.UUID) -> Optional[schema.TaskChangeComponentsSchema]:
+        try:
+            task: TaskChangeComponents = self.repository.get(task_id)
+        except AggregateNotFound:
+            return None
+        add = list(map(lambda x: self._add_model_to_schema(x), task.components_to_add))
+        remove = list(map(lambda x: self._remove_model_to_schema(x), task.components_to_remove))
+        model = schema.TaskChangeComponentsSchema(**task.__dict__, id=task.id, add=add, remove=remove)
+
+        return model
+
+    def _add_model_to_schema(self, component: AddComponentRequest) -> schema.AddComponentRequestSchema:
+        return schema.AddComponentRequestSchema(**component.__dict__)
+
+    def _remove_model_to_schema(self, component: RemoveComponentRequest) -> schema.RemoveComponentRequestSchema:
+        return schema.RemoveComponentRequestSchema(**component.__dict__)
 
     @singledispatchmethod
     def policy(self, domain_event, process_event):
         """Default policy"""
-
-    # @policy.register(Asset.Created)
-    # def _(self, domain_event: Asset.Created, process_event):
-    #     storage_item = StorageItem(domain_event.originator_id)
-    #     process_event.collect_events(storage_item)
