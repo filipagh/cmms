@@ -4,6 +4,7 @@ import 'package:open_cmms/pages/station/station_base_page.dart';
 import 'package:open_cmms/pages/station/station_components_page.dart';
 import 'package:open_cmms/pages/station/station_history_page.dart';
 import 'package:open_cmms/pages/station/station_info_page.dart';
+import 'package:open_cmms/pages/station/station_tasks_page.dart';
 
 class StationTabMenu extends StatelessWidget {
   final String stationId;
@@ -44,7 +45,7 @@ class StationTabMenu extends StatelessWidget {
     StationButton(
         "Informacie", const Icon(Icons.info), StationInfoPage.ENDPOINT),
     StationButton("Komponenty", const Icon(Icons.settings), StationComponentsPage.ENDPOINT),
-    StationButton("Ulohy", const Icon(Icons.task), ""),
+    StationButton("Ulohy", const Icon(Icons.task), StationTasksPage.ENDPOINT),
     StationButton("Historia", const Icon(Icons.history), StationHistoryPage.ENDPOINT),
   ];
 }

@@ -5,6 +5,7 @@ import 'package:open_cmms/pages/station/station_components_page.dart';
 import 'package:open_cmms/pages/station/station_history_page.dart';
 import 'package:open_cmms/pages/station/station_info_page.dart';
 import 'package:open_cmms/pages/station/station_tab_menu.dart';
+import 'package:open_cmms/pages/station/station_tasks_page.dart';
 import 'package:open_cmms/service/backend_api/station_service.dart';
 import 'package:open_cmms/states/station/station_state.dart';
 import 'package:open_cmms/states/stations_state.dart';
@@ -85,6 +86,9 @@ class StationBasePage extends StatelessWidget {
           contextWidget = StationHistoryPage(station: station.value!);
         }
         break;
+      case StationBaseContextPageEnum.tasks:
+          contextWidget = StationTasksPage(station: station.value!);
+        break;
     }
     return Column(
       children: [
@@ -132,4 +136,5 @@ enum StationBaseContextPageEnum {
   info,
   components,
   history,
+  tasks,
 }

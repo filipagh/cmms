@@ -9,6 +9,7 @@ import 'package:open_cmms/pages/station/station_base_page.dart';
 import 'package:open_cmms/pages/station/station_components_page.dart';
 import 'package:open_cmms/pages/station/station_history_page.dart';
 import 'package:open_cmms/pages/station/station_info_page.dart';
+import 'package:open_cmms/pages/station/station_tasks_page.dart';
 import 'package:open_cmms/pages/stations.dart';
 import 'package:open_cmms/pages/storage.dart';
 import 'package:open_cmms/pages/task.dart';
@@ -113,6 +114,12 @@ class MyApp extends StatelessWidget {
           name: StationBasePage.ENDPOINT+'/:id'+StationHistoryPage.ENDPOINT,
           page: () {
             return StationBasePage(assetId: Get.parameters["id"]!, contextPageEnum: StationBaseContextPageEnum.history,);
+          },
+        ),
+        GetPage(
+          name: StationBasePage.ENDPOINT+'/:id'+StationTasksPage.ENDPOINT,
+          page: () {
+            return StationBasePage(assetId: Get.parameters["id"]!, contextPageEnum: StationBaseContextPageEnum.tasks,);
           },
         ),
 
