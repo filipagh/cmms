@@ -1,9 +1,6 @@
 import uuid
 from enum import Enum
 
-import uuid
-from enum import Enum
-
 import sqlalchemy
 from sqlalchemy import Column, String, DateTime
 from sqlalchemy.dialects import postgresql
@@ -53,5 +50,5 @@ def get_all(station_id) -> list[TaskModel]:
     with _get_db() as db:
         select = db.query(TaskModel)
         if station_id:
-            select.filter(TaskModel.station_id==station_id)
+            select = select.where(TaskModel.station_id == station_id)
         return select.all()

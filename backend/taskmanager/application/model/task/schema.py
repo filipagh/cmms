@@ -1,3 +1,4 @@
+import datetime
 import uuid
 
 from pydantic import BaseModel
@@ -20,6 +21,7 @@ class TaskIdSchema(BaseModel):
 class TaskSchema(TaskIdSchema, TaskSchemaBASE):
     state: TaskState
     task_type: TaskType
+    created_on: datetime.datetime
 
 
 
