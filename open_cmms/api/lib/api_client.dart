@@ -242,6 +242,12 @@ class ApiClient {
           return TaskComponentRemoveNewSchema.fromJson(value);
         case 'TaskComponentState':
           return TaskComponentStateTypeTransformer().decode(value);
+        case 'TaskSchema':
+          return TaskSchema.fromJson(value);
+        case 'TaskState':
+          return TaskStateTypeTransformer().decode(value);
+        case 'TaskType':
+          return TaskTypeTypeTransformer().decode(value);
         case 'ValidationError':
           return ValidationError.fromJson(value);
         default:

@@ -75,9 +75,9 @@ class TaskManagerApi {
   /// Parameters:
   ///
   /// * [String] taskId (required):
-  Future<Response> loadTaskManagerLoadComponentTaskTaskIdGetWithHttpInfo(String taskId,) async {
+  Future<Response> loadTaskManagerGetComponentTaskTaskIdGetWithHttpInfo(String taskId,) async {
     // ignore: prefer_const_declarations
-    final path = r'/task-manager/load_component_task/{task_id}'
+    final path = r'/task-manager/get_component_task/{task_id}'
       .replaceAll('{task_id}', taskId);
 
     // ignore: prefer_final_locals
@@ -106,8 +106,8 @@ class TaskManagerApi {
   /// Parameters:
   ///
   /// * [String] taskId (required):
-  Future<TaskChangeComponentsSchema?> loadTaskManagerLoadComponentTaskTaskIdGet(String taskId,) async {
-    final response = await loadTaskManagerLoadComponentTaskTaskIdGetWithHttpInfo(taskId,);
+  Future<TaskChangeComponentsSchema?> loadTaskManagerGetComponentTaskTaskIdGet(String taskId,) async {
+    final response = await loadTaskManagerGetComponentTaskTaskIdGetWithHttpInfo(taskId,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -117,6 +117,65 @@ class TaskManagerApi {
     if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
       return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'TaskChangeComponentsSchema',) as TaskChangeComponentsSchema;
     
+    }
+    return null;
+  }
+
+  /// Load
+  ///
+  /// Note: This method returns the HTTP [Response].
+  ///
+  /// Parameters:
+  ///
+  /// * [String] stationId:
+  Future<Response> loadTaskManagerGetTasksGetWithHttpInfo({ String? stationId, }) async {
+    // ignore: prefer_const_declarations
+    final path = r'/task-manager/get_tasks';
+
+    // ignore: prefer_final_locals
+    Object? postBody;
+
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
+
+    if (stationId != null) {
+      queryParams.addAll(_queryParams('', 'station_id', stationId));
+    }
+
+    const contentTypes = <String>[];
+
+
+    return apiClient.invokeAPI(
+      path,
+      'GET',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      contentTypes.isEmpty ? null : contentTypes.first,
+    );
+  }
+
+  /// Load
+  ///
+  /// Parameters:
+  ///
+  /// * [String] stationId:
+  Future<List<TaskSchema>?> loadTaskManagerGetTasksGet({ String? stationId, }) async {
+    final response = await loadTaskManagerGetTasksGetWithHttpInfo( stationId: stationId, );
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+      final responseBody = await _decodeBodyBytes(response);
+      return (await apiClient.deserializeAsync(responseBody, 'List<TaskSchema>') as List)
+        .cast<TaskSchema>()
+        .toList();
+
     }
     return null;
   }
