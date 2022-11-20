@@ -73,13 +73,17 @@ Class | Method | HTTP request | Description
 *StationApi* | [**createStationStationCreateStationPost**](doc//StationApi.md#createstationstationcreatestationpost) | **POST** /station/create_station | Create Station
 *StationApi* | [**getAllStationStationsGet**](doc//StationApi.md#getallstationstationsget) | **GET** /station/stations | Get All
 *StationApi* | [**getByIdStationStationGet**](doc//StationApi.md#getbyidstationstationget) | **GET** /station/station | Get By Id
+*StationApi* | [**removeStationStationRemoveStationDelete**](doc//StationApi.md#removestationstationremovestationdelete) | **DELETE** /station/remove_station | Remove Station
 *StorageManagerApi* | [**getAllStorageItemsStorageManagerAllStorageDataGet**](doc//StorageManagerApi.md#getallstorageitemsstoragemanagerallstoragedataget) | **GET** /storage-manager/all-storage-data | Get All Storage Items
 *StorageManagerApi* | [**storeNewAssetsStorageManagerStoreNewAssetsPost**](doc//StorageManagerApi.md#storenewassetsstoragemanagerstorenewassetspost) | **POST** /storage-manager/store-new-assets | Store New Assets
+*TaskManagerApi* | [**createComponentTaskTaskManagerCreateChangeComponentTaskPost**](doc//TaskManagerApi.md#createcomponenttasktaskmanagercreatechangecomponenttaskpost) | **POST** /task-manager/create_change_component_task | Create Component Task
+*TaskManagerApi* | [**loadTaskManagerLoadComponentTaskTaskIdGet**](doc//TaskManagerApi.md#loadtaskmanagerloadcomponenttasktaskidget) | **GET** /task-manager/load_component_task/{task_id} | Load
 
 
 ## Documentation For Models
 
  - [ActionHistorySchema](doc//ActionHistorySchema.md)
+ - [AddComponentRequestSchema](doc//AddComponentRequestSchema.md)
  - [AssetCategoryNewSchema](doc//AssetCategoryNewSchema.md)
  - [AssetCategorySchema](doc//AssetCategorySchema.md)
  - [AssetCategotyIdSchema](doc//AssetCategotyIdSchema.md)
@@ -92,11 +96,18 @@ Class | Method | HTTP request | Description
  - [AssignedComponentSchema](doc//AssignedComponentSchema.md)
  - [AssignedComponentState](doc//AssignedComponentState.md)
  - [HTTPValidationError](doc//HTTPValidationError.md)
+ - [RemoveComponentRequestSchema](doc//RemoveComponentRequestSchema.md)
  - [RoadSegmentNewSchema](doc//RoadSegmentNewSchema.md)
  - [RoadSegmentSchema](doc//RoadSegmentSchema.md)
+ - [StationIdSchema](doc//StationIdSchema.md)
  - [StationNewSchema](doc//StationNewSchema.md)
  - [StationSchema](doc//StationSchema.md)
  - [StorageItemSchema](doc//StorageItemSchema.md)
+ - [TaskChangeComponentsNewSchema](doc//TaskChangeComponentsNewSchema.md)
+ - [TaskChangeComponentsSchema](doc//TaskChangeComponentsSchema.md)
+ - [TaskComponentAddNewSchema](doc//TaskComponentAddNewSchema.md)
+ - [TaskComponentRemoveNewSchema](doc//TaskComponentRemoveNewSchema.md)
+ - [TaskComponentState](doc//TaskComponentState.md)
  - [ValidationError](doc//ValidationError.md)
 
 

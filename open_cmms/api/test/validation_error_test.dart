@@ -16,7 +16,7 @@ void main() {
   // final instance = ValidationError();
 
   group('test ValidationError', () {
-    // List<LocationInner> loc (default value: const [])
+    // List<String> loc (default value: const [])
     test('to test the property `loc`', () async {
       // TODO
     });

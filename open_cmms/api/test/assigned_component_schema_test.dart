@@ -31,6 +31,11 @@ void main() {
       // TODO
     });
 
+    // AssignedComponentState status
+    test('to test the property `status`', () async {
+      // TODO
+    });
+
 
   });
 

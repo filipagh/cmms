@@ -11,23 +11,23 @@
 import 'package:BackendAPI/api.dart';
 import 'package:test/test.dart';
 
-// tests for StationSchema
+// tests for AddComponentRequestSchema
 void main() {
-  // final instance = StationSchema();
+  // final instance = AddComponentRequestSchema();
 
-  group('test StationSchema', () {
-    // String name
-    test('to test the property `name`', () async {
+  group('test AddComponentRequestSchema', () {
+    // String newAssetId
+    test('to test the property `newAssetId`', () async {
       // TODO
     });
 
-    // String roadSegmentId
-    test('to test the property `roadSegmentId`', () async {
+    // String assignedComponent
+    test('to test the property `assignedComponent`', () async {
       // TODO
     });
 
-    // String id
-    test('to test the property `id`', () async {
+    // TaskComponentState state
+    test('to test the property `state`', () async {
       // TODO
     });
 

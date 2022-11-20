@@ -192,6 +192,8 @@ class ApiClient {
           return valueString == 'true' || valueString == '1';
         case 'ActionHistorySchema':
           return ActionHistorySchema.fromJson(value);
+        case 'AddComponentRequestSchema':
+          return AddComponentRequestSchema.fromJson(value);
         case 'AssetCategoryNewSchema':
           return AssetCategoryNewSchema.fromJson(value);
         case 'AssetCategorySchema':
@@ -216,16 +218,30 @@ class ApiClient {
           return AssignedComponentStateTypeTransformer().decode(value);
         case 'HTTPValidationError':
           return HTTPValidationError.fromJson(value);
+        case 'RemoveComponentRequestSchema':
+          return RemoveComponentRequestSchema.fromJson(value);
         case 'RoadSegmentNewSchema':
           return RoadSegmentNewSchema.fromJson(value);
         case 'RoadSegmentSchema':
           return RoadSegmentSchema.fromJson(value);
+        case 'StationIdSchema':
+          return StationIdSchema.fromJson(value);
         case 'StationNewSchema':
           return StationNewSchema.fromJson(value);
         case 'StationSchema':
           return StationSchema.fromJson(value);
         case 'StorageItemSchema':
           return StorageItemSchema.fromJson(value);
+        case 'TaskChangeComponentsNewSchema':
+          return TaskChangeComponentsNewSchema.fromJson(value);
+        case 'TaskChangeComponentsSchema':
+          return TaskChangeComponentsSchema.fromJson(value);
+        case 'TaskComponentAddNewSchema':
+          return TaskComponentAddNewSchema.fromJson(value);
+        case 'TaskComponentRemoveNewSchema':
+          return TaskComponentRemoveNewSchema.fromJson(value);
+        case 'TaskComponentState':
+          return TaskComponentStateTypeTransformer().decode(value);
         case 'ValidationError':
           return ValidationError.fromJson(value);
         default:

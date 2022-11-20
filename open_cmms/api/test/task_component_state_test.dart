@@ -11,18 +11,11 @@
 import 'package:BackendAPI/api.dart';
 import 'package:test/test.dart';
 
-
-/// tests for DefaultApi
+// tests for TaskComponentState
 void main() {
-  // final instance = DefaultApi();
 
-  group('tests for DefaultApi', () {
-    // Root
-    //
-    //Future<Object> rootGet() async
-    test('test rootGet', () async {
-      // TODO
-    });
+  group('test TaskComponentState', () {
 
   });
+
 }

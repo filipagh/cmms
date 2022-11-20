@@ -17,10 +17,24 @@ void main() {
   // final instance = AssignedComponentsApi();
 
   group('tests for AssignedComponentsApi', () {
+    // Create Installed Component
+    //
+    //Future<List<String>> createInstalledComponentAssignedComponentsCreateInstalledComponentPost(List<AssignedComponentNewSchema> assignedComponentNewSchema) async
+    test('test createInstalledComponentAssignedComponentsCreateInstalledComponentPost', () async {
+      // TODO
+    });
+
     // Get All
     //
-    //Future<List<AssignedComponentSchema>> getAllAssignedComponentsComponentsGet({ String stationId }) async
+    //Future<List<AssignedComponentSchema>> getAllAssignedComponentsComponentsGet(String stationId) async
     test('test getAllAssignedComponentsComponentsGet', () async {
+      // TODO
+    });
+
+    // Remove Installed Component
+    //
+    //Future<List<String>> removeInstalledComponentAssignedComponentsRemoveInstalledComponentPost(List<AssignedComponentIdSchema> assignedComponentIdSchema) async
+    test('test removeInstalledComponentAssignedComponentsRemoveInstalledComponentPost', () async {
       // TODO
     });
 
