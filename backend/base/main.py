@@ -1,4 +1,5 @@
 import os
+import time
 from enum import Enum
 
 from eventsourcing.system import System, SingleThreadedRunner
@@ -30,7 +31,11 @@ from taskmanager.infrastructure.task_rest_router import task_manager_router
 #
 
 os.chdir(os.path.dirname(__file__) + '/../')
-os.system('alembic upgrade head')
+if os.system('alembic upgrade head') != 0:
+    print("ALEMBIC FAIL")
+    # temporally solution until proper loging is done (sleep -> ability to see logs in docker logs)
+    while True:
+        time.sleep(10)
 
 
 class Services(Enum):
