@@ -7,6 +7,7 @@ import 'package:open_cmms/states/station/components_state.dart';
 import 'package:open_cmms/widgets/forms/components/set_components_instation_form.dart';
 
 import '../../widgets/dialog_form.dart';
+import '../../widgets/forms/components/edit_station_components_form.dart';
 
 class StationComponentsPage extends StatelessWidget
     implements StationBaseContextPage {
@@ -50,7 +51,7 @@ class StationComponentsPage extends StatelessWidget
                 VerticalDivider(),
                 ElevatedButton(
                     onPressed: () {
-                      // showFormDialog(StationComponentsForm.editComponentsInStation(editItem: station));
+                      showFormDialog(EditStationComponentsForm(station: station));
                     },
                     child: Text('Editovat komponenty')),
               ],

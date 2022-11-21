@@ -25,7 +25,7 @@ from storagemanager.application.storage_item_projector import StorageItemProject
 from storagemanager.application.storage_item_service import StorageItemService
 from taskmanager.application.task_service import TaskService
 from taskmanager.application.tasks_projector import TasksProjector
-from taskmanager.domain.model.tasks.task_change_components import AddComponentRequestAsStr
+from taskmanager.domain.model.tasks.task_change_components import AddComponentRequestAsStr, RemoveComponentRequestAsStr
 from taskmanager.infrastructure.task_rest_router import task_manager_router
 
 #
@@ -60,9 +60,12 @@ runner = SingleThreadedRunner(system)
 runner.start()
 
 runner.get(TaskService).mapper.transcoder.register(AddComponentRequestAsStr())
+runner.get(TaskService).mapper.transcoder.register(RemoveComponentRequestAsStr())
 runner.get(TasksProjector).mapper.transcoder.register(AddComponentRequestAsStr())
+runner.get(TasksProjector).mapper.transcoder.register(RemoveComponentRequestAsStr())
 for x in runner.get(TasksProjector).mappers.values():
     x.transcoder.register(AddComponentRequestAsStr())
+    x.transcoder.register(RemoveComponentRequestAsStr())
 
 
 app = FastAPI(debug=True)

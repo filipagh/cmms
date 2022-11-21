@@ -6,22 +6,21 @@ from eventsourcing.application import AggregateNotFound
 from eventsourcing.dispatch import singledispatchmethod
 from eventsourcing.system import ProcessApplication
 
-import taskmanager.application.model.task_change_component.schema
 from base import main
 from stationmanager.application.station_projector import StationProjector
-from taskmanager.application.model.task_change_component import schema
-from taskmanager.application.model.task_change_component.schema import TaskComponentAddNewSchema
-from taskmanager.application.model.task_component.schema import TaskComponentRemoveNewSchema
+from taskmanager.application.model.task_change_component.schema import TaskChangeComponentsNewSchema, \
+    TaskComponentAddNewSchema, TaskComponentRemoveNewSchema, TaskChangeComponentsSchema, AddComponentRequestSchema, \
+    RemoveComponentRequestSchema
 from taskmanager.domain.model.task_component_state import TaskComponentState
 from taskmanager.domain.model.task_state import TaskState
-from taskmanager.domain.model.tasks.task_change_components import TaskChangeComponents, AddComponentRequest, \
-    RemoveComponentRequest
+from taskmanager.domain.model.tasks.task_change_components import AddComponentRequest, RemoveComponentRequest, \
+    TaskChangeComponents
 
 
 class TaskService(ProcessApplication):
 
     def create_component_task(self,
-                              new_task: taskmanager.application.model.task_change_component.schema.TaskChangeComponentsNewSchema) -> uuid.UUID:
+                              new_task: TaskChangeComponentsNewSchema) -> uuid.UUID:
         station_repo: StationProjector = main.runner.get(StationProjector)
         station = station_repo.get_by_id(new_task.station_id)
         if station is None:
@@ -43,22 +42,22 @@ class TaskService(ProcessApplication):
 
         return task.id
 
-    def load_component_task(self, task_id: uuid.UUID) -> Optional[schema.TaskChangeComponentsSchema]:
+    def load_component_task(self, task_id: uuid.UUID) -> Optional[TaskChangeComponentsSchema]:
         try:
             task: TaskChangeComponents = self.repository.get(task_id)
         except AggregateNotFound:
             return None
         add = list(map(lambda x: self._add_model_to_schema(x), task.components_to_add))
         remove = list(map(lambda x: self._remove_model_to_schema(x), task.components_to_remove))
-        model = schema.TaskChangeComponentsSchema(**task.__dict__, id=task.id, add=add, remove=remove)
+        model = TaskChangeComponentsSchema(**task.__dict__, id=task.id, add=add, remove=remove)
 
         return model
 
-    def _add_model_to_schema(self, component: AddComponentRequest) -> schema.AddComponentRequestSchema:
-        return schema.AddComponentRequestSchema(**component.__dict__)
+    def _add_model_to_schema(self, component: AddComponentRequest) -> AddComponentRequestSchema:
+        return AddComponentRequestSchema(**component.__dict__)
 
-    def _remove_model_to_schema(self, component: RemoveComponentRequest) -> schema.RemoveComponentRequestSchema:
-        return schema.RemoveComponentRequestSchema(**component.__dict__)
+    def _remove_model_to_schema(self, component: RemoveComponentRequest) -> RemoveComponentRequestSchema:
+        return RemoveComponentRequestSchema(**component.__dict__)
 
     @singledispatchmethod
     def policy(self, domain_event, process_event):

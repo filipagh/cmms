@@ -21,7 +21,7 @@ class TaskComponentAddNewSchema(BaseModel):
 
 
 class TaskComponentRemoveNewSchema(BaseModel):
-    assigned_component: uuid.UUID
+    assigned_component_id: uuid.UUID
     pass
 
 
