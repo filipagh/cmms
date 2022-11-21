@@ -38,5 +38,12 @@ void main() {
       // TODO
     });
 
+    // Remove Station
+    //
+    //Future<Object> removeStationStationRemoveStationDelete(StationIdSchema stationIdSchema) async
+    test('test removeStationStationRemoveStationDelete', () async {
+      // TODO
+    });
+
   });
 }

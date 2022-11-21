@@ -12,6 +12,7 @@ Method | HTTP request | Description
 [**createStationStationCreateStationPost**](StationApi.md#createstationstationcreatestationpost) | **POST** /station/create_station | Create Station
 [**getAllStationStationsGet**](StationApi.md#getallstationstationsget) | **GET** /station/stations | Get All
 [**getByIdStationStationGet**](StationApi.md#getbyidstationstationget) | **GET** /station/station | Get By Id
+[**removeStationStationRemoveStationDelete**](StationApi.md#removestationstationremovestationdelete) | **DELETE** /station/remove_station | Remove Station
 
 
 # **createStationStationCreateStationPost**
@@ -133,6 +134,47 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **removeStationStationRemoveStationDelete**
+> Object removeStationStationRemoveStationDelete(stationIdSchema)
+
+Remove Station
+
+### Example
+```dart
+import 'package:BackendAPI/api.dart';
+
+final api_instance = StationApi();
+final stationIdSchema = StationIdSchema(); // StationIdSchema | 
+
+try {
+    final result = api_instance.removeStationStationRemoveStationDelete(stationIdSchema);
+    print(result);
+} catch (e) {
+    print('Exception when calling StationApi->removeStationStationRemoveStationDelete: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **stationIdSchema** | [**StationIdSchema**](StationIdSchema.md)|  | 
+
+### Return type
+
+[**Object**](Object.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

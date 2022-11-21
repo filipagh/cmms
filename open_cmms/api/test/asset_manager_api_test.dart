@@ -17,10 +17,31 @@ void main() {
   // final instance = AssetManagerApi();
 
   group('tests for AssetManagerApi', () {
-    // Create New Main Category
+    // Create New Asset
     //
-    //Future<Object> createNewMainCategoryAssetManagerNewCategoryPost(AssetCategoryNewSchema assetCategoryNewSchema) async
-    test('test createNewMainCategoryAssetManagerNewCategoryPost', () async {
+    //Future<AssetIdSchema> createNewAssetAssetManagerNewAssetPost(AssetNewSchema assetNewSchema) async
+    test('test createNewAssetAssetManagerNewAssetPost', () async {
+      // TODO
+    });
+
+    // Create New Category
+    //
+    //Future<AssetCategotyIdSchema> createNewCategoryAssetManagerNewCategoryPost(AssetCategoryNewSchema assetCategoryNewSchema) async
+    test('test createNewCategoryAssetManagerNewCategoryPost', () async {
+      // TODO
+    });
+
+    // Get Asset Categories
+    //
+    //Future<List<AssetCategorySchema>> getAssetCategoriesAssetManagerAssetCategoriesGet() async
+    test('test getAssetCategoriesAssetManagerAssetCategoriesGet', () async {
+      // TODO
+    });
+
+    // Get Assets
+    //
+    //Future<List<AssetSchema>> getAssetsAssetManagerAssetsGet() async
+    test('test getAssetsAssetManagerAssetsGet', () async {
       // TODO
     });
 

@@ -4,7 +4,6 @@ from typing import Optional
 from fastapi import APIRouter
 
 from base import main
-
 from stationmanager.application.model import schema
 from stationmanager.application.station_projector import StationProjector
 from stationmanager.application.station_service import StationService
@@ -21,6 +20,12 @@ station_router = APIRouter(
 def create_station(new_station: schema.StationNewSchema):
     segment_service = main.runner.get(StationService)
     return segment_service.create_station(new_station)
+
+
+@station_router.delete("/remove_station")
+def remove_station(station_id: schema.StationIdSchema):
+    segment_service = main.runner.get(StationService)
+    segment_service.remove_station(station_id)
 
 
 @station_router.get("/station",

@@ -1,4 +1,5 @@
 import os
+from enum import Enum
 
 from eventsourcing.system import System, SingleThreadedRunner
 from fastapi import FastAPI
@@ -21,11 +22,24 @@ from stationmanager.infrastructure.assigned_component_rest_router import assigne
 from stationmanager.infrastructure.station_rest_router import station_router
 from storagemanager.application.storage_item_projector import StorageItemProjector
 from storagemanager.application.storage_item_service import StorageItemService
+from taskmanager.application.task_service import TaskService
+from taskmanager.application.tasks_projector import TasksProjector
+from taskmanager.domain.model.tasks.task_change_components import AddComponentRequestAsStr
+from taskmanager.infrastructure.task_rest_router import task_manager_router
 
 #
 
 os.chdir(os.path.dirname(__file__) + '/../')
 os.system('alembic upgrade head')
+
+
+class Services(Enum):
+    TaskService = TaskService
+    AssetService = AssetService
+    StationProjector = StationProjector
+
+
+
 
 system = System(pipes=[[AssetService, AssetProjector],
                        [AssetService, StorageItemService],
@@ -34,9 +48,17 @@ system = System(pipes=[[AssetService, AssetProjector],
                        [StationService, StationProjector],
                        [AssignedComponentsService, AssignedComponentProjector],
                        [AssignedComponentsService, ActionHistoryProjector],
+                       [TaskService, TasksProjector],
                        ])
+
 runner = SingleThreadedRunner(system)
 runner.start()
+
+runner.get(TaskService).mapper.transcoder.register(AddComponentRequestAsStr())
+runner.get(TasksProjector).mapper.transcoder.register(AddComponentRequestAsStr())
+for x in runner.get(TasksProjector).mappers.values():
+    x.transcoder.register(AddComponentRequestAsStr())
+
 
 app = FastAPI(debug=True)
 app.include_router(assetmanager.infrastructure.rest_router.asset_manager)
@@ -45,6 +67,9 @@ app.include_router(roadsegmentmanager.infrastructure.rest_router.road_segment_ma
 app.include_router(station_router)
 app.include_router(assigned_component_router)
 app.include_router(action_history_router)
+app.include_router(task_manager_router)
+
+
 
 origins = [
     "http://localhost:5000",

@@ -17,10 +17,17 @@ void main() {
   // final instance = StorageManagerApi();
 
   group('tests for StorageManagerApi', () {
-    // Get Assets
+    // Get All Storage Items
     //
-    //Future<List<StorageItemSchema>> getAssetsStorageManagerAllStorageDataGet() async
-    test('test getAssetsStorageManagerAllStorageDataGet', () async {
+    //Future<List<StorageItemSchema>> getAllStorageItemsStorageManagerAllStorageDataGet() async
+    test('test getAllStorageItemsStorageManagerAllStorageDataGet', () async {
+      // TODO
+    });
+
+    // Store New Assets
+    //
+    //Future<List<AssetItemToAdd>> storeNewAssetsStorageManagerStoreNewAssetsPost(List<AssetItemToAdd> assetItemToAdd) async
+    test('test storeNewAssetsStorageManagerStoreNewAssetsPost', () async {
       // TODO
     });
 

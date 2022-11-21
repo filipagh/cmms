@@ -1,8 +1,6 @@
 from fastapi import APIRouter
-from starlette.responses import PlainTextResponse
 
 from assetmanager.application import asset_category_service, asset_manager_loader
-from assetmanager.application.asset_service import AssetService
 from assetmanager.application.model import schema
 from base import main
 
@@ -20,7 +18,8 @@ def create_new_category(new_category: schema.AssetCategoryNewSchema):
 
 @asset_manager.post("/newAsset", response_model=schema.AssetIdSchema)
 def create_new_asset(new_asset: schema.AssetNewSchema):
-    asset_service = main.runner.get(AssetService)
+    asset_service = main.runner.get(main.Services.AssetService.value)
+    # asset_service = main.runner.get(AssetService)
     asset_id = asset_service.add_new_asset(new_asset.category_id, new_asset.name, new_asset.description)
     return schema.AssetIdSchema(id=asset_id)
 

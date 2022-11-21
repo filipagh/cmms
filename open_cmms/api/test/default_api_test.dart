@@ -24,12 +24,5 @@ void main() {
       // TODO
     });
 
-    // Say Hello
-    //
-    //Future<Object> sayHelloHelloNameGet(String name) async
-    test('test sayHelloHelloNameGet', () async {
-      // TODO
-    });
-
   });
 }

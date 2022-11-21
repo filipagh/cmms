@@ -11,11 +11,16 @@
 import 'package:BackendAPI/api.dart';
 import 'package:test/test.dart';
 
-// tests for LocationInner
+// tests for StationIdSchema
 void main() {
-  // final instance = LocationInner();
+  // final instance = StationIdSchema();
 
-  group('test LocationInner', () {
+  group('test StationIdSchema', () {
+    // String id
+    test('to test the property `id`', () async {
+      // TODO
+    });
+
 
   });
 
