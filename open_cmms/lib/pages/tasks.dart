@@ -6,7 +6,6 @@ import 'package:open_cmms/widgets/custom_app_bar.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 import 'package:open_cmms/widgets/forms/station/station_picker.dart';
 
-import '../models/station.dart';
 import '../widgets/forms/tasks/create_task.dart';
 import '../widgets/main_menu_widget.dart';
 
@@ -42,7 +41,7 @@ class Tasks extends StatelessWidget {
                     Spacer(),
                     ElevatedButton(
                       onPressed: () async {
-                        Station station =
+                        StationSchema station =
                             await showFormDialog(StationPickerForm());
                         showFormDialog(CreateTaskForm(station: station));
                       },
