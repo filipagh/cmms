@@ -1,6 +1,7 @@
+import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:open_cmms/states/tasks_state.dart';
+import 'package:open_cmms/service/backend_api/tasks_service.dart';
 import 'package:open_cmms/widgets/custom_app_bar.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 import 'package:open_cmms/widgets/forms/station/station_picker.dart';
@@ -9,16 +10,14 @@ import '../models/station.dart';
 import '../widgets/forms/tasks/create_task.dart';
 import '../widgets/main_menu_widget.dart';
 
-class Tasks extends StatefulWidget {
-  const Tasks({Key? key, required}) : super(key: key);
+class Tasks extends StatelessWidget {
+  Tasks({Key? key, required}) : super(key: key);
 
-  @override
-  State<Tasks> createState() => _TasksState();
-}
+  final RxList<TaskSchema> tasks = <TaskSchema>[].obs;
 
-class _TasksState extends State<Tasks> {
   @override
   Widget build(BuildContext context) {
+    loadTasks();
     return Scaffold(
       appBar: CustomAppBar(),
       body: Row(
@@ -43,17 +42,18 @@ class _TasksState extends State<Tasks> {
                     Spacer(),
                     ElevatedButton(
                       onPressed: () async {
-                       Station station =  await showFormDialog(StationPickerForm());
-                       showFormDialog(CreateTaskForm(station: station));
+                        Station station =
+                            await showFormDialog(StationPickerForm());
+                        showFormDialog(CreateTaskForm(station: station));
                       },
                       child: Text("create task"),
                     ),
                   ],
                 ),
                 Divider(),
-                Expanded(child: GetX<TasksState>(
-                  builder: (_) {
-                    var list =  _.tasks.values.toList();
+                Expanded(child: Obx(
+                  () {
+                    var list = tasks;
                     return ListView.builder(
                         addRepaintBoundaries: true,
                         padding: const EdgeInsets.all(8),
@@ -80,5 +80,13 @@ class _TasksState extends State<Tasks> {
         ],
       ),
     );
+  }
+
+  loadTasks() {
+    TasksService().loadTaskManagerGetTasksGet().then((value) {
+      tasks.clear();
+      tasks.addAll(value ?? []);
+      tasks.refresh();
+    });
   }
 }
