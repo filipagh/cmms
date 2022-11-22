@@ -9,12 +9,18 @@ import 'package:open_cmms/widgets/forms/tasks/create_change_components_task.dart
 
 import '../../../states/station/components_state.dart';
 
-class EditStationComponentsForm extends StatelessWidget implements hasFormTitle {
+class EditStationComponentsForm extends StatelessWidget
+    implements hasFormTitle {
   final schema.StationSchema station;
 
-  EditStationComponentsForm(
-      {Key? key, required this.station})
-      : super(key: key);
+  EditStationComponentsForm({Key? key, required this.station})
+      : super(key: key) {
+    try {
+      _assignedComponentState = Get.find();
+    } catch (e) {
+      _assignedComponentState = Get.put(AssignedComponentsState(station.id));
+    }
+  }
 
   String getTitle() {
     return "Zmena komponentov v stanici: ${station.name}";
@@ -26,7 +32,8 @@ class EditStationComponentsForm extends StatelessWidget implements hasFormTitle 
   }
 
   RxList<FormItem> items = <FormItem>[].obs;
-  final AssignedComponentsState _assignedComponentState = Get.find();
+
+  late final AssignedComponentsState _assignedComponentState;
   final AssetTypesState _assets = Get.find();
 
   @override
@@ -85,17 +92,20 @@ class EditStationComponentsForm extends StatelessWidget implements hasFormTitle 
                         List<TaskComponentAddNewSchema> add = [];
 
                         getNewItems().forEach((element) {
-                          add.add(TaskComponentAddNewSchema(newAssetId: element.assetId));
+                          add.add(TaskComponentAddNewSchema(
+                              newAssetId: element.assetId));
                         });
 
                         List<TaskComponentRemoveNewSchema> remove = [];
                         getToRemoveItems().forEach((element) {
-                          remove.add(TaskComponentRemoveNewSchema(assignedComponentId: element.assignedComponentId!));
+                          remove.add(TaskComponentRemoveNewSchema(
+                              assignedComponentId:
+                                  element.assignedComponentId!));
                         });
 
-
                         Get.back();
-                        showFormDialog(CreateChangeComponentsTaskForm(station: station, add: add, remove: remove));
+                        showFormDialog(CreateChangeComponentsTaskForm(
+                            station: station, add: add, remove: remove));
                       },
                       child: Text("submit")),
                 ],
