@@ -1,4 +1,5 @@
 import uuid
+from typing import Optional
 
 from pydantic import BaseModel
 
@@ -8,6 +9,7 @@ from stationmanager.domain.model.assigned_component import AssignedComponentStat
 class AssignedComponentSchemaBASE(BaseModel):
     asset_id: uuid.UUID
     station_id: uuid.UUID
+
 
 
 class AssignedComponentNewSchema(AssignedComponentSchemaBASE):
@@ -20,3 +22,4 @@ class AssignedComponentIdSchema(BaseModel):
 
 class AssignedComponentSchema(AssignedComponentIdSchema,AssignedComponentSchemaBASE):
     status: AssignedComponentState
+    task_id: Optional[uuid.UUID]

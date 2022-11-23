@@ -2,6 +2,7 @@ import os
 import time
 from enum import Enum
 
+from eventsourcing.persistence import Transcoding
 from eventsourcing.system import System, SingleThreadedRunner
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -28,7 +29,14 @@ from taskmanager.application.tasks_projector import TasksProjector
 from taskmanager.domain.model.tasks.task_change_components import AddComponentRequestAsStr, RemoveComponentRequestAsStr
 from taskmanager.infrastructure.task_rest_router import task_manager_router
 
+
 #
+def register_tansconder(services, t: Transcoding):
+    for s in services:
+        runner.get(s).mapper.transcoder.register(t)
+        for x in runner.get(s).mappers.values():
+            x.transcoder.register(t)
+
 
 os.chdir(os.path.dirname(__file__) + '/../')
 if os.system('alembic upgrade head') != 0:
@@ -54,6 +62,7 @@ system = System(pipes=[[AssetService, AssetProjector],
                        [AssignedComponentsService, AssignedComponentProjector],
                        [AssignedComponentsService, ActionHistoryProjector],
                        [TaskService, TasksProjector],
+                       [TaskService, AssignedComponentsService],
                        ])
 
 runner = SingleThreadedRunner(system)
@@ -61,11 +70,10 @@ runner.start()
 
 runner.get(TaskService).mapper.transcoder.register(AddComponentRequestAsStr())
 runner.get(TaskService).mapper.transcoder.register(RemoveComponentRequestAsStr())
-runner.get(TasksProjector).mapper.transcoder.register(AddComponentRequestAsStr())
-runner.get(TasksProjector).mapper.transcoder.register(RemoveComponentRequestAsStr())
-for x in runner.get(TasksProjector).mappers.values():
-    x.transcoder.register(AddComponentRequestAsStr())
-    x.transcoder.register(RemoveComponentRequestAsStr())
+
+register_tansconder([TasksProjector, AssignedComponentsService], AddComponentRequestAsStr())
+register_tansconder([TasksProjector, AssignedComponentsService], RemoveComponentRequestAsStr())
+
 
 
 app = FastAPI(debug=True)

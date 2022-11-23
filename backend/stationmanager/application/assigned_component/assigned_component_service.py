@@ -5,15 +5,37 @@ from eventsourcing.dispatch import singledispatchmethod
 from eventsourcing.system import ProcessApplication
 
 from stationmanager.domain.model.assigned_component import AssignedComponent, AssignedComponentState
+from taskmanager.domain.model.tasks.task_change_components import TaskChangeComponents
 
 
 class AssignedComponentsService(ProcessApplication):
 
-    def create_installed_component(self, asset_id: uuid, station_id: uuid):
+    def create_new_component(self, asset_id: uuid, station_id: uuid, task_id: uuid):
         component: AssignedComponent = AssignedComponent(asset_id=asset_id, station_id=station_id,
-                                                         status=AssignedComponentState.INSTALLED,created_at=datetime.now())
+                                                         status=AssignedComponentState.AWAITING,
+                                                         created_at=datetime.now(), task_id=task_id)
         self.save(component)
         return component.id
+
+    def create_installed_component(self, asset_id: uuid, station_id: uuid):
+        component: AssignedComponent = AssignedComponent(asset_id=asset_id, station_id=station_id,
+                                                         status=AssignedComponentState.INSTALLED,
+                                                         created_at=datetime.now(),task_id=None)
+        self.save(component)
+        return component.id
+
+    def set_component_to_be_removed(self, assigned_component_id, task_id: uuid):
+        component: AssignedComponent = self.repository.get(assigned_component_id)
+        match component.status:
+            case AssignedComponentState.REMOVED:
+                pass
+            case AssignedComponentState.WILL_BE_REMOVED:
+                pass
+            case AssignedComponentState.AWAITING:
+                pass
+            case AssignedComponentState.INSTALLED:
+                component.set_component_to_be_removed(task_id=task_id)
+                self.save(component)
 
     def force_remove_installed_component(self, assigned_component_id: uuid):
         component: AssignedComponent = self.repository.get(assigned_component_id)
@@ -32,7 +54,9 @@ class AssignedComponentsService(ProcessApplication):
     def policy(self, domain_event, process_event):
         """Default policy"""
 
-    # @policy.register(Asset.Created)
-    # def _(self, domain_event: Asset.Created, process_event):
-    #     storage_item = StorageItem(domain_event.originator_id)
-    #     process_event.collect_events(storage_item)
+    @policy.register(TaskChangeComponents.TaskChangeComponentsCreated)
+    def _(self, domain_event: TaskChangeComponents.TaskChangeComponentsCreated, process_event):
+        for add in domain_event.components_to_add:
+            self.create_new_component(add.new_asset_id, domain_event.station_id, domain_event.originator_id)
+        for remove in domain_event.components_to_remove:
+            self.set_component_to_be_removed(remove.assigned_component_id, domain_event.originator_id)

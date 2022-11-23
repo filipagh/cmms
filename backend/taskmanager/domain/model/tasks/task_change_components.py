@@ -39,14 +39,14 @@ class AddComponentRequestAsStr(Transcoding):
 
 class RemoveComponentRequest:
     id: str
-    assigned_component: Optional[str]
+    assigned_component_id: Optional[str]
     state: TaskComponentState
 
     def __init__(self, id: uuid.UUID, state: TaskComponentState,
-                 assigned_component: uuid.UUID
+                 assigned_component_id: uuid.UUID
                  ):
         self.id = str(id)
-        self.assigned_component = str(assigned_component)
+        self.assigned_component_id = str(assigned_component_id)
         self.state = state
 
 
