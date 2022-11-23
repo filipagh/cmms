@@ -94,7 +94,7 @@ class _CreateChangeComponentsTaskFormState
               if (_formKey.currentState!.validate()) {
                 TasksService()
                     .createComponentTaskTaskManagerCreateChangeComponentTaskPost(
-                    TaskChangeComponentsNewSchema(stationId: widget.station.id, name: taskName.text, description: taskDescription.text ?? "", add: widget.add, remove: widget.remove));
+                    TaskChangeComponentsNewSchema(stationId: widget.station.id, name: taskName.text, description: taskDescription.text, add: widget.add, remove: widget.remove));
                 Get.back();
               }
             }, child: Text("Vytvorit ulohu")),

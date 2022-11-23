@@ -106,7 +106,7 @@ class StationBasePage extends StatelessWidget {
               ),
               VerticalDivider(),
               Expanded(
-                child: contextWidget!,
+                child: contextWidget,
               ),
             ],
           ),
