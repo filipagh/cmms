@@ -26,6 +26,7 @@ class CreateTaskForm extends StatelessWidget implements hasFormTitle {
           children: [
             ElevatedButton(
                 onPressed: () {
+                  Get.back();
                   showFormDialog(EditStationComponentsForm(station: station));
                 },
                 child: Text("edit components")),
