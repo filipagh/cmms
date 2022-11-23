@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **stationId** | **String** |  | 
 **id** | **String** |  | 
 **status** | [**AssignedComponentState**](AssignedComponentState.md) |  | 
+**taskId** | **String** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
