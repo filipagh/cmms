@@ -8,7 +8,6 @@ import 'package:open_cmms/pages/station/station_tab_menu.dart';
 import 'package:open_cmms/pages/station/station_tasks_page.dart';
 import 'package:open_cmms/service/backend_api/station_service.dart';
 import 'package:open_cmms/states/station/station_state.dart';
-import 'package:open_cmms/states/stations_state.dart';
 
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/main_menu_widget.dart';
@@ -20,11 +19,8 @@ class StationBasePage extends StatelessWidget {
 
   StationBasePage(
       {Key? key, required this.contextPageEnum, required this.assetId})
-      : super(key: key) {
-    // Get.lazyPut(() => TestState());
-  }
+      : super(key: key) {}
 
-  StationsState stationsState = Get.find();
   Rxn<StationSchema> station = Rxn<StationSchema>();
   RxBool isModelLoaded = false.obs;
 
@@ -87,7 +83,7 @@ class StationBasePage extends StatelessWidget {
         }
         break;
       case StationBaseContextPageEnum.tasks:
-          contextWidget = StationTasksPage(station: station.value!);
+        contextWidget = StationTasksPage(station: station.value!);
         break;
     }
     return Column(

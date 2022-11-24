@@ -39,3 +39,9 @@ def load(task_id: uuid.UUID):
 def load(station_id: uuid.UUID = None):
     tasks_projector: TasksProjector = main.runner.get(TasksProjector)
     return tasks_projector.get_all(station_id)
+
+@task_manager_router.get("/get_task",
+                         response_model=TaskSchema)
+def load_by_id(task_id: uuid.UUID):
+    tasks_projector: TasksProjector = main.runner.get(TasksProjector)
+    return tasks_projector.get_by_id(task_id)

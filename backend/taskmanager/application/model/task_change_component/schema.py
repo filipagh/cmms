@@ -46,7 +46,7 @@ class AddComponentRequestSchema(BaseModel):
 
 
 class RemoveComponentRequestSchema(BaseModel):
-    assigned_component: uuid.UUID
+    assigned_component_id: uuid.UUID
     pass
 
 

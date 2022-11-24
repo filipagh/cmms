@@ -14,6 +14,7 @@ import 'package:open_cmms/pages/stations.dart';
 import 'package:open_cmms/pages/storage.dart';
 import 'package:open_cmms/pages/task.dart';
 import 'package:open_cmms/pages/tasks.dart';
+import 'package:open_cmms/pages/tasks/task_change_component.dart';
 import 'package:open_cmms/pages/unknownPage.dart';
 import 'package:open_cmms/service/secrets_manager_service.dart';
 import 'package:open_cmms/states/action_state.dart';
@@ -120,6 +121,12 @@ class MyApp extends StatelessWidget {
           name: StationBasePage.ENDPOINT+'/:id'+StationTasksPage.ENDPOINT,
           page: () {
             return StationBasePage(assetId: Get.parameters["id"]!, contextPageEnum: StationBaseContextPageEnum.tasks,);
+          },
+        ),
+        GetPage(
+          name: TaskChangeComponentsPage.ENDPOINT+'/:id',
+          page: () {
+            return TaskChangeComponentsPage(taskId: Get.parameters["id"]!);
           },
         ),
 

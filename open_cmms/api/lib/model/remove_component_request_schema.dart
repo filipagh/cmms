@@ -13,26 +13,26 @@ part of openapi.api;
 class RemoveComponentRequestSchema {
   /// Returns a new [RemoveComponentRequestSchema] instance.
   RemoveComponentRequestSchema({
-    required this.assignedComponent,
+    required this.assignedComponentId,
   });
 
-  String assignedComponent;
+  String assignedComponentId;
 
   @override
   bool operator ==(Object other) => identical(this, other) || other is RemoveComponentRequestSchema &&
-     other.assignedComponent == assignedComponent;
+     other.assignedComponentId == assignedComponentId;
 
   @override
   int get hashCode =>
     // ignore: unnecessary_parenthesis
-    (assignedComponent.hashCode);
+    (assignedComponentId.hashCode);
 
   @override
-  String toString() => 'RemoveComponentRequestSchema[assignedComponent=$assignedComponent]';
+  String toString() => 'RemoveComponentRequestSchema[assignedComponentId=$assignedComponentId]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-      _json[r'assigned_component'] = assignedComponent;
+      _json[r'assigned_component_id'] = assignedComponentId;
     return _json;
   }
 
@@ -55,7 +55,7 @@ class RemoveComponentRequestSchema {
       }());
 
       return RemoveComponentRequestSchema(
-        assignedComponent: mapValueOfType<String>(json, r'assigned_component')!,
+        assignedComponentId: mapValueOfType<String>(json, r'assigned_component_id')!,
       );
     }
     return null;
@@ -105,7 +105,7 @@ class RemoveComponentRequestSchema {
 
   /// The list of required keys that must be present in a JSON.
   static const requiredKeys = <String>{
-    'assigned_component',
+    'assigned_component_id',
   };
 }
 
