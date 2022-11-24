@@ -77,6 +77,7 @@ Class | Method | HTTP request | Description
 *StorageManagerApi* | [**getAllStorageItemsStorageManagerAllStorageDataGet**](doc//StorageManagerApi.md#getallstorageitemsstoragemanagerallstoragedataget) | **GET** /storage-manager/all-storage-data | Get All Storage Items
 *StorageManagerApi* | [**storeNewAssetsStorageManagerStoreNewAssetsPost**](doc//StorageManagerApi.md#storenewassetsstoragemanagerstorenewassetspost) | **POST** /storage-manager/store-new-assets | Store New Assets
 *TaskManagerApi* | [**createComponentTaskTaskManagerCreateChangeComponentTaskPost**](doc//TaskManagerApi.md#createcomponenttasktaskmanagercreatechangecomponenttaskpost) | **POST** /task-manager/create_change_component_task | Create Component Task
+*TaskManagerApi* | [**loadByIdTaskManagerGetTaskGet**](doc//TaskManagerApi.md#loadbyidtaskmanagergettaskget) | **GET** /task-manager/get_task | Load By Id
 *TaskManagerApi* | [**loadTaskManagerGetComponentTaskTaskIdGet**](doc//TaskManagerApi.md#loadtaskmanagergetcomponenttasktaskidget) | **GET** /task-manager/get_component_task/{task_id} | Load
 *TaskManagerApi* | [**loadTaskManagerGetTasksGet**](doc//TaskManagerApi.md#loadtaskmanagergettasksget) | **GET** /task-manager/get_tasks | Load
 

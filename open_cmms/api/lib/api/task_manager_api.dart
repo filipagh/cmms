@@ -68,6 +68,60 @@ class TaskManagerApi {
     return null;
   }
 
+  /// Load By Id
+  ///
+  /// Note: This method returns the HTTP [Response].
+  ///
+  /// Parameters:
+  ///
+  /// * [String] taskId (required):
+  Future<Response> loadByIdTaskManagerGetTaskGetWithHttpInfo(String taskId,) async {
+    // ignore: prefer_const_declarations
+    final path = r'/task-manager/get_task';
+
+    // ignore: prefer_final_locals
+    Object? postBody;
+
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
+
+      queryParams.addAll(_queryParams('', 'task_id', taskId));
+
+    const contentTypes = <String>[];
+
+
+    return apiClient.invokeAPI(
+      path,
+      'GET',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      contentTypes.isEmpty ? null : contentTypes.first,
+    );
+  }
+
+  /// Load By Id
+  ///
+  /// Parameters:
+  ///
+  /// * [String] taskId (required):
+  Future<TaskSchema?> loadByIdTaskManagerGetTaskGet(String taskId,) async {
+    final response = await loadByIdTaskManagerGetTaskGetWithHttpInfo(taskId,);
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'TaskSchema',) as TaskSchema;
+    
+    }
+    return null;
+  }
+
   /// Load
   ///
   /// Note: This method returns the HTTP [Response].

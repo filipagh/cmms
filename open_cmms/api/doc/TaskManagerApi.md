@@ -10,6 +10,7 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createComponentTaskTaskManagerCreateChangeComponentTaskPost**](TaskManagerApi.md#createcomponenttasktaskmanagercreatechangecomponenttaskpost) | **POST** /task-manager/create_change_component_task | Create Component Task
+[**loadByIdTaskManagerGetTaskGet**](TaskManagerApi.md#loadbyidtaskmanagergettaskget) | **GET** /task-manager/get_task | Load By Id
 [**loadTaskManagerGetComponentTaskTaskIdGet**](TaskManagerApi.md#loadtaskmanagergetcomponenttasktaskidget) | **GET** /task-manager/get_component_task/{task_id} | Load
 [**loadTaskManagerGetTasksGet**](TaskManagerApi.md#loadtaskmanagergettasksget) | **GET** /task-manager/get_tasks | Load
 
@@ -51,6 +52,47 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **loadByIdTaskManagerGetTaskGet**
+> TaskSchema loadByIdTaskManagerGetTaskGet(taskId)
+
+Load By Id
+
+### Example
+```dart
+import 'package:BackendAPI/api.dart';
+
+final api_instance = TaskManagerApi();
+final taskId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+
+try {
+    final result = api_instance.loadByIdTaskManagerGetTaskGet(taskId);
+    print(result);
+} catch (e) {
+    print('Exception when calling TaskManagerApi->loadByIdTaskManagerGetTaskGet: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **taskId** | **String**|  | 
+
+### Return type
+
+[**TaskSchema**](TaskSchema.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
