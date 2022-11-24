@@ -27,9 +27,19 @@ class Tasks extends StatelessWidget {
           Expanded(
             child: Column(
               children: [
-                Text(
-                  "Tasks",
-                  textScaleFactor: 5,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Tasks",
+                      textScaleFactor: 5,
+                    ),
+                    IconButton(
+                        onPressed: () {
+                          loadTasks();
+                        },
+                        icon: Icon(Icons.refresh))
+                  ],
                 ),
                 Row(
                   children: [
@@ -62,7 +72,8 @@ class Tasks extends StatelessWidget {
                           return Card(
                             child: ListTile(
                               onTap: () {
-                               TaskPageFactory().openTaskPageFromModel(list[index]);
+                                TaskPageFactory()
+                                    .openTaskPageFromModel(list[index]);
                               },
                               hoverColor: Colors.blue.shade200,
                               title: Text(list[index].name),
