@@ -51,7 +51,7 @@ class TaskService(ProcessApplication):
             return None
         add = list(map(lambda x: self._add_model_to_schema(x), task.components_to_add))
         remove = list(map(lambda x: self._remove_model_to_schema(x), task.components_to_remove))
-        model = TaskChangeComponentsSchema(**task.__dict__, id=task.id, add=add, remove=remove)
+        model = TaskChangeComponentsSchema(**task.__dict__, id=task.id, add=add, remove=remove, state=task.status)
 
         return model
 

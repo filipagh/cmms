@@ -17,6 +17,7 @@ class TaskChangeComponentsSchema {
     required this.name,
     required this.description,
     required this.id,
+    required this.state,
     required this.createdAt,
     this.add = const [],
     this.remove = const [],
@@ -30,6 +31,8 @@ class TaskChangeComponentsSchema {
 
   String id;
 
+  TaskState state;
+
   DateTime createdAt;
 
   List<AddComponentRequestSchema> add;
@@ -42,6 +45,7 @@ class TaskChangeComponentsSchema {
      other.name == name &&
      other.description == description &&
      other.id == id &&
+     other.state == state &&
      other.createdAt == createdAt &&
      other.add == add &&
      other.remove == remove;
@@ -53,12 +57,13 @@ class TaskChangeComponentsSchema {
     (name.hashCode) +
     (description.hashCode) +
     (id.hashCode) +
+    (state.hashCode) +
     (createdAt.hashCode) +
     (add.hashCode) +
     (remove.hashCode);
 
   @override
-  String toString() => 'TaskChangeComponentsSchema[stationId=$stationId, name=$name, description=$description, id=$id, createdAt=$createdAt, add=$add, remove=$remove]';
+  String toString() => 'TaskChangeComponentsSchema[stationId=$stationId, name=$name, description=$description, id=$id, state=$state, createdAt=$createdAt, add=$add, remove=$remove]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
@@ -66,6 +71,7 @@ class TaskChangeComponentsSchema {
       _json[r'name'] = name;
       _json[r'description'] = description;
       _json[r'id'] = id;
+      _json[r'state'] = state;
       _json[r'created_at'] = createdAt.toUtc().toIso8601String();
       _json[r'add'] = add;
       _json[r'remove'] = remove;
@@ -95,6 +101,7 @@ class TaskChangeComponentsSchema {
         name: mapValueOfType<String>(json, r'name')!,
         description: mapValueOfType<String>(json, r'description')!,
         id: mapValueOfType<String>(json, r'id')!,
+        state: TaskState.fromJson(json[r'state'])!,
         createdAt: mapDateTime(json, r'created_at', '')!,
         add: AddComponentRequestSchema.listFromJson(json[r'add'])!,
         remove: RemoveComponentRequestSchema.listFromJson(json[r'remove'])!,
@@ -151,6 +158,7 @@ class TaskChangeComponentsSchema {
     'name',
     'description',
     'id',
+    'state',
     'created_at',
     'add',
     'remove',

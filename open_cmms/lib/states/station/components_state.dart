@@ -15,6 +15,11 @@ class AssignedComponentsState extends GetxController {
     super.onInit();
   }
 
+  AssignedComponentSchema? getById(String assigned_component_id) {
+    return components
+        .firstWhereOrNull((element) => element.id == assigned_component_id);
+  }
+
   reload() {
     AssignedComponentService()
         .getAllAssignedComponentsComponentsGet(_stationId)

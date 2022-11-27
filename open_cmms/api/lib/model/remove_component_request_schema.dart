@@ -14,25 +14,31 @@ class RemoveComponentRequestSchema {
   /// Returns a new [RemoveComponentRequestSchema] instance.
   RemoveComponentRequestSchema({
     required this.assignedComponentId,
+    required this.state,
   });
 
   String assignedComponentId;
 
+  TaskComponentState state;
+
   @override
   bool operator ==(Object other) => identical(this, other) || other is RemoveComponentRequestSchema &&
-     other.assignedComponentId == assignedComponentId;
+     other.assignedComponentId == assignedComponentId &&
+     other.state == state;
 
   @override
   int get hashCode =>
     // ignore: unnecessary_parenthesis
-    (assignedComponentId.hashCode);
+    (assignedComponentId.hashCode) +
+    (state.hashCode);
 
   @override
-  String toString() => 'RemoveComponentRequestSchema[assignedComponentId=$assignedComponentId]';
+  String toString() => 'RemoveComponentRequestSchema[assignedComponentId=$assignedComponentId, state=$state]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
       _json[r'assigned_component_id'] = assignedComponentId;
+      _json[r'state'] = state;
     return _json;
   }
 
@@ -56,6 +62,7 @@ class RemoveComponentRequestSchema {
 
       return RemoveComponentRequestSchema(
         assignedComponentId: mapValueOfType<String>(json, r'assigned_component_id')!,
+        state: TaskComponentState.fromJson(json[r'state'])!,
       );
     }
     return null;
@@ -106,6 +113,7 @@ class RemoveComponentRequestSchema {
   /// The list of required keys that must be present in a JSON.
   static const requiredKeys = <String>{
     'assigned_component_id',
+    'state',
   };
 }
 

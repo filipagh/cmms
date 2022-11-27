@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **name** | **String** |  | 
 **description** | **String** |  | 
 **id** | **String** |  | 
+**state** | [**TaskState**](TaskState.md) |  | 
 **createdAt** | [**DateTime**](DateTime.md) |  | 
 **add** | [**List<AddComponentRequestSchema>**](AddComponentRequestSchema.md) |  | [default to const []]
 **remove** | [**List<RemoveComponentRequestSchema>**](RemoveComponentRequestSchema.md) |  | [default to const []]
