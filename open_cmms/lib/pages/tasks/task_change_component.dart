@@ -64,7 +64,7 @@ class TaskChangeComponentsPage extends StatelessWidget {
     );
   }
 
-  Column buildTaskPage() {
+  Widget buildTaskPage() {
     return Column(
       children: [
         Text(
@@ -73,7 +73,19 @@ class TaskChangeComponentsPage extends StatelessWidget {
         ),
         Divider(),
         buildTaskHeader(),
-        buildTaskComponents(),
+
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                buildTaskComponents(),
+                Text("komentare k tasku"),
+                Placeholder(),
+              ],
+            ),
+          ),
+        )
+
         // buildTaskComments(),
       ],
     );
@@ -135,12 +147,8 @@ class TaskChangeComponentsPage extends StatelessWidget {
   }
 
   buildTaskComponents() {
-    return Container(
-      width: 400,
-      child: ListView(
-        shrinkWrap: true,
-        children: [...buildAddComponents(), ...buildRemoveComponnets()],
-      ),
+    return Column(
+      children: [...buildAddComponents(), ...buildRemoveComponnets()],
     );
   }
 
@@ -159,7 +167,8 @@ class TaskChangeComponentsPage extends StatelessWidget {
     col.add(Divider());
     task.value!.add.forEach((addCom) {
       col.add(ListTile(
-        leading: Icon(getComponentStatusIcon(addCom.state,TaskComponentState.installed)),
+        leading: Icon(
+            getComponentStatusIcon(addCom.state, TaskComponentState.installed)),
         title: Text(_assets.getAssetById(addCom.newAssetId)!.name),
         subtitle: Text(getComponentStatusText(addCom.state)),
       ));
@@ -183,7 +192,8 @@ class TaskChangeComponentsPage extends StatelessWidget {
     col.add(Divider());
     task.value!.remove.forEach((removeCom) {
       col.add(ListTile(
-        leading: Icon(getComponentStatusIcon(removeCom.state, TaskComponentState.removed)),
+        leading: Icon(getComponentStatusIcon(
+            removeCom.state, TaskComponentState.removed)),
         title: GetBuilder<AssignedComponentsState>(
             tag: stationId,
             builder: (_components) {
