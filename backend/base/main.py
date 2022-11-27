@@ -63,6 +63,9 @@ system = System(pipes=[[AssetService, AssetProjector],
                        [AssignedComponentsService, ActionHistoryProjector],
                        [TaskService, TasksProjector],
                        [TaskService, AssignedComponentsService],
+                       [AssignedComponentsService, TaskService],
+                       [StorageItemService, TaskService],
+                       [TaskService, StorageItemService],
                        ])
 
 runner = SingleThreadedRunner(system)
@@ -71,8 +74,8 @@ runner.start()
 runner.get(TaskService).mapper.transcoder.register(AddComponentRequestAsStr())
 runner.get(TaskService).mapper.transcoder.register(RemoveComponentRequestAsStr())
 
-register_tansconder([TasksProjector, AssignedComponentsService], AddComponentRequestAsStr())
-register_tansconder([TasksProjector, AssignedComponentsService], RemoveComponentRequestAsStr())
+register_tansconder([TasksProjector, AssignedComponentsService,StorageItemService], AddComponentRequestAsStr())
+register_tansconder([TasksProjector, AssignedComponentsService,StorageItemService], RemoveComponentRequestAsStr())
 
 
 

@@ -3,7 +3,7 @@ import json
 import uuid
 from typing import Optional
 
-from eventsourcing.domain import Aggregate, event
+from eventsourcing.domain import Aggregate, event, ProgrammingError
 from eventsourcing.persistence import Transcoding
 
 from taskmanager.domain.model.task_component_state import TaskComponentState
@@ -13,16 +13,18 @@ from taskmanager.domain.model.task_state import TaskState
 class AddComponentRequest:
     id: str
     new_asset_id: str
-    assigned_component: Optional[str]
+    assigned_component_id: Optional[str]
     state: TaskComponentState
 
     def __init__(self, id: uuid.UUID, new_asset_id: uuid.UUID, state: TaskComponentState,
-                 assigned_component: Optional[uuid.UUID] = None
+                 assigned_component_id: Optional[uuid.UUID] = None
                  ):
         self.id = str(id)
         self.new_asset_id = str(new_asset_id)
-        if assigned_component:
-            self.assigned_component = str(assigned_component)
+        if assigned_component_id:
+            self.assigned_component_id = str(assigned_component_id)
+        else:
+            self.assigned_component_id = None
         self.state = state
 
 
@@ -61,6 +63,9 @@ class RemoveComponentRequestAsStr(Transcoding):
         return json.loads(data, object_hook=lambda d: RemoveComponentRequest(**d))
 
 
+
+
+
 class TaskChangeComponents(Aggregate):
     class TaskChangeComponentsCreated(Aggregate.Created):
         name: str
@@ -70,6 +75,15 @@ class TaskChangeComponents(Aggregate):
         components_to_add: list[AddComponentRequest]
         components_to_remove: list[RemoveComponentRequest]
         created_at: datetime.datetime
+
+    class TaskChangeComponentsComponentAssigned(Aggregate.Event):
+        asset_id: uuid.UUID
+        assigned_component_id: uuid.UUID
+        pass
+
+    class TaskChangeComponentsComponentAllocated(Aggregate.Event):
+        asset_id: uuid.UUID
+        pass
 
     @event(TaskChangeComponentsCreated)
     def __init__(self, name: str, description: str, station_id: uuid.UUID, status: TaskState,
@@ -82,3 +96,29 @@ class TaskChangeComponents(Aggregate):
         self.components_to_add = components_to_add
         self.components_to_remove = components_to_remove
         self.created_at = created_at
+
+    @event(TaskChangeComponentsComponentAssigned)
+    def assign_component(self, asset_id, assigned_component_id: uuid.UUID):
+        for c in self.components_to_add:
+            if c.new_asset_id != asset_id:
+                continue
+            if c.assigned_component_id != None:
+                continue
+            c.assigned_component_id = assigned_component_id
+            return
+
+        raise ProgrammingError(
+            "Assigned component " + str(assigned_component_id) + " cant be assign in task" + str(self.id))
+
+    @event(TaskChangeComponentsComponentAllocated)
+    def allocate_component(self, asset_id):
+        for c in self.components_to_add:
+            if c.new_asset_id != asset_id:
+                continue
+            if c.state != TaskComponentState.AWAITING:
+                continue
+            c.state = TaskComponentState.ALLOCATED
+            return
+
+        raise ProgrammingError(
+            "Allocated component " + str(asset_id) + " cant be allocated in task" + str(self.id))

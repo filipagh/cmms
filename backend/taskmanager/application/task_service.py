@@ -8,6 +8,8 @@ from eventsourcing.system import ProcessApplication
 
 from base import main
 from stationmanager.application.station_projector import StationProjector
+from stationmanager.domain.model.assigned_component import AssignedComponent, AssignedComponentState
+from storagemanager.domain.model.sotrageitem import StorageItem
 from taskmanager.application.model.task_change_component.schema import TaskChangeComponentsNewSchema, \
     TaskComponentAddNewSchema, TaskComponentRemoveNewSchema, TaskChangeComponentsSchema, AddComponentRequestSchema, \
     RemoveComponentRequestSchema
@@ -62,3 +64,18 @@ class TaskService(ProcessApplication):
     @singledispatchmethod
     def policy(self, domain_event, process_event):
         """Default policy"""
+
+    @policy.register(AssignedComponent.CreatedEvent)
+    def _(self, domain_event: AssignedComponent.CreatedEvent, process_event):
+        if domain_event.status == AssignedComponentState.AWAITING:
+            task: TaskChangeComponents = self.repository.get(domain_event.task_id)
+            task.assign_component(domain_event.asset_id, domain_event.originator_id)
+            self.save(task)
+
+    @policy.register(StorageItem.AssetAllocated)
+    def _(self, domain_event: StorageItem.AssetAllocated, process_event):
+        task: TaskChangeComponents = self.repository.get(domain_event.task_id)
+        task.allocate_component(domain_event.asset_id)
+        self.save(task)
+
+

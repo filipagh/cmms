@@ -35,3 +35,9 @@ def get_by_id(id: uuid.UUID):
     db: Session
     with _get_db() as db:
         return db.query(StorageItemModel).get(id)
+
+
+def get_by_asset_id(asset_id: uuid.UUID) -> StorageItemModel:
+    db: Session
+    with _get_db() as db:
+        return db.query(StorageItemModel).filter(StorageItemModel.asset_id == asset_id).first()
