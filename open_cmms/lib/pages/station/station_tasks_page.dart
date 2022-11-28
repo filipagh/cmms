@@ -2,6 +2,7 @@ import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/pages/station/station_base_page.dart';
+import 'package:open_cmms/pages/tasks/task_page_factory.dart';
 import 'package:open_cmms/service/backend_api/tasks_service.dart';
 
 class StationTasksPage extends StatelessWidget
@@ -29,6 +30,7 @@ class StationTasksPage extends StatelessWidget
                 TaskSchema t = i[index];
                 return Card(
                   child: ListTile(
+                    onTap: () =>TaskPageFactory().openTaskPageFromModel(t),
                     title: Text("${getTaskName(t.taskType)}: ${t.name}"),
                     subtitle: Text("${t.description}, ${t.createdOn
                         .toString()}"),
