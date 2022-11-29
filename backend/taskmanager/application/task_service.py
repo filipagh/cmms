@@ -9,6 +9,7 @@ from eventsourcing.system import ProcessApplication
 from base import main
 from stationmanager.application.station_projector import StationProjector
 from stationmanager.domain.model.assigned_component import AssignedComponent, AssignedComponentState
+from storagemanager.application.storage_item_service import StorageItemService
 from storagemanager.domain.model.sotrageitem import StorageItem
 from taskmanager.application.model.task_change_component.schema import TaskChangeComponentsNewSchema, \
     TaskComponentAddNewSchema, TaskComponentRemoveNewSchema, TaskChangeComponentsSchema, AddComponentRequestSchema, \
@@ -49,17 +50,7 @@ class TaskService(ProcessApplication):
             task: TaskChangeComponents = self.repository.get(task_id)
         except AggregateNotFound:
             return None
-        add = list(map(lambda x: self._add_model_to_schema(x), task.components_to_add))
-        remove = list(map(lambda x: self._remove_model_to_schema(x), task.components_to_remove))
-        model = TaskChangeComponentsSchema(**task.__dict__, id=task.id, add=add, remove=remove, state=task.status)
-
-        return model
-
-    def _add_model_to_schema(self, component: AddComponentRequest) -> AddComponentRequestSchema:
-        return AddComponentRequestSchema(**component.__dict__)
-
-    def _remove_model_to_schema(self, component: RemoveComponentRequest) -> RemoveComponentRequestSchema:
-        return RemoveComponentRequestSchema(**component.__dict__)
+        return self._task_component_to_chema(task)
 
     @singledispatchmethod
     def policy(self, domain_event, process_event):
@@ -78,4 +69,20 @@ class TaskService(ProcessApplication):
         task.allocate_component(domain_event.asset_id)
         self.save(task)
 
+    def request_component_allocation(self, task_id):
+        task: TaskChangeComponents = self.repository.get(task_id)
+        storage_service = main.runner.get(StorageItemService)
+        for c in task.components_to_add:
+            if c.state == TaskComponentState.AWAITING:
+                storage_service.try_to_allocate_component(c.new_asset_id, task_id)
 
+    def _task_component_to_chema(self, task: TaskChangeComponents):
+        def _add_model_to_schema(component: AddComponentRequest) -> AddComponentRequestSchema:
+            return AddComponentRequestSchema(**component.__dict__)
+
+        def _remove_model_to_schema(component: RemoveComponentRequest) -> RemoveComponentRequestSchema:
+            return RemoveComponentRequestSchema(**component.__dict__)
+
+        add = list(map(lambda x: _add_model_to_schema(x), task.components_to_add))
+        remove = list(map(lambda x: _remove_model_to_schema(x), task.components_to_remove))
+        return TaskChangeComponentsSchema(**task.__dict__, id=task.id, add=add, remove=remove, state=task.status)

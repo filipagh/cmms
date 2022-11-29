@@ -10,12 +10,12 @@ from taskmanager.domain.model.tasks.task_change_components import TaskChangeComp
 
 
 class StorageItemService(ProcessApplication):
+
     def try_to_allocate_component(self, asset_id, task_id):
         storage_item: StorageItem = self.repository.get(storage_item_repo.get_by_asset_id(asset_id).id)
         if storage_item.in_storage > 0:
             storage_item.allocate(task_id, asset_id)
             self.save(storage_item)
-
 
     def add_used_component(self):
         pass
@@ -36,11 +36,6 @@ class StorageItemService(ProcessApplication):
     @singledispatchmethod
     def policy(self, domain_event, process_event):
         """Default policy"""
-
-    # @policy.register(AssignedComponent.CreatedEvent)
-    # def _(self, domain_event: AssignedComponent.CreatedEvent, process_event):
-    #     if domain_event.status == AssignedComponentState.INSTALLED:
-    #         self.add_used_component()
 
     @policy.register(TaskChangeComponents.TaskChangeComponentsCreated)
     def _(self, domain_event: TaskChangeComponents.TaskChangeComponentsCreated, process_event):

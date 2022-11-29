@@ -1,6 +1,7 @@
 import uuid
 
 from fastapi import APIRouter, HTTPException
+from starlette.responses import PlainTextResponse
 
 import taskmanager.application.model.task_change_component.schema
 from base import main
@@ -27,12 +28,12 @@ def create_component_task(
         raise HTTPException(status_code=400, detail=e.__str__())
 
 
-
 @task_manager_router.get("/get_component_task/{task_id}",
                          response_model=schema_change_comp.TaskChangeComponentsSchema)
 def load(task_id: uuid.UUID):
     task_service: TaskService = main.runner.get(main.Services.TaskService.value)
-    return task_service.load_component_task(task_id)\
+    return task_service.load_component_task(task_id)
+
 
 @task_manager_router.get("/get_tasks",
                          response_model=list[TaskSchema])
@@ -40,8 +41,16 @@ def load(station_id: uuid.UUID = None):
     tasks_projector: TasksProjector = main.runner.get(TasksProjector)
     return tasks_projector.get_all(station_id)
 
+
 @task_manager_router.get("/get_task",
                          response_model=TaskSchema)
 def load_by_id(task_id: uuid.UUID):
     tasks_projector: TasksProjector = main.runner.get(TasksProjector)
     return tasks_projector.get_by_id(task_id)
+
+
+@task_manager_router.get("/{task_id}/allocate_components", response_class=PlainTextResponse)
+def allocate_components(task_id: uuid.UUID):
+    task_service: TaskService = main.runner.get(TaskService)
+    task_service.request_component_allocation(task_id)
+    return "OK"

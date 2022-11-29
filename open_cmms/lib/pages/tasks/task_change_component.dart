@@ -11,8 +11,10 @@ import '../../widgets/main_menu_widget.dart';
 class TaskChangeComponentsPage extends StatelessWidget {
   static const String ENDPOINT = '/TaskChangeComponent';
   final String taskId;
-  late String stationId;
+  late final String stationId;
   final AssetTypesState _assets = Get.find();
+  final Rxn<TaskChangeComponentsSchema> task =
+      Rxn<TaskChangeComponentsSchema>();
 
   TaskChangeComponentsPage({
     Key? key,
@@ -28,14 +30,13 @@ class TaskChangeComponentsPage extends StatelessWidget {
     });
   }
 
-  final Rxn<TaskChangeComponentsSchema> task =
-      Rxn<TaskChangeComponentsSchema>();
-  bool isModelLoaded = false;
-
   loadTask() {
     TasksService()
         .loadTaskManagerGetComponentTaskTaskIdGet(taskId)
-        .then((value) => task.value = value);
+        .then((value) {
+      task.value = value;
+      task.refresh();
+    });
   }
 
   Widget buildContent() {
@@ -55,7 +56,7 @@ class TaskChangeComponentsPage extends StatelessWidget {
       body: Row(
         children: [
           MainMenuWidget(),
-          VerticalDivider(),
+          const VerticalDivider(),
           Expanded(
             child: buildContent(),
           )
@@ -69,9 +70,9 @@ class TaskChangeComponentsPage extends StatelessWidget {
       children: [
         Text(
           "Uloha - zmena komponentov:  " + task.value!.name,
-          style: TextStyle(fontSize: 25),
+          style: const TextStyle(fontSize: 25),
         ),
-        Divider(),
+        const Divider(),
         buildTaskHeader(),
 
         Expanded(
@@ -79,8 +80,8 @@ class TaskChangeComponentsPage extends StatelessWidget {
             child: Column(
               children: [
                 buildTaskComponents(),
-                Text("komentare k tasku"),
-                Placeholder(),
+                const Text("komentare k tasku"),
+                const Placeholder(),
               ],
             ),
           ),
@@ -92,7 +93,7 @@ class TaskChangeComponentsPage extends StatelessWidget {
   }
 
   Widget buildMissingRoadSegment() {
-    return SizedBox(
+    return const SizedBox(
         width: 200, height: 200, child: CircularProgressIndicator());
   }
 
@@ -101,24 +102,25 @@ class TaskChangeComponentsPage extends StatelessWidget {
       children: [
         Text("Datum vytovrenia: " + task.value!.createdAt.toString()),
         Text("Stav: " + buildTaskStatusString()),
-        Text("Priradeny k: " + "Jozko Mrkvicka"),
-        Divider(),
+        const Text("Priradeny k: " + "Jozko Mrkvicka"),
+        const Divider(),
         Column(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   "Opis",
                   style: TextStyle(fontSize: 20),
                 ),
-                Icon(Icons.edit),
+                const Icon(Icons.edit),
               ],
             ),
-            Text(buildDescription(), style: TextStyle(height: 3), maxLines: 10)
+            Text(buildDescription(),
+                style: const TextStyle(height: 3), maxLines: 10)
           ],
         ),
-        Divider(),
+        const Divider(),
       ],
     );
   }
@@ -132,16 +134,12 @@ class TaskChangeComponentsPage extends StatelessWidget {
     switch (task.value!.state) {
       case TaskState.done:
         return "Uloha je dokoncena";
-        break;
       case TaskState.open:
         return "Nova uloha";
-        break;
       case TaskState.ready:
         return "Uloha je pripravena";
-        break;
       case TaskState.removed:
         return "Uloha je zrusena";
-        break;
     }
     return "Neznamy stav";
   }
@@ -157,14 +155,29 @@ class TaskChangeComponentsPage extends StatelessWidget {
     if (task.value!.add.isEmpty) {
       return col;
     }
+
     col.add(ListTile(
       style: ListTileStyle.drawer,
-      title: Text(
-        "Pridat Komponenty:",
-        style: TextStyle(fontSize: 20),
+      title: Row(
+        children: [
+          const Text(
+            "Pridat Komponenty:",
+            style: TextStyle(fontSize: 20),
+          ),
+          if (task.value!.add
+              .any((element) => element.state == TaskComponentState.awaiting))
+            ElevatedButton(
+                onPressed: () {
+                  TasksService()
+                      .allocateComponentsTaskManagerTaskIdAllocateComponentsGet(
+                          taskId)
+                      .then((value) => loadTask());
+                },
+                child: const Text("Priradit komponenty")),
+        ],
       ),
     ));
-    col.add(Divider());
+    col.add(const Divider());
     task.value!.add.forEach((addCom) {
       col.add(ListTile(
         leading: Icon(
@@ -182,14 +195,14 @@ class TaskChangeComponentsPage extends StatelessWidget {
     if (task.value!.remove.isEmpty) {
       return col;
     }
-    col.add(ListTile(
+    col.add(const ListTile(
       style: ListTileStyle.drawer,
       title: Text(
         "Odstranit Komponenty:",
         style: TextStyle(fontSize: 20),
       ),
     ));
-    col.add(Divider());
+    col.add(const Divider());
     task.value!.remove.forEach((removeCom) {
       col.add(ListTile(
         leading: Icon(getComponentStatusIcon(
@@ -198,9 +211,9 @@ class TaskChangeComponentsPage extends StatelessWidget {
             tag: stationId,
             builder: (_components) {
               final comp = _components.getById(removeCom.assignedComponentId);
-              if (comp == null) return Text("loading...");
+              if (comp == null) return const Text("loading...");
               final asset = _assets.getAssetById(comp.assetId);
-              if (asset == null) return Text("loading...");
+              if (asset == null) return const Text("loading...");
               return Text(asset.name);
             }),
         subtitle: Text(getComponentStatusText(removeCom.state)),
@@ -222,13 +235,13 @@ class TaskChangeComponentsPage extends StatelessWidget {
         {
           if (goalState == TaskComponentState.installed) {
             return Icons.done;
-          } else
+          } else {
             return Icons.timer_sharp;
+          }
         }
 
       case TaskComponentState.removed:
         return Icons.done;
-        break;
     }
     return Icons.error;
   }
@@ -243,7 +256,6 @@ class TaskChangeComponentsPage extends StatelessWidget {
         return "komponent je nainstalovany";
       case TaskComponentState.removed:
         return "komponent je odstraneny";
-        break;
     }
     return "Neznamy stav";
   }

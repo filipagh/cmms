@@ -16,6 +16,59 @@ class TaskManagerApi {
 
   final ApiClient apiClient;
 
+  /// Allocate Components
+  ///
+  /// Note: This method returns the HTTP [Response].
+  ///
+  /// Parameters:
+  ///
+  /// * [String] taskId (required):
+  Future<Response> allocateComponentsTaskManagerTaskIdAllocateComponentsGetWithHttpInfo(String taskId,) async {
+    // ignore: prefer_const_declarations
+    final path = r'/task-manager/{task_id}/allocate_components'
+      .replaceAll('{task_id}', taskId);
+
+    // ignore: prefer_final_locals
+    Object? postBody;
+
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
+
+    const contentTypes = <String>[];
+
+
+    return apiClient.invokeAPI(
+      path,
+      'GET',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      contentTypes.isEmpty ? null : contentTypes.first,
+    );
+  }
+
+  /// Allocate Components
+  ///
+  /// Parameters:
+  ///
+  /// * [String] taskId (required):
+  Future<String?> allocateComponentsTaskManagerTaskIdAllocateComponentsGet(String taskId,) async {
+    final response = await allocateComponentsTaskManagerTaskIdAllocateComponentsGetWithHttpInfo(taskId,);
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'String',) as String;
+    
+    }
+    return null;
+  }
+
   /// Create Component Task
   ///
   /// Note: This method returns the HTTP [Response].

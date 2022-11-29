@@ -9,11 +9,53 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**allocateComponentsTaskManagerTaskIdAllocateComponentsGet**](TaskManagerApi.md#allocatecomponentstaskmanagertaskidallocatecomponentsget) | **GET** /task-manager/{task_id}/allocate_components | Allocate Components
 [**createComponentTaskTaskManagerCreateChangeComponentTaskPost**](TaskManagerApi.md#createcomponenttasktaskmanagercreatechangecomponenttaskpost) | **POST** /task-manager/create_change_component_task | Create Component Task
 [**loadByIdTaskManagerGetTaskGet**](TaskManagerApi.md#loadbyidtaskmanagergettaskget) | **GET** /task-manager/get_task | Load By Id
 [**loadTaskManagerGetComponentTaskTaskIdGet**](TaskManagerApi.md#loadtaskmanagergetcomponenttasktaskidget) | **GET** /task-manager/get_component_task/{task_id} | Load
 [**loadTaskManagerGetTasksGet**](TaskManagerApi.md#loadtaskmanagergettasksget) | **GET** /task-manager/get_tasks | Load
 
+
+# **allocateComponentsTaskManagerTaskIdAllocateComponentsGet**
+> String allocateComponentsTaskManagerTaskIdAllocateComponentsGet(taskId)
+
+Allocate Components
+
+### Example
+```dart
+import 'package:BackendAPI/api.dart';
+
+final api_instance = TaskManagerApi();
+final taskId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+
+try {
+    final result = api_instance.allocateComponentsTaskManagerTaskIdAllocateComponentsGet(taskId);
+    print(result);
+} catch (e) {
+    print('Exception when calling TaskManagerApi->allocateComponentsTaskManagerTaskIdAllocateComponentsGet: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **taskId** | **String**|  | 
+
+### Return type
+
+**String**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **createComponentTaskTaskManagerCreateChangeComponentTaskPost**
 > String createComponentTaskTaskManagerCreateChangeComponentTaskPost(taskChangeComponentsNewSchema)
