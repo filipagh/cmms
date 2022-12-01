@@ -30,6 +30,12 @@ class TasksProjector(ProcessApplication):
         )
         tasks_repo.save(task)
 
+    @policy.register(TaskChangeComponents.TaskChangeComponentsStatusChanged)
+    def _(self, domain_event: TaskChangeComponents.TaskChangeComponentsStatusChanged, process_event):
+        task = self.repo.get_by_id(domain_event.originator_id)
+        task.state = domain_event.new_status
+        tasks_repo.save(task)
+
     def get_by_id(self, task_id: uuid.UUID) -> schema.TaskSchema:
         return schema.TaskSchema(**self.repo.get_by_id(task_id).__dict__)
 

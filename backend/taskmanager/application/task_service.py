@@ -5,6 +5,7 @@ from typing import Optional
 from eventsourcing.application import AggregateNotFound
 from eventsourcing.dispatch import singledispatchmethod
 from eventsourcing.system import ProcessApplication
+from eventsourcing.utils import EnvType
 
 from base import main
 from stationmanager.application.station_projector import StationProjector
@@ -14,6 +15,7 @@ from storagemanager.domain.model.sotrageitem import StorageItem
 from taskmanager.application.model.task_change_component.schema import TaskChangeComponentsNewSchema, \
     TaskComponentAddNewSchema, TaskComponentRemoveNewSchema, TaskChangeComponentsSchema, AddComponentRequestSchema, \
     RemoveComponentRequestSchema
+from taskmanager.domain.change_components.task_status_service import TaskStatusService
 from taskmanager.domain.model.task_component_state import TaskComponentState
 from taskmanager.domain.model.task_state import TaskState
 from taskmanager.domain.model.tasks.task_change_components import AddComponentRequest, RemoveComponentRequest, \
@@ -21,6 +23,11 @@ from taskmanager.domain.model.tasks.task_change_components import AddComponentRe
 
 
 class TaskService(ProcessApplication):
+    task_status_service: TaskStatusService
+
+    def __init__(self, env: Optional[EnvType] = None):
+        self.task_status_service = TaskStatusService(self)
+        super().__init__(env)
 
     def create_component_task(self,
                               new_task: TaskChangeComponentsNewSchema) -> uuid.UUID:
@@ -62,12 +69,14 @@ class TaskService(ProcessApplication):
             task: TaskChangeComponents = self.repository.get(domain_event.task_id)
             task.assign_component(domain_event.asset_id, domain_event.originator_id)
             self.save(task)
+            self.task_status_service.try_change_state_to_ready(task)
 
     @policy.register(StorageItem.AssetAllocated)
     def _(self, domain_event: StorageItem.AssetAllocated, process_event):
         task: TaskChangeComponents = self.repository.get(domain_event.task_id)
         task.allocate_component(domain_event.asset_id)
         self.save(task)
+        self.task_status_service.try_change_state_to_ready(task)
 
     def request_component_allocation(self, task_id):
         task: TaskChangeComponents = self.repository.get(task_id)

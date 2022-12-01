@@ -63,9 +63,6 @@ class RemoveComponentRequestAsStr(Transcoding):
         return json.loads(data, object_hook=lambda d: RemoveComponentRequest(**d))
 
 
-
-
-
 class TaskChangeComponents(Aggregate):
     class TaskChangeComponentsCreated(Aggregate.Created):
         name: str
@@ -83,6 +80,11 @@ class TaskChangeComponents(Aggregate):
 
     class TaskChangeComponentsComponentAllocated(Aggregate.Event):
         asset_id: uuid.UUID
+        pass
+
+    class TaskChangeComponentsStatusChanged(Aggregate.Event):
+        new_status: TaskState
+        old_status: TaskState
         pass
 
     @event(TaskChangeComponentsCreated)
@@ -122,3 +124,7 @@ class TaskChangeComponents(Aggregate):
 
         raise ProgrammingError(
             "Allocated component " + str(asset_id) + " cant be allocated in task" + str(self.id))
+
+    @event(TaskChangeComponentsStatusChanged)
+    def change_status(self, new_status: TaskState, old_status: TaskState):
+        self.status = new_status
