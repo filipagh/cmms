@@ -82,6 +82,20 @@ class TaskChangeComponentsPage extends StatelessWidget {
                 buildTaskComponents(),
                 const Text("komentare k tasku"),
                 const Placeholder(),
+                Row(
+                  children: [
+                    ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateColor.resolveWith(
+                                (x) => Colors.red)),
+                        onPressed: () {
+                          TasksService()
+                              .cancelTaskTaskManagerTaskIdDelete(taskId)
+                              .then((value) => loadTask());
+                        },
+                        child: Text("Zrusit ulohu"))
+                  ],
+                )
               ],
             ),
           ),
