@@ -59,6 +59,11 @@ class TaskService(ProcessApplication):
             return None
         return self._task_component_to_chema(task)
 
+    def cancel_task(self, task_id: uuid.UUID):
+        task: TaskChangeComponents = self.repository.get(task_id)
+        task.cancel_task()
+        self.save(task)
+
     @singledispatchmethod
     def policy(self, domain_event, process_event):
         """Default policy"""

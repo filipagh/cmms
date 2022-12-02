@@ -31,6 +31,12 @@ class AssignedComponent(Aggregate):
         task_id: uuid
         pass
 
+    class AssignedComponentRemoveReverted(Aggregate.Event):
+        new_status: AssignedComponentState
+
+    class AssignedComponentInstallReverted(Aggregate.Event):
+        pass
+
     @event(CreatedEvent)
     def __init__(self, asset_id, station_id, status: AssignedComponentState,
                  created_at: datetime.datetime, task_id: uuid):
@@ -51,3 +57,15 @@ class AssignedComponent(Aggregate):
     def set_component_to_be_removed(self, task_id: uuid, new_status=AssignedComponentState.WILL_BE_REMOVED):
         self.task_id = task_id
         self.status = new_status
+
+    def revert_remove_component(self):
+        self._revert_remove_component(AssignedComponentState.INSTALLED)
+
+    @event(AssignedComponentRemoveReverted)
+    def _revert_remove_component(self, new_status: AssignedComponentState):
+        self.task_id = None
+        self.status = new_status
+
+    @event(AssignedComponentInstallReverted)
+    def revert_install(self):
+        self.task_id = None

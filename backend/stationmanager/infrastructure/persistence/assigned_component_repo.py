@@ -28,10 +28,17 @@ def save(component: AssignedComponentModel):
         db.commit()
 
 
-def get_by_id(id: uuid.UUID) -> AssignedComponentModel:
+def get_by_id(component_id: uuid.UUID) -> AssignedComponentModel:
     db: Session
     with _get_db() as db:
-        return db.query(AssignedComponentModel).get(id)
+        return db.query(AssignedComponentModel).get(component_id)
+
+
+def delete_by_id(component_id: uuid.UUID):
+    db: Session
+    with _get_db() as db:
+        db.query(AssignedComponentModel).filter(AssignedComponentModel.id == component_id).delete()
+        db.commit()
 
 
 def get_by_station(station_id: uuid.UUID) -> list[AssignedComponentModel]:

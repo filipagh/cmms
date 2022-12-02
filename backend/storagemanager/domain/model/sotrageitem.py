@@ -14,6 +14,11 @@ class StorageItem(Aggregate):
         asset_id: uuid.UUID
         task_id: uuid.UUID
 
+    class AssetsUnAllocated(Aggregate.Event):
+        count: int
+        asset_id: uuid.UUID
+        task_id: uuid.UUID
+
     @event(AssetAddedToStorage)
     def add_to_storage(self, count_number: int):
         self.in_storage += count_number
@@ -29,3 +34,8 @@ class StorageItem(Aggregate):
         self.in_storage = self.in_storage - 1
         self.allocated = self.allocated + 1
         pass
+
+    @event(AssetsUnAllocated)
+    def unallocate(self, count: int, asset_id: uuid.UUID, task_id: uuid.UUID):
+        self.allocated -= count
+        self.in_storage += count

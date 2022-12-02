@@ -87,6 +87,12 @@ class TaskChangeComponents(Aggregate):
         old_status: TaskState
         pass
 
+    class TaskCanceled(Aggregate.Event):
+        assigned_component_to_revert: list[str]
+        assets_to_free: list[str]
+        new_status: TaskState
+        pass
+
     @event(TaskChangeComponentsCreated)
     def __init__(self, name: str, description: str, station_id: uuid.UUID, status: TaskState,
                  components_to_add: list[AddComponentRequest], components_to_remove: list[RemoveComponentRequest],
@@ -128,3 +134,24 @@ class TaskChangeComponents(Aggregate):
     @event(TaskChangeComponentsStatusChanged)
     def change_status(self, new_status: TaskState, old_status: TaskState):
         self.status = new_status
+
+    def cancel_task(self):
+
+        if self.status in [TaskState.REMOVED, TaskState.DONE]: return
+
+        assigned_comp_to_free = []
+        assets_to_free = []
+        for c in self.components_to_add:
+            if c.assigned_component_id is not None and c.state != TaskComponentState.INSTALLED: assigned_comp_to_free.append(
+                c.assigned_component_id)
+            if c.state == TaskComponentState.ALLOCATED: assets_to_free.append(c.new_asset_id)
+
+        for ac in self.components_to_remove:
+            if ac.state == TaskComponentState.AWAITING: assigned_comp_to_free.append(ac.assigned_component_id)
+
+        self._cancel_task(assigned_component_to_revert=assigned_comp_to_free, assets_to_free=assets_to_free,
+                          new_status=TaskState.REMOVED)
+
+    @event(TaskCanceled)
+    def _cancel_task(self, assigned_component_to_revert: list[str], assets_to_free: list[str], new_status: TaskState):
+        self.status = TaskState.REMOVED

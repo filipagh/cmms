@@ -9,6 +9,7 @@ from taskmanager.application.model.task.schema import TaskSchema
 from taskmanager.application.model.task_change_component import schema as schema_change_comp
 from taskmanager.application.task_service import TaskService
 from taskmanager.application.tasks_projector import TasksProjector
+from taskmanager.infrastructure.persistence.tasks_repo import TaskType
 
 task_manager_router = APIRouter(
     prefix="/task-manager",
@@ -54,3 +55,16 @@ def allocate_components(task_id: uuid.UUID):
     task_service: TaskService = main.runner.get(TaskService)
     task_service.request_component_allocation(task_id)
     return "OK"
+
+
+@task_manager_router.delete("/{task_id}", response_class=PlainTextResponse)
+def cancel_task(task_id: uuid.UUID):
+    task_proj = main.runner.get(TasksProjector)
+    task_type = task_proj.get_by_id(task_id).task_type
+    match task_type:
+        case TaskType.COMPONENT_CHANGE:
+            task_service: TaskService = main.runner.get(TaskService)
+            task_service.cancel_task(task_id)
+            return "OK"
+        case _:
+            raise HTTPException(500, f"Unimplemented task cancel type: {str(task_type.name)}")

@@ -20,7 +20,7 @@ class AssignedComponentsService(ProcessApplication):
     def create_installed_component(self, asset_id: uuid, station_id: uuid):
         component: AssignedComponent = AssignedComponent(asset_id=asset_id, station_id=station_id,
                                                          status=AssignedComponentState.INSTALLED,
-                                                         created_at=datetime.now(),task_id=None)
+                                                         created_at=datetime.now(), task_id=None)
         self.save(component)
         return component.id
 
@@ -60,3 +60,14 @@ class AssignedComponentsService(ProcessApplication):
             self.create_new_component(add.new_asset_id, domain_event.station_id, domain_event.originator_id)
         for remove in domain_event.components_to_remove:
             self.set_component_to_be_removed(remove.assigned_component_id, domain_event.originator_id)
+
+    @policy.register(TaskChangeComponents.TaskCanceled)
+    def _(self, domain_event: TaskChangeComponents.TaskCanceled, process_event):
+        for ac in domain_event.assigned_component_to_revert:
+            as_component: AssignedComponent = self.repository.get(ac)
+            if as_component.status == AssignedComponentState.WILL_BE_REMOVED:
+                as_component.revert_remove_component()
+                self.save(as_component)
+            if as_component.status == AssignedComponentState.AWAITING:
+                as_component.revert_install()
+                self.save(as_component)
