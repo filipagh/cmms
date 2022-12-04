@@ -8,6 +8,7 @@ import 'package:BackendAPI/api.dart';
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**id** | **String** |  | 
 **newAssetId** | **String** |  | 
 **assignedComponent** | **String** |  | [optional] 
 **state** | [**TaskComponentState**](TaskComponentState.md) |  | 

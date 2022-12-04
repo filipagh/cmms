@@ -13,10 +13,13 @@ part of openapi.api;
 class AddComponentRequestSchema {
   /// Returns a new [AddComponentRequestSchema] instance.
   AddComponentRequestSchema({
+    required this.id,
     required this.newAssetId,
     this.assignedComponent,
     required this.state,
   });
+
+  String id;
 
   String newAssetId;
 
@@ -32,6 +35,7 @@ class AddComponentRequestSchema {
 
   @override
   bool operator ==(Object other) => identical(this, other) || other is AddComponentRequestSchema &&
+     other.id == id &&
      other.newAssetId == newAssetId &&
      other.assignedComponent == assignedComponent &&
      other.state == state;
@@ -39,15 +43,17 @@ class AddComponentRequestSchema {
   @override
   int get hashCode =>
     // ignore: unnecessary_parenthesis
+    (id.hashCode) +
     (newAssetId.hashCode) +
     (assignedComponent == null ? 0 : assignedComponent!.hashCode) +
     (state.hashCode);
 
   @override
-  String toString() => 'AddComponentRequestSchema[newAssetId=$newAssetId, assignedComponent=$assignedComponent, state=$state]';
+  String toString() => 'AddComponentRequestSchema[id=$id, newAssetId=$newAssetId, assignedComponent=$assignedComponent, state=$state]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
+      _json[r'id'] = id;
       _json[r'new_asset_id'] = newAssetId;
     if (assignedComponent != null) {
       _json[r'assigned_component'] = assignedComponent;
@@ -75,6 +81,7 @@ class AddComponentRequestSchema {
       }());
 
       return AddComponentRequestSchema(
+        id: mapValueOfType<String>(json, r'id')!,
         newAssetId: mapValueOfType<String>(json, r'new_asset_id')!,
         assignedComponent: mapValueOfType<String>(json, r'assigned_component'),
         state: TaskComponentState.fromJson(json[r'state'])!,
@@ -127,6 +134,7 @@ class AddComponentRequestSchema {
 
   /// The list of required keys that must be present in a JSON.
   static const requiredKeys = <String>{
+    'id',
     'new_asset_id',
     'state',
   };
