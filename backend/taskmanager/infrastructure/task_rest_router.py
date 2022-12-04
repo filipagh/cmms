@@ -7,6 +7,7 @@ import taskmanager.application.model.task_change_component.schema
 from base import main
 from taskmanager.application.model.task.schema import TaskSchema
 from taskmanager.application.model.task_change_component import schema as schema_change_comp
+from taskmanager.application.model.task_change_component.schema import TaskChangeComponentRequestId
 from taskmanager.application.task_service import TaskService
 from taskmanager.application.tasks_projector import TasksProjector
 from taskmanager.infrastructure.persistence.tasks_repo import TaskType
@@ -54,6 +55,13 @@ def load_by_id(task_id: uuid.UUID):
 def allocate_components(task_id: uuid.UUID):
     task_service: TaskService = main.runner.get(TaskService)
     task_service.request_component_allocation(task_id)
+    return "OK"
+
+
+@task_manager_router.post("/{task_id}/compete_task_itmes", response_class=PlainTextResponse)
+def complete_task_items(task_id: uuid.UUID, task_items: list[TaskChangeComponentRequestId]):
+    task_service: TaskService = main.runner.get(TaskService)
+    task_service.complete_task_items(task_id, task_items)
     return "OK"
 
 

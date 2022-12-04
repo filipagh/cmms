@@ -2,6 +2,8 @@ import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/service/backend_api/tasks_service.dart';
+import 'package:open_cmms/widgets/dialog_form.dart';
+import 'package:open_cmms/widgets/forms/tasks/complete_change_components_task.dart';
 
 import '../../states/asset_types_state.dart';
 import '../../states/station/components_state.dart';
@@ -83,6 +85,7 @@ class TaskChangeComponentsPage extends StatelessWidget {
                 const Text("komentare k tasku"),
                 const Placeholder(),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ElevatedButton(
                         style: ButtonStyle(
@@ -93,7 +96,17 @@ class TaskChangeComponentsPage extends StatelessWidget {
                               .cancelTaskTaskManagerTaskIdDelete(taskId)
                               .then((value) => loadTask());
                         },
-                        child: Text("Zrusit ulohu"))
+                        child: Text("Zrusit ulohu")),
+                    ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateColor.resolveWith(
+                                (x) => Colors.green)),
+                        onPressed: () {
+                          showFormDialog(CompleteChangeComponentsTaskForm(
+                                  stationId: stationId, task: task.value!))
+                              .then((value) => loadTask());
+                        },
+                        child: Text("Dokoncit ulohu"))
                   ],
                 )
               ],

@@ -20,3 +20,16 @@ class TaskStatusService:
         if task.status == TaskState.OPEN:
             task.change_status(TaskState.READY, task.status)
             self.task_service.save(task)
+
+    def try_change_state_to_done(self, task: TaskChangeComponents):
+        if task.status != TaskState.READY:
+            return
+
+        for i in task.components_to_add:
+            if i.state != TaskComponentState.INSTALLED:
+                return
+        for i in task.components_to_remove:
+            if i.state != TaskComponentState.REMOVED:
+                return
+        task.change_status(TaskState.DONE, task.status)
+        self.task_service.save(task)

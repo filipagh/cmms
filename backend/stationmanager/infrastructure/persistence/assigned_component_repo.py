@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import Column, Enum
+from sqlalchemy import Column, Enum, DateTime
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import Session
 
@@ -16,6 +16,8 @@ class AssignedComponentModel(Base):
     asset_id = Column(postgresql.UUID(as_uuid=True), index=True, nullable=False)
     status = Column('assigned_component_status', Enum(AssignedComponentState), nullable=False)
     task_id = Column(postgresql.UUID(as_uuid=True), nullable=True)
+    installed_at = Column(DateTime, nullable=True)
+    removed_at = Column(DateTime, nullable=True)
 
 
 def _get_db():

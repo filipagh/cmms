@@ -1,3 +1,4 @@
+import datetime
 import uuid
 from typing import Optional
 
@@ -23,3 +24,5 @@ class AssignedComponentIdSchema(BaseModel):
 class AssignedComponentSchema(AssignedComponentIdSchema,AssignedComponentSchemaBASE):
     status: AssignedComponentState
     task_id: Optional[uuid.UUID]
+    installed_at: datetime.datetime
+    removed_at: Optional[datetime.datetime]

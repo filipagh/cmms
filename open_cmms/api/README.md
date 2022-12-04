@@ -56,32 +56,33 @@ try {
 
 All URIs are relative to *http://localhost*
 
-Class | Method | HTTP request | Description
------------- | ------------- | ------------- | -------------
-*ActionHistoryApi* | [**getByStationActionHistoryByStationGet**](doc//ActionHistoryApi.md#getbystationactionhistorybystationget) | **GET** /action_history/by_station | Get By Station
-*AssetManagerApi* | [**createNewAssetAssetManagerNewAssetPost**](doc//AssetManagerApi.md#createnewassetassetmanagernewassetpost) | **POST** /assetManager/newAsset | Create New Asset
-*AssetManagerApi* | [**createNewCategoryAssetManagerNewCategoryPost**](doc//AssetManagerApi.md#createnewcategoryassetmanagernewcategorypost) | **POST** /assetManager/newCategory | Create New Category
-*AssetManagerApi* | [**getAssetCategoriesAssetManagerAssetCategoriesGet**](doc//AssetManagerApi.md#getassetcategoriesassetmanagerassetcategoriesget) | **GET** /assetManager/asset-categories | Get Asset Categories
-*AssetManagerApi* | [**getAssetsAssetManagerAssetsGet**](doc//AssetManagerApi.md#getassetsassetmanagerassetsget) | **GET** /assetManager/assets | Get Assets
-*AssignedComponentsApi* | [**createInstalledComponentAssignedComponentsCreateInstalledComponentPost**](doc//AssignedComponentsApi.md#createinstalledcomponentassignedcomponentscreateinstalledcomponentpost) | **POST** /assigned_components/create_installed_component | Create Installed Component
-*AssignedComponentsApi* | [**getAllAssignedComponentsComponentsGet**](doc//AssignedComponentsApi.md#getallassignedcomponentscomponentsget) | **GET** /assigned_components/components | Get All
-*AssignedComponentsApi* | [**removeInstalledComponentAssignedComponentsRemoveInstalledComponentPost**](doc//AssignedComponentsApi.md#removeinstalledcomponentassignedcomponentsremoveinstalledcomponentpost) | **POST** /assigned_components/remove_installed_component | Remove Installed Component
-*DefaultApi* | [**rootGet**](doc//DefaultApi.md#rootget) | **GET** / | Root
-*RoadSegmentManagerApi* | [**createRoadSegmentRoadSegmentManagerCreateRoadSegmentPost**](doc//RoadSegmentManagerApi.md#createroadsegmentroadsegmentmanagercreateroadsegmentpost) | **POST** /road-segment-manager/create_road_segment | Create Road Segment
-*RoadSegmentManagerApi* | [**getAllRoadSegmentManagerSegmentsGet**](doc//RoadSegmentManagerApi.md#getallroadsegmentmanagersegmentsget) | **GET** /road-segment-manager/segments | Get All
-*RoadSegmentManagerApi* | [**getByIdRoadSegmentManagerSegmentGet**](doc//RoadSegmentManagerApi.md#getbyidroadsegmentmanagersegmentget) | **GET** /road-segment-manager/segment | Get By Id
-*StationApi* | [**createStationStationCreateStationPost**](doc//StationApi.md#createstationstationcreatestationpost) | **POST** /station/create_station | Create Station
-*StationApi* | [**getAllStationStationsGet**](doc//StationApi.md#getallstationstationsget) | **GET** /station/stations | Get All
-*StationApi* | [**getByIdStationStationGet**](doc//StationApi.md#getbyidstationstationget) | **GET** /station/station | Get By Id
-*StationApi* | [**removeStationStationRemoveStationDelete**](doc//StationApi.md#removestationstationremovestationdelete) | **DELETE** /station/remove_station | Remove Station
-*StorageManagerApi* | [**getAllStorageItemsStorageManagerAllStorageDataGet**](doc//StorageManagerApi.md#getallstorageitemsstoragemanagerallstoragedataget) | **GET** /storage-manager/all-storage-data | Get All Storage Items
-*StorageManagerApi* | [**storeNewAssetsStorageManagerStoreNewAssetsPost**](doc//StorageManagerApi.md#storenewassetsstoragemanagerstorenewassetspost) | **POST** /storage-manager/store-new-assets | Store New Assets
-*TaskManagerApi* | [**allocateComponentsTaskManagerTaskIdAllocateComponentsGet**](doc//TaskManagerApi.md#allocatecomponentstaskmanagertaskidallocatecomponentsget) | **GET** /task-manager/{task_id}/allocate_components | Allocate Components
-*TaskManagerApi* | [**cancelTaskTaskManagerTaskIdDelete**](doc//TaskManagerApi.md#canceltasktaskmanagertaskiddelete) | **DELETE** /task-manager/{task_id} | Cancel Task
-*TaskManagerApi* | [**createComponentTaskTaskManagerCreateChangeComponentTaskPost**](doc//TaskManagerApi.md#createcomponenttasktaskmanagercreatechangecomponenttaskpost) | **POST** /task-manager/create_change_component_task | Create Component Task
-*TaskManagerApi* | [**loadByIdTaskManagerGetTaskGet**](doc//TaskManagerApi.md#loadbyidtaskmanagergettaskget) | **GET** /task-manager/get_task | Load By Id
-*TaskManagerApi* | [**loadTaskManagerGetComponentTaskTaskIdGet**](doc//TaskManagerApi.md#loadtaskmanagergetcomponenttasktaskidget) | **GET** /task-manager/get_component_task/{task_id} | Load
-*TaskManagerApi* | [**loadTaskManagerGetTasksGet**](doc//TaskManagerApi.md#loadtaskmanagergettasksget) | **GET** /task-manager/get_tasks | Load
+ Class                   | Method                                                                                                                                                                             | HTTP request                                             | Description                
+-------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------|----------------------------
+ *ActionHistoryApi*      | [**getByStationActionHistoryByStationGet**](doc//ActionHistoryApi.md#getbystationactionhistorybystationget)                                                                        | **GET** /action_history/by_station                       | Get By Station             
+ *AssetManagerApi*       | [**createNewAssetAssetManagerNewAssetPost**](doc//AssetManagerApi.md#createnewassetassetmanagernewassetpost)                                                                       | **POST** /assetManager/newAsset                          | Create New Asset           
+ *AssetManagerApi*       | [**createNewCategoryAssetManagerNewCategoryPost**](doc//AssetManagerApi.md#createnewcategoryassetmanagernewcategorypost)                                                           | **POST** /assetManager/newCategory                       | Create New Category        
+ *AssetManagerApi*       | [**getAssetCategoriesAssetManagerAssetCategoriesGet**](doc//AssetManagerApi.md#getassetcategoriesassetmanagerassetcategoriesget)                                                   | **GET** /assetManager/asset-categories                   | Get Asset Categories       
+ *AssetManagerApi*       | [**getAssetsAssetManagerAssetsGet**](doc//AssetManagerApi.md#getassetsassetmanagerassetsget)                                                                                       | **GET** /assetManager/assets                             | Get Assets                 
+ *AssignedComponentsApi* | [**createInstalledComponentAssignedComponentsCreateInstalledComponentPost**](doc//AssignedComponentsApi.md#createinstalledcomponentassignedcomponentscreateinstalledcomponentpost) | **POST** /assigned_components/create_installed_component | Create Installed Component 
+ *AssignedComponentsApi* | [**getAllAssignedComponentsComponentsGet**](doc//AssignedComponentsApi.md#getallassignedcomponentscomponentsget)                                                                   | **GET** /assigned_components/components                  | Get All                    
+ *AssignedComponentsApi* | [**removeInstalledComponentAssignedComponentsRemoveInstalledComponentPost**](doc//AssignedComponentsApi.md#removeinstalledcomponentassignedcomponentsremoveinstalledcomponentpost) | **POST** /assigned_components/remove_installed_component | Remove Installed Component 
+ *DefaultApi*            | [**rootGet**](doc//DefaultApi.md#rootget)                                                                                                                                          | **GET** /                                                | Root                       
+ *RoadSegmentManagerApi* | [**createRoadSegmentRoadSegmentManagerCreateRoadSegmentPost**](doc//RoadSegmentManagerApi.md#createroadsegmentroadsegmentmanagercreateroadsegmentpost)                             | **POST** /road-segment-manager/create_road_segment       | Create Road Segment        
+ *RoadSegmentManagerApi* | [**getAllRoadSegmentManagerSegmentsGet**](doc//RoadSegmentManagerApi.md#getallroadsegmentmanagersegmentsget)                                                                       | **GET** /road-segment-manager/segments                   | Get All                    
+ *RoadSegmentManagerApi* | [**getByIdRoadSegmentManagerSegmentGet**](doc//RoadSegmentManagerApi.md#getbyidroadsegmentmanagersegmentget)                                                                       | **GET** /road-segment-manager/segment                    | Get By Id                  
+ *StationApi*            | [**createStationStationCreateStationPost**](doc//StationApi.md#createstationstationcreatestationpost)                                                                              | **POST** /station/create_station                         | Create Station             
+ *StationApi*            | [**getAllStationStationsGet**](doc//StationApi.md#getallstationstationsget)                                                                                                        | **GET** /station/stations                                | Get All                    
+ *StationApi*            | [**getByIdStationStationGet**](doc//StationApi.md#getbyidstationstationget)                                                                                                        | **GET** /station/station                                 | Get By Id                  
+ *StationApi*            | [**removeStationStationRemoveStationDelete**](doc//StationApi.md#removestationstationremovestationdelete)                                                                          | **DELETE** /station/remove_station                       | Remove Station             
+ *StorageManagerApi*     | [**getAllStorageItemsStorageManagerAllStorageDataGet**](doc//StorageManagerApi.md#getallstorageitemsstoragemanagerallstoragedataget)                                               | **GET** /storage-manager/all-storage-data                | Get All Storage Items      
+ *StorageManagerApi*     | [**storeNewAssetsStorageManagerStoreNewAssetsPost**](doc//StorageManagerApi.md#storenewassetsstoragemanagerstorenewassetspost)                                                     | **POST** /storage-manager/store-new-assets               | Store New Assets           
+ *TaskManagerApi*        | [**allocateComponentsTaskManagerTaskIdAllocateComponentsGet**](doc//TaskManagerApi.md#allocatecomponentstaskmanagertaskidallocatecomponentsget)                                    | **GET** /task-manager/{task_id}/allocate_components      | Allocate Components        
+ *TaskManagerApi*        | [**cancelTaskTaskManagerTaskIdDelete**](doc//TaskManagerApi.md#canceltasktaskmanagertaskiddelete)                                                                                  | **DELETE** /task-manager/{task_id}                       | Cancel Task                
+ *TaskManagerApi*        | [**completeTaskItemsTaskManagerTaskIdCompeteTaskItmesPost**](doc//TaskManagerApi.md#completetaskitemstaskmanagertaskidcompetetaskitmespost)                                        | **POST** /task-manager/{task_id}/compete_task_itmes      | Complete Task Items        
+ *TaskManagerApi*        | [**createComponentTaskTaskManagerCreateChangeComponentTaskPost**](doc//TaskManagerApi.md#createcomponenttasktaskmanagercreatechangecomponenttaskpost)                              | **POST** /task-manager/create_change_component_task      | Create Component Task      
+ *TaskManagerApi*        | [**loadByIdTaskManagerGetTaskGet**](doc//TaskManagerApi.md#loadbyidtaskmanagergettaskget)                                                                                          | **GET** /task-manager/get_task                           | Load By Id                 
+ *TaskManagerApi*        | [**loadTaskManagerGetComponentTaskTaskIdGet**](doc//TaskManagerApi.md#loadtaskmanagergetcomponenttasktaskidget)                                                                    | **GET** /task-manager/get_component_task/{task_id}       | Load                       
+ *TaskManagerApi*        | [**loadTaskManagerGetTasksGet**](doc//TaskManagerApi.md#loadtaskmanagergettasksget)                                                                                                | **GET** /task-manager/get_tasks                          | Load                       
 
 
 ## Documentation For Models
@@ -106,8 +107,9 @@ Class | Method | HTTP request | Description
  - [StationIdSchema](doc//StationIdSchema.md)
  - [StationNewSchema](doc//StationNewSchema.md)
  - [StationSchema](doc//StationSchema.md)
- - [StorageItemSchema](doc//StorageItemSchema.md)
- - [TaskChangeComponentsNewSchema](doc//TaskChangeComponentsNewSchema.md)
+- [StorageItemSchema](doc//StorageItemSchema.md)
+- [TaskChangeComponentRequestId](doc//TaskChangeComponentRequestId.md)
+- [TaskChangeComponentsNewSchema](doc//TaskChangeComponentsNewSchema.md)
  - [TaskChangeComponentsSchema](doc//TaskChangeComponentsSchema.md)
  - [TaskComponentAddNewSchema](doc//TaskComponentAddNewSchema.md)
  - [TaskComponentRemoveNewSchema](doc//TaskComponentRemoveNewSchema.md)

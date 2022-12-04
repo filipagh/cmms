@@ -20,8 +20,8 @@ class AssignedComponentProjector(ProcessApplication):
             asset_id=domain_event.asset_id,
             station_id=domain_event.station_id,
             status=domain_event.status,
-            task_id=domain_event.task_id
-
+            task_id=domain_event.task_id,
+            installed_at=domain_event.timestamp
         )
         assigned_component_repo.save(model)
 
@@ -35,6 +35,7 @@ class AssignedComponentProjector(ProcessApplication):
     @policy.register(AssignedComponent.AssignedComponentRemoved)
     def _(self, domain_event: AssignedComponent.AssignedComponentRemoved, process_event):
         component = assigned_component_repo.get_by_id(domain_event.originator_id)
+        component.removed_at = domain_event.removed_at
         component.status = domain_event.new_status
         assigned_component_repo.save(component)
 
@@ -43,6 +44,14 @@ class AssignedComponentProjector(ProcessApplication):
         component = assigned_component_repo.get_by_id(domain_event.originator_id)
         component.status = domain_event.new_status
         component.task_id = None
+        assigned_component_repo.save(component)
+
+    @policy.register(AssignedComponent.AssignedComponentInstalled)
+    def _(self, domain_event: AssignedComponent.AssignedComponentInstalled, process_event):
+        component = assigned_component_repo.get_by_id(domain_event.originator_id)
+        component.status = domain_event.new_status
+        component.task_id = None
+
         assigned_component_repo.save(component)
 
     @policy.register(AssignedComponent.AssignedComponentInstallReverted)

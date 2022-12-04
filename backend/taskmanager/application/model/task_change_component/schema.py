@@ -34,16 +34,18 @@ class TaskIdSchema(BaseModel):
     id: uuid.UUID
 
 
-class AddComponentRequestSchema(BaseModel):
+class TaskChangeComponentRequestId(BaseModel):
     id: uuid.UUID
+
+
+class AddComponentRequestSchema(TaskChangeComponentRequestId):
     new_asset_id: uuid.UUID
     assigned_component: Optional[uuid.UUID]
     state: TaskComponentState
     pass
 
 
-class RemoveComponentRequestSchema(BaseModel):
-    id: uuid.UUID
+class RemoveComponentRequestSchema(TaskChangeComponentRequestId):
     assigned_component_id: uuid.UUID
     state: TaskComponentState
     pass

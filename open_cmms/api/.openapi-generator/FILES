@@ -30,6 +30,7 @@ doc/StationNewSchema.md
 doc/StationSchema.md
 doc/StorageItemSchema.md
 doc/StorageManagerApi.md
+doc/TaskChangeComponentRequestId.md
 doc/TaskChangeComponentsNewSchema.md
 doc/TaskChangeComponentsSchema.md
 doc/TaskComponentAddNewSchema.md
@@ -79,6 +80,7 @@ lib/model/station_id_schema.dart
 lib/model/station_new_schema.dart
 lib/model/station_schema.dart
 lib/model/storage_item_schema.dart
+lib/model/task_change_component_request_id.dart
 lib/model/task_change_components_new_schema.dart
 lib/model/task_change_components_schema.dart
 lib/model/task_component_add_new_schema.dart

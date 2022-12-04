@@ -14,7 +14,7 @@ from storagemanager.application.storage_item_service import StorageItemService
 from storagemanager.domain.model.sotrageitem import StorageItem
 from taskmanager.application.model.task_change_component.schema import TaskChangeComponentsNewSchema, \
     TaskComponentAddNewSchema, TaskComponentRemoveNewSchema, TaskChangeComponentsSchema, AddComponentRequestSchema, \
-    RemoveComponentRequestSchema
+    RemoveComponentRequestSchema, TaskChangeComponentRequestId
 from taskmanager.domain.change_components.task_status_service import TaskStatusService
 from taskmanager.domain.model.task_component_state import TaskComponentState
 from taskmanager.domain.model.task_state import TaskState
@@ -45,7 +45,11 @@ class TaskService(ProcessApplication):
         add = list(map(lambda x: add_com_to_domain_model(x), new_task.add))
         remove = list(map(lambda x: remove_com_to_domain_model(x), new_task.remove))
 
-        task = TaskChangeComponents(new_task.name, new_task.description, new_task.station_id, TaskState.OPEN,
+        if (len(add) > 0):
+            status = TaskState.OPEN
+        else:
+            status = TaskState.READY
+        task = TaskChangeComponents(new_task.name, new_task.description, new_task.station_id, status,
                                     add, remove, datetime.datetime.now())
         self.save(task)
         print(task.id)
@@ -89,6 +93,12 @@ class TaskService(ProcessApplication):
         for c in task.components_to_add:
             if c.state == TaskComponentState.AWAITING:
                 storage_service.try_to_allocate_component(c.new_asset_id, task_id)
+
+    def complete_task_items(self, task_id: uuid.UUID, items: list[TaskChangeComponentRequestId]):
+        task: TaskChangeComponents = self.repository.get(task_id)
+        task.complete_items(items)
+        self.save(task)
+        self.task_status_service.try_change_state_to_done(task)
 
     def _task_component_to_chema(self, task: TaskChangeComponents):
         def _add_model_to_schema(component: AddComponentRequest) -> AddComponentRequestSchema:

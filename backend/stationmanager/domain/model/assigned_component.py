@@ -1,8 +1,9 @@
 import datetime
 import uuid
 from enum import Enum
+from typing import Optional
 
-from eventsourcing.domain import Aggregate, event
+from eventsourcing.domain import Aggregate, event, ProgrammingError
 
 
 class AssignedComponentState(str, Enum):
@@ -17,14 +18,14 @@ class AssignedComponent(Aggregate):
         asset_id: uuid
         station_id: uuid
         status: AssignedComponentState
-        created_at: datetime.datetime
         task_id: uuid
 
     class AssignedComponentRemoved(Aggregate.Event):
         new_status: AssignedComponentState
+        task_id: Optional[uuid.UUID]
         station_id: uuid
         asset_id: uuid
-        changed_at: datetime.datetime
+        removed_at: datetime.datetime
 
     class AssignedComponentStateChanged(Aggregate.Event):
         new_status: AssignedComponentState
@@ -37,20 +38,23 @@ class AssignedComponent(Aggregate):
     class AssignedComponentInstallReverted(Aggregate.Event):
         pass
 
+    class AssignedComponentInstalled(Aggregate.Event):
+        new_status: AssignedComponentState
+        task_id: uuid.UUID
+        installed_at: datetime.datetime
+
     @event(CreatedEvent)
     def __init__(self, asset_id, station_id, status: AssignedComponentState,
-                 created_at: datetime.datetime, task_id: uuid):
+                 task_id: uuid):
         self.status = status
         self.asset_id = asset_id
         self.station_id = station_id
-        self.created_at = created_at
         self.task_id = task_id
 
-    @event(AssignedComponentRemoved)
-    def remove_component(self, station_id, asset_id, new_status,
-                         changed_at: datetime.datetime):
-        self.status = new_status
-        self.changed_at = changed_at
+    def force_remove_component(self):
+        self._remove_component(new_status=AssignedComponentState.REMOVED, removed_at=datetime.datetime.now(),
+                               station_id=self.station_id,
+                               asset_id=self.asset_id, task_id=None)
 
     @event(AssignedComponentStateChanged)
     # todo test this
@@ -68,4 +72,26 @@ class AssignedComponent(Aggregate):
 
     @event(AssignedComponentInstallReverted)
     def revert_install(self):
+        self.task_id = None
+
+    def install_component(self, task_id, installed_at):
+        if self.status != AssignedComponentState.AWAITING:
+            raise ProgrammingError(f"assigned component {self.id} is in wrong state")
+        self._install_component(task_id, installed_at, AssignedComponentState.INSTALLED)
+
+    @event(AssignedComponentInstalled)
+    def _install_component(self, task_id, installed_at, new_status):
+        self.status = new_status
+        self.task_id = None
+
+    def remove_component(self, task_id, removed_at):
+        if self.status != AssignedComponentState.WILL_BE_REMOVED:
+            raise ProgrammingError(f"assigned component {self.id} is in wrong state")
+        self._remove_component(new_status=AssignedComponentState.REMOVED, task_id=task_id, removed_at=removed_at,
+                               station_id=self.station_id,
+                               asset_id=self.asset_id)
+
+    @event(AssignedComponentRemoved)
+    def _remove_component(self, new_status, removed_at, station_id, asset_id, task_id: Optional[uuid.UUID]):
+        self.status = new_status
         self.task_id = None

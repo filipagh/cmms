@@ -7,14 +7,15 @@ import 'package:BackendAPI/api.dart';
 
 All URIs are relative to *http://localhost*
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**allocateComponentsTaskManagerTaskIdAllocateComponentsGet**](TaskManagerApi.md#allocatecomponentstaskmanagertaskidallocatecomponentsget) | **GET** /task-manager/{task_id}/allocate_components | Allocate Components
-[**cancelTaskTaskManagerTaskIdDelete**](TaskManagerApi.md#canceltasktaskmanagertaskiddelete) | **DELETE** /task-manager/{task_id} | Cancel Task
-[**createComponentTaskTaskManagerCreateChangeComponentTaskPost**](TaskManagerApi.md#createcomponenttasktaskmanagercreatechangecomponenttaskpost) | **POST** /task-manager/create_change_component_task | Create Component Task
-[**loadByIdTaskManagerGetTaskGet**](TaskManagerApi.md#loadbyidtaskmanagergettaskget) | **GET** /task-manager/get_task | Load By Id
-[**loadTaskManagerGetComponentTaskTaskIdGet**](TaskManagerApi.md#loadtaskmanagergetcomponenttasktaskidget) | **GET** /task-manager/get_component_task/{task_id} | Load
-[**loadTaskManagerGetTasksGet**](TaskManagerApi.md#loadtaskmanagergettasksget) | **GET** /task-manager/get_tasks | Load
+ Method                                                                                                                                           | HTTP request                                        | Description           
+--------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------|-----------------------
+ [**allocateComponentsTaskManagerTaskIdAllocateComponentsGet**](TaskManagerApi.md#allocatecomponentstaskmanagertaskidallocatecomponentsget)       | **GET** /task-manager/{task_id}/allocate_components | Allocate Components   
+ [**cancelTaskTaskManagerTaskIdDelete**](TaskManagerApi.md#canceltasktaskmanagertaskiddelete)                                                     | **DELETE** /task-manager/{task_id}                  | Cancel Task           
+ [**completeTaskItemsTaskManagerTaskIdCompeteTaskItmesPost**](TaskManagerApi.md#completetaskitemstaskmanagertaskidcompetetaskitmespost)           | **POST** /task-manager/{task_id}/compete_task_itmes | Complete Task Items   
+ [**createComponentTaskTaskManagerCreateChangeComponentTaskPost**](TaskManagerApi.md#createcomponenttasktaskmanagercreatechangecomponenttaskpost) | **POST** /task-manager/create_change_component_task | Create Component Task 
+ [**loadByIdTaskManagerGetTaskGet**](TaskManagerApi.md#loadbyidtaskmanagergettaskget)                                                             | **GET** /task-manager/get_task                      | Load By Id            
+ [**loadTaskManagerGetComponentTaskTaskIdGet**](TaskManagerApi.md#loadtaskmanagergetcomponenttasktaskidget)                                       | **GET** /task-manager/get_component_task/{task_id}  | Load                  
+ [**loadTaskManagerGetTasksGet**](TaskManagerApi.md#loadtaskmanagergettasksget)                                                                   | **GET** /task-manager/get_tasks                     | Load                  
 
 
 # **allocateComponentsTaskManagerTaskIdAllocateComponentsGet**
@@ -94,17 +95,64 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: text/plain, application/json
+- **Content-Type**: Not defined
+- **Accept**: text/plain, application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **completeTaskItemsTaskManagerTaskIdCompeteTaskItmesPost**
+
+> String completeTaskItemsTaskManagerTaskIdCompeteTaskItmesPost(taskId, taskChangeComponentRequestId)
+
+Complete Task Items
+
+### Example
+
+```dart
+import 'package:BackendAPI/api.dart';
+
+final api_instance = TaskManagerApi();
+final taskId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+final taskChangeComponentRequestId = [List<TaskChangeComponentRequestId>()]; // List<TaskChangeComponentRequestId> | 
+
+try {
+    final result = api_instance.completeTaskItemsTaskManagerTaskIdCompeteTaskItmesPost(taskId, taskChangeComponentRequestId);
+    print(result);
+} catch (e) {
+    print('Exception when calling TaskManagerApi->completeTaskItemsTaskManagerTaskIdCompeteTaskItmesPost: $e\n');
+}
+```
+
+### Parameters
+
+ Name                             | Type                                                                      | Description | Notes 
+----------------------------------|---------------------------------------------------------------------------|-------------|-------
+ **taskId**                       | **String**                                                                |             |
+ **taskChangeComponentRequestId** | [**List<TaskChangeComponentRequestId>**](TaskChangeComponentRequestId.md) |             |
+
+### Return type
+
+**String**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: text/plain, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **createComponentTaskTaskManagerCreateChangeComponentTaskPost**
+
 > String createComponentTaskTaskManagerCreateChangeComponentTaskPost(taskChangeComponentsNewSchema)
 
 Create Component Task
 
 ### Example
+
 ```dart
 import 'package:BackendAPI/api.dart';
 

@@ -18,6 +18,8 @@ class AssignedComponentSchema {
     required this.id,
     required this.status,
     this.taskId,
+    required this.installedAt,
+    this.removedAt,
   });
 
   String assetId;
@@ -36,34 +38,55 @@ class AssignedComponentSchema {
   ///
   String? taskId;
 
+  DateTime installedAt;
+
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  DateTime? removedAt;
+
   @override
-  bool operator ==(Object other) => identical(this, other) || other is AssignedComponentSchema &&
-     other.assetId == assetId &&
-     other.stationId == stationId &&
-     other.id == id &&
-     other.status == status &&
-     other.taskId == taskId;
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is AssignedComponentSchema &&
+          other.assetId == assetId &&
+          other.stationId == stationId &&
+          other.id == id &&
+          other.status == status &&
+          other.taskId == taskId &&
+          other.installedAt == installedAt &&
+          other.removedAt == removedAt;
 
   @override
   int get hashCode =>
-    // ignore: unnecessary_parenthesis
-    (assetId.hashCode) +
-    (stationId.hashCode) +
-    (id.hashCode) +
-    (status.hashCode) +
-    (taskId == null ? 0 : taskId!.hashCode);
+      // ignore: unnecessary_parenthesis
+      (assetId.hashCode) +
+      (stationId.hashCode) +
+      (id.hashCode) +
+      (status.hashCode) +
+      (taskId == null ? 0 : taskId!.hashCode) +
+      (installedAt.hashCode) +
+      (removedAt == null ? 0 : removedAt!.hashCode);
 
   @override
-  String toString() => 'AssignedComponentSchema[assetId=$assetId, stationId=$stationId, id=$id, status=$status, taskId=$taskId]';
+  String toString() =>
+      'AssignedComponentSchema[assetId=$assetId, stationId=$stationId, id=$id, status=$status, taskId=$taskId, installedAt=$installedAt, removedAt=$removedAt]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-      _json[r'asset_id'] = assetId;
-      _json[r'station_id'] = stationId;
-      _json[r'id'] = id;
-      _json[r'status'] = status;
+    _json[r'asset_id'] = assetId;
+    _json[r'station_id'] = stationId;
+    _json[r'id'] = id;
+    _json[r'status'] = status;
     if (taskId != null) {
       _json[r'task_id'] = taskId;
+    }
+    _json[r'installed_at'] = installedAt.toUtc().toIso8601String();
+    if (removedAt != null) {
+      _json[r'removed_at'] = removedAt!.toUtc().toIso8601String();
     }
     return _json;
   }
@@ -92,6 +115,8 @@ class AssignedComponentSchema {
         id: mapValueOfType<String>(json, r'id')!,
         status: AssignedComponentState.fromJson(json[r'status'])!,
         taskId: mapValueOfType<String>(json, r'task_id'),
+        installedAt: mapDateTime(json, r'installed_at', '')!,
+        removedAt: mapDateTime(json, r'removed_at', ''),
       );
     }
     return null;
@@ -145,6 +170,7 @@ class AssignedComponentSchema {
     'station_id',
     'id',
     'status',
+    'installed_at',
   };
 }
 

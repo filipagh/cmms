@@ -232,6 +232,8 @@ class ApiClient {
           return StationSchema.fromJson(value);
         case 'StorageItemSchema':
           return StorageItemSchema.fromJson(value);
+        case 'TaskChangeComponentRequestId':
+          return TaskChangeComponentRequestId.fromJson(value);
         case 'TaskChangeComponentsNewSchema':
           return TaskChangeComponentsNewSchema.fromJson(value);
         case 'TaskChangeComponentsSchema':

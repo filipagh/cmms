@@ -6,6 +6,7 @@ from typing import Optional
 from eventsourcing.domain import Aggregate, event, ProgrammingError
 from eventsourcing.persistence import Transcoding
 
+from taskmanager.application.model.task_change_component.schema import TaskChangeComponentRequestId
 from taskmanager.domain.model.task_component_state import TaskComponentState
 from taskmanager.domain.model.task_state import TaskState
 
@@ -93,6 +94,16 @@ class TaskChangeComponents(Aggregate):
         new_status: TaskState
         pass
 
+    class TaskComponentInstalled(Aggregate.Event):
+        added_task_item_id: uuid.UUID
+        asset_id: uuid.UUID
+        assigned_component_id: uuid.UUID
+        pass
+
+    class TaskComponentRemoved(Aggregate.Event):
+        removed_task_item_id: uuid.UUID
+        assigned_component_id: uuid.UUID
+
     @event(TaskChangeComponentsCreated)
     def __init__(self, name: str, description: str, station_id: uuid.UUID, status: TaskState,
                  components_to_add: list[AddComponentRequest], components_to_remove: list[RemoveComponentRequest],
@@ -155,3 +166,30 @@ class TaskChangeComponents(Aggregate):
     @event(TaskCanceled)
     def _cancel_task(self, assigned_component_to_revert: list[str], assets_to_free: list[str], new_status: TaskState):
         self.status = TaskState.REMOVED
+
+    def complete_items(self, items: list[TaskChangeComponentRequestId]):
+        if self.status == TaskState.DONE: return
+        for i in items:
+            for cta in self.components_to_add:
+                if uuid.UUID(cta.id) == i.id:
+                    if cta.state == TaskComponentState.ALLOCATED and cta.assigned_component_id is not None:
+                        self._complete_add_item(i.id, cta.new_asset_id, cta.assigned_component_id)
+                        continue
+            for ctr in self.components_to_remove:
+                if uuid.UUID(ctr.id) == i.id:
+                    if ctr.state == TaskComponentState.INSTALLED:
+                        self._complete_remove_item(i.id, ctr.assigned_component_id)
+
+    @event(TaskComponentInstalled)
+    def _complete_add_item(self, added_task_item_id: uuid.UUID, asset_id, assigned_component_id):
+        for cta in self.components_to_add:
+            if uuid.UUID(cta.id) == added_task_item_id:
+                cta.state = TaskComponentState.INSTALLED
+                return
+
+    @event(TaskComponentRemoved)
+    def _complete_remove_item(self, removed_task_item_id, assigned_component_id):
+        for ctr in self.components_to_remove:
+            if uuid.UUID(ctr.id) == removed_task_item_id:
+                ctr.state = TaskComponentState.REMOVED
+                return
