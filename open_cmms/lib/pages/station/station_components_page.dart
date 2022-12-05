@@ -1,7 +1,9 @@
 import 'package:BackendAPI/api.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/pages/station/station_base_page.dart';
+import 'package:open_cmms/pages/tasks/task_page_factory.dart';
 import 'package:open_cmms/states/asset_types_state.dart';
 import 'package:open_cmms/states/station/components_state.dart';
 import 'package:open_cmms/widgets/forms/components/set_components_instation_form.dart';
@@ -51,7 +53,8 @@ class StationComponentsPage extends StatelessWidget
                 VerticalDivider(),
                 ElevatedButton(
                     onPressed: () {
-                      showFormDialog(EditStationComponentsForm(station: station));
+                      showFormDialog(
+                          EditStationComponentsForm(station: station));
                     },
                     child: Text('Editovat komponenty')),
               ],
@@ -67,7 +70,8 @@ class StationComponentsPage extends StatelessWidget
 
   Widget buildComponentList(List<AssignedComponentSchema> components) {
     AssetTypesState stateAssetTypes = Get.find();
-    components.removeWhere((element) => element.status == AssignedComponentState.removed);
+    components.removeWhere(
+        (element) => element.status == AssignedComponentState.removed);
     return components.isEmpty
         ? const Expanded(
             child: Center(
@@ -112,17 +116,41 @@ class StationComponentsPage extends StatelessWidget
     switch (component.status) {
       case AssignedComponentState.awaiting:
         //todo add task link
-        return Text("will be instaled in TASK");
+        return RichText(
+            text: TextSpan(
+          text: "Bude nainstalovane v ",
+          children: [
+            TextSpan(
+                recognizer: TapGestureRecognizer()
+                  ..onTap =
+                      () => TaskPageFactory().openTaskPage(component.taskId!),
+                text: "Ulohe",
+                style: TextStyle(
+                    color: Colors.blue, decoration: TextDecoration.underline))
+          ],
+        ));
       case AssignedComponentState.installed:
-        return Text('installed on: DATE');
+        return Text('instalovane dna: ${component.installedAt}');
       // return Text('installed on: ' + component.installed.toString());
       case AssignedComponentState.willBeRemoved:
         return Column(
           children: [
             //todo task
-            Text('will be removed in TASK'),
-            Text('installed on: DATE'),
-            // Text('installed on: ' + component.installed.toString()),
+            RichText(
+                text: TextSpan(
+              text: "Bude odstranene v ",
+              children: [
+                TextSpan(
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () =>
+                          TaskPageFactory().openTaskPage(component.taskId!),
+                    text: "Ulohe",
+                    style: TextStyle(
+                        color: Colors.blue,
+                        decoration: TextDecoration.underline))
+              ],
+            )),
+            Text('instalovane dna: ${component.installedAt}'),
           ],
         );
       case AssignedComponentState.removed:
