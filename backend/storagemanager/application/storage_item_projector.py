@@ -32,6 +32,13 @@ class StorageItemProjector(ProcessApplication):
 
         storage_item_repo.save(model)
 
+    @policy.register(StorageItem.AssetUsed)
+    def _(self, domain_event: StorageItem.AssetUsed, process_event):
+        model: storage_item_repo.StorageItemModel = storage_item_repo.get_by_id(domain_event.originator_id)
+        model.allocated -= 1
+
+        storage_item_repo.save(model)
+
     @policy.register(StorageItem.AssetsUnAllocated)
     def _(self, domain_event: StorageItem.AssetsUnAllocated, process_event):
         model: storage_item_repo.StorageItemModel = storage_item_repo.get_by_id(domain_event.originator_id)

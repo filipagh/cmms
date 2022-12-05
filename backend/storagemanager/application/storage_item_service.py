@@ -49,6 +49,12 @@ class StorageItemService(ProcessApplication):
         for c in domain_event.components_to_add:
             self.try_to_allocate_component(c.new_asset_id, domain_event.originator_id)
 
+    @policy.register(TaskChangeComponents.TaskComponentInstalled)
+    def _(self, domain_event: TaskChangeComponents.TaskComponentInstalled, process_event):
+        item: StorageItem = self._get_storage_item_from_asset(domain_event.asset_id)
+        item.used(domain_event.asset_id, domain_event.originator_id)
+        self.save(item)
+
     @policy.register(TaskChangeComponents.TaskCanceled)
     def _(self, domain_event: TaskChangeComponents.TaskCanceled, process_event):
         asset_dict = dict(Counter(domain_event.assets_to_free))
