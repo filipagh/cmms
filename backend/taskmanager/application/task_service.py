@@ -87,6 +87,7 @@ class TaskService(ProcessApplication):
 
     def request_component_allocation(self, task_id):
         task: TaskChangeComponents = self.repository.get(task_id)
+        if task.status != TaskState.OPEN: return
         storage_service = main.runner.get(StorageItemService)
         for c in task.components_to_add:
             if c.state == TaskComponentState.AWAITING:
