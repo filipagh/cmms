@@ -52,8 +52,6 @@ class TaskService(ProcessApplication):
         task = TaskChangeComponents(new_task.name, new_task.description, new_task.station_id, status,
                                     add, remove, datetime.datetime.now())
         self.save(task)
-        print(task.id)
-
         return task.id
 
     def load_component_task(self, task_id: uuid.UUID) -> Optional[TaskChangeComponentsSchema]:

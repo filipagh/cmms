@@ -8,7 +8,9 @@ from base import main
 from taskmanager.application.model.task.schema import TaskSchema
 from taskmanager.application.model.task_change_component import schema as schema_change_comp
 from taskmanager.application.model.task_change_component.schema import TaskChangeComponentRequestId
+from taskmanager.application.model.task_service_remote.schema import TaskServiceRemoteNewSchema
 from taskmanager.application.task_service import TaskService
+from taskmanager.application.task_service_remote_service import TaskServiceRemoteService
 from taskmanager.application.tasks_projector import TasksProjector
 from taskmanager.infrastructure.persistence.tasks_repo import TaskType
 
@@ -26,6 +28,17 @@ def create_component_task(
     task_service: TaskService = main.runner.get(main.Services.TaskService.value)
     try:
         return task_service.create_component_task(new_task)
+    except AttributeError as e:
+        raise HTTPException(status_code=400, detail=e.__str__())
+
+
+@task_manager_router.post("/create_service_remote_task",
+                          response_model=uuid.UUID)
+def create_service_remote_task(
+        new_task: TaskServiceRemoteNewSchema):
+    task_service: TaskServiceRemoteService = main.runner.get(TaskServiceRemoteService)
+    try:
+        return task_service.create_remote_task(new_task)
     except AttributeError as e:
         raise HTTPException(status_code=400, detail=e.__str__())
 

@@ -28,6 +28,8 @@ from taskmanager.application.task_service import TaskService
 from taskmanager.application.tasks_projector import TasksProjector
 from taskmanager.domain.model.tasks.task_change_components import AddComponentRequestAsStr, RemoveComponentRequestAsStr
 from taskmanager.infrastructure.task_rest_router import task_manager_router
+from taskmanager.infrastructure.task_servis_on_site_rest_router import task_servis_on_site
+from taskmanager.infrastructure.task_servis_remote_rest_router import task_servis_remote
 
 
 #
@@ -77,8 +79,6 @@ runner.get(TaskService).mapper.transcoder.register(RemoveComponentRequestAsStr()
 register_tansconder([TasksProjector, AssignedComponentsService,StorageItemService], AddComponentRequestAsStr())
 register_tansconder([TasksProjector, AssignedComponentsService,StorageItemService], RemoveComponentRequestAsStr())
 
-
-
 app = FastAPI(debug=True)
 app.include_router(assetmanager.infrastructure.rest_router.asset_manager)
 app.include_router(storagemanager.infrastructure.rest_router.storage_manager)
@@ -87,8 +87,8 @@ app.include_router(station_router)
 app.include_router(assigned_component_router)
 app.include_router(action_history_router)
 app.include_router(task_manager_router)
-
-
+app.include_router(task_servis_on_site)
+app.include_router(task_servis_remote)
 
 origins = [
     "http://localhost:5000",

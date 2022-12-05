@@ -4,6 +4,7 @@ from typing import Optional
 
 from pydantic import BaseModel
 
+from taskmanager.application.model.task.schema import TaskIdSchema
 from taskmanager.domain.model.task_component_state import TaskComponentState
 from taskmanager.domain.model.task_state import TaskState
 
@@ -29,9 +30,6 @@ class TaskChangeComponentsNewSchema(TaskChangeComponentSchemaBASE):
     add: list[TaskComponentAddNewSchema]
     remove: list[TaskComponentRemoveNewSchema]
 
-
-class TaskIdSchema(BaseModel):
-    id: uuid.UUID
 
 
 class TaskChangeComponentRequestId(BaseModel):
