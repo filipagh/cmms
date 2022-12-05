@@ -2,8 +2,8 @@ import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/pages/station/station_base_page.dart';
-import 'package:open_cmms/pages/tasks/task_page_factory.dart';
 import 'package:open_cmms/service/backend_api/tasks_service.dart';
+import 'package:open_cmms/widgets/task_list_title.dart';
 
 class StationTasksPage extends StatelessWidget
     implements StationBaseContextPage {
@@ -27,16 +27,7 @@ class StationTasksPage extends StatelessWidget
             return ListView.builder(
               itemCount: items.length,
               itemBuilder: (BuildContext context, int index) {
-                TaskSchema t = i[index];
-                return Card(
-                  child: ListTile(
-                    onTap: () =>TaskPageFactory().openTaskPageFromModel(t),
-                    title: Text("${getTaskName(t.taskType)}: ${t.name}"),
-                    subtitle: Text("${t.description}, ${t.createdOn
-                        .toString()}"),
-
-                  ),
-                );
+                return buildTaskListTitle(i[index]);
               },
             );
           }),
