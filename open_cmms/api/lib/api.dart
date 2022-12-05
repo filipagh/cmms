@@ -26,6 +26,8 @@ part 'api/road_segment_manager_api.dart';
 part 'api/station_api.dart';
 part 'api/storage_manager_api.dart';
 part 'api/task_manager_api.dart';
+part 'api/task_service_on_site_api.dart';
+part 'api/task_service_remote_api.dart';
 part 'api_client.dart';
 part 'api_exception.dart';
 part 'api_helper.dart';
@@ -62,10 +64,13 @@ part 'model/task_component_add_new_schema.dart';
 part 'model/task_component_remove_new_schema.dart';
 part 'model/task_component_state.dart';
 part 'model/task_schema.dart';
+part 'model/task_service_on_site_new_schema.dart';
+part 'model/task_service_on_site_schema.dart';
+part 'model/task_service_remote_new_schema.dart';
+part 'model/task_service_remote_schema.dart';
 part 'model/task_state.dart';
 part 'model/task_type.dart';
 part 'model/validation_error.dart';
-
 
 const _delimiters = {'csv': ',', 'ssv': ' ', 'tsv': '\t', 'pipes': '|'};
 const _dateEpochMarker = 'epoch';

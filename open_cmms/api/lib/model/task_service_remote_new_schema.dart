@@ -10,37 +10,49 @@
 
 part of openapi.api;
 
-class TaskChangeComponentRequestId {
-  /// Returns a new [TaskChangeComponentRequestId] instance.
-  TaskChangeComponentRequestId({
-    required this.id,
+class TaskServiceRemoteNewSchema {
+  /// Returns a new [TaskServiceRemoteNewSchema] instance.
+  TaskServiceRemoteNewSchema({
+    required this.stationId,
+    required this.name,
+    required this.description,
   });
 
-  String id;
+  String stationId;
+
+  String name;
+
+  String description;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is TaskChangeComponentRequestId && other.id == id;
+      other is TaskServiceRemoteNewSchema &&
+          other.stationId == stationId &&
+          other.name == name &&
+          other.description == description;
 
   @override
   int get hashCode =>
       // ignore: unnecessary_parenthesis
-      (id.hashCode);
+      (stationId.hashCode) + (name.hashCode) + (description.hashCode);
 
   @override
-  String toString() => 'TaskChangeComponentRequestId[id=$id]';
+  String toString() =>
+      'TaskServiceRemoteNewSchema[stationId=$stationId, name=$name, description=$description]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-    _json[r'id'] = id;
+    _json[r'station_id'] = stationId;
+    _json[r'name'] = name;
+    _json[r'description'] = description;
     return _json;
   }
 
-  /// Returns a new [TaskChangeComponentRequestId] instance and imports its values from
+  /// Returns a new [TaskServiceRemoteNewSchema] instance and imports its values from
   /// [value] if it's a [Map], null otherwise.
   // ignore: prefer_constructors_over_static_methods
-  static TaskChangeComponentRequestId? fromJson(dynamic value) {
+  static TaskServiceRemoteNewSchema? fromJson(dynamic value) {
     if (value is Map) {
       final json = value.cast<String, dynamic>();
 
@@ -50,28 +62,30 @@ class TaskChangeComponentRequestId {
       assert(() {
         requiredKeys.forEach((key) {
           assert(json.containsKey(key),
-              'Required key "TaskChangeComponentRequestId[$key]" is missing from JSON.');
+              'Required key "TaskServiceRemoteNewSchema[$key]" is missing from JSON.');
           assert(json[key] != null,
-              'Required key "TaskChangeComponentRequestId[$key]" has a null value in JSON.');
+              'Required key "TaskServiceRemoteNewSchema[$key]" has a null value in JSON.');
         });
         return true;
       }());
 
-      return TaskChangeComponentRequestId(
-        id: mapValueOfType<String>(json, r'id')!,
+      return TaskServiceRemoteNewSchema(
+        stationId: mapValueOfType<String>(json, r'station_id')!,
+        name: mapValueOfType<String>(json, r'name')!,
+        description: mapValueOfType<String>(json, r'description')!,
       );
     }
     return null;
   }
 
-  static List<TaskChangeComponentRequestId>? listFromJson(
+  static List<TaskServiceRemoteNewSchema>? listFromJson(
     dynamic json, {
     bool growable = false,
   }) {
-    final result = <TaskChangeComponentRequestId>[];
+    final result = <TaskServiceRemoteNewSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
-        final value = TaskChangeComponentRequestId.fromJson(row);
+        final value = TaskServiceRemoteNewSchema.fromJson(row);
         if (value != null) {
           result.add(value);
         }
@@ -80,12 +94,12 @@ class TaskChangeComponentRequestId {
     return result.toList(growable: growable);
   }
 
-  static Map<String, TaskChangeComponentRequestId> mapFromJson(dynamic json) {
-    final map = <String, TaskChangeComponentRequestId>{};
+  static Map<String, TaskServiceRemoteNewSchema> mapFromJson(dynamic json) {
+    final map = <String, TaskServiceRemoteNewSchema>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = TaskChangeComponentRequestId.fromJson(entry.value);
+        final value = TaskServiceRemoteNewSchema.fromJson(entry.value);
         if (value != null) {
           map[entry.key] = value;
         }
@@ -94,16 +108,16 @@ class TaskChangeComponentRequestId {
     return map;
   }
 
-  // maps a json object with a list of TaskChangeComponentRequestId-objects as value to a dart map
-  static Map<String, List<TaskChangeComponentRequestId>> mapListFromJson(
+  // maps a json object with a list of TaskServiceRemoteNewSchema-objects as value to a dart map
+  static Map<String, List<TaskServiceRemoteNewSchema>> mapListFromJson(
     dynamic json, {
     bool growable = false,
   }) {
-    final map = <String, List<TaskChangeComponentRequestId>>{};
+    final map = <String, List<TaskServiceRemoteNewSchema>>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = TaskChangeComponentRequestId.listFromJson(
+        final value = TaskServiceRemoteNewSchema.listFromJson(
           entry.value,
           growable: growable,
         );
@@ -117,7 +131,8 @@ class TaskChangeComponentRequestId {
 
   /// The list of required keys that must be present in a JSON.
   static const requiredKeys = <String>{
-    'id',
+    'station_id',
+    'name',
+    'description',
   };
 }
-
