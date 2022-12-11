@@ -17,7 +17,7 @@ task_servis_on_site = APIRouter(
 
 @task_servis_on_site.post("/create_service_on_side_task",
                           response_model=uuid.UUID)
-def create_service_on_site_task(
+def create(
         new_task: TaskServiceOnSiteNewSchema):
     task_service: TaskServiceOnSiteService = main.runner.get(TaskServiceOnSiteService)
     try:
@@ -34,7 +34,7 @@ def load(task_id: uuid.UUID):
 
 
 @task_servis_on_site.delete("/{task_id}", response_class=PlainTextResponse)
-def cancel_task(task_id: uuid.UUID):
+def cancel(task_id: uuid.UUID):
     task_service: TaskServiceOnSiteService = main.runner.get(TaskServiceOnSiteService)
     task_service.cancel_task(task_id)
     return "OK"

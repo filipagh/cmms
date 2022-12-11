@@ -25,6 +25,8 @@ from stationmanager.infrastructure.station_rest_router import station_router
 from storagemanager.application.storage_item_projector import StorageItemProjector
 from storagemanager.application.storage_item_service import StorageItemService
 from taskmanager.application.task_service import TaskService
+from taskmanager.application.task_service_on_site_service import TaskServiceOnSiteService
+from taskmanager.application.task_service_remote_service import TaskServiceRemoteService
 from taskmanager.application.tasks_projector import TasksProjector
 from taskmanager.domain.model.tasks.task_change_components import AddComponentRequestAsStr, RemoveComponentRequestAsStr
 from taskmanager.infrastructure.task_rest_router import task_manager_router
@@ -54,8 +56,6 @@ class Services(Enum):
     StationProjector = StationProjector
 
 
-
-
 system = System(pipes=[[AssetService, AssetProjector],
                        [AssetService, StorageItemService],
                        [StorageItemService, StorageItemProjector],
@@ -68,6 +68,8 @@ system = System(pipes=[[AssetService, AssetProjector],
                        [AssignedComponentsService, TaskService],
                        [StorageItemService, TaskService],
                        [TaskService, StorageItemService],
+                       [TaskServiceOnSiteService, TasksProjector],
+                       [TaskServiceRemoteService, TasksProjector],
                        ])
 
 runner = SingleThreadedRunner(system)
@@ -76,8 +78,8 @@ runner.start()
 runner.get(TaskService).mapper.transcoder.register(AddComponentRequestAsStr())
 runner.get(TaskService).mapper.transcoder.register(RemoveComponentRequestAsStr())
 
-register_tansconder([TasksProjector, AssignedComponentsService,StorageItemService], AddComponentRequestAsStr())
-register_tansconder([TasksProjector, AssignedComponentsService,StorageItemService], RemoveComponentRequestAsStr())
+register_tansconder([TasksProjector, AssignedComponentsService, StorageItemService], AddComponentRequestAsStr())
+register_tansconder([TasksProjector, AssignedComponentsService, StorageItemService], RemoveComponentRequestAsStr())
 
 app = FastAPI(debug=True)
 app.include_router(assetmanager.infrastructure.rest_router.asset_manager)

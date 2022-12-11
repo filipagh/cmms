@@ -51,9 +51,9 @@ class TasksProjector(ProcessApplication):
             name=domain_event.name,
             description=domain_event.description,
             state=domain_event.status,
-            task_type=TaskType.ON_SITE_INSPECTION,
+            task_type=TaskType.ON_SITE_SERVICE,
             station_id=domain_event.station_id,
-            created_on=domain_event.created_at
+            created_on=domain_event.timestamp
         )
         tasks_repo.save(task)
 
@@ -80,18 +80,18 @@ class TasksProjector(ProcessApplication):
             state=domain_event.status,
             task_type=TaskType.REMOTE_SERVICE,
             station_id=domain_event.station_id,
-            created_on=domain_event.created_at
+            created_on=domain_event.timestamp
         )
         tasks_repo.save(task)
 
-    @policy.register(TaskServiceRemote.TaskCreated)
+    @policy.register(TaskServiceRemote.TaskCanceled)
     def _(self, domain_event: TaskServiceRemote.TaskCreated, process_event):
         task = self.repo.get_by_id(domain_event.originator_id)
         task.state = domain_event.new_status
         task.finished_at = domain_event.finished_at
         tasks_repo.save(task)
 
-    @policy.register(TaskServiceRemote.TaskCreated)
+    @policy.register(TaskServiceRemote.TaskCanceled)
     def _(self, domain_event: TaskServiceRemote.TaskCreated, process_event):
         task = self.repo.get_by_id(domain_event.originator_id)
         task.state = domain_event.new_status

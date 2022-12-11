@@ -14,9 +14,9 @@ task_servis_remote = APIRouter(
 )
 
 
-@task_servis_remote.post("/create_service_Remote_task",
+@task_servis_remote.post("/create_service_remote_task",
                          response_model=uuid.UUID)
-def create_service_on_site_task(
+def create(
         new_task: TaskServiceRemoteNewSchema):
     task_service: TaskServiceRemoteService = main.runner.get(TaskServiceRemoteService)
     try:
@@ -33,7 +33,7 @@ def load(task_id: uuid.UUID):
 
 
 @task_servis_remote.delete("/{task_id}", response_class=PlainTextResponse)
-def cancel_task(task_id: uuid.UUID):
+def cancel(task_id: uuid.UUID):
     task_service: TaskServiceRemoteService = main.runner.get(TaskServiceRemoteService)
     task_service.cancel_task(task_id)
     return "OK"
