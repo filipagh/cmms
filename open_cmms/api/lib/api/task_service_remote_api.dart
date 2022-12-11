@@ -16,14 +16,14 @@ class TaskServiceRemoteApi {
 
   final ApiClient apiClient;
 
-  /// Cancel Task
+  /// Cancel
   ///
   /// Note: This method returns the HTTP [Response].
   ///
   /// Parameters:
   ///
   /// * [String] taskId (required):
-  Future<Response> cancelTaskTaskServiceRemoteTaskIdDeleteWithHttpInfo(
+  Future<Response> cancelTaskServiceRemoteTaskIdDeleteWithHttpInfo(
     String taskId,
   ) async {
     // ignore: prefer_const_declarations
@@ -50,15 +50,15 @@ class TaskServiceRemoteApi {
     );
   }
 
-  /// Cancel Task
+  /// Cancel
   ///
   /// Parameters:
   ///
   /// * [String] taskId (required):
-  Future<String?> cancelTaskTaskServiceRemoteTaskIdDelete(
+  Future<String?> cancelTaskServiceRemoteTaskIdDelete(
     String taskId,
   ) async {
-    final response = await cancelTaskTaskServiceRemoteTaskIdDeleteWithHttpInfo(
+    final response = await cancelTaskServiceRemoteTaskIdDeleteWithHttpInfo(
       taskId,
     );
     if (response.statusCode >= HttpStatus.badRequest) {
@@ -77,7 +77,7 @@ class TaskServiceRemoteApi {
     return null;
   }
 
-  /// Create Service On Site Task
+  /// Create
   ///
   /// Note: This method returns the HTTP [Response].
   ///
@@ -85,11 +85,11 @@ class TaskServiceRemoteApi {
   ///
   /// * [TaskServiceRemoteNewSchema] taskServiceRemoteNewSchema (required):
   Future<Response>
-      createServiceOnSiteTaskTaskServiceRemoteCreateServiceRemoteTaskPostWithHttpInfo(
+      createTaskServiceRemoteCreateServiceRemoteTaskPostWithHttpInfo(
     TaskServiceRemoteNewSchema taskServiceRemoteNewSchema,
   ) async {
     // ignore: prefer_const_declarations
-    final path = r'/task/service_remote/create_service_Remote_task';
+    final path = r'/task/service_remote/create_service_remote_task';
 
     // ignore: prefer_final_locals
     Object? postBody = taskServiceRemoteNewSchema;
@@ -111,17 +111,16 @@ class TaskServiceRemoteApi {
     );
   }
 
-  /// Create Service On Site Task
+  /// Create
   ///
   /// Parameters:
   ///
   /// * [TaskServiceRemoteNewSchema] taskServiceRemoteNewSchema (required):
-  Future<String?>
-      createServiceOnSiteTaskTaskServiceRemoteCreateServiceRemoteTaskPost(
+  Future<String?> createTaskServiceRemoteCreateServiceRemoteTaskPost(
     TaskServiceRemoteNewSchema taskServiceRemoteNewSchema,
   ) async {
     final response =
-        await createServiceOnSiteTaskTaskServiceRemoteCreateServiceRemoteTaskPostWithHttpInfo(
+        await createTaskServiceRemoteCreateServiceRemoteTaskPostWithHttpInfo(
       taskServiceRemoteNewSchema,
     );
     if (response.statusCode >= HttpStatus.badRequest) {

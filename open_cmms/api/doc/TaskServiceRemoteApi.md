@@ -7,30 +7,36 @@ import 'package:BackendAPI/api.dart';
 
 All URIs are relative to *http://localhost*
 
- Method                                                                                                                                                                 | HTTP request                                             | Description                 
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------|-----------------------------
- [**cancelTaskTaskServiceRemoteTaskIdDelete**](TaskServiceRemoteApi.md#canceltasktaskserviceremotetaskiddelete)                                                         | **DELETE** /task/service_remote/{task_id}                | Cancel Task                 
- [**createServiceOnSiteTaskTaskServiceRemoteCreateServiceRemoteTaskPost**](TaskServiceRemoteApi.md#createserviceonsitetasktaskserviceremotecreateserviceremotetaskpost) | **POST** /task/service_remote/create_service_Remote_task | Create Service On Site Task 
- [**loadTaskServiceRemoteTaskIdGet**](TaskServiceRemoteApi.md#loadtaskserviceremotetaskidget)                                                                           | **GET** /task/service_remote/{task_id}                   | Load                        
+ Method                                                                                                                               | HTTP request                                             | Description 
+--------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------|-------------
+ [**cancelTaskServiceRemoteTaskIdDelete**](TaskServiceRemoteApi.md#canceltaskserviceremotetaskiddelete)                               | **DELETE** /task/service_remote/{task_id}                | Cancel      
+ [**createTaskServiceRemoteCreateServiceRemoteTaskPost**](TaskServiceRemoteApi.md#createtaskserviceremotecreateserviceremotetaskpost) | **POST** /task/service_remote/create_service_remote_task | Create      
+ [**loadTaskServiceRemoteTaskIdGet**](TaskServiceRemoteApi.md#loadtaskserviceremotetaskidget)                                         | **GET** /task/service_remote/{task_id}                   | Load        
 
+# **cancelTaskServiceRemoteTaskIdDelete**
 
-# **cancelTaskTaskServiceRemoteTaskIdDelete**
-> String cancelTaskTaskServiceRemoteTaskIdDelete(taskId)
+> String cancelTaskServiceRemoteTaskIdDelete(taskId)
 
-Cancel Task
+Cancel
 
 ### Example
+
 ```dart
 import 'package:BackendAPI/api.dart';
 
 final api_instance = TaskServiceRemoteApi();
-final taskId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+final taskId = 38400000 - 8
+cf0-11
+bd-b23e-10
+b96e4ef00d; // String | 
 
 try {
-    final result = api_instance.cancelTaskTaskServiceRemoteTaskIdDelete(taskId);
-    print(result);
-} catch (e) {
-    print('Exception when calling TaskServiceRemoteApi->cancelTaskTaskServiceRemoteTaskIdDelete: $e\n');
+final result = api_instance.cancelTaskServiceRemoteTaskIdDelete(taskId);
+print(result);
+} catch
+(
+e) {
+print('Exception when calling TaskServiceRemoteApi->cancelTaskServiceRemoteTaskIdDelete: $e\n');
 }
 ```
 
@@ -55,12 +61,14 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **createServiceOnSiteTaskTaskServiceRemoteCreateServiceRemoteTaskPost**
-> String createServiceOnSiteTaskTaskServiceRemoteCreateServiceRemoteTaskPost(taskServiceRemoteNewSchema)
+# **createTaskServiceRemoteCreateServiceRemoteTaskPost**
 
-Create Service On Site Task
+> String createTaskServiceRemoteCreateServiceRemoteTaskPost(taskServiceRemoteNewSchema)
+
+Create
 
 ### Example
+
 ```dart
 import 'package:BackendAPI/api.dart';
 
@@ -68,10 +76,10 @@ final api_instance = TaskServiceRemoteApi();
 final taskServiceRemoteNewSchema = TaskServiceRemoteNewSchema(); // TaskServiceRemoteNewSchema | 
 
 try {
-    final result = api_instance.createServiceOnSiteTaskTaskServiceRemoteCreateServiceRemoteTaskPost(taskServiceRemoteNewSchema);
+    final result = api_instance.createTaskServiceRemoteCreateServiceRemoteTaskPost(taskServiceRemoteNewSchema);
     print(result);
 } catch (e) {
-    print('Exception when calling TaskServiceRemoteApi->createServiceOnSiteTaskTaskServiceRemoteCreateServiceRemoteTaskPost: $e\n');
+    print('Exception when calling TaskServiceRemoteApi->createTaskServiceRemoteCreateServiceRemoteTaskPost: $e\n');
 }
 ```
 

@@ -16,14 +16,14 @@ class TaskServiceOnSiteApi {
 
   final ApiClient apiClient;
 
-  /// Cancel Task
+  /// Cancel
   ///
   /// Note: This method returns the HTTP [Response].
   ///
   /// Parameters:
   ///
   /// * [String] taskId (required):
-  Future<Response> cancelTaskTaskServiceOnSiteTaskIdDeleteWithHttpInfo(
+  Future<Response> cancelTaskServiceOnSiteTaskIdDeleteWithHttpInfo(
     String taskId,
   ) async {
     // ignore: prefer_const_declarations
@@ -50,15 +50,15 @@ class TaskServiceOnSiteApi {
     );
   }
 
-  /// Cancel Task
+  /// Cancel
   ///
   /// Parameters:
   ///
   /// * [String] taskId (required):
-  Future<String?> cancelTaskTaskServiceOnSiteTaskIdDelete(
+  Future<String?> cancelTaskServiceOnSiteTaskIdDelete(
     String taskId,
   ) async {
-    final response = await cancelTaskTaskServiceOnSiteTaskIdDeleteWithHttpInfo(
+    final response = await cancelTaskServiceOnSiteTaskIdDeleteWithHttpInfo(
       taskId,
     );
     if (response.statusCode >= HttpStatus.badRequest) {
@@ -77,7 +77,7 @@ class TaskServiceOnSiteApi {
     return null;
   }
 
-  /// Create Service On Site Task
+  /// Create
   ///
   /// Note: This method returns the HTTP [Response].
   ///
@@ -85,7 +85,7 @@ class TaskServiceOnSiteApi {
   ///
   /// * [TaskServiceOnSiteNewSchema] taskServiceOnSiteNewSchema (required):
   Future<Response>
-      createServiceOnSiteTaskTaskServiceOnSiteCreateServiceOnSideTaskPostWithHttpInfo(
+      createTaskServiceOnSiteCreateServiceOnSideTaskPostWithHttpInfo(
     TaskServiceOnSiteNewSchema taskServiceOnSiteNewSchema,
   ) async {
     // ignore: prefer_const_declarations
@@ -111,17 +111,16 @@ class TaskServiceOnSiteApi {
     );
   }
 
-  /// Create Service On Site Task
+  /// Create
   ///
   /// Parameters:
   ///
   /// * [TaskServiceOnSiteNewSchema] taskServiceOnSiteNewSchema (required):
-  Future<String?>
-      createServiceOnSiteTaskTaskServiceOnSiteCreateServiceOnSideTaskPost(
+  Future<String?> createTaskServiceOnSiteCreateServiceOnSideTaskPost(
     TaskServiceOnSiteNewSchema taskServiceOnSiteNewSchema,
   ) async {
     final response =
-        await createServiceOnSiteTaskTaskServiceOnSiteCreateServiceOnSideTaskPostWithHttpInfo(
+        await createTaskServiceOnSiteCreateServiceOnSideTaskPostWithHttpInfo(
       taskServiceOnSiteNewSchema,
     );
     if (response.statusCode >= HttpStatus.badRequest) {
