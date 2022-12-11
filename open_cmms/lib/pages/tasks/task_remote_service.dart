@@ -2,8 +2,10 @@ import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/service/backend_api/tasks/tasks_remote_service.dart';
+import 'package:open_cmms/widgets/forms/util/text_edit_form.dart';
 
 import '../../widgets/custom_app_bar.dart';
+import '../../widgets/dialog_form.dart';
 import '../../widgets/main_menu_widget.dart';
 
 class TaskRemoteServicePage extends StatelessWidget {
@@ -56,9 +58,28 @@ class TaskRemoteServicePage extends StatelessWidget {
   Widget buildTaskPage() {
     return Column(
       children: [
-        Text(
-          "Uloha - vzdialena kontrola :  " + task.value!.name,
-          style: const TextStyle(fontSize: 25),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Uloha - vzdialena kontrola :  " + task.value!.name,
+              style: const TextStyle(fontSize: 25),
+            ),
+            IconButton(
+              icon: const Icon(Icons.edit),
+              onPressed: () async {
+                showFormDialog(TextEditForm(
+                        title: "Zmena nazvu ulohy", text: task.value!.name))
+                    .then((value) {
+                  getService()
+                      .changeDetailsTaskServiceRemoteTaskIdChangeDetailsPost(
+                          taskId,
+                          newName: value)
+                      .then((value) => loadTask());
+                });
+              },
+            )
+          ],
         ),
         const Divider(),
         buildTaskHeader(),
@@ -126,7 +147,21 @@ class TaskRemoteServicePage extends StatelessWidget {
                   "Opis",
                   style: TextStyle(fontSize: 20),
                 ),
-                const Icon(Icons.edit),
+                IconButton(
+                  icon: const Icon(Icons.edit),
+                  onPressed: () async {
+                    showFormDialog(TextEditForm(
+                            title: "Zmena opisu ulohy",
+                            text: task.value!.description))
+                        .then((value) {
+                      getService()
+                          .changeDetailsTaskServiceRemoteTaskIdChangeDetailsPost(
+                              taskId,
+                              newDescription: value)
+                          .then((value) => loadTask());
+                    });
+                  },
+                )
               ],
             ),
             Text(buildDescription(),

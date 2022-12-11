@@ -77,7 +77,7 @@ class TaskServiceRemoteApi {
     return null;
   }
 
-  /// Complete Task Items
+  /// Change Details
   ///
   /// Note: This method returns the HTTP [Response].
   ///
@@ -89,7 +89,7 @@ class TaskServiceRemoteApi {
   ///
   /// * [String] newDescription:
   Future<Response>
-      completeTaskItemsTaskServiceRemoteTaskIdChangeDetailsPostWithHttpInfo(
+      changeDetailsTaskServiceRemoteTaskIdChangeDetailsPostWithHttpInfo(
     String taskId, {
     String? newName,
     String? newDescription,
@@ -125,7 +125,7 @@ class TaskServiceRemoteApi {
     );
   }
 
-  /// Complete Task Items
+  /// Change Details
   ///
   /// Parameters:
   ///
@@ -134,13 +134,13 @@ class TaskServiceRemoteApi {
   /// * [String] newName:
   ///
   /// * [String] newDescription:
-  Future<String?> completeTaskItemsTaskServiceRemoteTaskIdChangeDetailsPost(
+  Future<String?> changeDetailsTaskServiceRemoteTaskIdChangeDetailsPost(
     String taskId, {
     String? newName,
     String? newDescription,
   }) async {
     final response =
-        await completeTaskItemsTaskServiceRemoteTaskIdChangeDetailsPostWithHttpInfo(
+        await changeDetailsTaskServiceRemoteTaskIdChangeDetailsPostWithHttpInfo(
       taskId,
       newName: newName,
       newDescription: newDescription,

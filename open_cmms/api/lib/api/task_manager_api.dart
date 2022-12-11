@@ -128,7 +128,7 @@ class TaskManagerApi {
     return null;
   }
 
-  /// Complete Task Items
+  /// Change Details
   ///
   /// Note: This method returns the HTTP [Response].
   ///
@@ -139,8 +139,7 @@ class TaskManagerApi {
   /// * [String] newName:
   ///
   /// * [String] newDescription:
-  Future<Response>
-      completeTaskItemsTaskManagerTaskIdChangeDetailsPostWithHttpInfo(
+  Future<Response> changeDetailsTaskManagerTaskIdChangeDetailsPostWithHttpInfo(
     String taskId, {
     String? newName,
     String? newDescription,
@@ -176,7 +175,7 @@ class TaskManagerApi {
     );
   }
 
-  /// Complete Task Items
+  /// Change Details
   ///
   /// Parameters:
   ///
@@ -185,13 +184,13 @@ class TaskManagerApi {
   /// * [String] newName:
   ///
   /// * [String] newDescription:
-  Future<String?> completeTaskItemsTaskManagerTaskIdChangeDetailsPost(
+  Future<String?> changeDetailsTaskManagerTaskIdChangeDetailsPost(
     String taskId, {
     String? newName,
     String? newDescription,
   }) async {
     final response =
-        await completeTaskItemsTaskManagerTaskIdChangeDetailsPostWithHttpInfo(
+        await changeDetailsTaskManagerTaskIdChangeDetailsPostWithHttpInfo(
       taskId,
       newName: newName,
       newDescription: newDescription,

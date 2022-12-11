@@ -11,7 +11,7 @@ All URIs are relative to *http://localhost*
 ------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------|----------------------------
  [**allocateComponentsTaskManagerTaskIdAllocateComponentsGet**](TaskManagerApi.md#allocatecomponentstaskmanagertaskidallocatecomponentsget)           | **GET** /task-manager/{task_id}/allocate_components | Allocate Components        
  [**cancelTaskTaskManagerTaskIdDelete**](TaskManagerApi.md#canceltasktaskmanagertaskiddelete)                                                         | **DELETE** /task-manager/{task_id}                  | Cancel Task                
- [**completeTaskItemsTaskManagerTaskIdChangeDetailsPost**](TaskManagerApi.md#completetaskitemstaskmanagertaskidchangedetailspost)                     | **POST** /task-manager/{task_id}/change_details     | Complete Task Items        
+ [**changeDetailsTaskManagerTaskIdChangeDetailsPost**](TaskManagerApi.md#changedetailstaskmanagertaskidchangedetailspost)                             | **POST** /task-manager/{task_id}/change_details     | Change Details             
  [**completeTaskItemsTaskManagerTaskIdCompeteTaskItmesPost**](TaskManagerApi.md#completetaskitemstaskmanagertaskidcompetetaskitmespost)               | **POST** /task-manager/{task_id}/compete_task_itmes | Complete Task Items        
  [**createComponentTaskTaskManagerCreateChangeComponentTaskPost**](TaskManagerApi.md#createcomponenttasktaskmanagercreatechangecomponenttaskpost)     | **POST** /task-manager/create_change_component_task | Create Component Task      
  [**createServiceRemoteTaskTaskManagerCreateServiceRemoteTaskPost**](TaskManagerApi.md#createserviceremotetasktaskmanagercreateserviceremotetaskpost) | **POST** /task-manager/create_service_remote_task   | Create Service Remote Task 
@@ -102,11 +102,11 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **completeTaskItemsTaskManagerTaskIdChangeDetailsPost**
+# **changeDetailsTaskManagerTaskIdChangeDetailsPost**
 
-> String completeTaskItemsTaskManagerTaskIdChangeDetailsPost(taskId, newName, newDescription)
+> String changeDetailsTaskManagerTaskIdChangeDetailsPost(taskId, newName, newDescription)
 
-Complete Task Items
+Change Details
 
 ### Example
 
@@ -119,10 +119,10 @@ final newName = newName_example; // String |
 final newDescription = newDescription_example; // String | 
 
 try {
-    final result = api_instance.completeTaskItemsTaskManagerTaskIdChangeDetailsPost(taskId, newName, newDescription);
+    final result = api_instance.changeDetailsTaskManagerTaskIdChangeDetailsPost(taskId, newName, newDescription);
     print(result);
 } catch (e) {
-    print('Exception when calling TaskManagerApi->completeTaskItemsTaskManagerTaskIdChangeDetailsPost: $e\n');
+    print('Exception when calling TaskManagerApi->changeDetailsTaskManagerTaskIdChangeDetailsPost: $e\n');
 }
 ```
 

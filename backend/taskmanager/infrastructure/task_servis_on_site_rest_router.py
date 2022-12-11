@@ -43,7 +43,7 @@ def load(task_id: uuid.UUID):
 
 
 @task_servis_on_site.post("/{task_id}/change_details", response_class=PlainTextResponse)
-def complete_task_items(task_id: uuid.UUID, new_name: Optional[str] = None, new_description: Optional[str] = None):
+def change_details(task_id: uuid.UUID, new_name: Optional[str] = None, new_description: Optional[str] = None):
     task_service: TaskServiceOnSiteService = main.runner.get(TaskServiceOnSiteService)
     task_service.change_component_task_details(task_id, new_name, new_description)
     return "OK"

@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:open_cmms/service/backend_api/tasks/tasks_on_site_service.dart';
 
 import '../../widgets/custom_app_bar.dart';
+import '../../widgets/dialog_form.dart';
+import '../../widgets/forms/util/text_edit_form.dart';
 import '../../widgets/main_menu_widget.dart';
 
 class TaskOnSiteServicePage extends StatelessWidget {
@@ -56,9 +58,28 @@ class TaskOnSiteServicePage extends StatelessWidget {
   Widget buildTaskPage() {
     return Column(
       children: [
-        Text(
-          "Uloha - kontrola na mieste:  " + task.value!.name,
-          style: const TextStyle(fontSize: 25),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Uloha - kontrola na mieste:  " + task.value!.name,
+              style: const TextStyle(fontSize: 25),
+            ),
+            IconButton(
+              icon: const Icon(Icons.edit),
+              onPressed: () async {
+                showFormDialog(TextEditForm(
+                        title: "Zmena nazvu ulohy", text: task.value!.name))
+                    .then((value) {
+                  getService()
+                      .changeDetailsTaskServiceOnSiteTaskIdChangeDetailsPost(
+                          taskId,
+                          newName: value)
+                      .then((value) => loadTask());
+                });
+              },
+            )
+          ],
         ),
         const Divider(),
         buildTaskHeader(),
@@ -126,7 +147,21 @@ class TaskOnSiteServicePage extends StatelessWidget {
                   "Opis",
                   style: TextStyle(fontSize: 20),
                 ),
-                const Icon(Icons.edit),
+                IconButton(
+                  icon: const Icon(Icons.edit),
+                  onPressed: () async {
+                    showFormDialog(TextEditForm(
+                            title: "Zmena opisu ulohy",
+                            text: task.value!.description))
+                        .then((value) {
+                      getService()
+                          .changeDetailsTaskServiceOnSiteTaskIdChangeDetailsPost(
+                              taskId,
+                              newDescription: value)
+                          .then((value) => loadTask());
+                    });
+                  },
+                )
               ],
             ),
             Text(buildDescription(),

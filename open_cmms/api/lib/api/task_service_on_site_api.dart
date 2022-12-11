@@ -77,7 +77,7 @@ class TaskServiceOnSiteApi {
     return null;
   }
 
-  /// Complete Task Items
+  /// Change Details
   ///
   /// Note: This method returns the HTTP [Response].
   ///
@@ -89,7 +89,7 @@ class TaskServiceOnSiteApi {
   ///
   /// * [String] newDescription:
   Future<Response>
-      completeTaskItemsTaskServiceOnSiteTaskIdChangeDetailsPostWithHttpInfo(
+      changeDetailsTaskServiceOnSiteTaskIdChangeDetailsPostWithHttpInfo(
     String taskId, {
     String? newName,
     String? newDescription,
@@ -125,7 +125,7 @@ class TaskServiceOnSiteApi {
     );
   }
 
-  /// Complete Task Items
+  /// Change Details
   ///
   /// Parameters:
   ///
@@ -134,13 +134,13 @@ class TaskServiceOnSiteApi {
   /// * [String] newName:
   ///
   /// * [String] newDescription:
-  Future<String?> completeTaskItemsTaskServiceOnSiteTaskIdChangeDetailsPost(
+  Future<String?> changeDetailsTaskServiceOnSiteTaskIdChangeDetailsPost(
     String taskId, {
     String? newName,
     String? newDescription,
   }) async {
     final response =
-        await completeTaskItemsTaskServiceOnSiteTaskIdChangeDetailsPostWithHttpInfo(
+        await changeDetailsTaskServiceOnSiteTaskIdChangeDetailsPostWithHttpInfo(
       taskId,
       newName: newName,
       newDescription: newDescription,

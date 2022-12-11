@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:open_cmms/service/backend_api/tasks_service.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 import 'package:open_cmms/widgets/forms/tasks/complete_change_components_task.dart';
+import 'package:open_cmms/widgets/forms/util/text_edit_form.dart';
 
 import '../../states/asset_types_state.dart';
 import '../../states/station/components_state.dart';
@@ -70,9 +71,27 @@ class TaskChangeComponentsPage extends StatelessWidget {
   Widget buildTaskPage() {
     return Column(
       children: [
-        Text(
-          "Uloha - zmena komponentov:  " + task.value!.name,
-          style: const TextStyle(fontSize: 25),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Uloha - zmena komponentov:  " + task.value!.name,
+              style: const TextStyle(fontSize: 25),
+            ),
+            IconButton(
+              icon: const Icon(Icons.edit),
+              onPressed: () async {
+                showFormDialog(TextEditForm(
+                        title: "Zmena nazvu ulohy", text: task.value!.name))
+                    .then((value) {
+                  TasksService()
+                      .changeDetailsTaskManagerTaskIdChangeDetailsPost(taskId,
+                          newName: value)
+                      .then((value) => loadTask());
+                });
+              },
+            )
+          ],
         ),
         const Divider(),
         buildTaskHeader(),
@@ -140,7 +159,21 @@ class TaskChangeComponentsPage extends StatelessWidget {
                   "Opis",
                   style: TextStyle(fontSize: 20),
                 ),
-                const Icon(Icons.edit),
+                IconButton(
+                  icon: const Icon(Icons.edit),
+                  onPressed: () async {
+                    showFormDialog(TextEditForm(
+                            title: "Zmena opisu ulohy",
+                            text: task.value!.description))
+                        .then((value) {
+                      TasksService()
+                          .changeDetailsTaskManagerTaskIdChangeDetailsPost(
+                              taskId,
+                              newDescription: value)
+                          .then((value) => loadTask());
+                    });
+                  },
+                ),
               ],
             ),
             Text(buildDescription(),
