@@ -15,6 +15,8 @@ import 'package:open_cmms/pages/storage.dart';
 import 'package:open_cmms/pages/task.dart';
 import 'package:open_cmms/pages/tasks.dart';
 import 'package:open_cmms/pages/tasks/task_change_component.dart';
+import 'package:open_cmms/pages/tasks/task_on_site_service.dart';
+import 'package:open_cmms/pages/tasks/task_remote_service.dart';
 import 'package:open_cmms/pages/unknownPage.dart';
 import 'package:open_cmms/service/secrets_manager_service.dart';
 import 'package:open_cmms/states/action_state.dart';
@@ -27,7 +29,6 @@ import 'package:open_cmms/states/stations_state.dart';
 import 'package:open_cmms/states/task_component_state.dart';
 import 'package:open_cmms/states/tasks_state.dart';
 
-
 void main() async {
   await checkOrLoadEnv();
   runApp(const MyApp());
@@ -38,7 +39,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     Get.put(RoadSegmentState());
     Get.put(StationsState());
     Get.put(AssetTypesStateDummy());
@@ -90,46 +90,76 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/Tasks/:id',
           page: () {
-            return TaskPage(taskId: Get.parameters["id"]!,);
+            return TaskPage(
+              taskId: Get.parameters["id"]!,
+            );
           },
         ),
         GetPage(
-          name: StationBasePage.ENDPOINT+'/:id',
+          name: StationBasePage.ENDPOINT + '/:id',
           page: () {
-            return StationBasePage(assetId: Get.parameters["id"]!, contextPageEnum: StationBaseContextPageEnum.info,);
+            return StationBasePage(
+              assetId: Get.parameters["id"]!,
+              contextPageEnum: StationBaseContextPageEnum.info,
+            );
           },
         ),
         GetPage(
-          name: StationBasePage.ENDPOINT+'/:id'+StationInfoPage.ENDPOINT,
+          name: StationBasePage.ENDPOINT + '/:id' + StationInfoPage.ENDPOINT,
           page: () {
-            return StationBasePage(assetId: Get.parameters["id"]!, contextPageEnum: StationBaseContextPageEnum.info,);
+            return StationBasePage(
+              assetId: Get.parameters["id"]!,
+              contextPageEnum: StationBaseContextPageEnum.info,
+            );
           },
         ),
         GetPage(
-          name: StationBasePage.ENDPOINT+'/:id'+StationComponentsPage.ENDPOINT,
+          name: StationBasePage.ENDPOINT +
+              '/:id' +
+              StationComponentsPage.ENDPOINT,
           page: () {
-            return StationBasePage(assetId: Get.parameters["id"]!, contextPageEnum: StationBaseContextPageEnum.components,);
+            return StationBasePage(
+              assetId: Get.parameters["id"]!,
+              contextPageEnum: StationBaseContextPageEnum.components,
+            );
           },
         ),
         GetPage(
-          name: StationBasePage.ENDPOINT+'/:id'+StationHistoryPage.ENDPOINT,
+          name: StationBasePage.ENDPOINT + '/:id' + StationHistoryPage.ENDPOINT,
           page: () {
-            return StationBasePage(assetId: Get.parameters["id"]!, contextPageEnum: StationBaseContextPageEnum.history,);
+            return StationBasePage(
+              assetId: Get.parameters["id"]!,
+              contextPageEnum: StationBaseContextPageEnum.history,
+            );
           },
         ),
         GetPage(
-          name: StationBasePage.ENDPOINT+'/:id'+StationTasksPage.ENDPOINT,
+          name: StationBasePage.ENDPOINT + '/:id' + StationTasksPage.ENDPOINT,
           page: () {
-            return StationBasePage(assetId: Get.parameters["id"]!, contextPageEnum: StationBaseContextPageEnum.tasks,);
+            return StationBasePage(
+              assetId: Get.parameters["id"]!,
+              contextPageEnum: StationBaseContextPageEnum.tasks,
+            );
           },
         ),
         GetPage(
-          name: TaskChangeComponentsPage.ENDPOINT+'/:id',
+          name: TaskChangeComponentsPage.ENDPOINT + '/:id',
           page: () {
             return TaskChangeComponentsPage(taskId: Get.parameters["id"]!);
           },
         ),
-
+        GetPage(
+          name: TaskOnSiteServicePage.ENDPOINT + '/:id',
+          page: () {
+            return TaskOnSiteServicePage(taskId: Get.parameters["id"]!);
+          },
+        ),
+        GetPage(
+          name: TaskRemoteServicePage.ENDPOINT + '/:id',
+          page: () {
+            return TaskRemoteServicePage(taskId: Get.parameters["id"]!);
+          },
+        ),
         GetPage(
           name: '/',
           page: () {
@@ -150,4 +180,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
