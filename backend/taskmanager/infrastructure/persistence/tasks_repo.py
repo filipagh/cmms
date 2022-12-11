@@ -14,6 +14,7 @@ from taskmanager.domain.model.task_state import TaskState
 class TaskType(str, Enum):
     COMPONENT_CHANGE = "component_change",
     LOCAL_INSPECTION = "local_inspection",
+    ON_SITE_INSPECTION = "on_site_inspection",
 
 
 class TaskModel(Base):
@@ -25,6 +26,7 @@ class TaskModel(Base):
     task_type = Column('task_type', sqlalchemy.types.Enum(TaskType), nullable=False)
     station_id = Column(postgresql.UUID(as_uuid=True), index=True, nullable=False)
     created_on = Column(DateTime, nullable=False)
+    finished_at = Column(DateTime, nullable=True)
 
 
 def _get_db():

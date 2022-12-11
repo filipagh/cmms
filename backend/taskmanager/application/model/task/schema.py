@@ -1,5 +1,6 @@
 import datetime
 import uuid
+from typing import Optional
 
 from pydantic import BaseModel
 
@@ -22,6 +23,4 @@ class TaskSchema(TaskIdSchema, TaskSchemaBASE):
     state: TaskState
     task_type: TaskType
     created_on: datetime.datetime
-
-
-
+    finished_at: Optional[datetime.datetime]
