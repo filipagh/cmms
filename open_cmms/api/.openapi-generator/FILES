@@ -103,9 +103,3 @@ lib/model/task_state.dart
 lib/model/task_type.dart
 lib/model/validation_error.dart
 pubspec.yaml
-test/task_service_on_site_api_test.dart
-test/task_service_on_site_new_schema_test.dart
-test/task_service_on_site_schema_test.dart
-test/task_service_remote_api_test.dart
-test/task_service_remote_new_schema_test.dart
-test/task_service_remote_schema_test.dart

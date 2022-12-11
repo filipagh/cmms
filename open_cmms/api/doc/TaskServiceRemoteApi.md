@@ -1,7 +1,6 @@
 # BackendAPI.api.TaskServiceRemoteApi
 
 ## Load the API package
-
 ```dart
 import 'package:BackendAPI/api.dart';
 ```
@@ -14,14 +13,13 @@ All URIs are relative to *http://localhost*
  [**createServiceOnSiteTaskTaskServiceRemoteCreateServiceRemoteTaskPost**](TaskServiceRemoteApi.md#createserviceonsitetasktaskserviceremotecreateserviceremotetaskpost) | **POST** /task/service_remote/create_service_Remote_task | Create Service On Site Task 
  [**loadTaskServiceRemoteTaskIdGet**](TaskServiceRemoteApi.md#loadtaskserviceremotetaskidget)                                                                           | **GET** /task/service_remote/{task_id}                   | Load                        
 
-# **cancelTaskTaskServiceRemoteTaskIdDelete**
 
+# **cancelTaskTaskServiceRemoteTaskIdDelete**
 > String cancelTaskTaskServiceRemoteTaskIdDelete(taskId)
 
 Cancel Task
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 
@@ -58,13 +56,11 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **createServiceOnSiteTaskTaskServiceRemoteCreateServiceRemoteTaskPost**
-
 > String createServiceOnSiteTaskTaskServiceRemoteCreateServiceRemoteTaskPost(taskServiceRemoteNewSchema)
 
 Create Service On Site Task
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 
@@ -101,13 +97,11 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **loadTaskServiceRemoteTaskIdGet**
-
 > TaskServiceRemoteSchema loadTaskServiceRemoteTaskIdGet(taskId)
 
 Load
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 

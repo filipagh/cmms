@@ -177,3 +177,4 @@ class TaskServiceRemoteSchema {
     'created_at',
   };
 }
+
