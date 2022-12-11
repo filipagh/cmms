@@ -16,9 +16,9 @@ depends_on = None
 
 
 def upgrade() -> None:
-    op.execute("ALTER TYPE tasktype ADD VALUE 'ON_SITE_INSPECTION'")
+    op.execute("ALTER TYPE tasktype RENAME VALUE 'LOCAL_INSPECTION' TO 'ON_SITE_SERVICE';")
+    op.execute("ALTER TYPE tasktype ADD VALUE 'REMOTE_SERVICE';")
     op.add_column('tasks', sa.Column('finished_at', sa.DateTime(), nullable=True))
-
 
 def downgrade() -> None:
     raise Exception("downgrade need to be implemented")

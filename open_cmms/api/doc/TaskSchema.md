@@ -8,12 +8,12 @@ import 'package:BackendAPI/api.dart';
 ## Properties
  Name            | Type                          | Description | Notes      
 -----------------|-------------------------------|-------------|------------
- **stationId**   | **String**                    |             | 
- **name**        | **String**                    |             | 
- **description** | **String**                    |             | 
- **id**          | **String**                    |             | 
- **state**       | [**TaskState**](TaskState.md) |             | 
- **taskType**    | [**TaskType**](TaskType.md)   |             | 
+ **stationId**   | **String**                    |             |
+ **name**        | **String**                    |             |
+ **description** | **String**                    |             |
+ **id**          | **String**                    |             |
+ **state**       | [**TaskState**](TaskState.md) |             |
+ **taskType**    | [**TaskType**](TaskType.md)   |             |
  **createdOn**   | [**DateTime**](DateTime.md)   |             |
  **finishedAt**  | [**DateTime**](DateTime.md)   |             | [optional] 
 

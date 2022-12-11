@@ -13,8 +13,8 @@ from taskmanager.domain.model.task_state import TaskState
 
 class TaskType(str, Enum):
     COMPONENT_CHANGE = "component_change",
-    LOCAL_INSPECTION = "local_inspection",
-    ON_SITE_INSPECTION = "on_site_inspection",
+    REMOTE_SERVICE = 'remote_service'
+    ON_SITE_SERVICE = "on_site_service",
 
 
 class TaskModel(Base):

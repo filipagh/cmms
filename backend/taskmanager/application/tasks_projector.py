@@ -78,7 +78,7 @@ class TasksProjector(ProcessApplication):
             name=domain_event.name,
             description=domain_event.description,
             state=domain_event.status,
-            task_type=TaskType.ON_SITE_INSPECTION,
+            task_type=TaskType.REMOTE_SERVICE,
             station_id=domain_event.station_id,
             created_on=domain_event.created_at
         )

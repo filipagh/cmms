@@ -24,14 +24,14 @@ class TaskType {
   String toJson() => value;
 
   static const componentChange = TaskType._(r'component_change');
-  static const localInspection = TaskType._(r'local_inspection');
-  static const onSiteInspection = TaskType._(r'on_site_inspection');
+  static const remoteService = TaskType._(r'remote_service');
+  static const onSiteService = TaskType._(r'on_site_service');
 
   /// List of all possible values in this [enum][TaskType].
   static const values = <TaskType>[
     componentChange,
-    localInspection,
-    onSiteInspection,
+    remoteService,
+    onSiteService,
   ];
 
   static TaskType? fromJson(dynamic value) =>
@@ -71,11 +71,12 @@ class TaskTypeTypeTransformer {
   TaskType? decode(dynamic data, {bool allowNull = true}) {
     if (data != null) {
       switch (data.toString()) {
-        case r'component_change': return TaskType.componentChange;
-        case r'local_inspection':
-          return TaskType.localInspection;
-        case r'on_site_inspection':
-          return TaskType.onSiteInspection;
+        case r'component_change':
+          return TaskType.componentChange;
+        case r'remote_service':
+          return TaskType.remoteService;
+        case r'on_site_service':
+          return TaskType.onSiteService;
         default:
           if (!allowNull) {
             throw ArgumentError('Unknown enum value to decode: $data');
