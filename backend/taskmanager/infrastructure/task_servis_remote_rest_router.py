@@ -25,6 +25,14 @@ def create(
         raise HTTPException(status_code=400, detail=e.__str__())
 
 
+@task_servis_remote.get("/{task_id}/complete",
+                        response_class=PlainTextResponse)
+def complete(task_id: uuid.UUID):
+    task_service: TaskServiceRemoteService = main.runner.get(TaskServiceRemoteService)
+    task_service.complete_task(task_id)
+    return "OK"
+
+
 @task_servis_remote.get("/{task_id}",
                         response_model=TaskServiceRemoteSchema)
 def load(task_id: uuid.UUID):

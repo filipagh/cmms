@@ -41,4 +41,4 @@ class TaskServiceOnSiteService(ProcessApplication):
 
     def load_task(self, task_id) -> TaskServiceOnSiteSchema:
         task: TaskServiceOnSite = self.repository.get(task_id)
-        return TaskServiceOnSiteSchema(**task.__dict__)
+        return TaskServiceOnSiteSchema(**task.__dict__, id=task.id, state=task.status, created_at=task.created_on)

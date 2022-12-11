@@ -91,7 +91,7 @@ class TasksProjector(ProcessApplication):
         task.finished_at = domain_event.finished_at
         tasks_repo.save(task)
 
-    @policy.register(TaskServiceRemote.TaskCanceled)
+    @policy.register(TaskServiceRemote.TaskComplete)
     def _(self, domain_event: TaskServiceRemote.TaskCreated, process_event):
         task = self.repo.get_by_id(domain_event.originator_id)
         task.state = domain_event.new_status

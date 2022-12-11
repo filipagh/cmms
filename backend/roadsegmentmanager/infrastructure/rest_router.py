@@ -6,8 +6,6 @@ from base import main
 from roadsegmentmanager.application.model import schema
 from roadsegmentmanager.application.road_segment_projector import RoadSegmentProjector
 from roadsegmentmanager.application.road_segment_service import RoadSegmentService
-from storagemanager.application import storage_manager_loader
-from storagemanager.application.storage_item_service import StorageItemService
 
 road_segment_manager = APIRouter(
     prefix="/road-segment-manager",
@@ -44,7 +42,7 @@ def get_by_id(segment_id: uuid.UUID):
 @road_segment_manager.get("/segments",
                           response_model=list[schema.RoadSegmentSchema])
 def get_all():
-    segment_projector = main.runner.get(RoadSegmentProjector)
+    segment_projector: RoadSegmentProjector = main.runner.get(RoadSegmentProjector)
     col = []
     for i in segment_projector.get_all():
         col.append(schema.RoadSegmentSchema(**i.__dict__))

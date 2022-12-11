@@ -40,4 +40,4 @@ class TaskServiceRemoteService(ProcessApplication):
 
     def load_task(self, task_id) -> TaskServiceRemoteSchema:
         task: TaskServiceRemote = self.repository.get(task_id)
-        return TaskServiceRemoteSchema(**task.__dict__)
+        return TaskServiceRemoteSchema(**task.__dict__, id=task.id, state=task.status, created_at=task.created_on)

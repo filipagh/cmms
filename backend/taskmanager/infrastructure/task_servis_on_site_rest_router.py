@@ -26,6 +26,14 @@ def create(
         raise HTTPException(status_code=400, detail=e.__str__())
 
 
+@task_servis_on_site.get("/{task_id}/complete",
+                         response_class=PlainTextResponse)
+def complete(task_id: uuid.UUID):
+    task_service: TaskServiceOnSiteService = main.runner.get(TaskServiceOnSiteService)
+    task_service.complete_task(task_id)
+    return "OK"
+
+
 @task_servis_on_site.get("/{task_id}",
                          response_model=TaskServiceOnSiteSchema)
 def load(task_id: uuid.UUID):

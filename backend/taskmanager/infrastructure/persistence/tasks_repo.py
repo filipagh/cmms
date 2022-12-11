@@ -51,6 +51,7 @@ def get_all(station_id) -> list[TaskModel]:
     db: Session
     with _get_db() as db:
         select = db.query(TaskModel)
+        select = select.order_by(TaskModel.created_on.desc())
         if station_id:
             select = select.where(TaskModel.station_id == station_id)
         return select.all()
