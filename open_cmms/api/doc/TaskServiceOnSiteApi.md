@@ -7,12 +7,13 @@ import 'package:BackendAPI/api.dart';
 
 All URIs are relative to *http://localhost*
 
- Method                                                                                                                               | HTTP request                                               | Description 
---------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------|-------------
- [**cancelTaskServiceOnSiteTaskIdDelete**](TaskServiceOnSiteApi.md#canceltaskserviceonsitetaskiddelete)                               | **DELETE** /task/service_on_site/{task_id}                 | Cancel      
- [**completeTaskServiceOnSiteTaskIdCompleteGet**](TaskServiceOnSiteApi.md#completetaskserviceonsitetaskidcompleteget)                 | **GET** /task/service_on_site/{task_id}/complete           | Complete    
- [**createTaskServiceOnSiteCreateServiceOnSideTaskPost**](TaskServiceOnSiteApi.md#createtaskserviceonsitecreateserviceonsidetaskpost) | **POST** /task/service_on_site/create_service_on_side_task | Create      
- [**loadTaskServiceOnSiteTaskIdGet**](TaskServiceOnSiteApi.md#loadtaskserviceonsitetaskidget)                                         | **GET** /task/service_on_site/{task_id}                    | Load        
+ Method                                                                                                                                             | HTTP request                                               | Description         
+----------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------|---------------------
+ [**cancelTaskServiceOnSiteTaskIdDelete**](TaskServiceOnSiteApi.md#canceltaskserviceonsitetaskiddelete)                                             | **DELETE** /task/service_on_site/{task_id}                 | Cancel              
+ [**completeTaskItemsTaskServiceOnSiteTaskIdChangeDetailsPost**](TaskServiceOnSiteApi.md#completetaskitemstaskserviceonsitetaskidchangedetailspost) | **POST** /task/service_on_site/{task_id}/change_details    | Complete Task Items 
+ [**completeTaskServiceOnSiteTaskIdCompleteGet**](TaskServiceOnSiteApi.md#completetaskserviceonsitetaskidcompleteget)                               | **GET** /task/service_on_site/{task_id}/complete           | Complete            
+ [**createTaskServiceOnSiteCreateServiceOnSideTaskPost**](TaskServiceOnSiteApi.md#createtaskserviceonsitecreateserviceonsidetaskpost)               | **POST** /task/service_on_site/create_service_on_side_task | Create              
+ [**loadTaskServiceOnSiteTaskIdGet**](TaskServiceOnSiteApi.md#loadtaskserviceonsitetaskidget)                                                       | **GET** /task/service_on_site/{task_id}                    | Load                
 
 
 # **cancelTaskServiceOnSiteTaskIdDelete**
@@ -21,7 +22,6 @@ All URIs are relative to *http://localhost*
 Cancel
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 
@@ -41,6 +41,53 @@ try {
  Name       | Type       | Description | Notes 
 ------------|------------|-------------|-------
  **taskId** | **String** |             |
+
+### Return type
+
+**String**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: text/plain, application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **completeTaskItemsTaskServiceOnSiteTaskIdChangeDetailsPost**
+
+> String completeTaskItemsTaskServiceOnSiteTaskIdChangeDetailsPost(taskId, newName, newDescription)
+
+Complete Task Items
+
+### Example
+
+```dart
+import 'package:BackendAPI/api.dart';
+
+final api_instance = TaskServiceOnSiteApi();
+final taskId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+final newName = newName_example; // String | 
+final newDescription = newDescription_example; // String | 
+
+try {
+    final result = api_instance.completeTaskItemsTaskServiceOnSiteTaskIdChangeDetailsPost(taskId, newName, newDescription);
+    print(result);
+} catch (e) {
+    print('Exception when calling TaskServiceOnSiteApi->completeTaskItemsTaskServiceOnSiteTaskIdChangeDetailsPost: $e\n');
+}
+```
+
+### Parameters
+
+ Name               | Type       | Description | Notes      
+--------------------|------------|-------------|------------
+ **taskId**         | **String** |             |
+ **newName**        | **String** |             | [optional] 
+ **newDescription** | **String** |             | [optional] 
 
 ### Return type
 

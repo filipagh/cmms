@@ -7,12 +7,13 @@ import 'package:BackendAPI/api.dart';
 
 All URIs are relative to *http://localhost*
 
- Method                                                                                                                               | HTTP request                                             | Description 
---------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------|-------------
- [**cancelTaskServiceRemoteTaskIdDelete**](TaskServiceRemoteApi.md#canceltaskserviceremotetaskiddelete)                               | **DELETE** /task/service_remote/{task_id}                | Cancel      
- [**completeTaskServiceRemoteTaskIdCompleteGet**](TaskServiceRemoteApi.md#completetaskserviceremotetaskidcompleteget)                 | **GET** /task/service_remote/{task_id}/complete          | Complete    
- [**createTaskServiceRemoteCreateServiceRemoteTaskPost**](TaskServiceRemoteApi.md#createtaskserviceremotecreateserviceremotetaskpost) | **POST** /task/service_remote/create_service_remote_task | Create      
- [**loadTaskServiceRemoteTaskIdGet**](TaskServiceRemoteApi.md#loadtaskserviceremotetaskidget)                                         | **GET** /task/service_remote/{task_id}                   | Load        
+ Method                                                                                                                                             | HTTP request                                             | Description         
+----------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------|---------------------
+ [**cancelTaskServiceRemoteTaskIdDelete**](TaskServiceRemoteApi.md#canceltaskserviceremotetaskiddelete)                                             | **DELETE** /task/service_remote/{task_id}                | Cancel              
+ [**completeTaskItemsTaskServiceRemoteTaskIdChangeDetailsPost**](TaskServiceRemoteApi.md#completetaskitemstaskserviceremotetaskidchangedetailspost) | **POST** /task/service_remote/{task_id}/change_details   | Complete Task Items 
+ [**completeTaskServiceRemoteTaskIdCompleteGet**](TaskServiceRemoteApi.md#completetaskserviceremotetaskidcompleteget)                               | **GET** /task/service_remote/{task_id}/complete          | Complete            
+ [**createTaskServiceRemoteCreateServiceRemoteTaskPost**](TaskServiceRemoteApi.md#createtaskserviceremotecreateserviceremotetaskpost)               | **POST** /task/service_remote/create_service_remote_task | Create              
+ [**loadTaskServiceRemoteTaskIdGet**](TaskServiceRemoteApi.md#loadtaskserviceremotetaskidget)                                                       | **GET** /task/service_remote/{task_id}                   | Load                
 
 
 # **cancelTaskServiceRemoteTaskIdDelete**
@@ -21,7 +22,6 @@ All URIs are relative to *http://localhost*
 Cancel
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 
@@ -41,6 +41,53 @@ try {
  Name       | Type       | Description | Notes 
 ------------|------------|-------------|-------
  **taskId** | **String** |             |
+
+### Return type
+
+**String**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: text/plain, application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **completeTaskItemsTaskServiceRemoteTaskIdChangeDetailsPost**
+
+> String completeTaskItemsTaskServiceRemoteTaskIdChangeDetailsPost(taskId, newName, newDescription)
+
+Complete Task Items
+
+### Example
+
+```dart
+import 'package:BackendAPI/api.dart';
+
+final api_instance = TaskServiceRemoteApi();
+final taskId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+final newName = newName_example; // String | 
+final newDescription = newDescription_example; // String | 
+
+try {
+    final result = api_instance.completeTaskItemsTaskServiceRemoteTaskIdChangeDetailsPost(taskId, newName, newDescription);
+    print(result);
+} catch (e) {
+    print('Exception when calling TaskServiceRemoteApi->completeTaskItemsTaskServiceRemoteTaskIdChangeDetailsPost: $e\n');
+}
+```
+
+### Parameters
+
+ Name               | Type       | Description | Notes      
+--------------------|------------|-------------|------------
+ **taskId**         | **String** |             |
+ **newName**        | **String** |             | [optional] 
+ **newDescription** | **String** |             | [optional] 
 
 ### Return type
 

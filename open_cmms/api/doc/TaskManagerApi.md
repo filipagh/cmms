@@ -11,6 +11,7 @@ All URIs are relative to *http://localhost*
 ------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------|----------------------------
  [**allocateComponentsTaskManagerTaskIdAllocateComponentsGet**](TaskManagerApi.md#allocatecomponentstaskmanagertaskidallocatecomponentsget)           | **GET** /task-manager/{task_id}/allocate_components | Allocate Components        
  [**cancelTaskTaskManagerTaskIdDelete**](TaskManagerApi.md#canceltasktaskmanagertaskiddelete)                                                         | **DELETE** /task-manager/{task_id}                  | Cancel Task                
+ [**completeTaskItemsTaskManagerTaskIdChangeDetailsPost**](TaskManagerApi.md#completetaskitemstaskmanagertaskidchangedetailspost)                     | **POST** /task-manager/{task_id}/change_details     | Complete Task Items        
  [**completeTaskItemsTaskManagerTaskIdCompeteTaskItmesPost**](TaskManagerApi.md#completetaskitemstaskmanagertaskidcompetetaskitmespost)               | **POST** /task-manager/{task_id}/compete_task_itmes | Complete Task Items        
  [**createComponentTaskTaskManagerCreateChangeComponentTaskPost**](TaskManagerApi.md#createcomponenttasktaskmanagercreatechangecomponenttaskpost)     | **POST** /task-manager/create_change_component_task | Create Component Task      
  [**createServiceRemoteTaskTaskManagerCreateServiceRemoteTaskPost**](TaskManagerApi.md#createserviceremotetasktaskmanagercreateserviceremotetaskpost) | **POST** /task-manager/create_service_remote_task   | Create Service Remote Task 
@@ -82,9 +83,56 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **taskId** | **String**|  | 
+ Name       | Type       | Description | Notes 
+------------|------------|-------------|-------
+ **taskId** | **String** |             |
+
+### Return type
+
+**String**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: text/plain, application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **completeTaskItemsTaskManagerTaskIdChangeDetailsPost**
+
+> String completeTaskItemsTaskManagerTaskIdChangeDetailsPost(taskId, newName, newDescription)
+
+Complete Task Items
+
+### Example
+
+```dart
+import 'package:BackendAPI/api.dart';
+
+final api_instance = TaskManagerApi();
+final taskId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+final newName = newName_example; // String | 
+final newDescription = newDescription_example; // String | 
+
+try {
+    final result = api_instance.completeTaskItemsTaskManagerTaskIdChangeDetailsPost(taskId, newName, newDescription);
+    print(result);
+} catch (e) {
+    print('Exception when calling TaskManagerApi->completeTaskItemsTaskManagerTaskIdChangeDetailsPost: $e\n');
+}
+```
+
+### Parameters
+
+ Name               | Type       | Description | Notes      
+--------------------|------------|-------------|------------
+ **taskId**         | **String** |             |
+ **newName**        | **String** |             | [optional] 
+ **newDescription** | **String** |             | [optional] 
 
 ### Return type
 
