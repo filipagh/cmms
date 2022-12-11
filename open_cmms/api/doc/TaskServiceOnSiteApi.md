@@ -10,11 +10,12 @@ All URIs are relative to *http://localhost*
  Method                                                                                                                               | HTTP request                                               | Description 
 --------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------|-------------
  [**cancelTaskServiceOnSiteTaskIdDelete**](TaskServiceOnSiteApi.md#canceltaskserviceonsitetaskiddelete)                               | **DELETE** /task/service_on_site/{task_id}                 | Cancel      
+ [**completeTaskServiceOnSiteTaskIdCompleteGet**](TaskServiceOnSiteApi.md#completetaskserviceonsitetaskidcompleteget)                 | **GET** /task/service_on_site/{task_id}/complete           | Complete    
  [**createTaskServiceOnSiteCreateServiceOnSideTaskPost**](TaskServiceOnSiteApi.md#createtaskserviceonsitecreateserviceonsidetaskpost) | **POST** /task/service_on_site/create_service_on_side_task | Create      
  [**loadTaskServiceOnSiteTaskIdGet**](TaskServiceOnSiteApi.md#loadtaskserviceonsitetaskidget)                                         | **GET** /task/service_on_site/{task_id}                    | Load        
 
-# **cancelTaskServiceOnSiteTaskIdDelete**
 
+# **cancelTaskServiceOnSiteTaskIdDelete**
 > String cancelTaskServiceOnSiteTaskIdDelete(taskId)
 
 Cancel
@@ -25,18 +26,56 @@ Cancel
 import 'package:BackendAPI/api.dart';
 
 final api_instance = TaskServiceOnSiteApi();
-final taskId = 38400000 - 8
-cf0-11
-bd-b23e-10
-b96e4ef00d; // String | 
+final taskId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-final result = api_instance.cancelTaskServiceOnSiteTaskIdDelete(taskId);
-print(result);
-} catch
-(
-e) {
-print('Exception when calling TaskServiceOnSiteApi->cancelTaskServiceOnSiteTaskIdDelete: $e\n');
+    final result = api_instance.cancelTaskServiceOnSiteTaskIdDelete(taskId);
+    print(result);
+} catch (e) {
+    print('Exception when calling TaskServiceOnSiteApi->cancelTaskServiceOnSiteTaskIdDelete: $e\n');
+}
+```
+
+### Parameters
+
+ Name       | Type       | Description | Notes 
+------------|------------|-------------|-------
+ **taskId** | **String** |             |
+
+### Return type
+
+**String**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: text/plain, application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **completeTaskServiceOnSiteTaskIdCompleteGet**
+
+> String completeTaskServiceOnSiteTaskIdCompleteGet(taskId)
+
+Complete
+
+### Example
+
+```dart
+import 'package:BackendAPI/api.dart';
+
+final api_instance = TaskServiceOnSiteApi();
+final taskId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+
+try {
+    final result = api_instance.completeTaskServiceOnSiteTaskIdCompleteGet(taskId);
+    print(result);
+} catch (e) {
+    print('Exception when calling TaskServiceOnSiteApi->completeTaskServiceOnSiteTaskIdCompleteGet: $e\n');
 }
 ```
 
@@ -62,13 +101,11 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **createTaskServiceOnSiteCreateServiceOnSideTaskPost**
-
 > String createTaskServiceOnSiteCreateServiceOnSideTaskPost(taskServiceOnSiteNewSchema)
 
 Create
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 
