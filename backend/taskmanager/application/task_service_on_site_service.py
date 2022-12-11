@@ -39,6 +39,17 @@ class TaskServiceOnSiteService(ProcessApplication):
     def policy(self, domain_event, process_event):
         """Default policy"""
 
+    def change_component_task_details(self, task_id, name, description):
+        task: TaskServiceOnSite = self.repository.get(task_id)
+        if name is None and description is None:
+            return
+        if name is None:
+            name = task.name
+        if description is None:
+            description = task.description
+        task.change_task_detail(name, description)
+        self.save(task)
+
     def load_task(self, task_id) -> TaskServiceOnSiteSchema:
         task: TaskServiceOnSite = self.repository.get(task_id)
         return TaskServiceOnSiteSchema(**task.__dict__, id=task.id, state=task.status, created_at=task.created_on)

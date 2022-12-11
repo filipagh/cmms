@@ -38,6 +38,13 @@ class TasksProjector(ProcessApplication):
         task.state = domain_event.new_status
         tasks_repo.save(task)
 
+    @policy.register(TaskChangeComponents.DetailChanged)
+    def _(self, domain_event: TaskChangeComponents.DetailChanged, process_event):
+        task = self.repo.get_by_id(domain_event.originator_id)
+        task.name = domain_event.name
+        task.description = domain_event.description
+        tasks_repo.save(task)
+
     @policy.register(TaskChangeComponents.TaskCanceled)
     def _(self, domain_event: TaskChangeComponents.TaskCanceled, process_event):
         task = self.repo.get_by_id(domain_event.originator_id)

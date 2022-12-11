@@ -21,6 +21,10 @@ class TaskServiceOnSite(Aggregate):
         new_status: TaskState
         finished_at: datetime.datetime
 
+    class DetailChanged(Aggregate.Event):
+        name: str
+        description: str
+
     @event(TaskCreated)
     def __init__(self, name: str, description: str, station_id: uuid.UUID, status: TaskState):
         self.name = name
@@ -47,3 +51,8 @@ class TaskServiceOnSite(Aggregate):
     def _complete_task(self, new_status: TaskState, finished_at: datetime.datetime):
         self.status = new_status
         self.finished_at = finished_at
+
+    @event(DetailChanged)
+    def change_task_detail(self, name, description):
+        self.name = name
+        self.description = description

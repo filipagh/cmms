@@ -99,6 +99,17 @@ class TaskService(ProcessApplication):
         self.save(task)
         self.task_status_service.try_change_state_to_done(task)
 
+    def change_component_task_details(self, task_id, name, description):
+        task: TaskChangeComponents = self.repository.get(task_id)
+        if name is None and description is None:
+            return
+        if name is None:
+            name = task.name
+        if description is None:
+            description = task.description
+        task.change_task_detail(name, description)
+        self.save(task)
+
     def _task_component_to_chema(self, task: TaskChangeComponents):
         def _add_model_to_schema(component: AddComponentRequest) -> AddComponentRequestSchema:
             return AddComponentRequestSchema(**component.__dict__)

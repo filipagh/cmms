@@ -1,4 +1,5 @@
 import uuid
+from typing import Optional
 
 from fastapi import APIRouter, HTTPException
 from starlette.responses import PlainTextResponse
@@ -38,6 +39,13 @@ def complete(task_id: uuid.UUID):
 def load(task_id: uuid.UUID):
     task_service: TaskServiceRemoteService = main.runner.get(TaskServiceRemoteService)
     return task_service.load_task(task_id)
+
+
+@task_servis_remote.post("/{task_id}/change_details", response_class=PlainTextResponse)
+def complete_task_items(task_id: uuid.UUID, new_name: Optional[str] = None, new_description: Optional[str] = None):
+    task_service: TaskServiceRemoteService = main.runner.get(TaskServiceRemoteService)
+    task_service.change_component_task_details(task_id, new_name, new_description)
+    return "OK"
 
 
 @task_servis_remote.delete("/{task_id}", response_class=PlainTextResponse)

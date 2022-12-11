@@ -104,6 +104,10 @@ class TaskChangeComponents(Aggregate):
         removed_task_item_id: uuid.UUID
         assigned_component_id: uuid.UUID
 
+    class DetailChanged(Aggregate.Event):
+        name: str
+        description: str
+
     @event(TaskChangeComponentsCreated)
     def __init__(self, name: str, description: str, station_id: uuid.UUID, status: TaskState,
                  components_to_add: list[AddComponentRequest], components_to_remove: list[RemoveComponentRequest],
@@ -193,3 +197,8 @@ class TaskChangeComponents(Aggregate):
             if uuid.UUID(ctr.id) == removed_task_item_id:
                 ctr.state = TaskComponentState.REMOVED
                 return
+
+    @event(DetailChanged)
+    def change_task_detail(self, name, description):
+        self.name = name
+        self.description = description

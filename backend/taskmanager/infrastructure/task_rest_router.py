@@ -1,4 +1,5 @@
 import uuid
+from typing import Optional
 
 from fastapi import APIRouter, HTTPException
 from starlette.responses import PlainTextResponse
@@ -75,6 +76,13 @@ def allocate_components(task_id: uuid.UUID):
 def complete_task_items(task_id: uuid.UUID, task_items: list[TaskChangeComponentRequestId]):
     task_service: TaskService = main.runner.get(TaskService)
     task_service.complete_task_items(task_id, task_items)
+    return "OK"
+
+
+@task_manager_router.post("/{task_id}/change_details", response_class=PlainTextResponse)
+def complete_task_items(task_id: uuid.UUID, new_name: Optional[str] = None, new_description: Optional[str] = None):
+    task_service: TaskService = main.runner.get(TaskService)
+    task_service.change_component_task_details(task_id, new_name, new_description)
     return "OK"
 
 
