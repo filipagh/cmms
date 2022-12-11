@@ -23,14 +23,14 @@ class Tasks extends StatelessWidget {
       body: Row(
         children: [
           MainMenuWidget(),
-          VerticalDivider(),
+          const VerticalDivider(),
           Expanded(
             child: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       "Tasks",
                       textScaleFactor: 5,
                     ),
@@ -38,29 +38,29 @@ class Tasks extends StatelessWidget {
                         onPressed: () {
                           loadTasks();
                         },
-                        icon: Icon(Icons.refresh))
+                        icon: const Icon(Icons.refresh))
                   ],
                 ),
                 Row(
                   children: [
-                    Placeholder(
+                    const Placeholder(
                       child: SizedBox(width: 300, child: Text("searchbar")),
                     ),
-                    Placeholder(
+                    const Placeholder(
                       child: Icon(Icons.filter_list_alt),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     ElevatedButton(
                       onPressed: () async {
                         StationSchema station =
                             await showFormDialog(StationPickerForm());
                         showFormDialog(CreateTaskForm(station: station));
                       },
-                      child: Text("create task"),
+                      child: const Text("create task"),
                     ),
                   ],
                 ),
-                Divider(),
+                const Divider(),
                 Expanded(child: Obx(
                   () {
                     var list = tasks;

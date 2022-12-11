@@ -9,7 +9,10 @@ class TaskPageFactory {
       case TaskType.componentChange:
         _openComponentChangeTaskPage(task.id);
         break;
-      case TaskType.localInspection:
+      case TaskType.onSiteService:
+        // TODO: Handle this case.
+        break;
+      case TaskType.remoteService:
         // TODO: Handle this case.
         break;
     }

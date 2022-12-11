@@ -7,6 +7,7 @@ import 'package:open_cmms/models/task_component.dart';
 import 'package:open_cmms/states/items_state_dummy.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 import 'package:open_cmms/widgets/forms/components/edit_station_components_form.dart';
+import 'package:open_cmms/widgets/forms/tasks/create_service_task.dart';
 
 import '../../../states/asset_types_state_dummy.dart';
 
@@ -30,8 +31,24 @@ class CreateTaskForm extends StatelessWidget implements hasFormTitle {
                   showFormDialog(EditStationComponentsForm(station: station));
                 },
                 child: Text("Zmena komponentov")),
-            ElevatedButton(onPressed: () {}, child: Text("Osobny servis")),
-            ElevatedButton(onPressed: () {}, child: Text("Vzdialeny servis")),
+            ElevatedButton(
+                onPressed: () {
+                  Get.back();
+                  showFormDialog(CreateServiceTaskForm(
+                    station: station,
+                    taskType: TaskType.onSiteService,
+                  ));
+                },
+                child: Text("Osobny servis")),
+            ElevatedButton(
+                onPressed: () {
+                  Get.back();
+                  showFormDialog(CreateServiceTaskForm(
+                    station: station,
+                    taskType: TaskType.remoteService,
+                  ));
+                },
+                child: Text("Vzdialeny servis")),
           ],
         ),
         // Container(height: 600, width: 500, child: buildTaskActionList()),

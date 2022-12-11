@@ -44,8 +44,11 @@ String getTaskName(TaskType taskType) {
     case TaskType.componentChange:
       name = "Zmena komponentov";
       break;
-    case TaskType.localInspection:
+    case TaskType.onSiteService:
       name = "Osobna kontrola";
+      break;
+    case TaskType.remoteService:
+      name = "Kontrola na dialku";
       break;
   }
   return name;
