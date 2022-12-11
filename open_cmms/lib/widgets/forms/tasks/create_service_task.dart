@@ -26,9 +26,9 @@ class CreateServiceTaskForm extends StatefulWidget implements hasFormTitle {
       case TaskType.componentChange:
         throw UnimplementedError("wrong task form for {$taskType}");
       case TaskType.onSiteService:
-        return "Osobna kontrola stanice";
-      case TaskType.remoteService:
         return "Kontrola stanice na mieste";
+      case TaskType.remoteService:
+        return "Vzdialena kontrola stanice";
     }
     throw UnimplementedError("wrong task form for {$taskType}");
   }
