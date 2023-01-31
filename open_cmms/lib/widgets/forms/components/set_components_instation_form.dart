@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/service/backend_api/assigned_components_service.dart';
 import 'package:open_cmms/states/asset_types_state.dart';
-
 import 'package:open_cmms/widgets/dialog_form.dart';
 import 'package:open_cmms/widgets/forms/components/component_picker.dart';
 
@@ -33,86 +32,119 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
   @override
   Widget build(BuildContext context) {
     setEditItems();
-    return ConstrainedBox(
-      constraints: BoxConstraints(maxWidth: 500),
-      child: Column(
-        children: [
-          ElevatedButton(
-              onPressed: () {
-                showFormDialog<AssetSchema>(ComponentPickerForm())
-                    .then((value) {
-                  items.insert(0, FormItem(value!.id));
-                });
-              },
-              child: Text('Pridat komponent')),
-          Container(
-            width: 500,
-            height: 600,
-            child: Obx(() {
-              return ListView.builder(
-                  itemCount: items.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return buildCardFromFormItem(items[index]);
-                  });
-            }),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    // return ConstrainedBox(
+    //   constraints: BoxConstraints(maxWidth: Get.width - 200, maxHeight: Get.height),
+    //   child: Column(children: [
+
+    // child: Column(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Flexible(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  ElevatedButton(
-                      onPressed: () {
-                        Get.back();
-                      },
-                      child: Text("Back")),
-                ],
+              ElevatedButton(
+                  onPressed: () {
+                    showFormDialog<AssetSchema>(ComponentPickerForm())
+                        .then((value) {
+                      items.insert(0, FormItem(value!.id));
+                    });
+                  },
+                  child: Text('Pridat komponent')),
+              SizedBox(
+                width: 500,
+                height: 400,
+                child: Obx(() {
+                  return ListView.builder(
+                      // shrinkWrap: true,
+                      itemCount: items.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return buildCardFromFormItem(items[index]);
+                      });
+                }),
               ),
-              Row(
-                children: [
-                  Obx(() {
-                    return Row(
-                      children: [
-                        Text("added: " + getNewItems().length.toString()),
-                        VerticalDivider(),
-                        Text(
-                            "removed: " + getToRemoveItems().length.toString()),
-                        VerticalDivider(),
-                      ],
-                    );
-                  }),
-                  ElevatedButton(
-                      onPressed: () {
-                        List<schema.AssignedComponentNewSchema> col = [];
-                        getNewItems().forEach((element) {
-                          col.add(schema.AssignedComponentNewSchema(
-                              assetId: element.assetId, stationId: station.id));
-                        });
-                        if (col.isNotEmpty) {
-                          AssignedComponentService()
-                              .createInstalledComponentAssignedComponentsCreateInstalledComponentPost(
-                                  col);
-                        }
-                        List<schema.AssignedComponentIdSchema> colr = [];
-                        getToRemoveItems().forEach((element) {
-                          colr.add(schema.AssignedComponentIdSchema(id: element.assignedComponentId!));
-                        });
-                        if (colr.isNotEmpty) {
-                          AssignedComponentService()
-                              .removeInstalledComponentAssignedComponentsRemoveInstalledComponentPost(
-                              colr);
-                        }
-
-
-                        Get.back();
-                      },
-                      child: Text("submit")),
-                ],
+              Flexible(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                              child: InputDatePickerFormField(
+                                  firstDate: DateTime.now(),
+                                  lastDate: DateTime.now()
+                                      .add(Duration(days: 365 * 20)))),
+                          Text("jiij"),
+                          Text("jiij"),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ],
+            // ),
           ),
-        ],
-      ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                ElevatedButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    child: Text("Back")),
+              ],
+            ),
+            Row(
+              children: [
+                Obx(() {
+                  return Row(
+                    children: [
+                      Text("added: " + getNewItems().length.toString()),
+                      VerticalDivider(),
+                      Text("removed: " + getToRemoveItems().length.toString()),
+                      VerticalDivider(),
+                    ],
+                  );
+                }),
+                ElevatedButton(
+                    onPressed: () {
+                      List<schema.AssignedComponentNewSchema> col = [];
+                      getNewItems().forEach((element) {
+                        col.add(schema.AssignedComponentNewSchema(
+                            assetId: element.assetId, stationId: station.id));
+                      });
+                      if (col.isNotEmpty) {
+                        AssignedComponentService()
+                            // todo warranty
+                            .createInstalledComponentAssignedComponentsCreateInstalledComponentPost(
+                                10, col);
+                      }
+                      List<schema.AssignedComponentIdSchema> colr = [];
+                      getToRemoveItems().forEach((element) {
+                        colr.add(schema.AssignedComponentIdSchema(
+                            id: element.assignedComponentId!));
+                      });
+                      if (colr.isNotEmpty) {
+                        AssignedComponentService()
+                            .removeInstalledComponentAssignedComponentsRemoveInstalledComponentPost(
+                                colr);
+                      }
+
+                      Get.back();
+                    },
+                    child: Text("submit")),
+              ],
+            ),
+          ],
+        )
+      ],
     );
   }
 

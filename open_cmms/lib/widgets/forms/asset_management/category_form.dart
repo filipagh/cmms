@@ -1,12 +1,9 @@
 import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:open_cmms/models/asset_type.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 
-import '../../../models/asset_type.dart';
 import '../../../states/asset_types_state.dart';
-import '../../../states/asset_types_state_dummy.dart';
 
 const EMPTY_CATEGORY = "NEW_CATEGORY";
 
@@ -59,53 +56,56 @@ class CategoryFormState extends State<CategoryForm> {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: BoxConstraints(maxWidth: 500),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            TextFormField(
-              onSaved: (value) {
-                name = value!;
-              },
-              initialValue:
-                  widget.editItem == null ? "" : widget.editItem!.name,
-              decoration: InputDecoration(labelText: 'name'),
-              validator: (value) {
-                return value == null || value.isEmpty ? "add name" : null;
-              },
+    return Column(
+      children: [
+        Form(
+          key: _formKey,
+          child: Expanded(
+            child: Column(
+              children: [
+                TextFormField(
+                  onSaved: (value) {
+                    name = value!;
+                  },
+                  initialValue:
+                      widget.editItem == null ? "" : widget.editItem!.name,
+                  decoration: InputDecoration(labelText: 'name'),
+                  validator: (value) {
+                    return value == null || value.isEmpty ? "add name" : null;
+                  },
+                ),
+                TextFormField(
+                  onSaved: (value) {
+                    description = value!;
+                  },
+                  initialValue:
+                      widget.editItem == null ? "" : widget.editItem!.name,
+                  decoration: InputDecoration(labelText: 'description'),
+                ),
+                if (widget.parent != null)
+                  Text("main category: " + widget.parent!.name),
+                Text("custom fields"),
+                Flexible(child: Placeholder()),
+                TextButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        _formKey.currentState?.save();
+                        if (widget.editItem != null) {
+                          assetTypes.editType(
+                              widget.editItem!.id, name, description);
+                        } else {
+                          assetTypes.createNewType(
+                              widget.parent?.id, true, name, description);
+                        }
+                        Get.back();
+                      }
+                    },
+                    child: Text("submit")),
+              ],
             ),
-            TextFormField(
-              onSaved: (value) {
-                description = value!;
-              },
-              initialValue:
-                  widget.editItem == null ? "" : widget.editItem!.name,
-              decoration: InputDecoration(labelText: 'description'),
-            ),
-
-            if (widget.parent != null) Text("main category: " + widget.parent!.name),
-            Text("custom fields"),
-            Placeholder(),
-            TextButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState?.save();
-                    if (widget.editItem != null) {
-                      assetTypes.editType(
-                          widget.editItem!.id, name, description);
-                    } else {
-                      assetTypes.createNewType(
-                          widget.parent?.id, true, name, description);
-                    }
-                    Get.back();
-                  }
-                },
-                child: Text("submit")),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }

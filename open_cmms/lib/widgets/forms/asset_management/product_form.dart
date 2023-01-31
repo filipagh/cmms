@@ -59,52 +59,54 @@ class ProductFormState extends State<ProductForm> {
 
   @override
   Widget build(BuildContext context) {
-    return ConstrainedBox(
-      constraints: BoxConstraints(maxWidth: 500),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            TextFormField(
-              onSaved: (value) {
-                name = value!;
-              },
-              initialValue:
-                  widget.editItem == null ? "" : widget.editItem!.name,
-              decoration: InputDecoration(labelText: 'name'),
-              validator: (value) {
-                return value == null || value.isEmpty ? "add name" : null;
-              },
-            ),
-            TextFormField(
-              onSaved: (value) {
-                description = value!;
-              },
-              initialValue:
-                  widget.editItem == null ? "" : widget.editItem!.name,
-              decoration: InputDecoration(labelText: 'description'),
-            ),
-            Text("main category: " + _mainCat.name),
-            Text("sub category: " + (_subCat?.name ?? "N/A")),
-            Text("custom fields"),
-            Placeholder(),
-            TextButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState?.save();
-                    if (widget.editItem != null) {
-                      assetTypes.editType(widget.editItem!.id, name, description);
-                    } else {
-                      assetTypes.createNewType(
-                          widget.parent.id, false, name, description);
-                    }
-                    Get.back();
-                  }
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              TextFormField(
+                onSaved: (value) {
+                  name = value!;
                 },
-                child: Text("submit")),
-          ],
+                initialValue:
+                    widget.editItem == null ? "" : widget.editItem!.name,
+                decoration: InputDecoration(labelText: 'name'),
+                validator: (value) {
+                  return value == null || value.isEmpty ? "add name" : null;
+                },
+              ),
+              TextFormField(
+                onSaved: (value) {
+                  description = value!;
+                },
+                initialValue:
+                    widget.editItem == null ? "" : widget.editItem!.name,
+                decoration: InputDecoration(labelText: 'description'),
+              ),
+              Text("main category: " + _mainCat.name),
+              Text("sub category: " + (_subCat?.name ?? "N/A")),
+              Text("custom fields"),
+              SizedBox(width: 500, height: 500, child: Placeholder()),
+            ],
+          ),
         ),
-      ),
+        TextButton(
+            onPressed: () {
+              if (_formKey.currentState!.validate()) {
+                _formKey.currentState?.save();
+                if (widget.editItem != null) {
+                  assetTypes.editType(widget.editItem!.id, name, description);
+                } else {
+                  assetTypes.createNewType(
+                      widget.parent.id, false, name, description);
+                }
+                Get.back();
+              }
+            },
+            child: Text("submit"))
+      ],
     );
   }
 }

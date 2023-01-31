@@ -93,10 +93,17 @@ class _CreateChangeComponentsTaskFormState
             ElevatedButton(onPressed: () {
               if (_formKey.currentState!.validate()) {
                 TasksService()
-                    .createComponentTaskTaskManagerCreateChangeComponentTaskPost(
-                    TaskChangeComponentsNewSchema(stationId: widget.station.id, name: taskName.text, description: taskDescription.text, add: widget.add, remove: widget.remove));
-                Get.back();
-              }
+                        .createComponentTaskTaskManagerCreateChangeComponentTaskPost(
+                            // todo warANT
+                            TaskChangeComponentsNewSchema(
+                                stationId: widget.station.id,
+                                name: taskName.text,
+                                description: taskDescription.text,
+                                add: widget.add,
+                                remove: widget.remove,
+                                warrantyPeriodDays: 10));
+                    Get.back();
+                  }
             }, child: Text("Vytvorit ulohu")),
           ],
         )

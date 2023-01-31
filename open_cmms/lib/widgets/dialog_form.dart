@@ -13,18 +13,17 @@ Future<T?> showFormDialog<T>(hasFormTitle form) async {
 
       title: form.getTitle(),
 
-      content: ConstrainedBox(
-        constraints: BoxConstraints(maxHeight: Get.height-150,maxWidth: Get.width-200, minWidth: 800),
-
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              form.getInstance(),
-            ],
-          ),
-        ),
+    content: IntrinsicHeight(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+            maxHeight: Get.height - 150,
+            minHeight: 500,
+            maxWidth: Get.width - 200,
+            minWidth: 500),
+        child: form.getInstance(),
       ),
-      // confirm: TextButton(
+    ),
+    // confirm: TextButton(
       //     onPressed: () {
       //
       //       form.submit() ? Get.back() : null;
