@@ -13,6 +13,7 @@ class TaskChangeComponentSchemaBASE(BaseModel):
     station_id: uuid.UUID
     name: str
     description: str
+    warranty_period_days: int
     pass
 
 

@@ -1,25 +1,29 @@
 import uuid
+from datetime import datetime
 
 from eventsourcing.dispatch import singledispatchmethod
 from eventsourcing.system import ProcessApplication
 
 from stationmanager.domain.model.assigned_component import AssignedComponent, AssignedComponentState
+from stationmanager.domain.waranty_calculator_service import warranty_until_date_calc
 from taskmanager.domain.model.tasks.task_change_components import TaskChangeComponents
 
 
 class AssignedComponentsService(ProcessApplication):
 
-    def create_new_component(self, asset_id: uuid, station_id: uuid, task_id: uuid):
+    def create_new_component(self, asset_id: uuid, station_id: uuid, task_id: uuid, warranty_period_days: int):
         component: AssignedComponent = AssignedComponent(asset_id=asset_id, station_id=station_id,
                                                          status=AssignedComponentState.AWAITING,
-                                                         task_id=task_id)
+                                                         task_id=task_id, warranty_period_days=warranty_period_days,
+                                                         warranty_period_until=None)
         self.save(component)
         return component.id
 
-    def create_installed_component(self, asset_id: uuid, station_id: uuid):
+    def create_installed_component(self, asset_id: uuid, station_id: uuid, warranty_period_days: int):
         component: AssignedComponent = AssignedComponent(asset_id=asset_id, station_id=station_id,
                                                          status=AssignedComponentState.INSTALLED,
-                                                         task_id=None)
+                                                         task_id=None, warranty_period_until=warranty_until_date_calc(
+                datetime.now().date(), warranty_period_days), warranty_period_days=warranty_period_days)
         self.save(component)
         return component.id
 
@@ -55,7 +59,8 @@ class AssignedComponentsService(ProcessApplication):
     @policy.register(TaskChangeComponents.TaskChangeComponentsCreated)
     def _(self, domain_event: TaskChangeComponents.TaskChangeComponentsCreated, process_event):
         for add in domain_event.components_to_add:
-            self.create_new_component(add.new_asset_id, domain_event.station_id, domain_event.originator_id)
+            self.create_new_component(add.new_asset_id, domain_event.station_id, domain_event.originator_id,
+                                      domain_event.warranty_period_days)
         for remove in domain_event.components_to_remove:
             self.set_component_to_be_removed(remove.assigned_component_id, domain_event.originator_id)
 

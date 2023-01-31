@@ -5,6 +5,8 @@ from typing import Optional
 
 from eventsourcing.domain import Aggregate, event, ProgrammingError
 
+from stationmanager.domain.waranty_calculator_service import warranty_until_date_calc
+
 
 class AssignedComponentState(str, Enum):
     AWAITING = "awaiting",
@@ -19,6 +21,8 @@ class AssignedComponent(Aggregate):
         station_id: uuid
         status: AssignedComponentState
         task_id: uuid
+        warranty_period_until: Optional[datetime.date]
+        warranty_period_days: int
 
     class AssignedComponentRemoved(Aggregate.Event):
         new_status: AssignedComponentState
@@ -39,17 +43,20 @@ class AssignedComponent(Aggregate):
         pass
 
     class AssignedComponentInstalled(Aggregate.Event):
+        warranty_period_until: datetime.date
         new_status: AssignedComponentState
         task_id: uuid.UUID
         installed_at: datetime.datetime
 
     @event(CreatedEvent)
     def __init__(self, asset_id, station_id, status: AssignedComponentState,
-                 task_id: uuid):
+                 task_id: uuid, warranty_period_until: Optional[datetime.date], warranty_period_days: int):
         self.status = status
         self.asset_id = asset_id
         self.station_id = station_id
         self.task_id = task_id
+        self.warranty_period_until = warranty_period_until
+        self.warranty_period_days = warranty_period_days
 
     def force_remove_component(self):
         self._remove_component(new_status=AssignedComponentState.REMOVED, removed_at=datetime.datetime.now(),
@@ -74,13 +81,17 @@ class AssignedComponent(Aggregate):
     def revert_install(self):
         self.task_id = None
 
-    def install_component(self, task_id, installed_at):
+    def install_component(self, task_id, installed_at: datetime):
         if self.status != AssignedComponentState.AWAITING:
             raise ProgrammingError(f"assigned component {self.id} is in wrong state")
-        self._install_component(task_id, installed_at, AssignedComponentState.INSTALLED)
+
+        warranty_period_until = warranty_until_date_calc(installed_at.date(), self.warranty_period_days)
+        self._install_component(task_id, installed_at, AssignedComponentState.INSTALLED, warranty_period_until)
 
     @event(AssignedComponentInstalled)
-    def _install_component(self, task_id, installed_at, new_status):
+    def _install_component(self, task_id, installed_at: datetime.datetime, new_status,
+                           warranty_period_until: datetime.date):
+        self.warranty_period_until = warranty_period_until
         self.status = new_status
         self.task_id = None
 

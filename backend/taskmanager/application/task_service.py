@@ -45,12 +45,13 @@ class TaskService(ProcessApplication):
         add = list(map(lambda x: add_com_to_domain_model(x), new_task.add))
         remove = list(map(lambda x: remove_com_to_domain_model(x), new_task.remove))
 
+        now = datetime.datetime.now()
         if (len(add) > 0):
             status = TaskState.OPEN
         else:
             status = TaskState.READY
         task = TaskChangeComponents(new_task.name, new_task.description, new_task.station_id, status,
-                                    add, remove, datetime.datetime.now())
+                                    add, remove, now, new_task.warranty_period_days)
         self.save(task)
         return task.id
 

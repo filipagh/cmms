@@ -15,13 +15,13 @@ assigned_component_router = APIRouter(
 
 
 @assigned_component_router.post("/create_installed_component",
-                     response_model=list[uuid.UUID])
-def create_installed_component(new_components: list[schema.AssignedComponentNewSchema]):
+                                response_model=list[uuid.UUID])
+def create_installed_component(new_components: list[schema.AssignedComponentNewSchema], warranty_period_days: int):
     segment_service = main.runner.get(AssignedComponentsService)
     ids = []
     for c in new_components:
-        ids.append(segment_service.create_installed_component(c.asset_id, c.station_id))
-    return ids\
+        ids.append(segment_service.create_installed_component(c.asset_id, c.station_id, warranty_period_days))
+    return ids
 
 @assigned_component_router.post("/remove_installed_component",
                      response_model=list[uuid.UUID])

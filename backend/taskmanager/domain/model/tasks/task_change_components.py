@@ -72,6 +72,7 @@ class TaskChangeComponents(Aggregate):
         station_id: uuid.UUID
         components_to_add: list[AddComponentRequest]
         components_to_remove: list[RemoveComponentRequest]
+        warranty_period_days: int
         created_at: datetime.datetime
 
     class TaskChangeComponentsComponentAssigned(Aggregate.Event):
@@ -111,14 +112,19 @@ class TaskChangeComponents(Aggregate):
     @event(TaskChangeComponentsCreated)
     def __init__(self, name: str, description: str, station_id: uuid.UUID, status: TaskState,
                  components_to_add: list[AddComponentRequest], components_to_remove: list[RemoveComponentRequest],
-                 created_at: datetime.datetime):
+                 created_at: datetime, warranty_period_days: int):
         self.name = name
         self.description = description
         self.status = status
         self.station_id = station_id
         self.components_to_add = components_to_add
         self.components_to_remove = components_to_remove
+        self.warranty_period_until = warranty_period_days
         self.created_at = created_at
+
+        if len(components_to_add) > 0:
+            if warranty_period_days <= 0:
+                raise AttributeError("warranty_period_until param must be set when new component are installed")
 
     @event(TaskChangeComponentsComponentAssigned)
     def assign_component(self, asset_id, assigned_component_id: uuid.UUID):

@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import Column, Enum, DateTime
+from sqlalchemy import Column, Enum, DateTime, Date
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import Session
 
@@ -17,6 +17,8 @@ class AssignedComponentModel(Base):
     status = Column('assigned_component_status', Enum(AssignedComponentState), nullable=False)
     task_id = Column(postgresql.UUID(as_uuid=True), nullable=True)
     installed_at = Column(DateTime, nullable=True)
+    warranty_period_days = Column(postgresql.INTEGER, nullable=True)
+    warranty_period_until = Column(Date, nullable=True)
     removed_at = Column(DateTime, nullable=True)
 
 
