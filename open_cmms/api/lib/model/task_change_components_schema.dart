@@ -16,6 +16,7 @@ class TaskChangeComponentsSchema {
     required this.stationId,
     required this.name,
     required this.description,
+    required this.warrantyPeriodDays,
     required this.id,
     required this.state,
     required this.createdAt,
@@ -29,6 +30,8 @@ class TaskChangeComponentsSchema {
 
   String description;
 
+  int warrantyPeriodDays;
+
   String id;
 
   TaskState state;
@@ -40,11 +43,13 @@ class TaskChangeComponentsSchema {
   List<RemoveComponentRequestSchema> remove;
 
   @override
-  bool operator ==(Object other) => identical(this, other) || other is TaskChangeComponentsSchema &&
-     other.stationId == stationId &&
-     other.name == name &&
-     other.description == description &&
-     other.id == id &&
+  bool operator ==(Object other) => identical(this, other) ||
+      other is TaskChangeComponentsSchema &&
+          other.stationId == stationId &&
+          other.name == name &&
+          other.description == description &&
+          other.warrantyPeriodDays == warrantyPeriodDays &&
+          other.id == id &&
      other.state == state &&
      other.createdAt == createdAt &&
      other.add == add &&
@@ -53,28 +58,31 @@ class TaskChangeComponentsSchema {
   @override
   int get hashCode =>
     // ignore: unnecessary_parenthesis
-    (stationId.hashCode) +
-    (name.hashCode) +
-    (description.hashCode) +
-    (id.hashCode) +
+  (stationId.hashCode) +
+      (name.hashCode) +
+      (description.hashCode) +
+      (warrantyPeriodDays.hashCode) +
+      (id.hashCode) +
     (state.hashCode) +
     (createdAt.hashCode) +
     (add.hashCode) +
     (remove.hashCode);
 
   @override
-  String toString() => 'TaskChangeComponentsSchema[stationId=$stationId, name=$name, description=$description, id=$id, state=$state, createdAt=$createdAt, add=$add, remove=$remove]';
+  String toString() =>
+      'TaskChangeComponentsSchema[stationId=$stationId, name=$name, description=$description, warrantyPeriodDays=$warrantyPeriodDays, id=$id, state=$state, createdAt=$createdAt, add=$add, remove=$remove]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-      _json[r'station_id'] = stationId;
-      _json[r'name'] = name;
-      _json[r'description'] = description;
-      _json[r'id'] = id;
-      _json[r'state'] = state;
-      _json[r'created_at'] = createdAt.toUtc().toIso8601String();
-      _json[r'add'] = add;
-      _json[r'remove'] = remove;
+    _json[r'station_id'] = stationId;
+    _json[r'name'] = name;
+    _json[r'description'] = description;
+    _json[r'warranty_period_days'] = warrantyPeriodDays;
+    _json[r'id'] = id;
+    _json[r'state'] = state;
+    _json[r'created_at'] = createdAt.toUtc().toIso8601String();
+    _json[r'add'] = add;
+    _json[r'remove'] = remove;
     return _json;
   }
 
@@ -100,6 +108,7 @@ class TaskChangeComponentsSchema {
         stationId: mapValueOfType<String>(json, r'station_id')!,
         name: mapValueOfType<String>(json, r'name')!,
         description: mapValueOfType<String>(json, r'description')!,
+        warrantyPeriodDays: mapValueOfType<int>(json, r'warranty_period_days')!,
         id: mapValueOfType<String>(json, r'id')!,
         state: TaskState.fromJson(json[r'state'])!,
         createdAt: mapDateTime(json, r'created_at', '')!,
@@ -157,6 +166,7 @@ class TaskChangeComponentsSchema {
     'station_id',
     'name',
     'description',
+    'warranty_period_days',
     'id',
     'state',
     'created_at',

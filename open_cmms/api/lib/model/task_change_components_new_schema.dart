@@ -16,6 +16,7 @@ class TaskChangeComponentsNewSchema {
     required this.stationId,
     required this.name,
     required this.description,
+    required this.warrantyPeriodDays,
     this.add = const [],
     this.remove = const [],
   });
@@ -26,37 +27,45 @@ class TaskChangeComponentsNewSchema {
 
   String description;
 
+  int warrantyPeriodDays;
+
   List<TaskComponentAddNewSchema> add;
 
   List<TaskComponentRemoveNewSchema> remove;
 
   @override
-  bool operator ==(Object other) => identical(this, other) || other is TaskChangeComponentsNewSchema &&
-     other.stationId == stationId &&
-     other.name == name &&
-     other.description == description &&
-     other.add == add &&
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is TaskChangeComponentsNewSchema &&
+          other.stationId == stationId &&
+          other.name == name &&
+          other.description == description &&
+          other.warrantyPeriodDays == warrantyPeriodDays &&
+          other.add == add &&
      other.remove == remove;
 
   @override
   int get hashCode =>
     // ignore: unnecessary_parenthesis
-    (stationId.hashCode) +
-    (name.hashCode) +
-    (description.hashCode) +
-    (add.hashCode) +
+  (stationId.hashCode) +
+      (name.hashCode) +
+      (description.hashCode) +
+      (warrantyPeriodDays.hashCode) +
+      (add.hashCode) +
     (remove.hashCode);
 
   @override
-  String toString() => 'TaskChangeComponentsNewSchema[stationId=$stationId, name=$name, description=$description, add=$add, remove=$remove]';
+  String toString() =>
+      'TaskChangeComponentsNewSchema[stationId=$stationId, name=$name, description=$description, warrantyPeriodDays=$warrantyPeriodDays, add=$add, remove=$remove]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-      _json[r'station_id'] = stationId;
-      _json[r'name'] = name;
-      _json[r'description'] = description;
-      _json[r'add'] = add;
-      _json[r'remove'] = remove;
+    _json[r'station_id'] = stationId;
+    _json[r'name'] = name;
+    _json[r'description'] = description;
+    _json[r'warranty_period_days'] = warrantyPeriodDays;
+    _json[r'add'] = add;
+    _json[r'remove'] = remove;
     return _json;
   }
 
@@ -82,6 +91,7 @@ class TaskChangeComponentsNewSchema {
         stationId: mapValueOfType<String>(json, r'station_id')!,
         name: mapValueOfType<String>(json, r'name')!,
         description: mapValueOfType<String>(json, r'description')!,
+        warrantyPeriodDays: mapValueOfType<int>(json, r'warranty_period_days')!,
         add: TaskComponentAddNewSchema.listFromJson(json[r'add'])!,
         remove: TaskComponentRemoveNewSchema.listFromJson(json[r'remove'])!,
       );
@@ -136,6 +146,7 @@ class TaskChangeComponentsNewSchema {
     'station_id',
     'name',
     'description',
+    'warranty_period_days',
     'add',
     'remove',
   };

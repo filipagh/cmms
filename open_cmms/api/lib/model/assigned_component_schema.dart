@@ -20,6 +20,8 @@ class AssignedComponentSchema {
     this.taskId,
     required this.installedAt,
     this.removedAt,
+    required this.warrantyPeriodDays,
+    this.warrantyPeriodUntil,
   });
 
   String assetId;
@@ -48,6 +50,16 @@ class AssignedComponentSchema {
   ///
   DateTime? removedAt;
 
+  int warrantyPeriodDays;
+
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  DateTime? warrantyPeriodUntil;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -58,7 +70,9 @@ class AssignedComponentSchema {
           other.status == status &&
           other.taskId == taskId &&
           other.installedAt == installedAt &&
-          other.removedAt == removedAt;
+          other.removedAt == removedAt &&
+          other.warrantyPeriodDays == warrantyPeriodDays &&
+          other.warrantyPeriodUntil == warrantyPeriodUntil;
 
   @override
   int get hashCode =>
@@ -69,11 +83,13 @@ class AssignedComponentSchema {
       (status.hashCode) +
       (taskId == null ? 0 : taskId!.hashCode) +
       (installedAt.hashCode) +
-      (removedAt == null ? 0 : removedAt!.hashCode);
+      (removedAt == null ? 0 : removedAt!.hashCode) +
+      (warrantyPeriodDays.hashCode) +
+      (warrantyPeriodUntil == null ? 0 : warrantyPeriodUntil!.hashCode);
 
   @override
   String toString() =>
-      'AssignedComponentSchema[assetId=$assetId, stationId=$stationId, id=$id, status=$status, taskId=$taskId, installedAt=$installedAt, removedAt=$removedAt]';
+      'AssignedComponentSchema[assetId=$assetId, stationId=$stationId, id=$id, status=$status, taskId=$taskId, installedAt=$installedAt, removedAt=$removedAt, warrantyPeriodDays=$warrantyPeriodDays, warrantyPeriodUntil=$warrantyPeriodUntil]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
@@ -87,6 +103,11 @@ class AssignedComponentSchema {
     _json[r'installed_at'] = installedAt.toUtc().toIso8601String();
     if (removedAt != null) {
       _json[r'removed_at'] = removedAt!.toUtc().toIso8601String();
+    }
+    _json[r'warranty_period_days'] = warrantyPeriodDays;
+    if (warrantyPeriodUntil != null) {
+      _json[r'warranty_period_until'] =
+          _dateFormatter.format(warrantyPeriodUntil!.toUtc());
     }
     return _json;
   }
@@ -117,6 +138,8 @@ class AssignedComponentSchema {
         taskId: mapValueOfType<String>(json, r'task_id'),
         installedAt: mapDateTime(json, r'installed_at', '')!,
         removedAt: mapDateTime(json, r'removed_at', ''),
+        warrantyPeriodDays: mapValueOfType<int>(json, r'warranty_period_days')!,
+        warrantyPeriodUntil: mapDateTime(json, r'warranty_period_until', ''),
       );
     }
     return null;
@@ -171,6 +194,7 @@ class AssignedComponentSchema {
     'id',
     'status',
     'installed_at',
+    'warranty_period_days',
   };
 }
 

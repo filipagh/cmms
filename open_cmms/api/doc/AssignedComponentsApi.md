@@ -15,7 +15,8 @@ Method | HTTP request | Description
 
 
 # **createInstalledComponentAssignedComponentsCreateInstalledComponentPost**
-> List<String> createInstalledComponentAssignedComponentsCreateInstalledComponentPost(assignedComponentNewSchema)
+> List<String> createInstalledComponentAssignedComponentsCreateInstalledComponentPost(warrantyPeriodDays,
+> assignedComponentNewSchema)
 
 Create Installed Component
 
@@ -24,11 +25,12 @@ Create Installed Component
 import 'package:BackendAPI/api.dart';
 
 final api_instance = AssignedComponentsApi();
+final warrantyPeriodDays = 56; // int | 
 final assignedComponentNewSchema = [List<AssignedComponentNewSchema>()]; // List<AssignedComponentNewSchema> | 
 
 try {
-    final result = api_instance.createInstalledComponentAssignedComponentsCreateInstalledComponentPost(assignedComponentNewSchema);
-    print(result);
+final result = api_instance.createInstalledComponentAssignedComponentsCreateInstalledComponentPost(warrantyPeriodDays, assignedComponentNewSchema);
+print(result);
 } catch (e) {
     print('Exception when calling AssignedComponentsApi->createInstalledComponentAssignedComponentsCreateInstalledComponentPost: $e\n');
 }
@@ -36,9 +38,10 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **assignedComponentNewSchema** | [**List<AssignedComponentNewSchema>**](AssignedComponentNewSchema.md)|  | 
+ Name                           | Type                                                                  | Description | Notes 
+--------------------------------|-----------------------------------------------------------------------|-------------|-------
+ **warrantyPeriodDays**         | **int**                                                               |             |
+ **assignedComponentNewSchema** | [**List<AssignedComponentNewSchema>**](AssignedComponentNewSchema.md) |             | 
 
 ### Return type
 

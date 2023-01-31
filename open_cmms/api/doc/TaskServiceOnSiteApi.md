@@ -58,13 +58,11 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **changeDetailsTaskServiceOnSiteTaskIdChangeDetailsPost**
-
 > String changeDetailsTaskServiceOnSiteTaskIdChangeDetailsPost(taskId, newName, newDescription)
 
 Change Details
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 
