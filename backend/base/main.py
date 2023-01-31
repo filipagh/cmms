@@ -3,7 +3,7 @@ import time
 from enum import Enum
 
 from eventsourcing.persistence import Transcoding
-from eventsourcing.system import System, SingleThreadedRunner
+from eventsourcing.system import System, SingleThreadedRunner, Follower
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -12,6 +12,7 @@ import roadsegmentmanager.infrastructure.rest_router
 import storagemanager.infrastructure.rest_router
 from assetmanager.application.asset_projector import AssetProjector
 from assetmanager.application.asset_service import AssetService
+from base.transcoding import DateAsIso
 from roadsegmentmanager.application.road_segment_projector import RoadSegmentProjector
 from roadsegmentmanager.application.road_segment_service import RoadSegmentService
 from stationmanager.application.action_history.action_history_projector import ActionHistoryProjector
@@ -34,12 +35,21 @@ from taskmanager.infrastructure.task_servis_on_site_rest_router import task_serv
 from taskmanager.infrastructure.task_servis_remote_rest_router import task_servis_remote
 
 
-#
 def register_tansconder(services, t: Transcoding):
     for s in services:
         runner.get(s).mapper.transcoder.register(t)
         for x in runner.get(s).mappers.values():
             x.transcoder.register(t)
+
+
+def add_transconder(t: Transcoding):
+    for s in services:
+        service = runner.get(s)
+        service.mapper.transcoder.register(t)
+        # if runner.get(s)
+        if isinstance(service, Follower):
+            for x in service.mappers.values():
+                x.transcoder.register(t)
 
 
 os.chdir(os.path.dirname(__file__) + '/../')
@@ -55,6 +65,11 @@ class Services(Enum):
     AssetService = AssetService
     StationProjector = StationProjector
 
+
+services = [AssetService, AssetProjector, StorageItemProjector, RoadSegmentProjector, StationProjector,
+            AssignedComponentProjector, ActionHistoryProjector, StorageItemService, RoadSegmentService, StationService,
+            AssignedComponentsService, TasksProjector,
+            TaskService, TaskServiceOnSiteService, TaskServiceRemoteService]
 
 system = System(pipes=[[AssetService, AssetProjector],
                        [AssetService, StorageItemService],
@@ -80,6 +95,7 @@ runner.get(TaskService).mapper.transcoder.register(RemoveComponentRequestAsStr()
 
 register_tansconder([TasksProjector, AssignedComponentsService, StorageItemService], AddComponentRequestAsStr())
 register_tansconder([TasksProjector, AssignedComponentsService, StorageItemService], RemoveComponentRequestAsStr())
+add_transconder(DateAsIso())
 
 app = FastAPI(debug=True)
 app.include_router(assetmanager.infrastructure.rest_router.asset_manager)
