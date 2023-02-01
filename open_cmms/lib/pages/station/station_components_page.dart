@@ -101,7 +101,12 @@ class StationComponentsPage extends StatelessWidget
                               Spacer(),
                               buildContextOfComponent(components[index])!,
                               Spacer(),
-                              Text('ACTIONS')
+                              Text(components[index].warrantyPeriodUntil != null
+                                  ? "Zaruka do " +
+                                      components[index]
+                                          .warrantyPeriodUntil
+                                          .toString()
+                                  : "")
                               // Text(components[index].assignedComponentId),
                             ],
 
