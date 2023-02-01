@@ -28,6 +28,26 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
   RxList<FormItem> items = <FormItem>[].obs;
   final AssignedComponentsState _assignedComponentState = Get.find();
   final AssetTypesState _assets = Get.find();
+  final TextEditingController warrantyDate = TextEditingController();
+  final TextEditingController warrantyDays = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  int? warrantyPeriodDays;
+
+  updateWarranty(DateTime newDate, {bool updateDays = true}) {
+    warrantyDate.text = newDate.toIso8601String().split("T").first;
+    var now = DateTime.now();
+    var delta =
+        newDate.difference(DateTime(now.year, now.month, now.day)).inDays;
+    if (updateDays) {
+      warrantyDays.text = delta.toString();
+    }
+    warrantyPeriodDays = delta;
+    _formKey.currentState!.validate();
+  }
+
+  updateWarrantyDays(int days) {
+    updateWarranty(DateTime.now().add(Duration(days: days)), updateDays: false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,114 +57,156 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
     //   child: Column(children: [
 
     // child: Column(
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Flexible(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              ElevatedButton(
-                  onPressed: () {
-                    showFormDialog<AssetSchema>(ComponentPickerForm())
-                        .then((value) {
-                      items.insert(0, FormItem(value!.id));
-                    });
-                  },
-                  child: Text('Pridat komponent')),
-              SizedBox(
-                width: 500,
-                height: 400,
-                child: Obx(() {
-                  return ListView.builder(
-                      // shrinkWrap: true,
-                      itemCount: items.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return buildCardFromFormItem(items[index]);
+    return Form(
+      key: _formKey,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Flexible(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                ElevatedButton(
+                    onPressed: () {
+                      showFormDialog<AssetSchema>(const ComponentPickerForm())
+                          .then((value) {
+                        items.insert(0, FormItem(value!.id));
                       });
-                }),
-              ),
-              Flexible(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    },
+                    child: const Text('Pridat komponent')),
+                SizedBox(
+                  width: 500,
+                  height: 400,
+                  child: Obx(() {
+                    return ListView.builder(
+                        // shrinkWrap: true,
+                        itemCount: items.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return buildCardFromFormItem(items[index]);
+                        });
+                  }),
+                ),
+                Flexible(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                                child: TextFormField(
+                              decoration:
+                                  const InputDecoration(labelText: "Zaruka do"),
+                              controller: warrantyDate,
+                              validator: (v) {
+                                return v == null || v.isEmpty
+                                    ? "zvolte datum"
+                                    : null;
+                              },
+                              onTap: () {
+                                var now = DateTime.now();
+                                showDatePicker(
+                                        context: context,
+                                        firstDate: now,
+                                        lastDate: now.add(
+                                            const Duration(days: 365 * 20)),
+                                        initialDate: DateTime(
+                                            now.year + 2, now.month, now.day))
+                                    .then((value) {
+                                  updateWarranty(value!);
+                                });
+                              },
+                            )),
+                            const Spacer(),
+                            Expanded(
+                                child: TextFormField(
+                              decoration: const InputDecoration(
+                                  labelText: "Pocet dni na zaruku"),
+                              validator: (v) {
+                                return v == null || v.isEmpty
+                                    ? "zvolte pocet dni"
+                                    : null;
+                              },
+                              onChanged: (v) {
+                                updateWarrantyDays(int.parse(v));
+                              },
+                              controller: warrantyDays,
+                            )),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+              // ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
                   children: [
-                    Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                              child: InputDatePickerFormField(
-                                  firstDate: DateTime.now(),
-                                  lastDate: DateTime.now()
-                                      .add(Duration(days: 365 * 20)))),
-                          Text("jiij"),
-                          Text("jiij"),
-                        ],
-                      ),
-                    )
+                    ElevatedButton(
+                        onPressed: () {
+                          Get.back();
+                        },
+                        child: const Text("Back")),
                   ],
                 ),
-              ),
-            ],
-            // ),
-          ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                ElevatedButton(
-                    onPressed: () {
-                      Get.back();
-                    },
-                    child: Text("Back")),
-              ],
-            ),
-            Row(
-              children: [
-                Obx(() {
-                  return Row(
-                    children: [
-                      Text("added: " + getNewItems().length.toString()),
-                      VerticalDivider(),
-                      Text("removed: " + getToRemoveItems().length.toString()),
-                      VerticalDivider(),
-                    ],
-                  );
-                }),
-                ElevatedButton(
-                    onPressed: () {
-                      List<schema.AssignedComponentNewSchema> col = [];
-                      getNewItems().forEach((element) {
-                        col.add(schema.AssignedComponentNewSchema(
-                            assetId: element.assetId, stationId: station.id));
-                      });
-                      if (col.isNotEmpty) {
-                        AssignedComponentService()
-                            // todo warranty
-                            .createInstalledComponentAssignedComponentsCreateInstalledComponentPost(
-                                10, col);
-                      }
-                      List<schema.AssignedComponentIdSchema> colr = [];
-                      getToRemoveItems().forEach((element) {
-                        colr.add(schema.AssignedComponentIdSchema(
-                            id: element.assignedComponentId!));
-                      });
-                      if (colr.isNotEmpty) {
-                        AssignedComponentService()
-                            .removeInstalledComponentAssignedComponentsRemoveInstalledComponentPost(
-                                colr);
-                      }
+                Row(
+                  children: [
+                    Obx(() {
+                      return Row(
+                        children: [
+                          Text("added: " + getNewItems().length.toString()),
+                          const VerticalDivider(),
+                          Text("removed: " +
+                              getToRemoveItems().length.toString()),
+                          const VerticalDivider(),
+                        ],
+                      );
+                    }),
+                    ElevatedButton(
+                        onPressed: () {
+                          List<schema.AssignedComponentNewSchema> col = [];
+                          getNewItems().forEach((element) {
+                            col.add(schema.AssignedComponentNewSchema(
+                                assetId: element.assetId,
+                                stationId: station.id));
+                          });
+                          if (col.isNotEmpty) {
+                            if (!_formKey.currentState!.validate()) {
+                              return;
+                            }
+                            AssignedComponentService()
+                                .createInstalledComponentAssignedComponentsCreateInstalledComponentPost(
+                                    warrantyPeriodDays!, col);
+                          }
+                          List<schema.AssignedComponentIdSchema> colr = [];
+                          getToRemoveItems().forEach((element) {
+                            colr.add(schema.AssignedComponentIdSchema(
+                                id: element.assignedComponentId!));
+                          });
+                          if (colr.isNotEmpty) {
+                            AssignedComponentService()
+                                .removeInstalledComponentAssignedComponentsRemoveInstalledComponentPost(
+                                    colr);
+                          }
 
-                      Get.back();
-                    },
-                    child: Text("submit")),
+                          Get.back();
+                        },
+                        child: const Text("submit")),
+                  ],
+                ),
               ],
             ),
-          ],
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 
@@ -168,7 +230,7 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
           child: ListTile(
             trailing: IconButton(
               onPressed: () => removeItem(item),
-              icon: Icon(Icons.delete),
+              icon: const Icon(Icons.delete),
             ),
             title: Text(_assets.getAssetById(item.assetId)!.name),
           ),
@@ -193,7 +255,7 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
           child: ListTile(
             trailing: IconButton(
               onPressed: () => removeNowAddedItem(item),
-              icon: Icon(Icons.close),
+              icon: const Icon(Icons.close),
             ),
             title: Text(_assets.getAssetById(item.assetId)!.name),
           ),
@@ -204,7 +266,7 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
           child: ListTile(
             trailing: IconButton(
               onPressed: () => rollBackRemove(item),
-              icon: Icon(Icons.rotate_left),
+              icon: const Icon(Icons.rotate_left),
             ),
             title: Text(_assets.getAssetById(item.assetId)!.name),
           ),

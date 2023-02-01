@@ -115,7 +115,6 @@ class StationComponentsPage extends StatelessWidget
   Widget? buildContextOfComponent(AssignedComponentSchema component) {
     switch (component.status) {
       case AssignedComponentState.awaiting:
-        //todo add task link
         return RichText(
             text: TextSpan(
           text: "Bude nainstalovane v ",
@@ -135,7 +134,6 @@ class StationComponentsPage extends StatelessWidget
       case AssignedComponentState.willBeRemoved:
         return Column(
           children: [
-            //todo task
             RichText(
                 text: TextSpan(
               text: "Bude odstranene v ",
