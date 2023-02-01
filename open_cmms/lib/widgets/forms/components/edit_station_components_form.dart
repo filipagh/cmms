@@ -71,43 +71,51 @@ class EditStationComponentsForm extends StatelessWidget
                       onPressed: () {
                         Get.back();
                       },
-                      child: Text("Back")),
+                      child: Text("spat")),
                 ],
               ),
               Row(
                 children: [
                   Obx(() {
+                    bool hasChange =
+                        getNewItems().length + getToRemoveItems().length > 0;
                     return Row(
                       children: [
-                        Text("added: " + getNewItems().length.toString()),
+                        Text("pridane: " + getNewItems().length.toString()),
                         VerticalDivider(),
-                        Text(
-                            "removed: " + getToRemoveItems().length.toString()),
+                        Text("odstranene: " +
+                            getToRemoveItems().length.toString()),
                         VerticalDivider(),
+                        ElevatedButton(
+                            onPressed: !hasChange
+                                ? null
+                                : () {
+                                    List<TaskComponentAddNewSchema> add = [];
+
+                                    getNewItems().forEach((element) {
+                                      add.add(TaskComponentAddNewSchema(
+                                          newAssetId: element.assetId));
+                                    });
+
+                                    List<TaskComponentRemoveNewSchema> remove =
+                                        [];
+                                    getToRemoveItems().forEach((element) {
+                                      remove.add(TaskComponentRemoveNewSchema(
+                                          assignedComponentId:
+                                              element.assignedComponentId!));
+                                    });
+
+                                    Get.back();
+                                    showFormDialog(
+                                        CreateChangeComponentsTaskForm(
+                                            station: station,
+                                            add: add,
+                                            remove: remove));
+                                  },
+                            child: Text("pokracovat"))
                       ],
                     );
                   }),
-                  ElevatedButton(
-                      onPressed: () {
-                        List<TaskComponentAddNewSchema> add = [];
-
-                        getNewItems().forEach((element) {
-                          add.add(TaskComponentAddNewSchema(
-                              newAssetId: element.assetId));
-                        });
-
-                        List<TaskComponentRemoveNewSchema> remove = [];
-                        getToRemoveItems().forEach((element) {
-                          remove.add(TaskComponentRemoveNewSchema(
-                              assignedComponentId:
-                                  element.assignedComponentId!));
-                        });
-
-                        Get.back();
-                        showFormDialog(CreateChangeComponentsTaskForm(
-                            station: station, add: add, remove: remove));
-                      },
-                      child: Text("submit")),
                 ],
               ),
             ],

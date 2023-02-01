@@ -119,7 +119,7 @@ class TaskChangeComponents(Aggregate):
         self.station_id = station_id
         self.components_to_add = components_to_add
         self.components_to_remove = components_to_remove
-        self.warranty_period_until = warranty_period_days
+        self.warranty_period_days = warranty_period_days
         self.created_at = created_at
 
         if len(components_to_add) > 0:
