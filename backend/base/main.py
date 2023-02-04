@@ -12,7 +12,7 @@ import roadsegmentmanager.infrastructure.rest_router
 import storagemanager.infrastructure.rest_router
 from assetmanager.application.asset_projector import AssetProjector
 from assetmanager.application.asset_service import AssetService
-from base.transcoding import DateAsIso
+from base.transcoding import DateAsIso, AssetTelemetryAsJSON
 from roadsegmentmanager.application.road_segment_projector import RoadSegmentProjector
 from roadsegmentmanager.application.road_segment_service import RoadSegmentService
 from stationmanager.application.action_history.action_history_projector import ActionHistoryProjector
@@ -96,6 +96,9 @@ runner.get(TaskService).mapper.transcoder.register(RemoveComponentRequestAsStr()
 register_tansconder([TasksProjector, AssignedComponentsService, StorageItemService], AddComponentRequestAsStr())
 register_tansconder([TasksProjector, AssignedComponentsService, StorageItemService], RemoveComponentRequestAsStr())
 add_transconder(DateAsIso())
+add_transconder(AssetTelemetryAsJSON())
+
+# runner.get(AssetProjector).pull_and_process("AssetService",3)
 
 app = FastAPI(debug=True)
 app.include_router(assetmanager.infrastructure.rest_router.asset_manager)

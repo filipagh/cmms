@@ -1,0 +1,34 @@
+from enum import Enum
+
+from pydantic import BaseModel
+
+
+class AssetTelemetryType(str, Enum):
+    AIR_TEMPERATURE = "AIR_TEMPERATURE",
+    GROUND_TEMPERATURE = "GROUND_TEMPERATURE",
+    ROAD_TEMPERATURE = "ROAD_TEMPERATURE",
+    VISIBILITY = "VISIBILITY",
+    WIND_SPEED = "WIND_SPEED",
+    WIND_DIRECTION = "WIND_DIRECTION",
+    RAINFALL_INTENSITY = 'RAINFALL_INTENSITY'
+    WIND_GUST_SPEED = "WIND_GUST_SPEED",
+    WIND_GUST_DIRECTION = "WIND_GUST_DIRECTION",
+    AIR_PRESSURE = "AIR_PRESSURE",
+    AIR_HUMIDITY = "AIR_HUMIDITY",
+
+    # todo
+    # AIR_HUMIDITY = "AIR_HUMIDITY",
+
+
+class AssetTelemetryValue(str, Enum):
+    CELSIUS = "CELSIUS",
+    METER_PER_SECOND = "METER_PER_SECOND",
+    CIRCLE_DEGREES = "CIRCLE_DEGREES",
+    MILLIMETER_PER_SECOND = "MILLIMETER_PER_SECOND",
+    HECTO_PASCAL = "HECTO_PASCAL",
+    PERCENTAGE = "PERCENTAGE",
+
+
+class AssetTelemetry(BaseModel):
+    type: AssetTelemetryType
+    value: AssetTelemetryValue

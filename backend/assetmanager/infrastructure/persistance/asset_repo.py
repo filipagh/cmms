@@ -1,11 +1,20 @@
 import uuid
 
-from sqlalchemy import Column, String
+import sqlalchemy
+from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.dialects import postgresql
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, relationship
 
 import base.database
+from assetmanager.domain.model.asset_telemetry import AssetTelemetryType, AssetTelemetryValue
 from base.database import Base
+
+
+class AssetTelemetryModel(Base):
+    __tablename__ = "assets_telemetry"
+    asset_id = Column(postgresql.UUID(as_uuid=True), ForeignKey("assets.id"), index=True, primary_key=True, )
+    type = Column('telemetry_type', sqlalchemy.types.Enum(AssetTelemetryType), nullable=False, primary_key=True, )
+    value = Column('telemetry_value', sqlalchemy.types.Enum(AssetTelemetryValue), nullable=False, primary_key=True)
 
 
 class AssetModel(Base):
@@ -14,6 +23,7 @@ class AssetModel(Base):
     category_id = Column(postgresql.UUID(as_uuid=True), nullable=False)
     name = Column(String)
     description = Column(String)
+    telemetry = relationship("AssetTelemetryModel", lazy="joined")
 
 
 def _get_db():
