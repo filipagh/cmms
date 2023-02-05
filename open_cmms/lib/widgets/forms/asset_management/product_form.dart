@@ -2,6 +2,7 @@ import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
+import 'package:open_cmms/widgets/forms/asset_management/telemetry_picker.dart';
 
 import '../../../states/asset_types_state.dart';
 
@@ -11,13 +12,13 @@ class ProductForm extends StatefulWidget implements hasFormTitle {
   final AssetTypesState assetTypes = Get.find();
   late final AssetSchema? editItem;
   late final AssetCategorySchema parent;
+  final List<AssetTelemetry> telemetry = <AssetTelemetry>[].obs;
 
   ProductForm.createNew({Key? key, required this.parent}) : super(key: key) {
     editItem = null;
   }
 
-  ProductForm.editItem({Key? key, this.editItem})
-      : super(key: key) {
+  ProductForm.editItem({Key? key, this.editItem}) : super(key: key) {
     parent = assetTypes.getAssetTypeById(editItem!.categoryId)!;
   }
 
@@ -54,6 +55,7 @@ class ProductFormState extends State<ProductForm> {
     if (_mainCat != widget.parent) {
       _subCat = widget.parent;
     }
+    widget.telemetry.addAll(widget.editItem?.telemetry ?? []);
     super.initState();
   }
 
@@ -65,6 +67,7 @@ class ProductFormState extends State<ProductForm> {
         Form(
           key: _formKey,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               TextFormField(
                 onSaved: (value) {
@@ -85,10 +88,50 @@ class ProductFormState extends State<ProductForm> {
                     widget.editItem == null ? "" : widget.editItem!.name,
                 decoration: InputDecoration(labelText: 'description'),
               ),
-              Text("main category: " + _mainCat.name),
-              Text("sub category: " + (_subCat?.name ?? "N/A")),
-              Text("custom fields"),
-              SizedBox(width: 500, height: 500, child: Placeholder()),
+              Divider(),
+              Text("Hlavna kategoria: " + _mainCat.name),
+              Text("Vedlajsia kategoria: " + (_subCat?.name ?? "---")),
+              Divider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Telemetria: "),
+                  ElevatedButton.icon(
+                    onPressed: () async {
+                      AssetTelemetry telemetryItem =
+                          await showFormDialog(TelemetryPickerForm());
+                      widget.telemetry.add(telemetryItem);
+                    },
+                    label: Text("Pridat"),
+                    icon: Icon(Icons.add),
+                  )
+                ],
+              ),
+              Obx(() {
+                return SizedBox(
+                  width: 500,
+                  height: 500,
+                  child: ListView.builder(
+                    itemCount: widget.telemetry.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      var t = widget.telemetry[index];
+                      return Card(
+                        child: ListTile(
+                          trailing: IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: () {
+                              widget.telemetry.removeAt(index);
+                            },
+                          ),
+                          title: Center(
+                              child:
+                                  Text(t.type.value + "  |  " + t.value.value)),
+                        ),
+                      );
+                    },
+                  ),
+                );
+              }),
             ],
           ),
         ),
@@ -99,8 +142,8 @@ class ProductFormState extends State<ProductForm> {
                 if (widget.editItem != null) {
                   assetTypes.editType(widget.editItem!.id, name, description);
                 } else {
-                  assetTypes.createNewType(
-                      widget.parent.id, false, name, description);
+                  assetTypes.createNewType(widget.parent.id, false,
+                      widget.telemetry, name, description);
                 }
                 Get.back();
               }

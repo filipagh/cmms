@@ -1,13 +1,7 @@
 import 'package:BackendAPI/api.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:open_cmms/models/asset_type.dart';
-import 'package:open_cmms/models/item.dart';
 import 'package:open_cmms/service/backend_api/assetManager.dart';
-import 'package:open_cmms/states/items_state_dummy.dart';
-import 'package:uuid/uuid.dart';
-
-import '../helper.dart';
 
 class AssetTypesState extends GetxController {
   Map<String, AssetCategorySchema> _categoriesTypes =
@@ -43,7 +37,9 @@ class AssetTypesState extends GetxController {
     // _categoriesTypes[id]!.text = description;
   }
 
-  void createNewType(String? parentId, bool isCategory,
+  // todo rozdelit asety a categorie
+  void createNewType(
+      String? parentId, bool isCategory, List<AssetTelemetry> telemetry,
       [String name = "name", String text = "text"]) {
     if (isCategory) {
       var model;
@@ -59,7 +55,10 @@ class AssetTypesState extends GetxController {
     } else {
       AssetManagerService()
           .createNewAssetAssetManagerNewAssetPost(AssetNewSchema(
-          categoryId: parentId!, name: name, description: text))
+              categoryId: parentId!,
+              name: name,
+              description: text,
+              telemetry: telemetry))
           .then((value) => reloadData());
     }
   }

@@ -20,6 +20,7 @@ import 'package:open_cmms/pages/tasks/task_remote_service.dart';
 import 'package:open_cmms/pages/unknownPage.dart';
 import 'package:open_cmms/service/secrets_manager_service.dart';
 import 'package:open_cmms/states/action_state.dart';
+import 'package:open_cmms/states/asset_telemetry_state.dart';
 import 'package:open_cmms/states/asset_types_state.dart';
 import 'package:open_cmms/states/asset_types_state_dummy.dart';
 import 'package:open_cmms/states/items_state.dart';
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
     Get.put(TasksState());
     Get.put(ActionState());
     Get.put(TaskComponentState());
+    Get.put(AssetTelemetryState());
     return GetMaterialApp(
       defaultTransition: Transition.noTransition,
       getPages: [

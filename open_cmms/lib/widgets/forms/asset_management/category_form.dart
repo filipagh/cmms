@@ -95,7 +95,7 @@ class CategoryFormState extends State<CategoryForm> {
                               widget.editItem!.id, name, description);
                         } else {
                           assetTypes.createNewType(
-                              widget.parent?.id, true, name, description);
+                              widget.parent?.id, true, [], name, description);
                         }
                         Get.back();
                       }
