@@ -63,6 +63,7 @@ All URIs are relative to *http://localhost*
  *AssetManagerApi*       | [**createNewCategoryAssetManagerNewCategoryPost**](doc//AssetManagerApi.md#createnewcategoryassetmanagernewcategorypost)                                                           | **POST** /assetManager/newCategory                         | Create New Category        
  *AssetManagerApi*       | [**getAssetCategoriesAssetManagerAssetCategoriesGet**](doc//AssetManagerApi.md#getassetcategoriesassetmanagerassetcategoriesget)                                                   | **GET** /assetManager/asset-categories                     | Get Asset Categories       
  *AssetManagerApi*       | [**getAssetsAssetManagerAssetsGet**](doc//AssetManagerApi.md#getassetsassetmanagerassetsget)                                                                                       | **GET** /assetManager/assets                               | Get Assets                 
+ *AssetManagerApi*       | [**getTelemetryOptionsAssetManagerTelemetryOptionsGet**](doc//AssetManagerApi.md#gettelemetryoptionsassetmanagertelemetryoptionsget)                                               | **GET** /assetManager/telemetry_options                    | Get Telemetry Options      
  *AssignedComponentsApi* | [**createInstalledComponentAssignedComponentsCreateInstalledComponentPost**](doc//AssignedComponentsApi.md#createinstalledcomponentassignedcomponentscreateinstalledcomponentpost) | **POST** /assigned_components/create_installed_component   | Create Installed Component 
  *AssignedComponentsApi* | [**getAllAssignedComponentsComponentsGet**](doc//AssignedComponentsApi.md#getallassignedcomponentscomponentsget)                                                                   | **GET** /assigned_components/components                    | Get All                    
  *AssignedComponentsApi* | [**removeInstalledComponentAssignedComponentsRemoveInstalledComponentPost**](doc//AssignedComponentsApi.md#removeinstalledcomponentassignedcomponentsremoveinstalledcomponentpost) | **POST** /assigned_components/remove_installed_component   | Remove Installed Component 
@@ -99,25 +100,28 @@ All URIs are relative to *http://localhost*
 
 ## Documentation For Models
 
- - [ActionHistorySchema](doc//ActionHistorySchema.md)
- - [AddComponentRequestSchema](doc//AddComponentRequestSchema.md)
- - [AssetCategoryNewSchema](doc//AssetCategoryNewSchema.md)
- - [AssetCategorySchema](doc//AssetCategorySchema.md)
- - [AssetCategotyIdSchema](doc//AssetCategotyIdSchema.md)
- - [AssetIdSchema](doc//AssetIdSchema.md)
- - [AssetItemToAdd](doc//AssetItemToAdd.md)
- - [AssetNewSchema](doc//AssetNewSchema.md)
- - [AssetSchema](doc//AssetSchema.md)
- - [AssignedComponentIdSchema](doc//AssignedComponentIdSchema.md)
- - [AssignedComponentNewSchema](doc//AssignedComponentNewSchema.md)
- - [AssignedComponentSchema](doc//AssignedComponentSchema.md)
- - [AssignedComponentState](doc//AssignedComponentState.md)
- - [HTTPValidationError](doc//HTTPValidationError.md)
- - [RemoveComponentRequestSchema](doc//RemoveComponentRequestSchema.md)
- - [RoadSegmentNewSchema](doc//RoadSegmentNewSchema.md)
- - [RoadSegmentSchema](doc//RoadSegmentSchema.md)
- - [StationIdSchema](doc//StationIdSchema.md)
- - [StationNewSchema](doc//StationNewSchema.md)
+- [ActionHistorySchema](doc//ActionHistorySchema.md)
+- [AddComponentRequestSchema](doc//AddComponentRequestSchema.md)
+- [AssetCategoryNewSchema](doc//AssetCategoryNewSchema.md)
+- [AssetCategorySchema](doc//AssetCategorySchema.md)
+- [AssetCategotyIdSchema](doc//AssetCategotyIdSchema.md)
+- [AssetIdSchema](doc//AssetIdSchema.md)
+- [AssetItemToAdd](doc//AssetItemToAdd.md)
+- [AssetNewSchema](doc//AssetNewSchema.md)
+- [AssetSchema](doc//AssetSchema.md)
+- [AssetTelemetry](doc//AssetTelemetry.md)
+- [AssetTelemetryType](doc//AssetTelemetryType.md)
+- [AssetTelemetryValue](doc//AssetTelemetryValue.md)
+- [AssignedComponentIdSchema](doc//AssignedComponentIdSchema.md)
+- [AssignedComponentNewSchema](doc//AssignedComponentNewSchema.md)
+- [AssignedComponentSchema](doc//AssignedComponentSchema.md)
+- [AssignedComponentState](doc//AssignedComponentState.md)
+- [HTTPValidationError](doc//HTTPValidationError.md)
+- [RemoveComponentRequestSchema](doc//RemoveComponentRequestSchema.md)
+- [RoadSegmentNewSchema](doc//RoadSegmentNewSchema.md)
+- [RoadSegmentSchema](doc//RoadSegmentSchema.md)
+- [StationIdSchema](doc//StationIdSchema.md)
+- [StationNewSchema](doc//StationNewSchema.md)
  - [StationSchema](doc//StationSchema.md)
  - [StorageItemSchema](doc//StorageItemSchema.md)
  - [TaskChangeComponentRequestId](doc//TaskChangeComponentRequestId.md)
@@ -132,8 +136,9 @@ All URIs are relative to *http://localhost*
  - [TaskServiceRemoteNewSchema](doc//TaskServiceRemoteNewSchema.md)
  - [TaskServiceRemoteSchema](doc//TaskServiceRemoteSchema.md)
  - [TaskState](doc//TaskState.md)
- - [TaskType](doc//TaskType.md)
- - [ValidationError](doc//ValidationError.md)
+- [TaskType](doc//TaskType.md)
+- [TelemetryOptions](doc//TelemetryOptions.md)
+- [ValidationError](doc//ValidationError.md)
 
 
 ## Documentation For Authorization

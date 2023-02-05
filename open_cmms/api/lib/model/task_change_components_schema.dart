@@ -43,30 +43,31 @@ class TaskChangeComponentsSchema {
   List<RemoveComponentRequestSchema> remove;
 
   @override
-  bool operator ==(Object other) => identical(this, other) ||
+  bool operator ==(Object other) =>
+      identical(this, other) ||
       other is TaskChangeComponentsSchema &&
           other.stationId == stationId &&
           other.name == name &&
           other.description == description &&
           other.warrantyPeriodDays == warrantyPeriodDays &&
           other.id == id &&
-     other.state == state &&
-     other.createdAt == createdAt &&
-     other.add == add &&
-     other.remove == remove;
+          other.state == state &&
+          other.createdAt == createdAt &&
+          other.add == add &&
+          other.remove == remove;
 
   @override
   int get hashCode =>
-    // ignore: unnecessary_parenthesis
-  (stationId.hashCode) +
+      // ignore: unnecessary_parenthesis
+      (stationId.hashCode) +
       (name.hashCode) +
       (description.hashCode) +
       (warrantyPeriodDays.hashCode) +
       (id.hashCode) +
-    (state.hashCode) +
-    (createdAt.hashCode) +
-    (add.hashCode) +
-    (remove.hashCode);
+      (state.hashCode) +
+      (createdAt.hashCode) +
+      (add.hashCode) +
+      (remove.hashCode);
 
   @override
   String toString() =>

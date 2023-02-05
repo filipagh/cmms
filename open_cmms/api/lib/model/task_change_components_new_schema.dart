@@ -42,17 +42,17 @@ class TaskChangeComponentsNewSchema {
           other.description == description &&
           other.warrantyPeriodDays == warrantyPeriodDays &&
           other.add == add &&
-     other.remove == remove;
+          other.remove == remove;
 
   @override
   int get hashCode =>
-    // ignore: unnecessary_parenthesis
-  (stationId.hashCode) +
+      // ignore: unnecessary_parenthesis
+      (stationId.hashCode) +
       (name.hashCode) +
       (description.hashCode) +
       (warrantyPeriodDays.hashCode) +
       (add.hashCode) +
-    (remove.hashCode);
+      (remove.hashCode);
 
   @override
   String toString() =>

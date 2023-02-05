@@ -7,12 +7,13 @@ import 'package:BackendAPI/api.dart';
 
 All URIs are relative to *http://localhost*
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**createNewAssetAssetManagerNewAssetPost**](AssetManagerApi.md#createnewassetassetmanagernewassetpost) | **POST** /assetManager/newAsset | Create New Asset
-[**createNewCategoryAssetManagerNewCategoryPost**](AssetManagerApi.md#createnewcategoryassetmanagernewcategorypost) | **POST** /assetManager/newCategory | Create New Category
-[**getAssetCategoriesAssetManagerAssetCategoriesGet**](AssetManagerApi.md#getassetcategoriesassetmanagerassetcategoriesget) | **GET** /assetManager/asset-categories | Get Asset Categories
-[**getAssetsAssetManagerAssetsGet**](AssetManagerApi.md#getassetsassetmanagerassetsget) | **GET** /assetManager/assets | Get Assets
+ Method                                                                                                                          | HTTP request                            | Description           
+---------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------|-----------------------
+ [**createNewAssetAssetManagerNewAssetPost**](AssetManagerApi.md#createnewassetassetmanagernewassetpost)                         | **POST** /assetManager/newAsset         | Create New Asset      
+ [**createNewCategoryAssetManagerNewCategoryPost**](AssetManagerApi.md#createnewcategoryassetmanagernewcategorypost)             | **POST** /assetManager/newCategory      | Create New Category   
+ [**getAssetCategoriesAssetManagerAssetCategoriesGet**](AssetManagerApi.md#getassetcategoriesassetmanagerassetcategoriesget)     | **GET** /assetManager/asset-categories  | Get Asset Categories  
+ [**getAssetsAssetManagerAssetsGet**](AssetManagerApi.md#getassetsassetmanagerassetsget)                                         | **GET** /assetManager/assets            | Get Assets            
+ [**getTelemetryOptionsAssetManagerTelemetryOptionsGet**](AssetManagerApi.md#gettelemetryoptionsassetmanagertelemetryoptionsget) | **GET** /assetManager/telemetry_options | Get Telemetry Options 
 
 
 # **createNewAssetAssetManagerNewAssetPost**
@@ -154,6 +155,7 @@ try {
 ```
 
 ### Parameters
+
 This endpoint does not need any parameter.
 
 ### Return type
@@ -166,8 +168,48 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getTelemetryOptionsAssetManagerTelemetryOptionsGet**
+
+> TelemetryOptions getTelemetryOptionsAssetManagerTelemetryOptionsGet()
+
+Get Telemetry Options
+
+### Example
+
+```dart
+import 'package:BackendAPI/api.dart';
+
+final api_instance = AssetManagerApi();
+
+try {
+    final result = api_instance.getTelemetryOptionsAssetManagerTelemetryOptionsGet();
+    print(result);
+} catch (e) {
+    print('Exception when calling AssetManagerApi->getTelemetryOptionsAssetManagerTelemetryOptionsGet: $e\n');
+}
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+[**TelemetryOptions**](TelemetryOptions.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

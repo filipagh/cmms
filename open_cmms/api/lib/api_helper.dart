@@ -55,6 +55,12 @@ String parameterToString(dynamic value) {
   if (value is DateTime) {
     return value.toUtc().toIso8601String();
   }
+  if (value is AssetTelemetryType) {
+    return AssetTelemetryTypeTypeTransformer().encode(value).toString();
+  }
+  if (value is AssetTelemetryValue) {
+    return AssetTelemetryValueTypeTransformer().encode(value).toString();
+  }
   if (value is AssignedComponentState) {
     return AssignedComponentStateTypeTransformer().encode(value).toString();
   }

@@ -16,6 +16,7 @@ class AssetSchema {
     required this.categoryId,
     required this.name,
     this.description,
+    this.telemetry = const [],
     required this.id,
   });
 
@@ -31,34 +32,42 @@ class AssetSchema {
   ///
   String? description;
 
+  List<AssetTelemetry> telemetry;
+
   String id;
 
   @override
-  bool operator ==(Object other) => identical(this, other) || other is AssetSchema &&
-     other.categoryId == categoryId &&
-     other.name == name &&
-     other.description == description &&
-     other.id == id;
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is AssetSchema &&
+          other.categoryId == categoryId &&
+          other.name == name &&
+          other.description == description &&
+          other.telemetry == telemetry &&
+          other.id == id;
 
   @override
   int get hashCode =>
     // ignore: unnecessary_parenthesis
-    (categoryId.hashCode) +
-    (name.hashCode) +
-    (description == null ? 0 : description!.hashCode) +
-    (id.hashCode);
+  (categoryId.hashCode) +
+      (name.hashCode) +
+      (description == null ? 0 : description!.hashCode) +
+      (telemetry.hashCode) +
+      (id.hashCode);
 
   @override
-  String toString() => 'AssetSchema[categoryId=$categoryId, name=$name, description=$description, id=$id]';
+  String toString() =>
+      'AssetSchema[categoryId=$categoryId, name=$name, description=$description, telemetry=$telemetry, id=$id]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-      _json[r'category_id'] = categoryId;
-      _json[r'name'] = name;
+    _json[r'category_id'] = categoryId;
+    _json[r'name'] = name;
     if (description != null) {
       _json[r'description'] = description;
     }
-      _json[r'id'] = id;
+    _json[r'telemetry'] = telemetry;
+    _json[r'id'] = id;
     return _json;
   }
 
@@ -84,6 +93,7 @@ class AssetSchema {
         categoryId: mapValueOfType<String>(json, r'category_id')!,
         name: mapValueOfType<String>(json, r'name')!,
         description: mapValueOfType<String>(json, r'description'),
+        telemetry: AssetTelemetry.listFromJson(json[r'telemetry'])!,
         id: mapValueOfType<String>(json, r'id')!,
       );
     }
@@ -136,6 +146,7 @@ class AssetSchema {
   static const requiredKeys = <String>{
     'category_id',
     'name',
+    'telemetry',
     'id',
   };
 }

@@ -16,6 +16,7 @@ class AssetNewSchema {
     required this.categoryId,
     required this.name,
     this.description,
+    this.telemetry = const [],
   });
 
   String categoryId;
@@ -30,29 +31,37 @@ class AssetNewSchema {
   ///
   String? description;
 
+  List<AssetTelemetry> telemetry;
+
   @override
-  bool operator ==(Object other) => identical(this, other) || other is AssetNewSchema &&
-     other.categoryId == categoryId &&
-     other.name == name &&
-     other.description == description;
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is AssetNewSchema &&
+          other.categoryId == categoryId &&
+          other.name == name &&
+          other.description == description &&
+          other.telemetry == telemetry;
 
   @override
   int get hashCode =>
-    // ignore: unnecessary_parenthesis
-    (categoryId.hashCode) +
-    (name.hashCode) +
-    (description == null ? 0 : description!.hashCode);
+      // ignore: unnecessary_parenthesis
+      (categoryId.hashCode) +
+      (name.hashCode) +
+      (description == null ? 0 : description!.hashCode) +
+      (telemetry.hashCode);
 
   @override
-  String toString() => 'AssetNewSchema[categoryId=$categoryId, name=$name, description=$description]';
+  String toString() =>
+      'AssetNewSchema[categoryId=$categoryId, name=$name, description=$description, telemetry=$telemetry]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-      _json[r'category_id'] = categoryId;
-      _json[r'name'] = name;
+    _json[r'category_id'] = categoryId;
+    _json[r'name'] = name;
     if (description != null) {
       _json[r'description'] = description;
     }
+    _json[r'telemetry'] = telemetry;
     return _json;
   }
 
@@ -78,6 +87,7 @@ class AssetNewSchema {
         categoryId: mapValueOfType<String>(json, r'category_id')!,
         name: mapValueOfType<String>(json, r'name')!,
         description: mapValueOfType<String>(json, r'description'),
+        telemetry: AssetTelemetry.listFromJson(json[r'telemetry'])!,
       );
     }
     return null;
@@ -129,6 +139,7 @@ class AssetNewSchema {
   static const requiredKeys = <String>{
     'category_id',
     'name',
+    'telemetry',
   };
 }
 

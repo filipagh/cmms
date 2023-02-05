@@ -13,6 +13,9 @@ doc/AssetItemToAdd.md
 doc/AssetManagerApi.md
 doc/AssetNewSchema.md
 doc/AssetSchema.md
+doc/AssetTelemetry.md
+doc/AssetTelemetryType.md
+doc/AssetTelemetryValue.md
 doc/AssignedComponentIdSchema.md
 doc/AssignedComponentNewSchema.md
 doc/AssignedComponentSchema.md
@@ -46,6 +49,7 @@ doc/TaskServiceRemoteNewSchema.md
 doc/TaskServiceRemoteSchema.md
 doc/TaskState.md
 doc/TaskType.md
+doc/TelemetryOptions.md
 doc/ValidationError.md
 git_push.sh
 lib/api.dart
@@ -76,6 +80,9 @@ lib/model/asset_id_schema.dart
 lib/model/asset_item_to_add.dart
 lib/model/asset_new_schema.dart
 lib/model/asset_schema.dart
+lib/model/asset_telemetry.dart
+lib/model/asset_telemetry_type.dart
+lib/model/asset_telemetry_value.dart
 lib/model/assigned_component_id_schema.dart
 lib/model/assigned_component_new_schema.dart
 lib/model/assigned_component_schema.dart
@@ -101,5 +108,10 @@ lib/model/task_service_remote_new_schema.dart
 lib/model/task_service_remote_schema.dart
 lib/model/task_state.dart
 lib/model/task_type.dart
+lib/model/telemetry_options.dart
 lib/model/validation_error.dart
 pubspec.yaml
+test/asset_telemetry_test.dart
+test/asset_telemetry_type_test.dart
+test/asset_telemetry_value_test.dart
+test/telemetry_options_test.dart

@@ -21,6 +21,7 @@ Method | HTTP request | Description
 Create Installed Component
 
 ### Example
+
 ```dart
 import 'package:BackendAPI/api.dart';
 
@@ -29,8 +30,8 @@ final warrantyPeriodDays = 56; // int |
 final assignedComponentNewSchema = [List<AssignedComponentNewSchema>()]; // List<AssignedComponentNewSchema> | 
 
 try {
-final result = api_instance.createInstalledComponentAssignedComponentsCreateInstalledComponentPost(warrantyPeriodDays, assignedComponentNewSchema);
-print(result);
+    final result = api_instance.createInstalledComponentAssignedComponentsCreateInstalledComponentPost(warrantyPeriodDays, assignedComponentNewSchema);
+    print(result);
 } catch (e) {
     print('Exception when calling AssignedComponentsApi->createInstalledComponentAssignedComponentsCreateInstalledComponentPost: $e\n');
 }
@@ -41,7 +42,7 @@ print(result);
  Name                           | Type                                                                  | Description | Notes 
 --------------------------------|-----------------------------------------------------------------------|-------------|-------
  **warrantyPeriodDays**         | **int**                                                               |             |
- **assignedComponentNewSchema** | [**List<AssignedComponentNewSchema>**](AssignedComponentNewSchema.md) |             | 
+ **assignedComponentNewSchema** | [**List<AssignedComponentNewSchema>**](AssignedComponentNewSchema.md) |             |
 
 ### Return type
 

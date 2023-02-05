@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="GENERATE FE CLIENT" type="ShConfigurationType">
-    <option name="SCRIPT_TEXT" value="flutter pub run build_runner build --delete-conflicting-outputs" />
+    <option name="SCRIPT_TEXT" value="cd .dart_tool/build; rm -r -- !(entrypoint); flutter pub run build_runner build --delete-conflicting-outputs" />
     <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
     <option name="SCRIPT_PATH" value="" />
     <option name="SCRIPT_OPTIONS" value="" />

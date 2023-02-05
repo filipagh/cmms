@@ -45,6 +45,9 @@ part 'model/asset_id_schema.dart';
 part 'model/asset_item_to_add.dart';
 part 'model/asset_new_schema.dart';
 part 'model/asset_schema.dart';
+part 'model/asset_telemetry.dart';
+part 'model/asset_telemetry_type.dart';
+part 'model/asset_telemetry_value.dart';
 part 'model/assigned_component_id_schema.dart';
 part 'model/assigned_component_new_schema.dart';
 part 'model/assigned_component_schema.dart';
@@ -70,6 +73,7 @@ part 'model/task_service_remote_new_schema.dart';
 part 'model/task_service_remote_schema.dart';
 part 'model/task_state.dart';
 part 'model/task_type.dart';
+part 'model/telemetry_options.dart';
 part 'model/validation_error.dart';
 
 const _delimiters = {'csv': ',', 'ssv': ' ', 'tsv': '\t', 'pipes': '|'};

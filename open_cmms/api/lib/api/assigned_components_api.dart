@@ -87,7 +87,6 @@ class AssignedComponentsApi {
               as List)
           .cast<String>()
           .toList();
-
     }
     return null;
   }

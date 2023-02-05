@@ -208,6 +208,12 @@ class ApiClient {
           return AssetNewSchema.fromJson(value);
         case 'AssetSchema':
           return AssetSchema.fromJson(value);
+        case 'AssetTelemetry':
+          return AssetTelemetry.fromJson(value);
+        case 'AssetTelemetryType':
+          return AssetTelemetryTypeTypeTransformer().decode(value);
+        case 'AssetTelemetryValue':
+          return AssetTelemetryValueTypeTransformer().decode(value);
         case 'AssignedComponentIdSchema':
           return AssignedComponentIdSchema.fromJson(value);
         case 'AssignedComponentNewSchema':
@@ -258,6 +264,8 @@ class ApiClient {
           return TaskStateTypeTransformer().decode(value);
         case 'TaskType':
           return TaskTypeTypeTransformer().decode(value);
+        case 'TelemetryOptions':
+          return TelemetryOptions.fromJson(value);
         case 'ValidationError':
           return ValidationError.fromJson(value);
         default:
