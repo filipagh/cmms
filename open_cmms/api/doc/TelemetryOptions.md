@@ -1,13 +1,11 @@
 # BackendAPI.model.TelemetryOptions
 
 ## Load the model package
-
 ```dart
 import 'package:BackendAPI/api.dart';
 ```
 
 ## Properties
-
  Name       | Type                                                    | Description | Notes                 
 ------------|---------------------------------------------------------|-------------|-----------------------
  **types**  | [**List<AssetTelemetryType>**](AssetTelemetryType.md)   |             | [default to const []] 

@@ -126,3 +126,4 @@ class AssetTelemetryTypeTypeTransformer {
   /// Singleton [AssetTelemetryTypeTypeTransformer] instance.
   static AssetTelemetryTypeTypeTransformer? _instance;
 }
+

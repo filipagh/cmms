@@ -21,6 +21,8 @@ class TaskSchema {
     required this.taskType,
     required this.createdOn,
     this.finishedAt,
+    required this.stationName,
+    required this.roadSegmentName,
   });
 
   String stationId;
@@ -45,6 +47,10 @@ class TaskSchema {
   ///
   DateTime? finishedAt;
 
+  String stationName;
+
+  String roadSegmentName;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -56,7 +62,9 @@ class TaskSchema {
           other.state == state &&
           other.taskType == taskType &&
           other.createdOn == createdOn &&
-          other.finishedAt == finishedAt;
+          other.finishedAt == finishedAt &&
+          other.stationName == stationName &&
+          other.roadSegmentName == roadSegmentName;
 
   @override
   int get hashCode =>
@@ -68,11 +76,13 @@ class TaskSchema {
       (state.hashCode) +
       (taskType.hashCode) +
       (createdOn.hashCode) +
-      (finishedAt == null ? 0 : finishedAt!.hashCode);
+      (finishedAt == null ? 0 : finishedAt!.hashCode) +
+      (stationName.hashCode) +
+      (roadSegmentName.hashCode);
 
   @override
   String toString() =>
-      'TaskSchema[stationId=$stationId, name=$name, description=$description, id=$id, state=$state, taskType=$taskType, createdOn=$createdOn, finishedAt=$finishedAt]';
+      'TaskSchema[stationId=$stationId, name=$name, description=$description, id=$id, state=$state, taskType=$taskType, createdOn=$createdOn, finishedAt=$finishedAt, stationName=$stationName, roadSegmentName=$roadSegmentName]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
@@ -86,6 +96,8 @@ class TaskSchema {
     if (finishedAt != null) {
       _json[r'finished_at'] = finishedAt!.toUtc().toIso8601String();
     }
+    _json[r'station_name'] = stationName;
+    _json[r'road_segment_name'] = roadSegmentName;
     return _json;
   }
 
@@ -116,6 +128,8 @@ class TaskSchema {
         taskType: TaskType.fromJson(json[r'task_type'])!,
         createdOn: mapDateTime(json, r'created_on', '')!,
         finishedAt: mapDateTime(json, r'finished_at', ''),
+        stationName: mapValueOfType<String>(json, r'station_name')!,
+        roadSegmentName: mapValueOfType<String>(json, r'road_segment_name')!,
       );
     }
     return null;
@@ -172,6 +186,8 @@ class TaskSchema {
     'state',
     'task_type',
     'created_on',
+    'station_name',
+    'road_segment_name',
   };
 }
 

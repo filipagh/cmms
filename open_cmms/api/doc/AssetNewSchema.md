@@ -8,8 +8,8 @@ import 'package:BackendAPI/api.dart';
 ## Properties
  Name            | Type                                          | Description | Notes                 
 -----------------|-----------------------------------------------|-------------|-----------------------
- **categoryId**  | **String**                                    |             | 
- **name**        | **String**                                    |             | 
+ **categoryId**  | **String**                                    |             |
+ **name**        | **String**                                    |             |
  **description** | **String**                                    |             | [optional]            
  **telemetry**   | [**List<AssetTelemetry>**](AssetTelemetry.md) |             | [default to const []] 
 

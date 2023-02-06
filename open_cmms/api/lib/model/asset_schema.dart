@@ -48,8 +48,8 @@ class AssetSchema {
 
   @override
   int get hashCode =>
-    // ignore: unnecessary_parenthesis
-  (categoryId.hashCode) +
+      // ignore: unnecessary_parenthesis
+      (categoryId.hashCode) +
       (name.hashCode) +
       (description == null ? 0 : description!.hashCode) +
       (telemetry.hashCode) +

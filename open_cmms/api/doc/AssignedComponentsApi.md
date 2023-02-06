@@ -21,7 +21,6 @@ Method | HTTP request | Description
 Create Installed Component
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 

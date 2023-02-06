@@ -63,7 +63,6 @@ class AssetManagerApi {
     // FormatException when trying to decode an empty string.
     if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
       return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'AssetIdSchema',) as AssetIdSchema;
-
     }
     return null;
   }
@@ -115,7 +114,6 @@ class AssetManagerApi {
     // FormatException when trying to decode an empty string.
     if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
       return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'AssetCategotyIdSchema',) as AssetCategotyIdSchema;
-
     }
     return null;
   }
