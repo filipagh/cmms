@@ -103,9 +103,11 @@ class StationComponentsPage extends StatelessWidget
                               Spacer(),
                               Text(components[index].warrantyPeriodUntil != null
                                   ? "Zaruka do " +
-                                      components[index]
-                                          .warrantyPeriodUntil
-                                          .toString()
+                                          components[index]
+                                              .warrantyPeriodUntil!
+                                              .toIso8601String()
+                                              .substring(0, 10) ??
+                                      ''
                                   : "")
                               // Text(components[index].assignedComponentId),
                             ],
