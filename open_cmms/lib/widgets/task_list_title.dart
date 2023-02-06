@@ -12,7 +12,14 @@ Widget buildTaskListTitle(TaskSchema task) {
       hoverColor: Colors.blue.shade200,
       leading: Icon(getStatusIcon(task.state)),
       title: Text("${_getTaskName(task.taskType)}: ${task.name}"),
-      subtitle: Text('vytvorene: ${task.createdOn}'),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('vytvorene: ${task.createdOn}'),
+          Text("stanica: " + task.stationName),
+          Text("cestny usek: " + task.roadSegmentName),
+        ],
+      ),
       tileColor: _getTileColor(task.state),
     ),
   );

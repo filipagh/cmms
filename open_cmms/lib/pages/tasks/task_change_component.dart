@@ -14,7 +14,7 @@ import '../../widgets/main_menu_widget.dart';
 class TaskChangeComponentsPage extends StatelessWidget {
   static const String ENDPOINT = '/TaskChangeComponent';
   final String taskId;
-  late final String stationId;
+  late final TaskSchema? taskProjection;
   final AssetTypesState _assets = Get.find();
   final Rxn<TaskChangeComponentsSchema> task =
       Rxn<TaskChangeComponentsSchema>();
@@ -24,11 +24,12 @@ class TaskChangeComponentsPage extends StatelessWidget {
     required this.taskId,
   }) : super(key: key) {
     TasksService().loadByIdTaskManagerGetTaskGet(taskId).then((value) {
-      stationId = value!.stationId;
+      taskProjection = value;
       try {
-        Get.find(tag: value.stationId);
+        Get.find(tag: taskProjection!.stationId);
       } catch (e) {
-        Get.put(AssignedComponentsState(value.stationId), tag: value.stationId);
+        Get.put(AssignedComponentsState(taskProjection!.stationId),
+            tag: taskProjection!.stationId);
       }
     });
   }
@@ -122,7 +123,8 @@ class TaskChangeComponentsPage extends StatelessWidget {
                                 (x) => Colors.green)),
                         onPressed: () {
                           showFormDialog(CompleteChangeComponentsTaskForm(
-                                  stationId: stationId, task: task.value!))
+                                  stationId: taskProjection!.stationId,
+                                  task: task.value!))
                               .then((value) => loadTask());
                         },
                         child: Text("Dokoncit ulohu"))
@@ -143,9 +145,12 @@ class TaskChangeComponentsPage extends StatelessWidget {
         width: 200, height: 200, child: CircularProgressIndicator());
   }
 
+  // todo deduplikovat 3x
   buildTaskHeader() {
     return Column(
       children: [
+        Text("Stanica: " + taskProjection!.stationName),
+        Text("Cestny usek: " + taskProjection!.roadSegmentName),
         Text("Datum vytovrenia: " + task.value!.createdAt.toString()),
         Text("Stav: " + buildTaskStatusString()),
         const Text("Priradeny k: " + "Jozko Mrkvicka"),
@@ -265,7 +270,7 @@ class TaskChangeComponentsPage extends StatelessWidget {
     col.add(const Divider());
     task.value!.remove.forEach((removeCom) {
       col.add(GetBuilder<AssignedComponentsState>(
-          tag: stationId,
+          tag: taskProjection!.stationId,
           builder: (_components) {
             final comp = _components.getById(removeCom.assignedComponentId);
             if (comp == null) return const Text("loading...");
