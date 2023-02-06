@@ -264,20 +264,37 @@ class TaskChangeComponentsPage extends StatelessWidget {
     ));
     col.add(const Divider());
     task.value!.remove.forEach((removeCom) {
-      col.add(ListTile(
-        leading: Icon(getComponentStatusIcon(
-            removeCom.state, TaskComponentState.removed)),
-        title: GetBuilder<AssignedComponentsState>(
-            tag: stationId,
-            builder: (_components) {
-              final comp = _components.getById(removeCom.assignedComponentId);
-              if (comp == null) return const Text("loading...");
-              final asset = _assets.getAssetById(comp.assetId);
-              if (asset == null) return const Text("loading...");
-              return Text(asset.name);
-            }),
-        subtitle: Text(getComponentStatusText(removeCom.state)),
-      ));
+      col.add(GetBuilder<AssignedComponentsState>(
+          tag: stationId,
+          builder: (_components) {
+            final comp = _components.getById(removeCom.assignedComponentId);
+            if (comp == null) return const Text("loading...");
+            final asset = _assets.getAssetById(comp.assetId);
+            if (asset == null) return const Text("loading...");
+            return ListTile(
+              leading: Icon(getComponentStatusIcon(
+                  removeCom.state, TaskComponentState.removed)),
+              title: Text(asset.name),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(getComponentStatusText(removeCom.state)),
+                  Row(
+                    children: [
+                      Text("Zaruka do : " +
+                          (comp.warrantyPeriodUntil
+                                  ?.toIso8601String()
+                                  .substring(0, 10) ??
+                              "")),
+                      task.value!.createdAt.isBefore(comp.warrantyPeriodUntil!)
+                          ? Icon(Icons.check)
+                          : Icon(Icons.close)
+                    ],
+                  ),
+                ],
+              ),
+            );
+          }));
     });
 
     return col;
