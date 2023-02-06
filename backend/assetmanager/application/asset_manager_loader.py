@@ -14,8 +14,14 @@ def load_asset_structure():
 def load_assets() -> list[AssetModel]:
     return asset_repo.get_assets()
 
-def load_asset_by_id(asset_id:uuid.UUID) -> schema.AssetSchema:
-    return schema.AssetSchema(**asset_repo.get_asset_by_id(asset_id).__dict__)
+
+def load_asset_by_id(asset_id: uuid.UUID) -> schema.AssetSchema:
+    asset = asset_repo.get_asset_by_id(asset_id).__dict__
+    tele = asset.pop("telemetry")
+    telemetry = []
+    for t in tele:
+        telemetry.append(schema.AssetTelemetry(**t.__dict__))
+    return schema.AssetSchema(**asset, telemetry=telemetry)
 
 
 def load_asset_category() -> list[AssetCategoryModel]:
