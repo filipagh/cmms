@@ -98,7 +98,9 @@ register_tansconder([TasksProjector, AssignedComponentsService, StorageItemServi
 add_transconder(DateAsIso())
 add_transconder(AssetTelemetryAsJSON())
 
-# runner.get(AssetProjector).pull_and_process("AssetService",3)
+# runner.get(TasksProjector).pull_and_process("TaskService")
+# runner.get(TasksProjector).pull_and_process("TaskServiceOnSiteService")
+# runner.get(TasksProjector).pull_and_process("TaskServiceRemoteService")
 
 app = FastAPI(debug=True)
 app.include_router(assetmanager.infrastructure.rest_router.asset_manager)

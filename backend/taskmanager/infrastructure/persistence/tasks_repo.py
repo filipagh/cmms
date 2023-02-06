@@ -25,6 +25,8 @@ class TaskModel(Base):
     state: TaskState = Column('task_state', sqlalchemy.types.Enum(TaskState), nullable=False)
     task_type = Column('task_type', sqlalchemy.types.Enum(TaskType), nullable=False)
     station_id = Column(postgresql.UUID(as_uuid=True), index=True, nullable=False)
+    station_name = Column(String, nullable=False)
+    road_segment_name = Column(String, nullable=False)
     created_on = Column(DateTime, nullable=False)
     finished_at = Column(DateTime, nullable=True)
 

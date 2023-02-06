@@ -24,3 +24,5 @@ class TaskSchema(TaskIdSchema, TaskSchemaBASE):
     task_type: TaskType
     created_on: datetime.datetime
     finished_at: Optional[datetime.datetime]
+    station_name: str
+    road_segment_name: str
