@@ -23,6 +23,7 @@ class AssetTelemetryType(str, Enum):
 class AssetTelemetryValue(str, Enum):
     CELSIUS = "CELSIUS",
     METER_PER_SECOND = "METER_PER_SECOND",
+    METERS = "METERS",
     CIRCLE_DEGREES = "CIRCLE_DEGREES",
     MILLIMETER_PER_SECOND = "MILLIMETER_PER_SECOND",
     HECTO_PASCAL = "HECTO_PASCAL",

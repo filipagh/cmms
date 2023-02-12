@@ -53,3 +53,14 @@ def get(station_id: uuid.UUID):
 def get_contract(contract_id: uuid.UUID):
     projector = main.runner.get(ServiceContractProjector)
     return _model_to_schema(projector.get_by_id(contract_id))
+
+@service_contract_router.get("/contracts",
+                             response_model=list[schema.ServiceContractSchema])
+def get_contracts():
+    projector = main.runner.get(ServiceContractProjector)
+    col = []
+    contracts = projector.get_all()
+    for i in contracts:
+        col.append(_model_to_schema(i))
+
+    return col

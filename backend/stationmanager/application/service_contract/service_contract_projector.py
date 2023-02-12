@@ -39,3 +39,5 @@ class ServiceContractProjector(ProcessApplication):
 
     def get_by_station(self, station_id: uuid.UUID) -> list[AssignedComponentModel]:
         return service_contract_repo.get_contract_by_station_id(station_id)
+    def get_all(self) -> list[AssignedComponentModel]:
+        return service_contract_repo.get_all_contracts()

@@ -47,3 +47,8 @@ def get_contract_by_id(contract_id) -> ServiceContractModel:
     db: Session
     with _get_db() as db:
         return db.query(ServiceContractModel).get(contract_id)
+
+
+def get_all_contracts():
+    with _get_db() as db:
+        return db.query(ServiceContractModel).all()
