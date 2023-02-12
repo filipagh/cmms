@@ -6,4 +6,6 @@ from stationmanager.infrastructure.persistence.action_history_repo import Action
 from stationmanager.infrastructure.persistence.assigned_component_repo import AssignedComponentModel  # noqa
 from stationmanager.infrastructure.persistence.station_repo import StationModel  # noqa
 from storagemanager.infrastructure.persistance.storage_item_repo import StorageItemModel  # noqa
+from stationmanager.infrastructure.persistence.service_contract_repo import ServiceContractModel  # noqa
+from stationmanager.infrastructure.persistence.service_contract_repo import StationServiceContractModel  # noqa
 from taskmanager.infrastructure.persistence.tasks_repo import TaskModel  # noqa

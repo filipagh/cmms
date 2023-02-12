@@ -18,10 +18,13 @@ from roadsegmentmanager.application.road_segment_service import RoadSegmentServi
 from stationmanager.application.action_history.action_history_projector import ActionHistoryProjector
 from stationmanager.application.assigned_component.assigned_component_projector import AssignedComponentProjector
 from stationmanager.application.assigned_component.assigned_component_service import AssignedComponentsService
+from stationmanager.application.service_contract.service_contract_projector import ServiceContractProjector
+from stationmanager.application.service_contract.service_contract_service import ServiceContractService
 from stationmanager.application.station_projector import StationProjector
 from stationmanager.application.station_service import StationService
 from stationmanager.infrastructure.action_history_rest_router import action_history_router
 from stationmanager.infrastructure.assigned_component_rest_router import assigned_component_router
+from stationmanager.infrastructure.service_contract_rest_router import service_contract_router
 from stationmanager.infrastructure.station_rest_router import station_router
 from storagemanager.application.storage_item_projector import StorageItemProjector
 from storagemanager.application.storage_item_service import StorageItemService
@@ -69,7 +72,7 @@ class Services(Enum):
 services = [AssetService, AssetProjector, StorageItemProjector, RoadSegmentProjector, StationProjector,
             AssignedComponentProjector, ActionHistoryProjector, StorageItemService, RoadSegmentService, StationService,
             AssignedComponentsService, TasksProjector,
-            TaskService, TaskServiceOnSiteService, TaskServiceRemoteService]
+            TaskService, TaskServiceOnSiteService, TaskServiceRemoteService, ServiceContractService, ServiceContractProjector]
 
 system = System(pipes=[[AssetService, AssetProjector],
                        [AssetService, StorageItemService],
@@ -85,6 +88,7 @@ system = System(pipes=[[AssetService, AssetProjector],
                        [TaskService, StorageItemService],
                        [TaskServiceOnSiteService, TasksProjector],
                        [TaskServiceRemoteService, TasksProjector],
+                       [ServiceContractService, ServiceContractProjector]
                        ])
 
 runner = SingleThreadedRunner(system)
@@ -112,6 +116,7 @@ app.include_router(action_history_router)
 app.include_router(task_manager_router)
 app.include_router(task_servis_on_site)
 app.include_router(task_servis_remote)
+app.include_router(service_contract_router)
 
 origins = [
     "http://localhost:5000",
