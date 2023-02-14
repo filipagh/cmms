@@ -1,4 +1,5 @@
 import uuid
+from typing import Optional
 
 from fastapi import APIRouter
 
@@ -44,7 +45,7 @@ def remove_installed_component(components_to_remove: list[schema.AssignedCompone
 @assigned_component_router.get("/components",
                                response_model=list[schema.AssignedComponentSchema])
 def get_all(
-        station_id: uuid.UUID
+        station_id: Optional[uuid.UUID] = None
 ):
     projector = main.runner.get(AssignedComponentProjector)
     col = []

@@ -1,4 +1,5 @@
 import uuid
+from typing import Optional
 
 from sqlalchemy import Column, Enum, DateTime, Date
 from sqlalchemy.dialects import postgresql
@@ -45,7 +46,10 @@ def delete_by_id(component_id: uuid.UUID):
         db.commit()
 
 
-def get_by_station(station_id: uuid.UUID) -> list[AssignedComponentModel]:
+def get_by_station(station_id: Optional[uuid.UUID]) -> list[AssignedComponentModel]:
     db: Session
     with _get_db() as db:
-        return db.query(AssignedComponentModel).where(AssignedComponentModel.station_id == station_id).all()
+        query = db.query(AssignedComponentModel)
+        if station_id:
+            query = query.where(AssignedComponentModel.station_id == station_id)
+        return query.all()
