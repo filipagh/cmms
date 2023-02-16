@@ -22,7 +22,7 @@ class AssignedComponentsState extends GetxController {
 
   reload() {
     AssignedComponentService()
-        .getAllAssignedComponentsComponentsGet(_stationId)
+        .getAllAssignedComponentsComponentsGet(stationId: _stationId)
         .then((value) {
       components.clear();
       components.addAll(value ?? []);
