@@ -19,21 +19,20 @@ class TaskChangeComponentRequestId {
   String id;
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is TaskChangeComponentRequestId && other.id == id;
+  bool operator ==(Object other) => identical(this, other) || other is TaskChangeComponentRequestId &&
+     other.id == id;
 
   @override
   int get hashCode =>
-      // ignore: unnecessary_parenthesis
-      (id.hashCode);
+    // ignore: unnecessary_parenthesis
+    (id.hashCode);
 
   @override
   String toString() => 'TaskChangeComponentRequestId[id=$id]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-    _json[r'id'] = id;
+      _json[r'id'] = id;
     return _json;
   }
 
@@ -49,10 +48,8 @@ class TaskChangeComponentRequestId {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key),
-              'Required key "TaskChangeComponentRequestId[$key]" is missing from JSON.');
-          assert(json[key] != null,
-              'Required key "TaskChangeComponentRequestId[$key]" has a null value in JSON.');
+          assert(json.containsKey(key), 'Required key "TaskChangeComponentRequestId[$key]" is missing from JSON.');
+          assert(json[key] != null, 'Required key "TaskChangeComponentRequestId[$key]" has a null value in JSON.');
         });
         return true;
       }());
@@ -64,10 +61,7 @@ class TaskChangeComponentRequestId {
     return null;
   }
 
-  static List<TaskChangeComponentRequestId>? listFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static List<TaskChangeComponentRequestId>? listFromJson(dynamic json, {bool growable = false,}) {
     final result = <TaskChangeComponentRequestId>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -95,18 +89,12 @@ class TaskChangeComponentRequestId {
   }
 
   // maps a json object with a list of TaskChangeComponentRequestId-objects as value to a dart map
-  static Map<String, List<TaskChangeComponentRequestId>> mapListFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static Map<String, List<TaskChangeComponentRequestId>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<TaskChangeComponentRequestId>>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = TaskChangeComponentRequestId.listFromJson(
-          entry.value,
-          growable: growable,
-        );
+        final value = TaskChangeComponentRequestId.listFromJson(entry.value, growable: growable,);
         if (value != null) {
           map[entry.key] = value;
         }

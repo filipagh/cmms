@@ -25,9 +25,9 @@ class AssetTelemetryValue {
 
   static const CELSIUS = AssetTelemetryValue._(r'CELSIUS');
   static const METER_PER_SECOND = AssetTelemetryValue._(r'METER_PER_SECOND');
+  static const METERS = AssetTelemetryValue._(r'METERS');
   static const CIRCLE_DEGREES = AssetTelemetryValue._(r'CIRCLE_DEGREES');
-  static const MILLIMETER_PER_SECOND =
-      AssetTelemetryValue._(r'MILLIMETER_PER_SECOND');
+  static const MILLIMETER_PER_SECOND = AssetTelemetryValue._(r'MILLIMETER_PER_SECOND');
   static const HECTO_PASCAL = AssetTelemetryValue._(r'HECTO_PASCAL');
   static const PERCENTAGE = AssetTelemetryValue._(r'PERCENTAGE');
 
@@ -35,19 +35,16 @@ class AssetTelemetryValue {
   static const values = <AssetTelemetryValue>[
     CELSIUS,
     METER_PER_SECOND,
+    METERS,
     CIRCLE_DEGREES,
     MILLIMETER_PER_SECOND,
     HECTO_PASCAL,
     PERCENTAGE,
   ];
 
-  static AssetTelemetryValue? fromJson(dynamic value) =>
-      AssetTelemetryValueTypeTransformer().decode(value);
+  static AssetTelemetryValue? fromJson(dynamic value) => AssetTelemetryValueTypeTransformer().decode(value);
 
-  static List<AssetTelemetryValue>? listFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static List<AssetTelemetryValue>? listFromJson(dynamic json, {bool growable = false,}) {
     final result = <AssetTelemetryValue>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -64,8 +61,7 @@ class AssetTelemetryValue {
 /// Transformation class that can [encode] an instance of [AssetTelemetryValue] to String,
 /// and [decode] dynamic data back to [AssetTelemetryValue].
 class AssetTelemetryValueTypeTransformer {
-  factory AssetTelemetryValueTypeTransformer() =>
-      _instance ??= const AssetTelemetryValueTypeTransformer._();
+  factory AssetTelemetryValueTypeTransformer() => _instance ??= const AssetTelemetryValueTypeTransformer._();
 
   const AssetTelemetryValueTypeTransformer._();
 
@@ -82,18 +78,13 @@ class AssetTelemetryValueTypeTransformer {
   AssetTelemetryValue? decode(dynamic data, {bool allowNull = true}) {
     if (data != null) {
       switch (data.toString()) {
-        case r'CELSIUS':
-          return AssetTelemetryValue.CELSIUS;
-        case r'METER_PER_SECOND':
-          return AssetTelemetryValue.METER_PER_SECOND;
-        case r'CIRCLE_DEGREES':
-          return AssetTelemetryValue.CIRCLE_DEGREES;
-        case r'MILLIMETER_PER_SECOND':
-          return AssetTelemetryValue.MILLIMETER_PER_SECOND;
-        case r'HECTO_PASCAL':
-          return AssetTelemetryValue.HECTO_PASCAL;
-        case r'PERCENTAGE':
-          return AssetTelemetryValue.PERCENTAGE;
+        case r'CELSIUS': return AssetTelemetryValue.CELSIUS;
+        case r'METER_PER_SECOND': return AssetTelemetryValue.METER_PER_SECOND;
+        case r'METERS': return AssetTelemetryValue.METERS;
+        case r'CIRCLE_DEGREES': return AssetTelemetryValue.CIRCLE_DEGREES;
+        case r'MILLIMETER_PER_SECOND': return AssetTelemetryValue.MILLIMETER_PER_SECOND;
+        case r'HECTO_PASCAL': return AssetTelemetryValue.HECTO_PASCAL;
+        case r'PERCENTAGE': return AssetTelemetryValue.PERCENTAGE;
         default:
           if (!allowNull) {
             throw ArgumentError('Unknown enum value to decode: $data');

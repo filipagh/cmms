@@ -1,4 +1,4 @@
-# BackendAPI.model.AssetNewSchema
+# BackendAPI.model.ServiceContractSchema
 
 ## Load the model package
 ```dart
@@ -8,10 +8,12 @@ import 'package:BackendAPI/api.dart';
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**categoryId** | **String** |  | 
 **name** | **String** |  | 
-**description** | **String** |  | [optional] 
-**telemetry** | [**List<AssetTelemetry>**](AssetTelemetry.md) |  | [default to const []]
+**validFrom** | [**DateTime**](DateTime.md) |  | 
+**validUntil** | [**DateTime**](DateTime.md) |  | 
+**stationIdList** | **List<String>** |  | [default to const []]
+**id** | **String** |  | 
+**createdAt** | [**DateTime**](DateTime.md) |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

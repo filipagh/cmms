@@ -11,24 +11,24 @@
 part of openapi.api;
 
 
-class AssetManagerApi {
-  AssetManagerApi([ApiClient? apiClient]) : apiClient = apiClient ?? defaultApiClient;
+class ServiceContractApi {
+  ServiceContractApi([ApiClient? apiClient]) : apiClient = apiClient ?? defaultApiClient;
 
   final ApiClient apiClient;
 
-  /// Create New Asset
+  /// Create Contract
   ///
   /// Note: This method returns the HTTP [Response].
   ///
   /// Parameters:
   ///
-  /// * [AssetNewSchema] assetNewSchema (required):
-  Future<Response> createNewAssetAssetManagerNewAssetPostWithHttpInfo(AssetNewSchema assetNewSchema,) async {
+  /// * [ServiceContractNewSchema] serviceContractNewSchema (required):
+  Future<Response> createContractServiceContractCreateContractPostWithHttpInfo(ServiceContractNewSchema serviceContractNewSchema,) async {
     // ignore: prefer_const_declarations
-    final path = r'/assetManager/newAsset';
+    final path = r'/service-contract/create_contract';
 
     // ignore: prefer_final_locals
-    Object? postBody = assetNewSchema;
+    Object? postBody = serviceContractNewSchema;
 
     final queryParams = <QueryParam>[];
     final headerParams = <String, String>{};
@@ -48,13 +48,13 @@ class AssetManagerApi {
     );
   }
 
-  /// Create New Asset
+  /// Create Contract
   ///
   /// Parameters:
   ///
-  /// * [AssetNewSchema] assetNewSchema (required):
-  Future<AssetIdSchema?> createNewAssetAssetManagerNewAssetPost(AssetNewSchema assetNewSchema,) async {
-    final response = await createNewAssetAssetManagerNewAssetPostWithHttpInfo(assetNewSchema,);
+  /// * [ServiceContractNewSchema] serviceContractNewSchema (required):
+  Future<String?> createContractServiceContractCreateContractPost(ServiceContractNewSchema serviceContractNewSchema,) async {
+    final response = await createContractServiceContractCreateContractPostWithHttpInfo(serviceContractNewSchema,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -62,36 +62,38 @@ class AssetManagerApi {
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
     if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'AssetIdSchema',) as AssetIdSchema;
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'String',) as String;
     
     }
     return null;
   }
 
-  /// Create New Category
+  /// Get Contract
   ///
   /// Note: This method returns the HTTP [Response].
   ///
   /// Parameters:
   ///
-  /// * [AssetCategoryNewSchema] assetCategoryNewSchema (required):
-  Future<Response> createNewCategoryAssetManagerNewCategoryPostWithHttpInfo(AssetCategoryNewSchema assetCategoryNewSchema,) async {
+  /// * [String] contractId (required):
+  Future<Response> getContractServiceContractContractGetWithHttpInfo(String contractId,) async {
     // ignore: prefer_const_declarations
-    final path = r'/assetManager/newCategory';
+    final path = r'/service-contract/contract';
 
     // ignore: prefer_final_locals
-    Object? postBody = assetCategoryNewSchema;
+    Object? postBody;
 
     final queryParams = <QueryParam>[];
     final headerParams = <String, String>{};
     final formParams = <String, String>{};
 
-    const contentTypes = <String>['application/json'];
+      queryParams.addAll(_queryParams('', 'contract_id', contractId));
+
+    const contentTypes = <String>[];
 
 
     return apiClient.invokeAPI(
       path,
-      'POST',
+      'GET',
       queryParams,
       postBody,
       headerParams,
@@ -100,13 +102,13 @@ class AssetManagerApi {
     );
   }
 
-  /// Create New Category
+  /// Get Contract
   ///
   /// Parameters:
   ///
-  /// * [AssetCategoryNewSchema] assetCategoryNewSchema (required):
-  Future<AssetCategotyIdSchema?> createNewCategoryAssetManagerNewCategoryPost(AssetCategoryNewSchema assetCategoryNewSchema,) async {
-    final response = await createNewCategoryAssetManagerNewCategoryPostWithHttpInfo(assetCategoryNewSchema,);
+  /// * [String] contractId (required):
+  Future<ServiceContractSchema?> getContractServiceContractContractGet(String contractId,) async {
+    final response = await getContractServiceContractContractGetWithHttpInfo(contractId,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -114,18 +116,18 @@ class AssetManagerApi {
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
     if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'AssetCategotyIdSchema',) as AssetCategotyIdSchema;
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'ServiceContractSchema',) as ServiceContractSchema;
     
     }
     return null;
   }
 
-  /// Get Asset Categories
+  /// Get Contracts
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> getAssetCategoriesAssetManagerAssetCategoriesGetWithHttpInfo() async {
+  Future<Response> getContractsServiceContractContractsGetWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/assetManager/asset-categories';
+    final path = r'/service-contract/contracts';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -148,9 +150,9 @@ class AssetManagerApi {
     );
   }
 
-  /// Get Asset Categories
-  Future<List<AssetCategorySchema>?> getAssetCategoriesAssetManagerAssetCategoriesGet() async {
-    final response = await getAssetCategoriesAssetManagerAssetCategoriesGetWithHttpInfo();
+  /// Get Contracts
+  Future<List<ServiceContractSchema>?> getContractsServiceContractContractsGet() async {
+    final response = await getContractsServiceContractContractsGetWithHttpInfo();
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -159,20 +161,24 @@ class AssetManagerApi {
     // FormatException when trying to decode an empty string.
     if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
       final responseBody = await _decodeBodyBytes(response);
-      return (await apiClient.deserializeAsync(responseBody, 'List<AssetCategorySchema>') as List)
-        .cast<AssetCategorySchema>()
+      return (await apiClient.deserializeAsync(responseBody, 'List<ServiceContractSchema>') as List)
+        .cast<ServiceContractSchema>()
         .toList();
 
     }
     return null;
   }
 
-  /// Get Assets
+  /// Get
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> getAssetsAssetManagerAssetsGetWithHttpInfo() async {
+  ///
+  /// Parameters:
+  ///
+  /// * [String] stationId (required):
+  Future<Response> getServiceContractContractForStationGetWithHttpInfo(String stationId,) async {
     // ignore: prefer_const_declarations
-    final path = r'/assetManager/assets';
+    final path = r'/service-contract/contract_for_station';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -180,6 +186,8 @@ class AssetManagerApi {
     final queryParams = <QueryParam>[];
     final headerParams = <String, String>{};
     final formParams = <String, String>{};
+
+      queryParams.addAll(_queryParams('', 'station_id', stationId));
 
     const contentTypes = <String>[];
 
@@ -195,9 +203,13 @@ class AssetManagerApi {
     );
   }
 
-  /// Get Assets
-  Future<List<AssetSchema>?> getAssetsAssetManagerAssetsGet() async {
-    final response = await getAssetsAssetManagerAssetsGetWithHttpInfo();
+  /// Get
+  ///
+  /// Parameters:
+  ///
+  /// * [String] stationId (required):
+  Future<List<ServiceContractSchema>?> getServiceContractContractForStationGet(String stationId,) async {
+    final response = await getServiceContractContractForStationGetWithHttpInfo(stationId,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -206,54 +218,10 @@ class AssetManagerApi {
     // FormatException when trying to decode an empty string.
     if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
       final responseBody = await _decodeBodyBytes(response);
-      return (await apiClient.deserializeAsync(responseBody, 'List<AssetSchema>') as List)
-        .cast<AssetSchema>()
+      return (await apiClient.deserializeAsync(responseBody, 'List<ServiceContractSchema>') as List)
+        .cast<ServiceContractSchema>()
         .toList();
 
-    }
-    return null;
-  }
-
-  /// Get Telemetry Options
-  ///
-  /// Note: This method returns the HTTP [Response].
-  Future<Response> getTelemetryOptionsAssetManagerTelemetryOptionsGetWithHttpInfo() async {
-    // ignore: prefer_const_declarations
-    final path = r'/assetManager/telemetry_options';
-
-    // ignore: prefer_final_locals
-    Object? postBody;
-
-    final queryParams = <QueryParam>[];
-    final headerParams = <String, String>{};
-    final formParams = <String, String>{};
-
-    const contentTypes = <String>[];
-
-
-    return apiClient.invokeAPI(
-      path,
-      'GET',
-      queryParams,
-      postBody,
-      headerParams,
-      formParams,
-      contentTypes.isEmpty ? null : contentTypes.first,
-    );
-  }
-
-  /// Get Telemetry Options
-  Future<TelemetryOptions?> getTelemetryOptionsAssetManagerTelemetryOptionsGet() async {
-    final response = await getTelemetryOptionsAssetManagerTelemetryOptionsGetWithHttpInfo();
-    if (response.statusCode >= HttpStatus.badRequest) {
-      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
-    }
-    // When a remote server returns no body with a status of 204, we shall not decode it.
-    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
-    // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'TelemetryOptions',) as TelemetryOptions;
-    
     }
     return null;
   }

@@ -7,13 +7,13 @@ import 'package:BackendAPI/api.dart';
 
 All URIs are relative to *http://localhost*
 
- Method                                                                                                                                     | HTTP request                                             | Description    
---------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------|----------------
- [**cancelTaskServiceRemoteTaskIdDelete**](TaskServiceRemoteApi.md#canceltaskserviceremotetaskiddelete)                                     | **DELETE** /task/service_remote/{task_id}                | Cancel         
- [**changeDetailsTaskServiceRemoteTaskIdChangeDetailsPost**](TaskServiceRemoteApi.md#changedetailstaskserviceremotetaskidchangedetailspost) | **POST** /task/service_remote/{task_id}/change_details   | Change Details 
- [**completeTaskServiceRemoteTaskIdCompleteGet**](TaskServiceRemoteApi.md#completetaskserviceremotetaskidcompleteget)                       | **GET** /task/service_remote/{task_id}/complete          | Complete       
- [**createTaskServiceRemoteCreateServiceRemoteTaskPost**](TaskServiceRemoteApi.md#createtaskserviceremotecreateserviceremotetaskpost)       | **POST** /task/service_remote/create_service_remote_task | Create         
- [**loadTaskServiceRemoteTaskIdGet**](TaskServiceRemoteApi.md#loadtaskserviceremotetaskidget)                                               | **GET** /task/service_remote/{task_id}                   | Load           
+Method | HTTP request | Description
+------------- | ------------- | -------------
+[**cancelTaskServiceRemoteTaskIdDelete**](TaskServiceRemoteApi.md#canceltaskserviceremotetaskiddelete) | **DELETE** /task/service_remote/{task_id} | Cancel
+[**changeDetailsTaskServiceRemoteTaskIdChangeDetailsPost**](TaskServiceRemoteApi.md#changedetailstaskserviceremotetaskidchangedetailspost) | **POST** /task/service_remote/{task_id}/change_details | Change Details
+[**completeTaskServiceRemoteTaskIdCompleteGet**](TaskServiceRemoteApi.md#completetaskserviceremotetaskidcompleteget) | **GET** /task/service_remote/{task_id}/complete | Complete
+[**createTaskServiceRemoteCreateServiceRemoteTaskPost**](TaskServiceRemoteApi.md#createtaskserviceremotecreateserviceremotetaskpost) | **POST** /task/service_remote/create_service_remote_task | Create
+[**loadTaskServiceRemoteTaskIdGet**](TaskServiceRemoteApi.md#loadtaskserviceremotetaskidget) | **GET** /task/service_remote/{task_id} | Load
 
 
 # **cancelTaskServiceRemoteTaskIdDelete**
@@ -38,9 +38,9 @@ try {
 
 ### Parameters
 
- Name       | Type       | Description | Notes 
-------------|------------|-------------|-------
- **taskId** | **String** |             |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **taskId** | **String**|  | 
 
 ### Return type
 
@@ -52,8 +52,8 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: text/plain, application/json
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -81,11 +81,11 @@ try {
 
 ### Parameters
 
- Name               | Type       | Description | Notes      
---------------------|------------|-------------|------------
- **taskId**         | **String** |             |
- **newName**        | **String** |             | [optional] 
- **newDescription** | **String** |             | [optional] 
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **taskId** | **String**|  | 
+ **newName** | **String**|  | [optional] 
+ **newDescription** | **String**|  | [optional] 
 
 ### Return type
 
@@ -97,8 +97,8 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: text/plain, application/json
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -124,9 +124,9 @@ try {
 
 ### Parameters
 
- Name       | Type       | Description | Notes 
-------------|------------|-------------|-------
- **taskId** | **String** |             |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **taskId** | **String**|  | 
 
 ### Return type
 
@@ -138,8 +138,8 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: text/plain, application/json
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -165,9 +165,9 @@ try {
 
 ### Parameters
 
- Name                           | Type                                                            | Description | Notes 
---------------------------------|-----------------------------------------------------------------|-------------|-------
- **taskServiceRemoteNewSchema** | [**TaskServiceRemoteNewSchema**](TaskServiceRemoteNewSchema.md) |             |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **taskServiceRemoteNewSchema** | [**TaskServiceRemoteNewSchema**](TaskServiceRemoteNewSchema.md)|  | 
 
 ### Return type
 
@@ -179,8 +179,8 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: application/json
-- **Accept**: application/json
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -206,9 +206,9 @@ try {
 
 ### Parameters
 
- Name       | Type       | Description | Notes 
-------------|------------|-------------|-------
- **taskId** | **String** |             |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **taskId** | **String**|  | 
 
 ### Return type
 
@@ -220,8 +220,8 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: application/json
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -52,52 +52,49 @@ class TaskSchema {
   String roadSegmentName;
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is TaskSchema &&
-          other.stationId == stationId &&
-          other.name == name &&
-          other.description == description &&
-          other.id == id &&
-          other.state == state &&
-          other.taskType == taskType &&
-          other.createdOn == createdOn &&
-          other.finishedAt == finishedAt &&
-          other.stationName == stationName &&
-          other.roadSegmentName == roadSegmentName;
+  bool operator ==(Object other) => identical(this, other) || other is TaskSchema &&
+     other.stationId == stationId &&
+     other.name == name &&
+     other.description == description &&
+     other.id == id &&
+     other.state == state &&
+     other.taskType == taskType &&
+     other.createdOn == createdOn &&
+     other.finishedAt == finishedAt &&
+     other.stationName == stationName &&
+     other.roadSegmentName == roadSegmentName;
 
   @override
   int get hashCode =>
-      // ignore: unnecessary_parenthesis
-      (stationId.hashCode) +
-      (name.hashCode) +
-      (description.hashCode) +
-      (id.hashCode) +
-      (state.hashCode) +
-      (taskType.hashCode) +
-      (createdOn.hashCode) +
-      (finishedAt == null ? 0 : finishedAt!.hashCode) +
-      (stationName.hashCode) +
-      (roadSegmentName.hashCode);
+    // ignore: unnecessary_parenthesis
+    (stationId.hashCode) +
+    (name.hashCode) +
+    (description.hashCode) +
+    (id.hashCode) +
+    (state.hashCode) +
+    (taskType.hashCode) +
+    (createdOn.hashCode) +
+    (finishedAt == null ? 0 : finishedAt!.hashCode) +
+    (stationName.hashCode) +
+    (roadSegmentName.hashCode);
 
   @override
-  String toString() =>
-      'TaskSchema[stationId=$stationId, name=$name, description=$description, id=$id, state=$state, taskType=$taskType, createdOn=$createdOn, finishedAt=$finishedAt, stationName=$stationName, roadSegmentName=$roadSegmentName]';
+  String toString() => 'TaskSchema[stationId=$stationId, name=$name, description=$description, id=$id, state=$state, taskType=$taskType, createdOn=$createdOn, finishedAt=$finishedAt, stationName=$stationName, roadSegmentName=$roadSegmentName]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-    _json[r'station_id'] = stationId;
-    _json[r'name'] = name;
-    _json[r'description'] = description;
-    _json[r'id'] = id;
-    _json[r'state'] = state;
-    _json[r'task_type'] = taskType;
-    _json[r'created_on'] = createdOn.toUtc().toIso8601String();
+      _json[r'station_id'] = stationId;
+      _json[r'name'] = name;
+      _json[r'description'] = description;
+      _json[r'id'] = id;
+      _json[r'state'] = state;
+      _json[r'task_type'] = taskType;
+      _json[r'created_on'] = createdOn.toUtc().toIso8601String();
     if (finishedAt != null) {
       _json[r'finished_at'] = finishedAt!.toUtc().toIso8601String();
     }
-    _json[r'station_name'] = stationName;
-    _json[r'road_segment_name'] = roadSegmentName;
+      _json[r'station_name'] = stationName;
+      _json[r'road_segment_name'] = roadSegmentName;
     return _json;
   }
 

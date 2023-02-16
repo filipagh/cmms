@@ -10,9 +10,9 @@
 
 part of openapi.api;
 
+
 class TaskServiceRemoteApi {
-  TaskServiceRemoteApi([ApiClient? apiClient])
-      : apiClient = apiClient ?? defaultApiClient;
+  TaskServiceRemoteApi([ApiClient? apiClient]) : apiClient = apiClient ?? defaultApiClient;
 
   final ApiClient apiClient;
 
@@ -23,12 +23,10 @@ class TaskServiceRemoteApi {
   /// Parameters:
   ///
   /// * [String] taskId (required):
-  Future<Response> cancelTaskServiceRemoteTaskIdDeleteWithHttpInfo(
-    String taskId,
-  ) async {
+  Future<Response> cancelTaskServiceRemoteTaskIdDeleteWithHttpInfo(String taskId,) async {
     // ignore: prefer_const_declarations
-    final path =
-        r'/task/service_remote/{task_id}'.replaceAll('{task_id}', taskId);
+    final path = r'/task/service_remote/{task_id}'
+      .replaceAll('{task_id}', taskId);
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -38,6 +36,7 @@ class TaskServiceRemoteApi {
     final formParams = <String, String>{};
 
     const contentTypes = <String>[];
+
 
     return apiClient.invokeAPI(
       path,
@@ -55,24 +54,17 @@ class TaskServiceRemoteApi {
   /// Parameters:
   ///
   /// * [String] taskId (required):
-  Future<String?> cancelTaskServiceRemoteTaskIdDelete(
-    String taskId,
-  ) async {
-    final response = await cancelTaskServiceRemoteTaskIdDeleteWithHttpInfo(
-      taskId,
-    );
+  Future<String?> cancelTaskServiceRemoteTaskIdDelete(String taskId,) async {
+    final response = await cancelTaskServiceRemoteTaskIdDeleteWithHttpInfo(taskId,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
     // When a remote server returns no body with a status of 204, we shall not decode it.
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty &&
-        response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(
-        await _decodeBodyBytes(response),
-        'String',
-      ) as String;
+    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'String',) as String;
+    
     }
     return null;
   }
@@ -88,15 +80,10 @@ class TaskServiceRemoteApi {
   /// * [String] newName:
   ///
   /// * [String] newDescription:
-  Future<Response>
-      changeDetailsTaskServiceRemoteTaskIdChangeDetailsPostWithHttpInfo(
-    String taskId, {
-    String? newName,
-    String? newDescription,
-  }) async {
+  Future<Response> changeDetailsTaskServiceRemoteTaskIdChangeDetailsPostWithHttpInfo(String taskId, { String? newName, String? newDescription, }) async {
     // ignore: prefer_const_declarations
     final path = r'/task/service_remote/{task_id}/change_details'
-        .replaceAll('{task_id}', taskId);
+      .replaceAll('{task_id}', taskId);
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -114,6 +101,7 @@ class TaskServiceRemoteApi {
 
     const contentTypes = <String>[];
 
+
     return apiClient.invokeAPI(
       path,
       'POST',
@@ -134,29 +122,17 @@ class TaskServiceRemoteApi {
   /// * [String] newName:
   ///
   /// * [String] newDescription:
-  Future<String?> changeDetailsTaskServiceRemoteTaskIdChangeDetailsPost(
-    String taskId, {
-    String? newName,
-    String? newDescription,
-  }) async {
-    final response =
-        await changeDetailsTaskServiceRemoteTaskIdChangeDetailsPostWithHttpInfo(
-      taskId,
-      newName: newName,
-      newDescription: newDescription,
-    );
+  Future<String?> changeDetailsTaskServiceRemoteTaskIdChangeDetailsPost(String taskId, { String? newName, String? newDescription, }) async {
+    final response = await changeDetailsTaskServiceRemoteTaskIdChangeDetailsPostWithHttpInfo(taskId,  newName: newName, newDescription: newDescription, );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
     // When a remote server returns no body with a status of 204, we shall not decode it.
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty &&
-        response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(
-        await _decodeBodyBytes(response),
-        'String',
-      ) as String;
+    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'String',) as String;
+    
     }
     return null;
   }
@@ -168,12 +144,10 @@ class TaskServiceRemoteApi {
   /// Parameters:
   ///
   /// * [String] taskId (required):
-  Future<Response> completeTaskServiceRemoteTaskIdCompleteGetWithHttpInfo(
-    String taskId,
-  ) async {
+  Future<Response> completeTaskServiceRemoteTaskIdCompleteGetWithHttpInfo(String taskId,) async {
     // ignore: prefer_const_declarations
     final path = r'/task/service_remote/{task_id}/complete'
-        .replaceAll('{task_id}', taskId);
+      .replaceAll('{task_id}', taskId);
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -183,6 +157,7 @@ class TaskServiceRemoteApi {
     final formParams = <String, String>{};
 
     const contentTypes = <String>[];
+
 
     return apiClient.invokeAPI(
       path,
@@ -200,25 +175,17 @@ class TaskServiceRemoteApi {
   /// Parameters:
   ///
   /// * [String] taskId (required):
-  Future<String?> completeTaskServiceRemoteTaskIdCompleteGet(
-    String taskId,
-  ) async {
-    final response =
-        await completeTaskServiceRemoteTaskIdCompleteGetWithHttpInfo(
-      taskId,
-    );
+  Future<String?> completeTaskServiceRemoteTaskIdCompleteGet(String taskId,) async {
+    final response = await completeTaskServiceRemoteTaskIdCompleteGetWithHttpInfo(taskId,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
     // When a remote server returns no body with a status of 204, we shall not decode it.
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty &&
-        response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(
-        await _decodeBodyBytes(response),
-        'String',
-      ) as String;
+    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'String',) as String;
+    
     }
     return null;
   }
@@ -230,10 +197,7 @@ class TaskServiceRemoteApi {
   /// Parameters:
   ///
   /// * [TaskServiceRemoteNewSchema] taskServiceRemoteNewSchema (required):
-  Future<Response>
-      createTaskServiceRemoteCreateServiceRemoteTaskPostWithHttpInfo(
-    TaskServiceRemoteNewSchema taskServiceRemoteNewSchema,
-  ) async {
+  Future<Response> createTaskServiceRemoteCreateServiceRemoteTaskPostWithHttpInfo(TaskServiceRemoteNewSchema taskServiceRemoteNewSchema,) async {
     // ignore: prefer_const_declarations
     final path = r'/task/service_remote/create_service_remote_task';
 
@@ -245,6 +209,7 @@ class TaskServiceRemoteApi {
     final formParams = <String, String>{};
 
     const contentTypes = <String>['application/json'];
+
 
     return apiClient.invokeAPI(
       path,
@@ -262,25 +227,17 @@ class TaskServiceRemoteApi {
   /// Parameters:
   ///
   /// * [TaskServiceRemoteNewSchema] taskServiceRemoteNewSchema (required):
-  Future<String?> createTaskServiceRemoteCreateServiceRemoteTaskPost(
-    TaskServiceRemoteNewSchema taskServiceRemoteNewSchema,
-  ) async {
-    final response =
-        await createTaskServiceRemoteCreateServiceRemoteTaskPostWithHttpInfo(
-      taskServiceRemoteNewSchema,
-    );
+  Future<String?> createTaskServiceRemoteCreateServiceRemoteTaskPost(TaskServiceRemoteNewSchema taskServiceRemoteNewSchema,) async {
+    final response = await createTaskServiceRemoteCreateServiceRemoteTaskPostWithHttpInfo(taskServiceRemoteNewSchema,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
     // When a remote server returns no body with a status of 204, we shall not decode it.
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty &&
-        response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(
-        await _decodeBodyBytes(response),
-        'String',
-      ) as String;
+    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'String',) as String;
+    
     }
     return null;
   }
@@ -292,12 +249,10 @@ class TaskServiceRemoteApi {
   /// Parameters:
   ///
   /// * [String] taskId (required):
-  Future<Response> loadTaskServiceRemoteTaskIdGetWithHttpInfo(
-    String taskId,
-  ) async {
+  Future<Response> loadTaskServiceRemoteTaskIdGetWithHttpInfo(String taskId,) async {
     // ignore: prefer_const_declarations
-    final path =
-        r'/task/service_remote/{task_id}'.replaceAll('{task_id}', taskId);
+    final path = r'/task/service_remote/{task_id}'
+      .replaceAll('{task_id}', taskId);
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -307,6 +262,7 @@ class TaskServiceRemoteApi {
     final formParams = <String, String>{};
 
     const contentTypes = <String>[];
+
 
     return apiClient.invokeAPI(
       path,
@@ -324,24 +280,17 @@ class TaskServiceRemoteApi {
   /// Parameters:
   ///
   /// * [String] taskId (required):
-  Future<TaskServiceRemoteSchema?> loadTaskServiceRemoteTaskIdGet(
-    String taskId,
-  ) async {
-    final response = await loadTaskServiceRemoteTaskIdGetWithHttpInfo(
-      taskId,
-    );
+  Future<TaskServiceRemoteSchema?> loadTaskServiceRemoteTaskIdGet(String taskId,) async {
+    final response = await loadTaskServiceRemoteTaskIdGetWithHttpInfo(taskId,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
     // When a remote server returns no body with a status of 204, we shall not decode it.
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty &&
-        response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(
-        await _decodeBodyBytes(response),
-        'TaskServiceRemoteSchema',
-      ) as TaskServiceRemoteSchema;
+    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'TaskServiceRemoteSchema',) as TaskServiceRemoteSchema;
+    
     }
     return null;
   }

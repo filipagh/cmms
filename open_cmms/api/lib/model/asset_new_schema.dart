@@ -34,34 +34,31 @@ class AssetNewSchema {
   List<AssetTelemetry> telemetry;
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is AssetNewSchema &&
-          other.categoryId == categoryId &&
-          other.name == name &&
-          other.description == description &&
-          other.telemetry == telemetry;
+  bool operator ==(Object other) => identical(this, other) || other is AssetNewSchema &&
+     other.categoryId == categoryId &&
+     other.name == name &&
+     other.description == description &&
+     other.telemetry == telemetry;
 
   @override
   int get hashCode =>
-      // ignore: unnecessary_parenthesis
-      (categoryId.hashCode) +
-      (name.hashCode) +
-      (description == null ? 0 : description!.hashCode) +
-      (telemetry.hashCode);
+    // ignore: unnecessary_parenthesis
+    (categoryId.hashCode) +
+    (name.hashCode) +
+    (description == null ? 0 : description!.hashCode) +
+    (telemetry.hashCode);
 
   @override
-  String toString() =>
-      'AssetNewSchema[categoryId=$categoryId, name=$name, description=$description, telemetry=$telemetry]';
+  String toString() => 'AssetNewSchema[categoryId=$categoryId, name=$name, description=$description, telemetry=$telemetry]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-    _json[r'category_id'] = categoryId;
-    _json[r'name'] = name;
+      _json[r'category_id'] = categoryId;
+      _json[r'name'] = name;
     if (description != null) {
       _json[r'description'] = description;
     }
-    _json[r'telemetry'] = telemetry;
+      _json[r'telemetry'] = telemetry;
     return _json;
   }
 

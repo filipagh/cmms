@@ -25,27 +25,26 @@ class TaskServiceRemoteNewSchema {
   String description;
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is TaskServiceRemoteNewSchema &&
-          other.stationId == stationId &&
-          other.name == name &&
-          other.description == description;
+  bool operator ==(Object other) => identical(this, other) || other is TaskServiceRemoteNewSchema &&
+     other.stationId == stationId &&
+     other.name == name &&
+     other.description == description;
 
   @override
   int get hashCode =>
-      // ignore: unnecessary_parenthesis
-      (stationId.hashCode) + (name.hashCode) + (description.hashCode);
+    // ignore: unnecessary_parenthesis
+    (stationId.hashCode) +
+    (name.hashCode) +
+    (description.hashCode);
 
   @override
-  String toString() =>
-      'TaskServiceRemoteNewSchema[stationId=$stationId, name=$name, description=$description]';
+  String toString() => 'TaskServiceRemoteNewSchema[stationId=$stationId, name=$name, description=$description]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-    _json[r'station_id'] = stationId;
-    _json[r'name'] = name;
-    _json[r'description'] = description;
+      _json[r'station_id'] = stationId;
+      _json[r'name'] = name;
+      _json[r'description'] = description;
     return _json;
   }
 
@@ -61,10 +60,8 @@ class TaskServiceRemoteNewSchema {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key),
-              'Required key "TaskServiceRemoteNewSchema[$key]" is missing from JSON.');
-          assert(json[key] != null,
-              'Required key "TaskServiceRemoteNewSchema[$key]" has a null value in JSON.');
+          assert(json.containsKey(key), 'Required key "TaskServiceRemoteNewSchema[$key]" is missing from JSON.');
+          assert(json[key] != null, 'Required key "TaskServiceRemoteNewSchema[$key]" has a null value in JSON.');
         });
         return true;
       }());
@@ -78,10 +75,7 @@ class TaskServiceRemoteNewSchema {
     return null;
   }
 
-  static List<TaskServiceRemoteNewSchema>? listFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static List<TaskServiceRemoteNewSchema>? listFromJson(dynamic json, {bool growable = false,}) {
     final result = <TaskServiceRemoteNewSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -109,18 +103,12 @@ class TaskServiceRemoteNewSchema {
   }
 
   // maps a json object with a list of TaskServiceRemoteNewSchema-objects as value to a dart map
-  static Map<String, List<TaskServiceRemoteNewSchema>> mapListFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static Map<String, List<TaskServiceRemoteNewSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<TaskServiceRemoteNewSchema>>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = TaskServiceRemoteNewSchema.listFromJson(
-          entry.value,
-          growable: growable,
-        );
+        final value = TaskServiceRemoteNewSchema.listFromJson(entry.value, growable: growable,);
         if (value != null) {
           map[entry.key] = value;
         }

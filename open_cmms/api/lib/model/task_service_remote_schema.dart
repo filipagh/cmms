@@ -43,40 +43,37 @@ class TaskServiceRemoteSchema {
   DateTime? finishedAt;
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is TaskServiceRemoteSchema &&
-          other.stationId == stationId &&
-          other.name == name &&
-          other.description == description &&
-          other.id == id &&
-          other.state == state &&
-          other.createdAt == createdAt &&
-          other.finishedAt == finishedAt;
+  bool operator ==(Object other) => identical(this, other) || other is TaskServiceRemoteSchema &&
+     other.stationId == stationId &&
+     other.name == name &&
+     other.description == description &&
+     other.id == id &&
+     other.state == state &&
+     other.createdAt == createdAt &&
+     other.finishedAt == finishedAt;
 
   @override
   int get hashCode =>
-      // ignore: unnecessary_parenthesis
-      (stationId.hashCode) +
-      (name.hashCode) +
-      (description.hashCode) +
-      (id.hashCode) +
-      (state.hashCode) +
-      (createdAt.hashCode) +
-      (finishedAt == null ? 0 : finishedAt!.hashCode);
+    // ignore: unnecessary_parenthesis
+    (stationId.hashCode) +
+    (name.hashCode) +
+    (description.hashCode) +
+    (id.hashCode) +
+    (state.hashCode) +
+    (createdAt.hashCode) +
+    (finishedAt == null ? 0 : finishedAt!.hashCode);
 
   @override
-  String toString() =>
-      'TaskServiceRemoteSchema[stationId=$stationId, name=$name, description=$description, id=$id, state=$state, createdAt=$createdAt, finishedAt=$finishedAt]';
+  String toString() => 'TaskServiceRemoteSchema[stationId=$stationId, name=$name, description=$description, id=$id, state=$state, createdAt=$createdAt, finishedAt=$finishedAt]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-    _json[r'station_id'] = stationId;
-    _json[r'name'] = name;
-    _json[r'description'] = description;
-    _json[r'id'] = id;
-    _json[r'state'] = state;
-    _json[r'created_at'] = createdAt.toUtc().toIso8601String();
+      _json[r'station_id'] = stationId;
+      _json[r'name'] = name;
+      _json[r'description'] = description;
+      _json[r'id'] = id;
+      _json[r'state'] = state;
+      _json[r'created_at'] = createdAt.toUtc().toIso8601String();
     if (finishedAt != null) {
       _json[r'finished_at'] = finishedAt!.toUtc().toIso8601String();
     }
@@ -95,10 +92,8 @@ class TaskServiceRemoteSchema {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key),
-              'Required key "TaskServiceRemoteSchema[$key]" is missing from JSON.');
-          assert(json[key] != null,
-              'Required key "TaskServiceRemoteSchema[$key]" has a null value in JSON.');
+          assert(json.containsKey(key), 'Required key "TaskServiceRemoteSchema[$key]" is missing from JSON.');
+          assert(json[key] != null, 'Required key "TaskServiceRemoteSchema[$key]" has a null value in JSON.');
         });
         return true;
       }());
@@ -116,10 +111,7 @@ class TaskServiceRemoteSchema {
     return null;
   }
 
-  static List<TaskServiceRemoteSchema>? listFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static List<TaskServiceRemoteSchema>? listFromJson(dynamic json, {bool growable = false,}) {
     final result = <TaskServiceRemoteSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -147,18 +139,12 @@ class TaskServiceRemoteSchema {
   }
 
   // maps a json object with a list of TaskServiceRemoteSchema-objects as value to a dart map
-  static Map<String, List<TaskServiceRemoteSchema>> mapListFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static Map<String, List<TaskServiceRemoteSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<TaskServiceRemoteSchema>>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = TaskServiceRemoteSchema.listFromJson(
-          entry.value,
-          growable: growable,
-        );
+        final value = TaskServiceRemoteSchema.listFromJson(entry.value, growable: growable,);
         if (value != null) {
           map[entry.key] = value;
         }

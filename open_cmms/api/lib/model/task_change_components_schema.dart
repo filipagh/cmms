@@ -43,47 +43,44 @@ class TaskChangeComponentsSchema {
   List<RemoveComponentRequestSchema> remove;
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is TaskChangeComponentsSchema &&
-          other.stationId == stationId &&
-          other.name == name &&
-          other.description == description &&
-          other.warrantyPeriodDays == warrantyPeriodDays &&
-          other.id == id &&
-          other.state == state &&
-          other.createdAt == createdAt &&
-          other.add == add &&
-          other.remove == remove;
+  bool operator ==(Object other) => identical(this, other) || other is TaskChangeComponentsSchema &&
+     other.stationId == stationId &&
+     other.name == name &&
+     other.description == description &&
+     other.warrantyPeriodDays == warrantyPeriodDays &&
+     other.id == id &&
+     other.state == state &&
+     other.createdAt == createdAt &&
+     other.add == add &&
+     other.remove == remove;
 
   @override
   int get hashCode =>
-      // ignore: unnecessary_parenthesis
-      (stationId.hashCode) +
-      (name.hashCode) +
-      (description.hashCode) +
-      (warrantyPeriodDays.hashCode) +
-      (id.hashCode) +
-      (state.hashCode) +
-      (createdAt.hashCode) +
-      (add.hashCode) +
-      (remove.hashCode);
+    // ignore: unnecessary_parenthesis
+    (stationId.hashCode) +
+    (name.hashCode) +
+    (description.hashCode) +
+    (warrantyPeriodDays.hashCode) +
+    (id.hashCode) +
+    (state.hashCode) +
+    (createdAt.hashCode) +
+    (add.hashCode) +
+    (remove.hashCode);
 
   @override
-  String toString() =>
-      'TaskChangeComponentsSchema[stationId=$stationId, name=$name, description=$description, warrantyPeriodDays=$warrantyPeriodDays, id=$id, state=$state, createdAt=$createdAt, add=$add, remove=$remove]';
+  String toString() => 'TaskChangeComponentsSchema[stationId=$stationId, name=$name, description=$description, warrantyPeriodDays=$warrantyPeriodDays, id=$id, state=$state, createdAt=$createdAt, add=$add, remove=$remove]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-    _json[r'station_id'] = stationId;
-    _json[r'name'] = name;
-    _json[r'description'] = description;
-    _json[r'warranty_period_days'] = warrantyPeriodDays;
-    _json[r'id'] = id;
-    _json[r'state'] = state;
-    _json[r'created_at'] = createdAt.toUtc().toIso8601String();
-    _json[r'add'] = add;
-    _json[r'remove'] = remove;
+      _json[r'station_id'] = stationId;
+      _json[r'name'] = name;
+      _json[r'description'] = description;
+      _json[r'warranty_period_days'] = warrantyPeriodDays;
+      _json[r'id'] = id;
+      _json[r'state'] = state;
+      _json[r'created_at'] = createdAt.toUtc().toIso8601String();
+      _json[r'add'] = add;
+      _json[r'remove'] = remove;
     return _json;
   }
 

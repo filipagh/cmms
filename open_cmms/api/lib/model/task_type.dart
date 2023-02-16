@@ -34,8 +34,7 @@ class TaskType {
     onSiteService,
   ];
 
-  static TaskType? fromJson(dynamic value) =>
-      TaskTypeTypeTransformer().decode(value);
+  static TaskType? fromJson(dynamic value) => TaskTypeTypeTransformer().decode(value);
 
   static List<TaskType>? listFromJson(dynamic json, {bool growable = false,}) {
     final result = <TaskType>[];
@@ -71,12 +70,9 @@ class TaskTypeTypeTransformer {
   TaskType? decode(dynamic data, {bool allowNull = true}) {
     if (data != null) {
       switch (data.toString()) {
-        case r'component_change':
-          return TaskType.componentChange;
-        case r'remote_service':
-          return TaskType.remoteService;
-        case r'on_site_service':
-          return TaskType.onSiteService;
+        case r'component_change': return TaskType.componentChange;
+        case r'remote_service': return TaskType.remoteService;
+        case r'on_site_service': return TaskType.onSiteService;
         default:
           if (!allowNull) {
             throw ArgumentError('Unknown enum value to decode: $data');

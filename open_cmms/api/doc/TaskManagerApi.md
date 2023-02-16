@@ -7,17 +7,17 @@ import 'package:BackendAPI/api.dart';
 
 All URIs are relative to *http://localhost*
 
- Method                                                                                                                                               | HTTP request                                        | Description                
-------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------|----------------------------
- [**allocateComponentsTaskManagerTaskIdAllocateComponentsGet**](TaskManagerApi.md#allocatecomponentstaskmanagertaskidallocatecomponentsget)           | **GET** /task-manager/{task_id}/allocate_components | Allocate Components        
- [**cancelTaskTaskManagerTaskIdDelete**](TaskManagerApi.md#canceltasktaskmanagertaskiddelete)                                                         | **DELETE** /task-manager/{task_id}                  | Cancel Task                
- [**changeDetailsTaskManagerTaskIdChangeDetailsPost**](TaskManagerApi.md#changedetailstaskmanagertaskidchangedetailspost)                             | **POST** /task-manager/{task_id}/change_details     | Change Details             
- [**completeTaskItemsTaskManagerTaskIdCompeteTaskItmesPost**](TaskManagerApi.md#completetaskitemstaskmanagertaskidcompetetaskitmespost)               | **POST** /task-manager/{task_id}/compete_task_itmes | Complete Task Items        
- [**createComponentTaskTaskManagerCreateChangeComponentTaskPost**](TaskManagerApi.md#createcomponenttasktaskmanagercreatechangecomponenttaskpost)     | **POST** /task-manager/create_change_component_task | Create Component Task      
- [**createServiceRemoteTaskTaskManagerCreateServiceRemoteTaskPost**](TaskManagerApi.md#createserviceremotetasktaskmanagercreateserviceremotetaskpost) | **POST** /task-manager/create_service_remote_task   | Create Service Remote Task 
- [**loadByIdTaskManagerGetTaskGet**](TaskManagerApi.md#loadbyidtaskmanagergettaskget)                                                                 | **GET** /task-manager/get_task                      | Load By Id                 
- [**loadTaskManagerGetComponentTaskTaskIdGet**](TaskManagerApi.md#loadtaskmanagergetcomponenttasktaskidget)                                           | **GET** /task-manager/get_component_task/{task_id}  | Load                       
- [**loadTaskManagerGetTasksGet**](TaskManagerApi.md#loadtaskmanagergettasksget)                                                                       | **GET** /task-manager/get_tasks                     | Load                       
+Method | HTTP request | Description
+------------- | ------------- | -------------
+[**allocateComponentsTaskManagerTaskIdAllocateComponentsGet**](TaskManagerApi.md#allocatecomponentstaskmanagertaskidallocatecomponentsget) | **GET** /task-manager/{task_id}/allocate_components | Allocate Components
+[**cancelTaskTaskManagerTaskIdDelete**](TaskManagerApi.md#canceltasktaskmanagertaskiddelete) | **DELETE** /task-manager/{task_id} | Cancel Task
+[**changeDetailsTaskManagerTaskIdChangeDetailsPost**](TaskManagerApi.md#changedetailstaskmanagertaskidchangedetailspost) | **POST** /task-manager/{task_id}/change_details | Change Details
+[**completeTaskItemsTaskManagerTaskIdCompeteTaskItmesPost**](TaskManagerApi.md#completetaskitemstaskmanagertaskidcompetetaskitmespost) | **POST** /task-manager/{task_id}/compete_task_itmes | Complete Task Items
+[**createComponentTaskTaskManagerCreateChangeComponentTaskPost**](TaskManagerApi.md#createcomponenttasktaskmanagercreatechangecomponenttaskpost) | **POST** /task-manager/create_change_component_task | Create Component Task
+[**createServiceRemoteTaskTaskManagerCreateServiceRemoteTaskPost**](TaskManagerApi.md#createserviceremotetasktaskmanagercreateserviceremotetaskpost) | **POST** /task-manager/create_service_remote_task | Create Service Remote Task
+[**loadByIdTaskManagerGetTaskGet**](TaskManagerApi.md#loadbyidtaskmanagergettaskget) | **GET** /task-manager/get_task | Load By Id
+[**loadTaskManagerGetComponentTaskTaskIdGet**](TaskManagerApi.md#loadtaskmanagergetcomponenttasktaskidget) | **GET** /task-manager/get_component_task/{task_id} | Load
+[**loadTaskManagerGetTasksGet**](TaskManagerApi.md#loadtaskmanagergettasksget) | **GET** /task-manager/get_tasks | Load
 
 
 # **allocateComponentsTaskManagerTaskIdAllocateComponentsGet**
@@ -83,9 +83,9 @@ try {
 
 ### Parameters
 
- Name       | Type       | Description | Notes 
-------------|------------|-------------|-------
- **taskId** | **String** |             |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **taskId** | **String**|  | 
 
 ### Return type
 
@@ -97,8 +97,8 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: text/plain, application/json
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -126,11 +126,11 @@ try {
 
 ### Parameters
 
- Name               | Type       | Description | Notes      
---------------------|------------|-------------|------------
- **taskId**         | **String** |             |
- **newName**        | **String** |             | [optional] 
- **newDescription** | **String** |             | [optional] 
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **taskId** | **String**|  | 
+ **newName** | **String**|  | [optional] 
+ **newDescription** | **String**|  | [optional] 
 
 ### Return type
 
@@ -142,8 +142,8 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: text/plain, application/json
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -170,10 +170,10 @@ try {
 
 ### Parameters
 
- Name                             | Type                                                                      | Description | Notes 
-----------------------------------|---------------------------------------------------------------------------|-------------|-------
- **taskId**                       | **String**                                                                |             |
- **taskChangeComponentRequestId** | [**List<TaskChangeComponentRequestId>**](TaskChangeComponentRequestId.md) |             |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **taskId** | **String**|  | 
+ **taskChangeComponentRequestId** | [**List<TaskChangeComponentRequestId>**](TaskChangeComponentRequestId.md)|  | 
 
 ### Return type
 
@@ -185,8 +185,8 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: application/json
-- **Accept**: text/plain, application/json
+ - **Content-Type**: application/json
+ - **Accept**: text/plain, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -212,9 +212,9 @@ try {
 
 ### Parameters
 
- Name                              | Type                                                                  | Description | Notes 
------------------------------------|-----------------------------------------------------------------------|-------------|-------
- **taskChangeComponentsNewSchema** | [**TaskChangeComponentsNewSchema**](TaskChangeComponentsNewSchema.md) |             |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **taskChangeComponentsNewSchema** | [**TaskChangeComponentsNewSchema**](TaskChangeComponentsNewSchema.md)|  | 
 
 ### Return type
 
@@ -226,8 +226,8 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: application/json
-- **Accept**: application/json
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -253,9 +253,9 @@ try {
 
 ### Parameters
 
- Name                           | Type                                                            | Description | Notes 
---------------------------------|-----------------------------------------------------------------|-------------|-------
- **taskServiceRemoteNewSchema** | [**TaskServiceRemoteNewSchema**](TaskServiceRemoteNewSchema.md) |             |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **taskServiceRemoteNewSchema** | [**TaskServiceRemoteNewSchema**](TaskServiceRemoteNewSchema.md)|  | 
 
 ### Return type
 
@@ -267,8 +267,8 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: application/json
-- **Accept**: application/json
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

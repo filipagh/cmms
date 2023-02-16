@@ -7,13 +7,13 @@ import 'package:BackendAPI/api.dart';
 
 All URIs are relative to *http://localhost*
 
- Method                                                                                                                                     | HTTP request                                               | Description    
---------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------|----------------
- [**cancelTaskServiceOnSiteTaskIdDelete**](TaskServiceOnSiteApi.md#canceltaskserviceonsitetaskiddelete)                                     | **DELETE** /task/service_on_site/{task_id}                 | Cancel         
- [**changeDetailsTaskServiceOnSiteTaskIdChangeDetailsPost**](TaskServiceOnSiteApi.md#changedetailstaskserviceonsitetaskidchangedetailspost) | **POST** /task/service_on_site/{task_id}/change_details    | Change Details 
- [**completeTaskServiceOnSiteTaskIdCompleteGet**](TaskServiceOnSiteApi.md#completetaskserviceonsitetaskidcompleteget)                       | **GET** /task/service_on_site/{task_id}/complete           | Complete       
- [**createTaskServiceOnSiteCreateServiceOnSideTaskPost**](TaskServiceOnSiteApi.md#createtaskserviceonsitecreateserviceonsidetaskpost)       | **POST** /task/service_on_site/create_service_on_side_task | Create         
- [**loadTaskServiceOnSiteTaskIdGet**](TaskServiceOnSiteApi.md#loadtaskserviceonsitetaskidget)                                               | **GET** /task/service_on_site/{task_id}                    | Load           
+Method | HTTP request | Description
+------------- | ------------- | -------------
+[**cancelTaskServiceOnSiteTaskIdDelete**](TaskServiceOnSiteApi.md#canceltaskserviceonsitetaskiddelete) | **DELETE** /task/service_on_site/{task_id} | Cancel
+[**changeDetailsTaskServiceOnSiteTaskIdChangeDetailsPost**](TaskServiceOnSiteApi.md#changedetailstaskserviceonsitetaskidchangedetailspost) | **POST** /task/service_on_site/{task_id}/change_details | Change Details
+[**completeTaskServiceOnSiteTaskIdCompleteGet**](TaskServiceOnSiteApi.md#completetaskserviceonsitetaskidcompleteget) | **GET** /task/service_on_site/{task_id}/complete | Complete
+[**createTaskServiceOnSiteCreateServiceOnSideTaskPost**](TaskServiceOnSiteApi.md#createtaskserviceonsitecreateserviceonsidetaskpost) | **POST** /task/service_on_site/create_service_on_side_task | Create
+[**loadTaskServiceOnSiteTaskIdGet**](TaskServiceOnSiteApi.md#loadtaskserviceonsitetaskidget) | **GET** /task/service_on_site/{task_id} | Load
 
 
 # **cancelTaskServiceOnSiteTaskIdDelete**
@@ -38,9 +38,9 @@ try {
 
 ### Parameters
 
- Name       | Type       | Description | Notes 
-------------|------------|-------------|-------
- **taskId** | **String** |             |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **taskId** | **String**|  | 
 
 ### Return type
 
@@ -52,8 +52,8 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: text/plain, application/json
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -81,11 +81,11 @@ try {
 
 ### Parameters
 
- Name               | Type       | Description | Notes      
---------------------|------------|-------------|------------
- **taskId**         | **String** |             |
- **newName**        | **String** |             | [optional] 
- **newDescription** | **String** |             | [optional] 
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **taskId** | **String**|  | 
+ **newName** | **String**|  | [optional] 
+ **newDescription** | **String**|  | [optional] 
 
 ### Return type
 
@@ -97,8 +97,8 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: text/plain, application/json
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -124,9 +124,9 @@ try {
 
 ### Parameters
 
- Name       | Type       | Description | Notes 
-------------|------------|-------------|-------
- **taskId** | **String** |             |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **taskId** | **String**|  | 
 
 ### Return type
 
@@ -138,8 +138,8 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: text/plain, application/json
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -165,9 +165,9 @@ try {
 
 ### Parameters
 
- Name                           | Type                                                            | Description | Notes 
---------------------------------|-----------------------------------------------------------------|-------------|-------
- **taskServiceOnSiteNewSchema** | [**TaskServiceOnSiteNewSchema**](TaskServiceOnSiteNewSchema.md) |             |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **taskServiceOnSiteNewSchema** | [**TaskServiceOnSiteNewSchema**](TaskServiceOnSiteNewSchema.md)|  | 
 
 ### Return type
 
@@ -179,8 +179,8 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: application/json
-- **Accept**: application/json
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -206,9 +206,9 @@ try {
 
 ### Parameters
 
- Name       | Type       | Description | Notes 
-------------|------------|-------------|-------
- **taskId** | **String** |             |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **taskId** | **String**|  | 
 
 ### Return type
 
@@ -220,8 +220,8 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: application/json
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

@@ -25,27 +25,26 @@ class TaskServiceOnSiteNewSchema {
   String description;
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is TaskServiceOnSiteNewSchema &&
-          other.stationId == stationId &&
-          other.name == name &&
-          other.description == description;
+  bool operator ==(Object other) => identical(this, other) || other is TaskServiceOnSiteNewSchema &&
+     other.stationId == stationId &&
+     other.name == name &&
+     other.description == description;
 
   @override
   int get hashCode =>
-      // ignore: unnecessary_parenthesis
-      (stationId.hashCode) + (name.hashCode) + (description.hashCode);
+    // ignore: unnecessary_parenthesis
+    (stationId.hashCode) +
+    (name.hashCode) +
+    (description.hashCode);
 
   @override
-  String toString() =>
-      'TaskServiceOnSiteNewSchema[stationId=$stationId, name=$name, description=$description]';
+  String toString() => 'TaskServiceOnSiteNewSchema[stationId=$stationId, name=$name, description=$description]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-    _json[r'station_id'] = stationId;
-    _json[r'name'] = name;
-    _json[r'description'] = description;
+      _json[r'station_id'] = stationId;
+      _json[r'name'] = name;
+      _json[r'description'] = description;
     return _json;
   }
 
@@ -61,10 +60,8 @@ class TaskServiceOnSiteNewSchema {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key),
-              'Required key "TaskServiceOnSiteNewSchema[$key]" is missing from JSON.');
-          assert(json[key] != null,
-              'Required key "TaskServiceOnSiteNewSchema[$key]" has a null value in JSON.');
+          assert(json.containsKey(key), 'Required key "TaskServiceOnSiteNewSchema[$key]" is missing from JSON.');
+          assert(json[key] != null, 'Required key "TaskServiceOnSiteNewSchema[$key]" has a null value in JSON.');
         });
         return true;
       }());
@@ -78,10 +75,7 @@ class TaskServiceOnSiteNewSchema {
     return null;
   }
 
-  static List<TaskServiceOnSiteNewSchema>? listFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static List<TaskServiceOnSiteNewSchema>? listFromJson(dynamic json, {bool growable = false,}) {
     final result = <TaskServiceOnSiteNewSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -109,18 +103,12 @@ class TaskServiceOnSiteNewSchema {
   }
 
   // maps a json object with a list of TaskServiceOnSiteNewSchema-objects as value to a dart map
-  static Map<String, List<TaskServiceOnSiteNewSchema>> mapListFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static Map<String, List<TaskServiceOnSiteNewSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<TaskServiceOnSiteNewSchema>>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = TaskServiceOnSiteNewSchema.listFromJson(
-          entry.value,
-          growable: growable,
-        );
+        final value = TaskServiceOnSiteNewSchema.listFromJson(entry.value, growable: growable,);
         if (value != null) {
           map[entry.key] = value;
         }

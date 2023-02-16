@@ -22,24 +22,23 @@ class TelemetryOptions {
   List<AssetTelemetryValue> values;
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is TelemetryOptions &&
-          other.types == types &&
-          other.values == values;
+  bool operator ==(Object other) => identical(this, other) || other is TelemetryOptions &&
+     other.types == types &&
+     other.values == values;
 
   @override
   int get hashCode =>
-      // ignore: unnecessary_parenthesis
-      (types.hashCode) + (values.hashCode);
+    // ignore: unnecessary_parenthesis
+    (types.hashCode) +
+    (values.hashCode);
 
   @override
   String toString() => 'TelemetryOptions[types=$types, values=$values]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-    _json[r'types'] = types;
-    _json[r'values'] = values;
+      _json[r'types'] = types;
+      _json[r'values'] = values;
     return _json;
   }
 
@@ -55,10 +54,8 @@ class TelemetryOptions {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key),
-              'Required key "TelemetryOptions[$key]" is missing from JSON.');
-          assert(json[key] != null,
-              'Required key "TelemetryOptions[$key]" has a null value in JSON.');
+          assert(json.containsKey(key), 'Required key "TelemetryOptions[$key]" is missing from JSON.');
+          assert(json[key] != null, 'Required key "TelemetryOptions[$key]" has a null value in JSON.');
         });
         return true;
       }());
@@ -71,10 +68,7 @@ class TelemetryOptions {
     return null;
   }
 
-  static List<TelemetryOptions>? listFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static List<TelemetryOptions>? listFromJson(dynamic json, {bool growable = false,}) {
     final result = <TelemetryOptions>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -102,18 +96,12 @@ class TelemetryOptions {
   }
 
   // maps a json object with a list of TelemetryOptions-objects as value to a dart map
-  static Map<String, List<TelemetryOptions>> mapListFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static Map<String, List<TelemetryOptions>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<TelemetryOptions>>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = TelemetryOptions.listFromJson(
-          entry.value,
-          growable: growable,
-        );
+        final value = TelemetryOptions.listFromJson(entry.value, growable: growable,);
         if (value != null) {
           map[entry.key] = value;
         }

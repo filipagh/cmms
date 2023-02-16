@@ -22,22 +22,23 @@ class AssetTelemetry {
   AssetTelemetryValue value;
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is AssetTelemetry && other.type == type && other.value == value;
+  bool operator ==(Object other) => identical(this, other) || other is AssetTelemetry &&
+     other.type == type &&
+     other.value == value;
 
   @override
   int get hashCode =>
-      // ignore: unnecessary_parenthesis
-      (type.hashCode) + (value.hashCode);
+    // ignore: unnecessary_parenthesis
+    (type.hashCode) +
+    (value.hashCode);
 
   @override
   String toString() => 'AssetTelemetry[type=$type, value=$value]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-    _json[r'type'] = type;
-    _json[r'value'] = value;
+      _json[r'type'] = type;
+      _json[r'value'] = value;
     return _json;
   }
 
@@ -53,10 +54,8 @@ class AssetTelemetry {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key),
-              'Required key "AssetTelemetry[$key]" is missing from JSON.');
-          assert(json[key] != null,
-              'Required key "AssetTelemetry[$key]" has a null value in JSON.');
+          assert(json.containsKey(key), 'Required key "AssetTelemetry[$key]" is missing from JSON.');
+          assert(json[key] != null, 'Required key "AssetTelemetry[$key]" has a null value in JSON.');
         });
         return true;
       }());
@@ -69,10 +68,7 @@ class AssetTelemetry {
     return null;
   }
 
-  static List<AssetTelemetry>? listFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static List<AssetTelemetry>? listFromJson(dynamic json, {bool growable = false,}) {
     final result = <AssetTelemetry>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -100,18 +96,12 @@ class AssetTelemetry {
   }
 
   // maps a json object with a list of AssetTelemetry-objects as value to a dart map
-  static Map<String, List<AssetTelemetry>> mapListFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static Map<String, List<AssetTelemetry>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<AssetTelemetry>>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = AssetTelemetry.listFromJson(
-          entry.value,
-          growable: growable,
-        );
+        final value = AssetTelemetry.listFromJson(entry.value, growable: growable,);
         if (value != null) {
           map[entry.key] = value;
         }

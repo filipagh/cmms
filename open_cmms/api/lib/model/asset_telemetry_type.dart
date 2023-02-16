@@ -31,8 +31,7 @@ class AssetTelemetryType {
   static const WIND_DIRECTION = AssetTelemetryType._(r'WIND_DIRECTION');
   static const RAINFALL_INTENSITY = AssetTelemetryType._(r'RAINFALL_INTENSITY');
   static const WIND_GUST_SPEED = AssetTelemetryType._(r'WIND_GUST_SPEED');
-  static const WIND_GUST_DIRECTION =
-      AssetTelemetryType._(r'WIND_GUST_DIRECTION');
+  static const WIND_GUST_DIRECTION = AssetTelemetryType._(r'WIND_GUST_DIRECTION');
   static const AIR_PRESSURE = AssetTelemetryType._(r'AIR_PRESSURE');
   static const AIR_HUMIDITY = AssetTelemetryType._(r'AIR_HUMIDITY');
 
@@ -51,13 +50,9 @@ class AssetTelemetryType {
     AIR_HUMIDITY,
   ];
 
-  static AssetTelemetryType? fromJson(dynamic value) =>
-      AssetTelemetryTypeTypeTransformer().decode(value);
+  static AssetTelemetryType? fromJson(dynamic value) => AssetTelemetryTypeTypeTransformer().decode(value);
 
-  static List<AssetTelemetryType>? listFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static List<AssetTelemetryType>? listFromJson(dynamic json, {bool growable = false,}) {
     final result = <AssetTelemetryType>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -74,8 +69,7 @@ class AssetTelemetryType {
 /// Transformation class that can [encode] an instance of [AssetTelemetryType] to String,
 /// and [decode] dynamic data back to [AssetTelemetryType].
 class AssetTelemetryTypeTypeTransformer {
-  factory AssetTelemetryTypeTypeTransformer() =>
-      _instance ??= const AssetTelemetryTypeTypeTransformer._();
+  factory AssetTelemetryTypeTypeTransformer() => _instance ??= const AssetTelemetryTypeTypeTransformer._();
 
   const AssetTelemetryTypeTypeTransformer._();
 
@@ -92,28 +86,17 @@ class AssetTelemetryTypeTypeTransformer {
   AssetTelemetryType? decode(dynamic data, {bool allowNull = true}) {
     if (data != null) {
       switch (data.toString()) {
-        case r'AIR_TEMPERATURE':
-          return AssetTelemetryType.AIR_TEMPERATURE;
-        case r'GROUND_TEMPERATURE':
-          return AssetTelemetryType.GROUND_TEMPERATURE;
-        case r'ROAD_TEMPERATURE':
-          return AssetTelemetryType.ROAD_TEMPERATURE;
-        case r'VISIBILITY':
-          return AssetTelemetryType.VISIBILITY;
-        case r'WIND_SPEED':
-          return AssetTelemetryType.WIND_SPEED;
-        case r'WIND_DIRECTION':
-          return AssetTelemetryType.WIND_DIRECTION;
-        case r'RAINFALL_INTENSITY':
-          return AssetTelemetryType.RAINFALL_INTENSITY;
-        case r'WIND_GUST_SPEED':
-          return AssetTelemetryType.WIND_GUST_SPEED;
-        case r'WIND_GUST_DIRECTION':
-          return AssetTelemetryType.WIND_GUST_DIRECTION;
-        case r'AIR_PRESSURE':
-          return AssetTelemetryType.AIR_PRESSURE;
-        case r'AIR_HUMIDITY':
-          return AssetTelemetryType.AIR_HUMIDITY;
+        case r'AIR_TEMPERATURE': return AssetTelemetryType.AIR_TEMPERATURE;
+        case r'GROUND_TEMPERATURE': return AssetTelemetryType.GROUND_TEMPERATURE;
+        case r'ROAD_TEMPERATURE': return AssetTelemetryType.ROAD_TEMPERATURE;
+        case r'VISIBILITY': return AssetTelemetryType.VISIBILITY;
+        case r'WIND_SPEED': return AssetTelemetryType.WIND_SPEED;
+        case r'WIND_DIRECTION': return AssetTelemetryType.WIND_DIRECTION;
+        case r'RAINFALL_INTENSITY': return AssetTelemetryType.RAINFALL_INTENSITY;
+        case r'WIND_GUST_SPEED': return AssetTelemetryType.WIND_GUST_SPEED;
+        case r'WIND_GUST_DIRECTION': return AssetTelemetryType.WIND_GUST_DIRECTION;
+        case r'AIR_PRESSURE': return AssetTelemetryType.AIR_PRESSURE;
+        case r'AIR_HUMIDITY': return AssetTelemetryType.AIR_HUMIDITY;
         default:
           if (!allowNull) {
             throw ArgumentError('Unknown enum value to decode: $data');

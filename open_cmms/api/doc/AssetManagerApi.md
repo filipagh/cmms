@@ -7,13 +7,13 @@ import 'package:BackendAPI/api.dart';
 
 All URIs are relative to *http://localhost*
 
- Method                                                                                                                          | HTTP request                            | Description           
----------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------|-----------------------
- [**createNewAssetAssetManagerNewAssetPost**](AssetManagerApi.md#createnewassetassetmanagernewassetpost)                         | **POST** /assetManager/newAsset         | Create New Asset      
- [**createNewCategoryAssetManagerNewCategoryPost**](AssetManagerApi.md#createnewcategoryassetmanagernewcategorypost)             | **POST** /assetManager/newCategory      | Create New Category   
- [**getAssetCategoriesAssetManagerAssetCategoriesGet**](AssetManagerApi.md#getassetcategoriesassetmanagerassetcategoriesget)     | **GET** /assetManager/asset-categories  | Get Asset Categories  
- [**getAssetsAssetManagerAssetsGet**](AssetManagerApi.md#getassetsassetmanagerassetsget)                                         | **GET** /assetManager/assets            | Get Assets            
- [**getTelemetryOptionsAssetManagerTelemetryOptionsGet**](AssetManagerApi.md#gettelemetryoptionsassetmanagertelemetryoptionsget) | **GET** /assetManager/telemetry_options | Get Telemetry Options 
+Method | HTTP request | Description
+------------- | ------------- | -------------
+[**createNewAssetAssetManagerNewAssetPost**](AssetManagerApi.md#createnewassetassetmanagernewassetpost) | **POST** /assetManager/newAsset | Create New Asset
+[**createNewCategoryAssetManagerNewCategoryPost**](AssetManagerApi.md#createnewcategoryassetmanagernewcategorypost) | **POST** /assetManager/newCategory | Create New Category
+[**getAssetCategoriesAssetManagerAssetCategoriesGet**](AssetManagerApi.md#getassetcategoriesassetmanagerassetcategoriesget) | **GET** /assetManager/asset-categories | Get Asset Categories
+[**getAssetsAssetManagerAssetsGet**](AssetManagerApi.md#getassetsassetmanagerassetsget) | **GET** /assetManager/assets | Get Assets
+[**getTelemetryOptionsAssetManagerTelemetryOptionsGet**](AssetManagerApi.md#gettelemetryoptionsassetmanagertelemetryoptionsget) | **GET** /assetManager/telemetry_options | Get Telemetry Options
 
 
 # **createNewAssetAssetManagerNewAssetPost**
@@ -167,8 +167,8 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: application/json
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -204,8 +204,8 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: application/json
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

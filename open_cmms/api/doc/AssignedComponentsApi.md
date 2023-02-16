@@ -15,8 +15,7 @@ Method | HTTP request | Description
 
 
 # **createInstalledComponentAssignedComponentsCreateInstalledComponentPost**
-> List<String> createInstalledComponentAssignedComponentsCreateInstalledComponentPost(warrantyPeriodDays,
-> assignedComponentNewSchema)
+> List<String> createInstalledComponentAssignedComponentsCreateInstalledComponentPost(warrantyPeriodDays, assignedComponentNewSchema)
 
 Create Installed Component
 
@@ -38,10 +37,10 @@ try {
 
 ### Parameters
 
- Name                           | Type                                                                  | Description | Notes 
---------------------------------|-----------------------------------------------------------------------|-------------|-------
- **warrantyPeriodDays**         | **int**                                                               |             |
- **assignedComponentNewSchema** | [**List<AssignedComponentNewSchema>**](AssignedComponentNewSchema.md) |             |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **warrantyPeriodDays** | **int**|  | 
+ **assignedComponentNewSchema** | [**List<AssignedComponentNewSchema>**](AssignedComponentNewSchema.md)|  | 
 
 ### Return type
 
@@ -82,7 +81,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **stationId** | **String**|  | 
+ **stationId** | **String**|  | [optional] 
 
 ### Return type
 

@@ -27,6 +27,9 @@ doc/RemoveComponentRequestSchema.md
 doc/RoadSegmentManagerApi.md
 doc/RoadSegmentNewSchema.md
 doc/RoadSegmentSchema.md
+doc/ServiceContractApi.md
+doc/ServiceContractNewSchema.md
+doc/ServiceContractSchema.md
 doc/StationApi.md
 doc/StationIdSchema.md
 doc/StationNewSchema.md
@@ -58,6 +61,7 @@ lib/api/asset_manager_api.dart
 lib/api/assigned_components_api.dart
 lib/api/default_api.dart
 lib/api/road_segment_manager_api.dart
+lib/api/service_contract_api.dart
 lib/api/station_api.dart
 lib/api/storage_manager_api.dart
 lib/api/task_manager_api.dart
@@ -91,6 +95,8 @@ lib/model/http_validation_error.dart
 lib/model/remove_component_request_schema.dart
 lib/model/road_segment_new_schema.dart
 lib/model/road_segment_schema.dart
+lib/model/service_contract_new_schema.dart
+lib/model/service_contract_schema.dart
 lib/model/station_id_schema.dart
 lib/model/station_new_schema.dart
 lib/model/station_schema.dart
@@ -111,3 +117,6 @@ lib/model/task_type.dart
 lib/model/telemetry_options.dart
 lib/model/validation_error.dart
 pubspec.yaml
+test/service_contract_api_test.dart
+test/service_contract_new_schema_test.dart
+test/service_contract_schema_test.dart
