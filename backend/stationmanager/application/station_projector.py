@@ -19,8 +19,17 @@ class StationProjector(ProcessApplication):
         model = station_repo.StationModel(
             id=domain_event.originator_id,
             name=domain_event.name,
-            road_segment_id=domain_event.road_segment_id)
+            road_segment_id=domain_event.road_segment_id,
+            km_of_road=domain_event.km_of_road,
+            km_of_road_note=domain_event.km_of_road_note,
+            latitude=domain_event.latitude,
+            longitude=domain_event.longitude,
+            see_level=domain_event.see_level,
+            description=domain_event.description
+
+        )
         station_repo.save(model)
+
     @policy.register(Station.StationRemoved)
     def _(self, domain_event: Station.StationRemoved, process_event):
         station_repo.remove_by_id(domain_event.originator_id)

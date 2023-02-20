@@ -9,6 +9,12 @@ class Station(Aggregate):
     class CreatedEvent(Aggregate.Created):
         name: str
         road_segment_id: uuid
+        km_of_road: float
+        km_of_road_note: str
+        latitude: float
+        longitude: float
+        see_level: int
+        description: str
     class StationRemoved(Aggregate.Event):
         removed_at: datetime.datetime = datetime.datetime.now()
 
@@ -20,10 +26,17 @@ class Station(Aggregate):
     #     self.in_storage += count_number
 
     @event(CreatedEvent)
-    def __init__(self, name: str, road_segment_id: uuid):
+    def __init__(self, name: str, road_segment_id: uuid, km_of_road: float, km_of_road_note: str, latitude: float,
+                 longitude: float, see_level: int, description: str):
         self.is_removed = False
         self.name = name
         self.road_segment_id = road_segment_id
+        self.km_of_road = km_of_road
+        self.km_of_road_note = km_of_road_note
+        self.latitude = latitude
+        self.longitude = longitude
+        self.see_level = see_level
+        self.description = description
 
     @event(StationRemoved)
     def remove(self):
