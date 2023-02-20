@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:open_cmms/pages/service_contracts.dart';
 import 'package:open_cmms/pages/stations.dart';
 
 class MainMenuWidget extends StatefulWidget {
@@ -64,7 +65,7 @@ class _MainMenuWidgetState extends State<MainMenuWidget>
             message: "service contracts",
             child: IconButton(
               icon: const Icon(Icons.document_scanner),
-              onPressed: () {},
+              onPressed: () => Get.offAllNamed(ServiceContracts.ENDPOINT),
             ),
           ),
           Container(

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:open_cmms/pages/assets_management.dart';
 import 'package:open_cmms/pages/dashboard.dart';
 import 'package:open_cmms/pages/road_segment.dart';
 import 'package:open_cmms/pages/road_segments.dart';
+import 'package:open_cmms/pages/service_contracts.dart';
 import 'package:open_cmms/pages/station/station_base_page.dart';
 import 'package:open_cmms/pages/station/station_components_page.dart';
 import 'package:open_cmms/pages/station/station_history_page.dart';
@@ -63,6 +63,12 @@ class MyApp extends StatelessWidget {
           name: '/AssetManagement',
           page: () {
             return AssetsManagement();
+          },
+        ),
+        GetPage(
+          name: ServiceContracts.ENDPOINT,
+          page: () {
+            return ServiceContracts();
           },
         ),
         GetPage(
@@ -165,7 +171,7 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/',
           page: () {
-            return Dashboard();
+            return const Dashboard();
           },
         ),
       ],

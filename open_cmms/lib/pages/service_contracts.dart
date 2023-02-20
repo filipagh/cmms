@@ -2,13 +2,17 @@ import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/service/backend_api/service_contract_service.dart';
+import 'package:open_cmms/widgets/forms/service_contracts/service_contract_form.dart';
 
 import '../widgets/custom_app_bar.dart';
+import '../widgets/dialog_form.dart';
 import '../widgets/main_menu_widget.dart';
 
 class ServiceContracts extends StatelessWidget {
+  static const String ENDPOINT = '/service_contracts';
+
   final List<ServiceContractSchema> _contracts = <ServiceContractSchema>[].obs;
-  bool loaded = false;
+  final RxBool loaded = false.obs;
 
   ServiceContracts({
     Key? key,
@@ -20,26 +24,27 @@ class ServiceContracts extends StatelessWidget {
     ServiceContractService()
         .getContractsServiceContractContractsGet()
         .then((contracts) {
-      loaded = true;
+      loaded.value = true;
       _contracts.clear();
       _contracts.addAll(contracts!);
     });
   }
 
   Widget buildContent() {
-    if (loaded) {
+    if (loaded.value) {
       return buildContractsList();
     }
-    return CircularProgressIndicator();
+    return const CircularProgressIndicator();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(),
       body: Row(
         children: [
           MainMenuWidget(),
-          VerticalDivider(),
+          const VerticalDivider(),
           Expanded(
             child: Obx(() {
               return buildContent();
@@ -54,19 +59,38 @@ class ServiceContracts extends StatelessWidget {
     return Column(
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              "Servicne zmluvy",
+            const Text(
+              "Servisne zmluvy",
               textScaleFactor: 5,
             ),
             IconButton(
                 onPressed: () {
                   reloadContracts();
                 },
-                icon: Icon(Icons.refresh))
+                icon: const Icon(Icons.refresh))
           ],
         ),
-        Divider(),
+        const Divider(),
+        Row(
+          children: [
+            const Placeholder(
+              child: SizedBox(width: 300, child: Text("searchbar")),
+            ),
+            const Placeholder(
+              child: Icon(Icons.filter_list_alt),
+            ),
+            const Spacer(),
+            ElevatedButton(
+              onPressed: () {
+                showFormDialog(ServiceContractForm());
+              },
+              child: const Text("vytvorit novu zmluvu"),
+            ),
+          ],
+        ),
+        const Divider(),
         Expanded(
           child: Row(
             children: [
@@ -82,14 +106,16 @@ class ServiceContracts extends StatelessWidget {
                             return Card(
                               child: ListTile(
                                 onTap: () {
-                                  // Get.toNamed(StationBasePage.ENDPOINT+"/${list[index].id}");
+                                  showFormDialog(ServiceContractForm(
+                                    contract: _contracts[index],
+                                  ));
                                 },
                                 hoverColor: Colors.blue.shade200,
                                 title:
                                     Center(child: Text(_contracts[index].name)),
                                 subtitle: Center(
                                     child: Text(
-                                        'platnost: ${_contracts[index].validFrom.toString()} ${_contracts[index].validUntil.toString()}')),
+                                        'platnost:    ${_contracts[index].validFrom.toString().substring(0, 10)}   -   ${_contracts[index].validUntil.toString().substring(0, 10)}')),
                               ),
                             );
                           }),
