@@ -1,5 +1,6 @@
 import datetime
 import uuid
+from typing import Optional
 
 from eventsourcing.domain import Aggregate, event
 
@@ -9,11 +10,11 @@ class Station(Aggregate):
     class CreatedEvent(Aggregate.Created):
         name: str
         road_segment_id: uuid
-        km_of_road: float
+        km_of_road: Optional[float]
         km_of_road_note: str
-        latitude: float
-        longitude: float
-        see_level: int
+        latitude: Optional[float]
+        longitude: Optional[float]
+        see_level: Optional[int]
         description: str
     class StationRemoved(Aggregate.Event):
         removed_at: datetime.datetime = datetime.datetime.now()
@@ -26,8 +27,9 @@ class Station(Aggregate):
     #     self.in_storage += count_number
 
     @event(CreatedEvent)
-    def __init__(self, name: str, road_segment_id: uuid, km_of_road: float, km_of_road_note: str, latitude: float,
-                 longitude: float, see_level: int, description: str):
+    def __init__(self, name: str, road_segment_id: uuid, km_of_road: Optional[float], km_of_road_note: str,
+                 latitude: Optional[float],
+                 longitude: Optional[float], see_level: Optional[int], description: str):
         self.is_removed = False
         self.name = name
         self.road_segment_id = road_segment_id

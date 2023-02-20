@@ -13,11 +13,11 @@ class StationModel(Base):
     id = Column(postgresql.UUID(as_uuid=True), primary_key=True, index=True, default=uuid.uuid4)
     name = Column(String, nullable=False)
     road_segment_id = Column(postgresql.UUID(as_uuid=True), nullable=False)
-    km_of_road = Column(postgresql.FLOAT, nullable=False)
+    km_of_road = Column(postgresql.FLOAT, nullable=True)
     km_of_road_note = Column(String, nullable=False)
-    latitude = Column(postgresql.FLOAT, nullable=False)
-    longitude = Column(postgresql.FLOAT, nullable=False)
-    see_level = Column(postgresql.INTEGER, nullable=False)
+    latitude = Column(postgresql.FLOAT, nullable=True)
+    longitude = Column(postgresql.FLOAT, nullable=True)
+    see_level = Column(postgresql.INTEGER, nullable=True)
     description = Column(String, nullable=False)
 
 def _get_db():
