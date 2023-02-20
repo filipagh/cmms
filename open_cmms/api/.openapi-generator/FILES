@@ -117,6 +117,3 @@ lib/model/task_type.dart
 lib/model/telemetry_options.dart
 lib/model/validation_error.dart
 pubspec.yaml
-test/service_contract_api_test.dart
-test/service_contract_new_schema_test.dart
-test/service_contract_schema_test.dart

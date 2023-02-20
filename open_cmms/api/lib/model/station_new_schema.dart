@@ -15,30 +15,69 @@ class StationNewSchema {
   StationNewSchema({
     required this.name,
     required this.roadSegmentId,
+    required this.kmOfRoad,
+    required this.kmOfRoadNote,
+    required this.latitude,
+    required this.longitude,
+    required this.seeLevel,
+    required this.description,
   });
 
   String name;
 
   String roadSegmentId;
 
+  num kmOfRoad;
+
+  String kmOfRoadNote;
+
+  num latitude;
+
+  num longitude;
+
+  int seeLevel;
+
+  String description;
+
   @override
-  bool operator ==(Object other) => identical(this, other) || other is StationNewSchema &&
-     other.name == name &&
-     other.roadSegmentId == roadSegmentId;
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is StationNewSchema &&
+          other.name == name &&
+          other.roadSegmentId == roadSegmentId &&
+          other.kmOfRoad == kmOfRoad &&
+          other.kmOfRoadNote == kmOfRoadNote &&
+          other.latitude == latitude &&
+          other.longitude == longitude &&
+          other.seeLevel == seeLevel &&
+          other.description == description;
 
   @override
   int get hashCode =>
-    // ignore: unnecessary_parenthesis
-    (name.hashCode) +
-    (roadSegmentId.hashCode);
+      // ignore: unnecessary_parenthesis
+      (name.hashCode) +
+      (roadSegmentId.hashCode) +
+      (kmOfRoad.hashCode) +
+      (kmOfRoadNote.hashCode) +
+      (latitude.hashCode) +
+      (longitude.hashCode) +
+      (seeLevel.hashCode) +
+      (description.hashCode);
 
   @override
-  String toString() => 'StationNewSchema[name=$name, roadSegmentId=$roadSegmentId]';
+  String toString() =>
+      'StationNewSchema[name=$name, roadSegmentId=$roadSegmentId, kmOfRoad=$kmOfRoad, kmOfRoadNote=$kmOfRoadNote, latitude=$latitude, longitude=$longitude, seeLevel=$seeLevel, description=$description]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-      _json[r'name'] = name;
-      _json[r'road_segment_id'] = roadSegmentId;
+    _json[r'name'] = name;
+    _json[r'road_segment_id'] = roadSegmentId;
+    _json[r'km_of_road'] = kmOfRoad;
+    _json[r'km_of_road_note'] = kmOfRoadNote;
+    _json[r'latitude'] = latitude;
+    _json[r'longitude'] = longitude;
+    _json[r'see_level'] = seeLevel;
+    _json[r'description'] = description;
     return _json;
   }
 
@@ -63,6 +102,18 @@ class StationNewSchema {
       return StationNewSchema(
         name: mapValueOfType<String>(json, r'name')!,
         roadSegmentId: mapValueOfType<String>(json, r'road_segment_id')!,
+        kmOfRoad: json[r'km_of_road'] == null
+            ? null
+            : num.parse(json[r'km_of_road'].toString()),
+        kmOfRoadNote: mapValueOfType<String>(json, r'km_of_road_note')!,
+        latitude: json[r'latitude'] == null
+            ? null
+            : num.parse(json[r'latitude'].toString()),
+        longitude: json[r'longitude'] == null
+            ? null
+            : num.parse(json[r'longitude'].toString()),
+        seeLevel: mapValueOfType<int>(json, r'see_level')!,
+        description: mapValueOfType<String>(json, r'description')!,
       );
     }
     return null;
@@ -114,6 +165,12 @@ class StationNewSchema {
   static const requiredKeys = <String>{
     'name',
     'road_segment_id',
+    'km_of_road',
+    'km_of_road_note',
+    'latitude',
+    'longitude',
+    'see_level',
+    'description',
   };
 }
 
