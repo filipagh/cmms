@@ -15,11 +15,11 @@ class StationNewSchema {
   StationNewSchema({
     required this.name,
     required this.roadSegmentId,
-    required this.kmOfRoad,
+    this.kmOfRoad,
     required this.kmOfRoadNote,
-    required this.latitude,
-    required this.longitude,
-    required this.seeLevel,
+    this.latitude,
+    this.longitude,
+    this.seeLevel,
     required this.description,
   });
 
@@ -27,15 +27,39 @@ class StationNewSchema {
 
   String roadSegmentId;
 
-  num kmOfRoad;
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  num? kmOfRoad;
 
   String kmOfRoadNote;
 
-  num latitude;
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  num? latitude;
 
-  num longitude;
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  num? longitude;
 
-  int seeLevel;
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  int? seeLevel;
 
   String description;
 
@@ -57,11 +81,11 @@ class StationNewSchema {
       // ignore: unnecessary_parenthesis
       (name.hashCode) +
       (roadSegmentId.hashCode) +
-      (kmOfRoad.hashCode) +
+      (kmOfRoad == null ? 0 : kmOfRoad!.hashCode) +
       (kmOfRoadNote.hashCode) +
-      (latitude.hashCode) +
-      (longitude.hashCode) +
-      (seeLevel.hashCode) +
+      (latitude == null ? 0 : latitude!.hashCode) +
+      (longitude == null ? 0 : longitude!.hashCode) +
+      (seeLevel == null ? 0 : seeLevel!.hashCode) +
       (description.hashCode);
 
   @override
@@ -72,11 +96,19 @@ class StationNewSchema {
     final _json = <String, dynamic>{};
     _json[r'name'] = name;
     _json[r'road_segment_id'] = roadSegmentId;
-    _json[r'km_of_road'] = kmOfRoad;
+    if (kmOfRoad != null) {
+      _json[r'km_of_road'] = kmOfRoad;
+    }
     _json[r'km_of_road_note'] = kmOfRoadNote;
-    _json[r'latitude'] = latitude;
-    _json[r'longitude'] = longitude;
-    _json[r'see_level'] = seeLevel;
+    if (latitude != null) {
+      _json[r'latitude'] = latitude;
+    }
+    if (longitude != null) {
+      _json[r'longitude'] = longitude;
+    }
+    if (seeLevel != null) {
+      _json[r'see_level'] = seeLevel;
+    }
     _json[r'description'] = description;
     return _json;
   }
@@ -112,7 +144,7 @@ class StationNewSchema {
         longitude: json[r'longitude'] == null
             ? null
             : num.parse(json[r'longitude'].toString()),
-        seeLevel: mapValueOfType<int>(json, r'see_level')!,
+        seeLevel: mapValueOfType<int>(json, r'see_level'),
         description: mapValueOfType<String>(json, r'description')!,
       );
     }
@@ -165,11 +197,7 @@ class StationNewSchema {
   static const requiredKeys = <String>{
     'name',
     'road_segment_id',
-    'km_of_road',
     'km_of_road_note',
-    'latitude',
-    'longitude',
-    'see_level',
     'description',
   };
 }

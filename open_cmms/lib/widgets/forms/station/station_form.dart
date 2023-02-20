@@ -49,8 +49,12 @@ class _StationFormState extends State<StationForm> {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState?.save();
                     StationService().createStationStationCreateStationPost(
+                        // todo add form fields for station
                         StationNewSchema(
-                            name: name, roadSegmentId: widget.roadSegment.id));
+                            name: name,
+                            roadSegmentId: widget.roadSegment.id,
+                            kmOfRoadNote: '',
+                            description: ''));
                     Get.back();
                   }
                 },
