@@ -6,20 +6,20 @@ from assetmanager.application.model.schema import TelemetryOptions
 from assetmanager.domain.model.asset_telemetry import AssetTelemetryType, AssetTelemetryValue
 from base import main
 
-asset_manager = APIRouter(
+asset_manager_router = APIRouter(
     prefix="/assetManager",
     tags=["AssetManager"],
     responses={404: {"description": "Not found"}},
 )
 
 
-@asset_manager.post("/newCategory", response_model=schema.AssetCategotyIdSchema)
+@asset_manager_router.post("/newCategory", response_model=schema.AssetCategotyIdSchema)
 def create_new_category(new_category: schema.AssetCategoryNewSchema):
     category_id = asset_category_service.create_main_category(new_category)
     return schema.AssetCategotyIdSchema(id=category_id)
 
 
-@asset_manager.post("/newAsset", response_model=schema.AssetIdSchema)
+@asset_manager_router.post("/newAsset", response_model=schema.AssetIdSchema)
 def create_new_asset(new_asset: schema.AssetNewSchema):
     asset_service = main.runner.get(main.Services.AssetService.value)
     asset_id = asset_service.add_new_asset(new_asset.category_id, new_asset.name, new_asset.description,
@@ -27,7 +27,7 @@ def create_new_asset(new_asset: schema.AssetNewSchema):
     return schema.AssetIdSchema(id=asset_id)
 
 
-@asset_manager.get("/assets", response_model=list[schema.AssetSchema])
+@asset_manager_router.get("/assets", response_model=list[schema.AssetSchema])
 def get_assets():
     assets = asset_manager_loader.load_assets()
     list = []
@@ -42,7 +42,7 @@ def get_assets():
     return list
 
 
-@asset_manager.get("/asset-categories", response_model=list[schema.AssetCategorySchema])
+@asset_manager_router.get("/asset-categories", response_model=list[schema.AssetCategorySchema])
 def get_asset_categories():
     assets = asset_manager_loader.load_asset_category()
     list = []
@@ -52,7 +52,7 @@ def get_asset_categories():
     return list
 
 
-@asset_manager.get("/telemetry_options", response_model=schema.TelemetryOptions)
+@asset_manager_router.get("/telemetry_options", response_model=schema.TelemetryOptions)
 def get_telemetry_options():
     return TelemetryOptions(
         types=[e for e in AssetTelemetryType],

@@ -14,16 +14,31 @@ def get_db_link():
            f'{os.environ["POSTGRES_REPLICA_PORT"]}/' \
            f'{os.environ["POSTGRES_DBNAME"]}'
 
+
 print(get_db_link())
-engine = create_engine(get_db_link())
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-
-if not database_exists(engine.url):
-    sys.exit(f'Database "{os.environ["POSTGRES_DBNAME"]} " on "{os.environ["POSTGRES_REPLICA_HOST"]} ":"{os.environ["POSTGRES_REPLICA_PORT"]}" was not initialized with alembic')
-
 Base = declarative_base()
-Base.metadata.create_all(bind=engine)
+SessionLocal = None
+
+
+def close_sessions():
+    global SessionLocal
+    SessionLocal.close_all()
+    SessionLocal = None
+
+
 def get_sesionmaker():
+    global SessionLocal
+    if SessionLocal is None:
+        create_sesionmaker()
+
     return SessionLocal()
 
 
+def create_sesionmaker():
+    engine = create_engine(get_db_link())
+    global SessionLocal
+    SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+    if not database_exists(engine.url):
+        sys.exit(
+            f'Database "{os.environ["POSTGRES_DBNAME"]} " on "{os.environ["POSTGRES_REPLICA_HOST"]} ":"{os.environ["POSTGRES_REPLICA_PORT"]}" was not initialized with alembic')
+    Base.metadata.create_all(bind=engine)

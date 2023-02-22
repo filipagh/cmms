@@ -7,7 +7,6 @@ from eventsourcing.system import System, SingleThreadedRunner, Follower
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-import assetmanager.infrastructure.rest_router
 import roadsegmentmanager.infrastructure.rest_router
 import storagemanager.infrastructure.rest_router
 from assetmanager.application.asset_projector import AssetProjector
@@ -25,6 +24,7 @@ from stationmanager.application.station_service import StationService
 from stationmanager.infrastructure.action_history_rest_router import action_history_router
 from stationmanager.infrastructure.assigned_component_rest_router import assigned_component_router
 from stationmanager.infrastructure.service_contract_rest_router import service_contract_router
+from assetmanager.infrastructure.rest_router import asset_manager_router
 from stationmanager.infrastructure.station_rest_router import station_router
 from storagemanager.application.storage_item_projector import StorageItemProjector
 from storagemanager.application.storage_item_service import StorageItemService
@@ -107,7 +107,7 @@ add_transconder(AssetTelemetryAsJSON())
 # runner.get(TasksProjector).pull_and_process("TaskServiceRemoteService")
 
 app = FastAPI(debug=True)
-app.include_router(assetmanager.infrastructure.rest_router.asset_manager)
+app.include_router(asset_manager_router)
 app.include_router(storagemanager.infrastructure.rest_router.storage_manager)
 app.include_router(roadsegmentmanager.infrastructure.rest_router.road_segment_manager)
 app.include_router(station_router)

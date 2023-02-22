@@ -13,6 +13,18 @@ services:
       POSTGRES_HOST: "*"
     networks:
       - common-net
+  postgres-test-replica-tests:
+    container_name: postgres-test-replica-tests
+    image: postgres:14.1-alpine
+    env_file:
+      - .env
+    ports:
+      - "54322:5432"
+    environment:
+      POSTGRES_HOST: "*"
+      POSTGRES_DB: "cmms"
+    networks:
+      - common-net
   postgres-eventstore:
     container_name: postgres-eventstore
     image: postgres:14.1-alpine
@@ -28,7 +40,7 @@ services:
       - common-net
 
   be:
-    image: pumec/open_cmms-backend:master
+    image: sha256:99fe3e35a545a6fbaaa1e071dd975d5ee1cb44139399512cfd6037b112d34e23
     depends_on:
       - postgres-test
       - postgres-eventstore
