@@ -90,7 +90,7 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
                 return (v == null || v.isEmpty) ? "zvolte datum" : null;
               },
               decoration:
-                  const InputDecoration(labelText: "Datum platnosti do"),
+                  const InputDecoration(labelText: "Datum platnosti od"),
               onTap: () {
                 pickDateRange(context);
               }),
@@ -100,7 +100,7 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
                 return (v == null || v.isEmpty) ? "zvolte datum" : null;
               },
               decoration:
-                  const InputDecoration(labelText: "Datum platnosti od"),
+                  const InputDecoration(labelText: "Datum platnosti do"),
               onTap: () {
                 pickDateRange(context);
               }),
