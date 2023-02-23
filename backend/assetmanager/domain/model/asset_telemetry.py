@@ -15,10 +15,9 @@ class AssetTelemetryType(str, Enum):
     WIND_GUST_DIRECTION = "WIND_GUST_DIRECTION",
     AIR_PRESSURE = "AIR_PRESSURE",
     AIR_HUMIDITY = "AIR_HUMIDITY",
-
-    # todo
-    # AIR_HUMIDITY = "AIR_HUMIDITY",
-
+    ROAD_WARNING_STATUS = "ROAD_WARNING_STATUS",
+    ROAD_RAIN_STATUS = "ROAD_RAIN_STATUS",
+    ROAD_SURFACE_STATUS = "ROAD_SURFACE_STATUS",
 
 class AssetTelemetryValue(str, Enum):
     CELSIUS = "CELSIUS",
@@ -28,6 +27,8 @@ class AssetTelemetryValue(str, Enum):
     MILLIMETER_PER_SECOND = "MILLIMETER_PER_SECOND",
     HECTO_PASCAL = "HECTO_PASCAL",
     PERCENTAGE = "PERCENTAGE",
+    STRING = 'STRING'
+
 
 
 class AssetTelemetry(BaseModel):

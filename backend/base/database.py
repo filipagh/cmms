@@ -22,8 +22,9 @@ SessionLocal = None
 
 def close_sessions():
     global SessionLocal
-    SessionLocal.close_all()
-    SessionLocal = None
+    if SessionLocal is not None:
+        SessionLocal.close_all()
+        SessionLocal = None
 
 
 def get_sesionmaker():

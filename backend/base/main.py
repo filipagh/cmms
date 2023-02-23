@@ -11,6 +11,7 @@ import roadsegmentmanager.infrastructure.rest_router
 import storagemanager.infrastructure.rest_router
 from assetmanager.application.asset_projector import AssetProjector
 from assetmanager.application.asset_service import AssetService
+from base.init_import import import_assets, import_station
 from base.transcoding import DateAsIso, AssetTelemetryAsJSON
 from roadsegmentmanager.application.road_segment_projector import RoadSegmentProjector
 from roadsegmentmanager.application.road_segment_service import RoadSegmentService
@@ -133,6 +134,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+# imports
+import_assets()
+import_station()
 
 @app.get("/")
 async def root():

@@ -4,11 +4,14 @@ import roadsegmentmanager.infrastructure.rest_router as rs_api
 import stationmanager.infrastructure.station_rest_router as api
 from roadsegmentmanager.application.model.schema import RoadSegmentNewSchema
 from stationmanager.application.model.schema import StationNewSchema
-from test.db_test_util import db_app_setup
+from test.db_test_util import db_app_setup, db_app_clean
 
 
 def setup():
     db_app_setup()
+
+def teardown():
+    db_app_clean()
 
 
 async def test_mocking_function(mocker):
