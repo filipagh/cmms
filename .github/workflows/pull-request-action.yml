@@ -8,7 +8,7 @@ on: [ pull_request ]
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b
-  build:
+  be-tests:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 

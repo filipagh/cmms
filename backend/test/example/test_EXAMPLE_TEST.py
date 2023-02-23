@@ -14,6 +14,7 @@ def teardown():
 
 
 async def test_mocking_function(mocker):
+    assert False
     get_telemetry_options()
 
     id_segment = create_road_segment(RoadSegmentNewSchema(name="name", ssud="ssud"))
