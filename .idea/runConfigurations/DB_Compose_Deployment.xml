@@ -7,6 +7,7 @@
           <list>
             <option value="postgres-test" />
             <option value="postgres-eventstore" />
+            <option value="postgres-test-replica-tests" />
           </list>
         </option>
         <option name="sourceFilePath" value="backend/docker-compose.yml" />
