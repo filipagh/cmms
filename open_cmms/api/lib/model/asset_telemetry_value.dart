@@ -30,6 +30,7 @@ class AssetTelemetryValue {
   static const MILLIMETER_PER_SECOND = AssetTelemetryValue._(r'MILLIMETER_PER_SECOND');
   static const HECTO_PASCAL = AssetTelemetryValue._(r'HECTO_PASCAL');
   static const PERCENTAGE = AssetTelemetryValue._(r'PERCENTAGE');
+  static const STRING = AssetTelemetryValue._(r'STRING');
 
   /// List of all possible values in this [enum][AssetTelemetryValue].
   static const values = <AssetTelemetryValue>[
@@ -40,6 +41,7 @@ class AssetTelemetryValue {
     MILLIMETER_PER_SECOND,
     HECTO_PASCAL,
     PERCENTAGE,
+    STRING,
   ];
 
   static AssetTelemetryValue? fromJson(dynamic value) => AssetTelemetryValueTypeTransformer().decode(value);
@@ -85,6 +87,7 @@ class AssetTelemetryValueTypeTransformer {
         case r'MILLIMETER_PER_SECOND': return AssetTelemetryValue.MILLIMETER_PER_SECOND;
         case r'HECTO_PASCAL': return AssetTelemetryValue.HECTO_PASCAL;
         case r'PERCENTAGE': return AssetTelemetryValue.PERCENTAGE;
+        case r'STRING': return AssetTelemetryValue.STRING;
         default:
           if (!allowNull) {
             throw ArgumentError('Unknown enum value to decode: $data');

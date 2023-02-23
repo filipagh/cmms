@@ -64,42 +64,39 @@ class StationNewSchema {
   String description;
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is StationNewSchema &&
-          other.name == name &&
-          other.roadSegmentId == roadSegmentId &&
-          other.kmOfRoad == kmOfRoad &&
-          other.kmOfRoadNote == kmOfRoadNote &&
-          other.latitude == latitude &&
-          other.longitude == longitude &&
-          other.seeLevel == seeLevel &&
-          other.description == description;
+  bool operator ==(Object other) => identical(this, other) || other is StationNewSchema &&
+     other.name == name &&
+     other.roadSegmentId == roadSegmentId &&
+     other.kmOfRoad == kmOfRoad &&
+     other.kmOfRoadNote == kmOfRoadNote &&
+     other.latitude == latitude &&
+     other.longitude == longitude &&
+     other.seeLevel == seeLevel &&
+     other.description == description;
 
   @override
   int get hashCode =>
-      // ignore: unnecessary_parenthesis
-      (name.hashCode) +
-      (roadSegmentId.hashCode) +
-      (kmOfRoad == null ? 0 : kmOfRoad!.hashCode) +
-      (kmOfRoadNote.hashCode) +
-      (latitude == null ? 0 : latitude!.hashCode) +
-      (longitude == null ? 0 : longitude!.hashCode) +
-      (seeLevel == null ? 0 : seeLevel!.hashCode) +
-      (description.hashCode);
+    // ignore: unnecessary_parenthesis
+    (name.hashCode) +
+    (roadSegmentId.hashCode) +
+    (kmOfRoad == null ? 0 : kmOfRoad!.hashCode) +
+    (kmOfRoadNote.hashCode) +
+    (latitude == null ? 0 : latitude!.hashCode) +
+    (longitude == null ? 0 : longitude!.hashCode) +
+    (seeLevel == null ? 0 : seeLevel!.hashCode) +
+    (description.hashCode);
 
   @override
-  String toString() =>
-      'StationNewSchema[name=$name, roadSegmentId=$roadSegmentId, kmOfRoad=$kmOfRoad, kmOfRoadNote=$kmOfRoadNote, latitude=$latitude, longitude=$longitude, seeLevel=$seeLevel, description=$description]';
+  String toString() => 'StationNewSchema[name=$name, roadSegmentId=$roadSegmentId, kmOfRoad=$kmOfRoad, kmOfRoadNote=$kmOfRoadNote, latitude=$latitude, longitude=$longitude, seeLevel=$seeLevel, description=$description]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-    _json[r'name'] = name;
-    _json[r'road_segment_id'] = roadSegmentId;
+      _json[r'name'] = name;
+      _json[r'road_segment_id'] = roadSegmentId;
     if (kmOfRoad != null) {
       _json[r'km_of_road'] = kmOfRoad;
     }
-    _json[r'km_of_road_note'] = kmOfRoadNote;
+      _json[r'km_of_road_note'] = kmOfRoadNote;
     if (latitude != null) {
       _json[r'latitude'] = latitude;
     }
@@ -109,7 +106,7 @@ class StationNewSchema {
     if (seeLevel != null) {
       _json[r'see_level'] = seeLevel;
     }
-    _json[r'description'] = description;
+      _json[r'description'] = description;
     return _json;
   }
 

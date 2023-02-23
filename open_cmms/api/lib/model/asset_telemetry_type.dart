@@ -34,6 +34,9 @@ class AssetTelemetryType {
   static const WIND_GUST_DIRECTION = AssetTelemetryType._(r'WIND_GUST_DIRECTION');
   static const AIR_PRESSURE = AssetTelemetryType._(r'AIR_PRESSURE');
   static const AIR_HUMIDITY = AssetTelemetryType._(r'AIR_HUMIDITY');
+  static const ROAD_WARNING_STATUS = AssetTelemetryType._(r'ROAD_WARNING_STATUS');
+  static const ROAD_RAIN_STATUS = AssetTelemetryType._(r'ROAD_RAIN_STATUS');
+  static const ROAD_SURFACE_STATUS = AssetTelemetryType._(r'ROAD_SURFACE_STATUS');
 
   /// List of all possible values in this [enum][AssetTelemetryType].
   static const values = <AssetTelemetryType>[
@@ -48,6 +51,9 @@ class AssetTelemetryType {
     WIND_GUST_DIRECTION,
     AIR_PRESSURE,
     AIR_HUMIDITY,
+    ROAD_WARNING_STATUS,
+    ROAD_RAIN_STATUS,
+    ROAD_SURFACE_STATUS,
   ];
 
   static AssetTelemetryType? fromJson(dynamic value) => AssetTelemetryTypeTypeTransformer().decode(value);
@@ -97,6 +103,9 @@ class AssetTelemetryTypeTypeTransformer {
         case r'WIND_GUST_DIRECTION': return AssetTelemetryType.WIND_GUST_DIRECTION;
         case r'AIR_PRESSURE': return AssetTelemetryType.AIR_PRESSURE;
         case r'AIR_HUMIDITY': return AssetTelemetryType.AIR_HUMIDITY;
+        case r'ROAD_WARNING_STATUS': return AssetTelemetryType.ROAD_WARNING_STATUS;
+        case r'ROAD_RAIN_STATUS': return AssetTelemetryType.ROAD_RAIN_STATUS;
+        case r'ROAD_SURFACE_STATUS': return AssetTelemetryType.ROAD_SURFACE_STATUS;
         default:
           if (!allowNull) {
             throw ArgumentError('Unknown enum value to decode: $data');
