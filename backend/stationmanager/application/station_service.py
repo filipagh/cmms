@@ -13,7 +13,14 @@ class StationService(ProcessApplication):
     def create_station(self, station: schema.StationNewSchema) -> uuid.UUID:
         station = Station(name=station.name, road_segment_id=station.road_segment_id, km_of_road=station.km_of_road,
                           km_of_road_note=station.km_of_road_note, latitude=station.latitude,
-                          longitude=station.longitude, see_level=station.see_level, description=station.description)
+                          longitude=station.longitude, see_level=station.see_level, description=station.description,legacy_ids="")
+        self.save(station)
+        return station.id
+
+    def create_station_legacy(self, station: schema.StationNewSchema, legacy_ids: str) -> uuid.UUID:
+        station = Station(name=station.name, road_segment_id=station.road_segment_id, km_of_road=station.km_of_road,
+                              km_of_road_note=station.km_of_road_note, latitude=station.latitude,
+                              longitude=station.longitude, see_level=station.see_level, description=station.description,legacy_ids=legacy_ids)
         self.save(station)
         return station.id
 

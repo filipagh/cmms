@@ -25,8 +25,8 @@ class StationProjector(ProcessApplication):
             latitude=domain_event.latitude,
             longitude=domain_event.longitude,
             see_level=domain_event.see_level,
-            description=domain_event.description
-
+            description=domain_event.description,
+            legacy_ids=domain_event.legacy_ids
         )
         station_repo.save(model)
 

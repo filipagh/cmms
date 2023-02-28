@@ -15,6 +15,7 @@ class Station(Aggregate):
         latitude: Optional[float]
         longitude: Optional[float]
         see_level: Optional[int]
+        legacy_ids: str
         description: str
     class StationRemoved(Aggregate.Event):
         removed_at: datetime.datetime = datetime.datetime.now()
@@ -29,7 +30,7 @@ class Station(Aggregate):
     @event(CreatedEvent)
     def __init__(self, name: str, road_segment_id: uuid, km_of_road: Optional[float], km_of_road_note: str,
                  latitude: Optional[float],
-                 longitude: Optional[float], see_level: Optional[int], description: str):
+                 longitude: Optional[float], see_level: Optional[int], description: str, legacy_ids: str):
         self.is_removed = False
         self.name = name
         self.road_segment_id = road_segment_id
@@ -39,6 +40,7 @@ class Station(Aggregate):
         self.longitude = longitude
         self.see_level = see_level
         self.description = description
+        self.legacy_ids = legacy_ids
 
     @event(StationRemoved)
     def remove(self):

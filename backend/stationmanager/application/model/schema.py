@@ -23,4 +23,5 @@ class StationIdSchema(BaseModel):
 
 
 class StationSchema(StationIdSchema, StationSchemaBASE):
+    legacy_ids: str
     pass

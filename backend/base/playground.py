@@ -1,57 +1,55 @@
-import uuid
-from typing import List, Optional
-
-from eventsourcing.domain import Aggregate, event
-
-
-class Dog(Aggregate):
-    class Registered(Aggregate.Created):
-        asset_category_id: uuid.UUID
-        name: str
-        description: str
+from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response, status
+from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.security import APIKeyCookie
+from fief_client import FiefAsync, FiefUserInfo
+from fief_client.integrations.fastapi import FiefAuth
 
 
-    @event(Registered)
-    def __init__(self, asset_category_id: uuid.UUID, name: str, description: Optional[str]):
-        self.asset_category_id: uuid.UUID = asset_category_id
-        self.name: str = name
-        self.description: str = description
+class CustomFiefAuth(FiefAuth):
+    client: FiefAsync
+
+    async def get_unauthorized_response(self, request: Request, response: Response):
+        redirect_uri = request.url_for("auth_callback")
+        auth_url = await self.client.auth_url(redirect_uri, scope=["openid"])
+        raise HTTPException(
+            status_code=status.HTTP_307_TEMPORARY_REDIRECT,
+            headers={"Location": auth_url},
+        )
 
 
-from typing import Any, Dict
-from uuid import UUID
+fief = FiefAsync(
+    "https://example.fief.dev",
+    "YOUR_CLIENT_ID",
+    "YOUR_CLIENT_SECRET",
+)
 
-from eventsourcing.application import Application
-
-
-
-class DogSchool(Application):
-    is_snapshotting_enabled = True
-
-    def add_new_asset(self, asset_category_id: uuid.UUID, name: str, description: Optional[str]):
-        asset = Dog(asset_category_id, name, description)
-        self.save(asset)
-        return asset.id
+SESSION_COOKIE_NAME = "user_session"
+scheme = APIKeyCookie(name=SESSION_COOKIE_NAME, auto_error=False)
+auth = CustomFiefAuth(fief, scheme)
+app = FastAPI()
 
 
+@app.get("/auth-callback", name="auth_callback")
+async def auth_callback(request: Request, response: Response, code: str = Query(...)):
+    redirect_uri = request.url_for("auth_callback")
+    tokens, _ = await fief.auth_callback(code, redirect_uri)
 
-    def get_dog(self, dog_id: UUID):
-        dog: Dog = self.repository.get(dog_id)
-        return dog
+    response = RedirectResponse(request.url_for("protected"))
+    response.set_cookie(
+        SESSION_COOKIE_NAME,
+        tokens["access_token"],
+        max_age=tokens["expires_in"],
+        httponly=True,
+        secure=False,
+    )
 
-from unittest import TestCase
+    return response
 
 
-
-
-class TestDogSchool(TestCase):
-    def test_dog_school(self) -> None:
-        # Construct application object.
-        school = DogSchool()
-
-        # Evolve application state.
-        dog_id = school.add_new_asset(uuid.uuid4(),"deddd",None)
-
-        # Query application state.
-        dog = school.get_dog(dog_id)
-        a=4
+@app.get("/protected", name="protected")
+async def protected(
+        user: FiefUserInfo = Depends(auth.current_user()),
+):
+    return HTMLResponse(
+        f"<h1>You are authenticated. Your user email is {user['email']}</h1>"
+    )

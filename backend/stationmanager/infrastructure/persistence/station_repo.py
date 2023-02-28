@@ -19,6 +19,7 @@ class StationModel(Base):
     longitude = Column(postgresql.FLOAT, nullable=True)
     see_level = Column(postgresql.INTEGER, nullable=True)
     description = Column(String, nullable=False)
+    legacy_ids = Column(String, nullable=False)
 
 def _get_db():
     return base.database.get_sesionmaker()
