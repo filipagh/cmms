@@ -22,6 +22,7 @@ class StationSchema {
     this.seeLevel,
     required this.description,
     required this.id,
+    required this.legacyIds,
   });
 
   String name;
@@ -66,6 +67,8 @@ class StationSchema {
 
   String id;
 
+  String legacyIds;
+
   @override
   bool operator ==(Object other) => identical(this, other) || other is StationSchema &&
      other.name == name &&
@@ -76,7 +79,8 @@ class StationSchema {
      other.longitude == longitude &&
      other.seeLevel == seeLevel &&
      other.description == description &&
-     other.id == id;
+     other.id == id &&
+     other.legacyIds == legacyIds;
 
   @override
   int get hashCode =>
@@ -89,10 +93,11 @@ class StationSchema {
     (longitude == null ? 0 : longitude!.hashCode) +
     (seeLevel == null ? 0 : seeLevel!.hashCode) +
     (description.hashCode) +
-    (id.hashCode);
+    (id.hashCode) +
+    (legacyIds.hashCode);
 
   @override
-  String toString() => 'StationSchema[name=$name, roadSegmentId=$roadSegmentId, kmOfRoad=$kmOfRoad, kmOfRoadNote=$kmOfRoadNote, latitude=$latitude, longitude=$longitude, seeLevel=$seeLevel, description=$description, id=$id]';
+  String toString() => 'StationSchema[name=$name, roadSegmentId=$roadSegmentId, kmOfRoad=$kmOfRoad, kmOfRoadNote=$kmOfRoadNote, latitude=$latitude, longitude=$longitude, seeLevel=$seeLevel, description=$description, id=$id, legacyIds=$legacyIds]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
@@ -113,6 +118,7 @@ class StationSchema {
     }
       _json[r'description'] = description;
       _json[r'id'] = id;
+      _json[r'legacy_ids'] = legacyIds;
     return _json;
   }
 
@@ -150,6 +156,7 @@ class StationSchema {
         seeLevel: mapValueOfType<int>(json, r'see_level'),
         description: mapValueOfType<String>(json, r'description')!,
         id: mapValueOfType<String>(json, r'id')!,
+        legacyIds: mapValueOfType<String>(json, r'legacy_ids')!,
       );
     }
     return null;
@@ -204,6 +211,7 @@ class StationSchema {
     'km_of_road_note',
     'description',
     'id',
+    'legacy_ids',
   };
 }
 
