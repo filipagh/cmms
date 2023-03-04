@@ -23,11 +23,11 @@ def upgrade() -> None:
                     sa.Column('telemetry_type',
                               sa.Enum('AIR_TEMPERATURE', 'GROUND_TEMPERATURE', 'ROAD_TEMPERATURE', 'VISIBILITY',
                                       'WIND_SPEED', 'WIND_DIRECTION', 'RAINFALL_INTENSITY', 'WIND_GUST_SPEED',
-                                      'WIND_GUST_DIRECTION', 'AIR_PRESSURE', 'AIR_HUMIDITY', 'ROAD_WARNING_STATUS', 'ROAD_RAIN_STATUS', 'ROAD_SURFACE_STATUS',  name='assettelemetrytype'),
+                                      'WIND_GUST_DIRECTION', 'AIR_PRESSURE', 'AIR_HUMIDITY', 'ROAD_WARNING_STATUS', 'ROAD_RAIN_STATUS', 'ROAD_SURFACE_STATUS','GRIP', 'WATER_HEIGHT', 'SNOW_HEIGHT','ICE_HEIGHT',  name='assettelemetrytype'),
                               nullable=False),
                     sa.Column('telemetry_value',
                               sa.Enum('CELSIUS', 'METER_PER_SECOND', 'METERS', 'CIRCLE_DEGREES', 'MILLIMETER_PER_SECOND', 'STRING',
-                                      'HECTO_PASCAL', 'PERCENTAGE', name='assettelemetryvalue'), nullable=False),
+                                      'HECTO_PASCAL', 'PERCENTAGE','MILIMETERS', name='assettelemetryvalue'), nullable=False),
                     sa.ForeignKeyConstraint(['asset_id'], ['assets.id'], ),
                     sa.PrimaryKeyConstraint('asset_id', 'telemetry_type', 'telemetry_value')
                     )
