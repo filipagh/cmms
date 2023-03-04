@@ -25,9 +25,11 @@ class AssetTelemetryValue {
 
   static const CELSIUS = AssetTelemetryValue._(r'CELSIUS');
   static const METER_PER_SECOND = AssetTelemetryValue._(r'METER_PER_SECOND');
+  static const MILIMETERS = AssetTelemetryValue._(r'MILIMETERS');
   static const METERS = AssetTelemetryValue._(r'METERS');
   static const CIRCLE_DEGREES = AssetTelemetryValue._(r'CIRCLE_DEGREES');
-  static const MILLIMETER_PER_SECOND = AssetTelemetryValue._(r'MILLIMETER_PER_SECOND');
+  static const MILLIMETER_PER_SECOND =
+      AssetTelemetryValue._(r'MILLIMETER_PER_SECOND');
   static const HECTO_PASCAL = AssetTelemetryValue._(r'HECTO_PASCAL');
   static const PERCENTAGE = AssetTelemetryValue._(r'PERCENTAGE');
   static const STRING = AssetTelemetryValue._(r'STRING');
@@ -36,6 +38,7 @@ class AssetTelemetryValue {
   static const values = <AssetTelemetryValue>[
     CELSIUS,
     METER_PER_SECOND,
+    MILIMETERS,
     METERS,
     CIRCLE_DEGREES,
     MILLIMETER_PER_SECOND,
@@ -81,8 +84,12 @@ class AssetTelemetryValueTypeTransformer {
     if (data != null) {
       switch (data.toString()) {
         case r'CELSIUS': return AssetTelemetryValue.CELSIUS;
-        case r'METER_PER_SECOND': return AssetTelemetryValue.METER_PER_SECOND;
-        case r'METERS': return AssetTelemetryValue.METERS;
+        case r'METER_PER_SECOND':
+          return AssetTelemetryValue.METER_PER_SECOND;
+        case r'MILIMETERS':
+          return AssetTelemetryValue.MILIMETERS;
+        case r'METERS':
+          return AssetTelemetryValue.METERS;
         case r'CIRCLE_DEGREES': return AssetTelemetryValue.CIRCLE_DEGREES;
         case r'MILLIMETER_PER_SECOND': return AssetTelemetryValue.MILLIMETER_PER_SECOND;
         case r'HECTO_PASCAL': return AssetTelemetryValue.HECTO_PASCAL;
