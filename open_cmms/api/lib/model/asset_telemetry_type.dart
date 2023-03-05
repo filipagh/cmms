@@ -103,10 +103,14 @@ class AssetTelemetryTypeTypeTransformer {
   AssetTelemetryType? decode(dynamic data, {bool allowNull = true}) {
     if (data != null) {
       switch (data.toString()) {
-        case r'AIR_TEMPERATURE': return AssetTelemetryType.AIR_TEMPERATURE;
-        case r'GROUND_TEMPERATURE': return AssetTelemetryType.GROUND_TEMPERATURE;
-        case r'ROAD_TEMPERATURE': return AssetTelemetryType.ROAD_TEMPERATURE;
-        case r'VISIBILITY': return AssetTelemetryType.VISIBILITY;
+        case r'AIR_TEMPERATURE':
+          return AssetTelemetryType.AIR_TEMPERATURE;
+        case r'GROUND_TEMPERATURE':
+          return AssetTelemetryType.GROUND_TEMPERATURE;
+        case r'ROAD_TEMPERATURE':
+          return AssetTelemetryType.ROAD_TEMPERATURE;
+        case r'VISIBILITY':
+          return AssetTelemetryType.VISIBILITY;
         case r'WIND_SPEED':
           return AssetTelemetryType.WIND_SPEED;
         case r'WIND_DIRECTION':

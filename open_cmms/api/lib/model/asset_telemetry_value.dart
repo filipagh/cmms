@@ -83,18 +83,24 @@ class AssetTelemetryValueTypeTransformer {
   AssetTelemetryValue? decode(dynamic data, {bool allowNull = true}) {
     if (data != null) {
       switch (data.toString()) {
-        case r'CELSIUS': return AssetTelemetryValue.CELSIUS;
+        case r'CELSIUS':
+          return AssetTelemetryValue.CELSIUS;
         case r'METER_PER_SECOND':
           return AssetTelemetryValue.METER_PER_SECOND;
         case r'MILIMETERS':
           return AssetTelemetryValue.MILIMETERS;
         case r'METERS':
           return AssetTelemetryValue.METERS;
-        case r'CIRCLE_DEGREES': return AssetTelemetryValue.CIRCLE_DEGREES;
-        case r'MILLIMETER_PER_SECOND': return AssetTelemetryValue.MILLIMETER_PER_SECOND;
-        case r'HECTO_PASCAL': return AssetTelemetryValue.HECTO_PASCAL;
-        case r'PERCENTAGE': return AssetTelemetryValue.PERCENTAGE;
-        case r'STRING': return AssetTelemetryValue.STRING;
+        case r'CIRCLE_DEGREES':
+          return AssetTelemetryValue.CIRCLE_DEGREES;
+        case r'MILLIMETER_PER_SECOND':
+          return AssetTelemetryValue.MILLIMETER_PER_SECOND;
+        case r'HECTO_PASCAL':
+          return AssetTelemetryValue.HECTO_PASCAL;
+        case r'PERCENTAGE':
+          return AssetTelemetryValue.PERCENTAGE;
+        case r'STRING':
+          return AssetTelemetryValue.STRING;
         default:
           if (!allowNull) {
             throw ArgumentError('Unknown enum value to decode: $data');

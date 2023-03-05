@@ -23,6 +23,7 @@ import 'package:open_cmms/states/action_state.dart';
 import 'package:open_cmms/states/asset_telemetry_state.dart';
 import 'package:open_cmms/states/asset_types_state.dart';
 import 'package:open_cmms/states/asset_types_state_dummy.dart';
+import 'package:open_cmms/states/auth_state.dart';
 import 'package:open_cmms/states/items_state.dart';
 import 'package:open_cmms/states/items_state_dummy.dart';
 import 'package:open_cmms/states/road_segment_state.dart';
@@ -32,6 +33,9 @@ import 'package:open_cmms/states/tasks_state.dart';
 
 void main() async {
   await checkOrLoadEnv();
+
+  // var a = await BackEndService().getUserLoginGetWithHttpInfo();
+
   runApp(const MyApp());
 }
 
@@ -40,6 +44,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(AuthState());
     Get.put(RoadSegmentState());
     Get.put(StationsState());
     Get.put(AssetTypesStateDummy());

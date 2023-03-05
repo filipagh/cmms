@@ -45,3 +45,6 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 20221204_20-23-36_ce800fea69b4_migration_name.py
+
+
+backend/.env
