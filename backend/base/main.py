@@ -1,13 +1,14 @@
 import os
 import time
 from enum import Enum
+from typing import Optional
 
 from eventsourcing.persistence import Transcoding
 from eventsourcing.system import System, SingleThreadedRunner, Follower
-from fastapi import FastAPI, Depends, Request, Response, status, HTTPException, Query
+from fastapi import FastAPI, Depends, Request, Response, status, HTTPException, Query, Security
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, RedirectResponse
-from fastapi.security import OAuth2AuthorizationCodeBearer, APIKeyCookie
+from fastapi.security import OAuth2AuthorizationCodeBearer, APIKeyCookie, APIKeyHeader
 from fief_client import FiefAsync, FiefAccessTokenInfo, FiefUserInfo
 from fief_client.integrations.fastapi import FiefAuth
 from starlette.responses import PlainTextResponse
@@ -176,6 +177,24 @@ scheme = APIKeyCookie(name=SESSION_COOKIE_NAME, auto_error=False)
 auth2 = CustomFiefAuth(fief, scheme)
 
 
+api_key_header = APIKeyHeader(name="api_key", auto_error=False)
+
+def get_api_key(api_key_headerr: str = Security(api_key_header)):
+    if api_key_headerr == "aaa":
+        return api_key_headerr
+
+
+async def custom_auth(api_key=Depends(get_api_key),
+                      fief_user: Optional[FiefAccessTokenInfo] = Depends(auth2.current_user(optional=True)),
+                      fief_user2: Optional[FiefAccessTokenInfo] = Depends(auth.authenticated(optional=True))):
+
+    if api_key is not None: return api_key
+    if fief_user is not None: return fief_user
+    if fief_user2 is not None: return fief_user2
+    raise HTTPException(401,"missing auth")
+
+
+
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
@@ -197,6 +216,15 @@ async def login(
         f"<h1>You are authenticated. Your user email is {user['email']}</h1> <script> window.close() </script>"
 
     )
+
+@app.get("/auth_test")
+async def auth_test(
+        user: FiefUserInfo = Depends(custom_auth),
+):
+    return HTMLResponse(
+        f"<h1>You are authenticated. Your user email is {user}</h1>"
+    )
+
 
 
 @app.get("/logged_out")

@@ -2,7 +2,6 @@ import uuid
 from typing import Optional
 
 from fastapi import APIRouter
-from starlette.requests import Request
 
 from base import main
 from stationmanager.application.model import schema
@@ -40,7 +39,6 @@ def get_by_id(segment_id: uuid.UUID):
 @station_router.get("/stations",
                     response_model=list[schema.StationSchema])
 def get_all(
-        request: Request,
         road_segment_id: Optional[uuid.UUID] = None
 ):
     projector = main.runner.get(StationProjector)
