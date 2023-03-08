@@ -28,8 +28,7 @@ class AssetTelemetryValue {
   static const MILIMETERS = AssetTelemetryValue._(r'MILIMETERS');
   static const METERS = AssetTelemetryValue._(r'METERS');
   static const CIRCLE_DEGREES = AssetTelemetryValue._(r'CIRCLE_DEGREES');
-  static const MILLIMETER_PER_SECOND =
-      AssetTelemetryValue._(r'MILLIMETER_PER_SECOND');
+  static const MILLIMETER_PER_SECOND = AssetTelemetryValue._(r'MILLIMETER_PER_SECOND');
   static const HECTO_PASCAL = AssetTelemetryValue._(r'HECTO_PASCAL');
   static const PERCENTAGE = AssetTelemetryValue._(r'PERCENTAGE');
   static const STRING = AssetTelemetryValue._(r'STRING');
@@ -83,24 +82,15 @@ class AssetTelemetryValueTypeTransformer {
   AssetTelemetryValue? decode(dynamic data, {bool allowNull = true}) {
     if (data != null) {
       switch (data.toString()) {
-        case r'CELSIUS':
-          return AssetTelemetryValue.CELSIUS;
-        case r'METER_PER_SECOND':
-          return AssetTelemetryValue.METER_PER_SECOND;
-        case r'MILIMETERS':
-          return AssetTelemetryValue.MILIMETERS;
-        case r'METERS':
-          return AssetTelemetryValue.METERS;
-        case r'CIRCLE_DEGREES':
-          return AssetTelemetryValue.CIRCLE_DEGREES;
-        case r'MILLIMETER_PER_SECOND':
-          return AssetTelemetryValue.MILLIMETER_PER_SECOND;
-        case r'HECTO_PASCAL':
-          return AssetTelemetryValue.HECTO_PASCAL;
-        case r'PERCENTAGE':
-          return AssetTelemetryValue.PERCENTAGE;
-        case r'STRING':
-          return AssetTelemetryValue.STRING;
+        case r'CELSIUS': return AssetTelemetryValue.CELSIUS;
+        case r'METER_PER_SECOND': return AssetTelemetryValue.METER_PER_SECOND;
+        case r'MILIMETERS': return AssetTelemetryValue.MILIMETERS;
+        case r'METERS': return AssetTelemetryValue.METERS;
+        case r'CIRCLE_DEGREES': return AssetTelemetryValue.CIRCLE_DEGREES;
+        case r'MILLIMETER_PER_SECOND': return AssetTelemetryValue.MILLIMETER_PER_SECOND;
+        case r'HECTO_PASCAL': return AssetTelemetryValue.HECTO_PASCAL;
+        case r'PERCENTAGE': return AssetTelemetryValue.PERCENTAGE;
+        case r'STRING': return AssetTelemetryValue.STRING;
         default:
           if (!allowNull) {
             throw ArgumentError('Unknown enum value to decode: $data');
