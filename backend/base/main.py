@@ -118,13 +118,19 @@ class CustomFiefAuth(FiefAuth):
     client: FiefAsync
 
     async def get_unauthorized_response(self, request: Request, response: Response):
-        redirect_uri = request.url_for("auth_callback")
+        redirect_uri = fixServerProtocol(request.url_for("auth_callback"))
+
         auth_url = await self.client.auth_url(redirect_uri, scope=["openid"])
         raise HTTPException(
             status_code=status.HTTP_307_TEMPORARY_REDIRECT,
             headers={"Location": auth_url},
         )
 
+
+def fixServerProtocol(url):
+    if os.environ['SSL_SET'] == "true":
+        return 'https' + url[4:]
+    return url
 
 
 fief = FiefAsync(
@@ -226,7 +232,7 @@ async def logged_out(
 @app.get("/logout")
 async def logout(request: Request
                  ):
-    url = await auth.client.logout_url(request.url_for("logged_out"))
+    url = await auth.client.logout_url(fixServerProtocol(request.url_for("logged_out")))
 
     response = RedirectResponse(url)
     response.delete_cookie(
@@ -237,7 +243,7 @@ async def logout(request: Request
 
 @app.get("/auth-callback", name="auth_callback")
 async def auth_callback(request: Request, response: Response, code: str = Query(...)):
-    redirect_uri = request.url_for("auth_callback")
+    redirect_uri = request.url_for(fixServerProtocol("auth_callback"))
     tokens, _ = await fief.auth_callback(code, redirect_uri)
     response = RedirectResponse("/login")
     response.set_cookie(
