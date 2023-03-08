@@ -11,7 +11,6 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.security import OAuth2AuthorizationCodeBearer, APIKeyCookie, APIKeyHeader
 from fief_client import FiefAsync, FiefAccessTokenInfo, FiefUserInfo
 from fief_client.integrations.fastapi import FiefAuth
-from starlette.responses import PlainTextResponse
 
 import roadsegmentmanager.infrastructure.rest_router
 import storagemanager.infrastructure.rest_router
@@ -127,11 +126,12 @@ class CustomFiefAuth(FiefAuth):
         )
 
 
+
 fief = FiefAsync(
     os.environ['FIEF_CLIENT_HOST'],
     os.environ['FIEF_CLIENT_ID'],
     os.environ['FIEF_CLIENT_SECRET'],
-    encryption_key=os.environ['FIEF_ENCRYPTION_KEY'],
+    encryption_key=os.environ['FIEF_ENCRYPTION_KEY'] if os.environ.get("TEST") is None else None,
 )
 
 scheme = OAuth2AuthorizationCodeBearer(
