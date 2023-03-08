@@ -243,7 +243,7 @@ async def logout(request: Request
 
 @app.get("/auth-callback", name="auth_callback")
 async def auth_callback(request: Request, response: Response, code: str = Query(...)):
-    redirect_uri = request.url_for(fixServerProtocol("auth_callback"))
+    redirect_uri = fixServerProtocol(request.url_for("auth_callback"))
     tokens, _ = await fief.auth_callback(code, redirect_uri)
     response = RedirectResponse("/login")
     response.set_cookie(
