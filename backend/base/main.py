@@ -245,14 +245,13 @@ async def logout(request: Request
 async def auth_callback(request: Request, response: Response, code: str = Query(...)):
     redirect_uri = fixServerProtocol(request.url_for("auth_callback"))
     tokens, _ = await fief.auth_callback(code, redirect_uri)
-    response = RedirectResponse("/login")
+    response = RedirectResponse(fixServerProtocol(request.url_for("login")))
     response.set_cookie(
         SESSION_COOKIE_NAME,
         tokens["access_token"],
         max_age=tokens["expires_in"],
         httponly=False,
-        secure=False,
-        domain="localhost"
+        secure=False
 
     )
     return response
