@@ -8,7 +8,7 @@ from eventsourcing.system import System, SingleThreadedRunner, Follower
 from fastapi import FastAPI, Depends, Request, Response, status, HTTPException, Query, Security
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, RedirectResponse
-from fastapi.security import OAuth2AuthorizationCodeBearer, APIKeyHeader
+from fastapi.security import OAuth2AuthorizationCodeBearer, APIKeyHeader, APIKeyCookie
 from fief_client import FiefAsync, FiefAccessTokenInfo, FiefUserInfo
 from fief_client.integrations.fastapi import FiefAuth
 
@@ -179,7 +179,7 @@ app.add_middleware(
 import_assets()
 
 SESSION_COOKIE_NAME = "user_session"
-scheme = APIKeyHeader(name=SESSION_COOKIE_NAME, scheme_name=SESSION_COOKIE_NAME, auto_error=False)
+scheme = APIKeyCookie(name=SESSION_COOKIE_NAME, scheme_name=SESSION_COOKIE_NAME, auto_error=False)
 auth2 = CustomFiefAuth(fief, scheme)
 
 api_key_header = APIKeyHeader(name="api_key", scheme_name="api_key", auto_error=False)
@@ -253,5 +253,4 @@ async def auth_callback(request: Request, response: Response, code: str = Query(
         secure=False
 
     )
-    response.headers[SESSION_COOKIE_NAME] = tokens["access_token"]
     return response
