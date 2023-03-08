@@ -180,7 +180,7 @@ auth2 = CustomFiefAuth(fief, scheme)
 api_key_header = APIKeyHeader(name="api_key", auto_error=False)
 
 def get_api_key(api_key_headerr: str = Security(api_key_header)):
-    if api_key_headerr == "aaa":
+    if api_key_headerr == os.environ['READ_API_KEY']:
         return api_key_headerr
 
 
