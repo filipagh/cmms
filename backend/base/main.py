@@ -253,4 +253,5 @@ async def auth_callback(request: Request, response: Response, code: str = Query(
         secure=False
 
     )
+    response.headers[SESSION_COOKIE_NAME] = tokens["access_token"]
     return response
