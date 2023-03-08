@@ -67,6 +67,11 @@ Class | Method | HTTP request | Description
 *AssignedComponentsApi* | [**createInstalledComponentAssignedComponentsCreateInstalledComponentPost**](doc//AssignedComponentsApi.md#createinstalledcomponentassignedcomponentscreateinstalledcomponentpost) | **POST** /assigned_components/create_installed_component | Create Installed Component
 *AssignedComponentsApi* | [**getAllAssignedComponentsComponentsGet**](doc//AssignedComponentsApi.md#getallassignedcomponentscomponentsget) | **GET** /assigned_components/components | Get All
 *AssignedComponentsApi* | [**removeInstalledComponentAssignedComponentsRemoveInstalledComponentPost**](doc//AssignedComponentsApi.md#removeinstalledcomponentassignedcomponentsremoveinstalledcomponentpost) | **POST** /assigned_components/remove_installed_component | Remove Installed Component
+*DefaultApi* | [**authCallbackAuthCallbackGet**](doc//DefaultApi.md#authcallbackauthcallbackget) | **GET** /auth-callback | Auth Callback
+*DefaultApi* | [**authTestAuthTestGet**](doc//DefaultApi.md#authtestauthtestget) | **GET** /auth_test | Auth Test
+*DefaultApi* | [**loggedOutLoggedOutGet**](doc//DefaultApi.md#loggedoutloggedoutget) | **GET** /logged_out | Logged Out
+*DefaultApi* | [**loginLoginGet**](doc//DefaultApi.md#loginloginget) | **GET** /login | Login
+*DefaultApi* | [**logoutLogoutGet**](doc//DefaultApi.md#logoutlogoutget) | **GET** /logout | Logout
 *DefaultApi* | [**rootGet**](doc//DefaultApi.md#rootget) | **GET** / | Root
 *RoadSegmentManagerApi* | [**createRoadSegmentRoadSegmentManagerCreateRoadSegmentPost**](doc//RoadSegmentManagerApi.md#createroadsegmentroadsegmentmanagercreateroadsegmentpost) | **POST** /road-segment-manager/create_road_segment | Create Road Segment
 *RoadSegmentManagerApi* | [**getAllRoadSegmentManagerSegmentsGet**](doc//RoadSegmentManagerApi.md#getallroadsegmentmanagersegmentsget) | **GET** /road-segment-manager/segments | Get All
@@ -149,7 +154,27 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Authorization
 
- All endpoints do not require authorization.
+
+## APIKeyCookie
+
+- **Type**: API key
+- **API key parameter name**: user_session
+- **Location**: 
+
+## APIKeyHeader
+
+- **Type**: API key
+- **API key parameter name**: api_key
+- **Location**: HTTP header
+
+## OAuth2AuthorizationCodeBearer
+
+- **Type**: OAuth
+- **Flow**: accessCode
+- **Authorization URL**: https://cmms.fief.dev/authorize
+- **Scopes**: 
+ - **openid**: openid
+ - **offline_access**: offline_access
 
 
 ## Author

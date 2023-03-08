@@ -1,16 +1,22 @@
 import os
 import time
 from enum import Enum
+from typing import Optional
 
 from eventsourcing.persistence import Transcoding
 from eventsourcing.system import System, SingleThreadedRunner, Follower
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends, Request, Response, status, HTTPException, Query, Security
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.security import OAuth2AuthorizationCodeBearer, APIKeyCookie, APIKeyHeader
+from fief_client import FiefAsync, FiefAccessTokenInfo, FiefUserInfo
+from fief_client.integrations.fastapi import FiefAuth
 
 import roadsegmentmanager.infrastructure.rest_router
 import storagemanager.infrastructure.rest_router
 from assetmanager.application.asset_projector import AssetProjector
 from assetmanager.application.asset_service import AssetService
+from assetmanager.infrastructure.rest_router import asset_manager_router
 from base.init_import import import_assets
 from base.transcoding import DateAsIso, AssetTelemetryAsJSON
 from roadsegmentmanager.application.road_segment_projector import RoadSegmentProjector
@@ -25,7 +31,6 @@ from stationmanager.application.station_service import StationService
 from stationmanager.infrastructure.action_history_rest_router import action_history_router
 from stationmanager.infrastructure.assigned_component_rest_router import assigned_component_router
 from stationmanager.infrastructure.service_contract_rest_router import service_contract_router
-from assetmanager.infrastructure.rest_router import asset_manager_router
 from stationmanager.infrastructure.station_rest_router import station_router
 from storagemanager.application.storage_item_projector import StorageItemProjector
 from storagemanager.application.storage_item_service import StorageItemService
@@ -103,9 +108,39 @@ register_tansconder([TasksProjector, AssignedComponentsService, StorageItemServi
 add_transconder(DateAsIso())
 add_transconder(AssetTelemetryAsJSON())
 
+
 # runner.get(TasksProjector).pull_and_process("TaskService")
 # runner.get(TasksProjector).pull_and_process("TaskServiceOnSiteService")
 # runner.get(TasksProjector).pull_and_process("TaskServiceRemoteService")
+
+
+class CustomFiefAuth(FiefAuth):
+    client: FiefAsync
+
+    async def get_unauthorized_response(self, request: Request, response: Response):
+        redirect_uri = request.url_for("auth_callback")
+        auth_url = await self.client.auth_url(redirect_uri, scope=["openid"])
+        raise HTTPException(
+            status_code=status.HTTP_307_TEMPORARY_REDIRECT,
+            headers={"Location": auth_url},
+        )
+
+
+
+fief = FiefAsync(
+    os.environ['FIEF_CLIENT_HOST'],
+    os.environ['FIEF_CLIENT_ID'],
+    os.environ['FIEF_CLIENT_SECRET'],
+    encryption_key=os.environ['FIEF_ENCRYPTION_KEY'] if os.environ.get("TEST") is None else None,
+)
+
+scheme = OAuth2AuthorizationCodeBearer(
+    os.environ['FIEF_CLIENT_HOST'] + "/authorize",
+    os.environ['FIEF_CLIENT_HOST'] + "/api/token",
+    scopes={"openid": "openid", "offline_access": "offline_access"},
+    auto_error=False,
+)
+auth = FiefAuth(fief, scheme)
 
 app = FastAPI(debug=True)
 app.include_router(asset_manager_router)
@@ -134,16 +169,84 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 # imports
 import_assets()
+
+SESSION_COOKIE_NAME = "user_session"
+scheme = APIKeyCookie(name=SESSION_COOKIE_NAME, auto_error=False)
+auth2 = CustomFiefAuth(fief, scheme)
+
+
+api_key_header = APIKeyHeader(name="api_key", auto_error=False)
+
+def get_api_key(api_key_headerr: str = Security(api_key_header)):
+    if api_key_headerr == os.environ['READ_API_KEY']:
+        return api_key_headerr
+
+
+async def custom_auth(api_key=Depends(get_api_key),
+                      fief_user: Optional[FiefAccessTokenInfo] = Depends(auth2.current_user(optional=True)),
+                      fief_user2: Optional[FiefAccessTokenInfo] = Depends(auth.authenticated(optional=True))):
+
+    if api_key is not None: return api_key
+    if fief_user is not None: return fief_user
+    if fief_user2 is not None: return fief_user2
+    raise HTTPException(401,"missing auth")
+
 
 
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
-#
 
-# @app.get("/hello/{name}")
-# async def say_hello(name: str):
-#     return {"message": f"Hello {name}"}
+@app.get("/login")
+async def login(
+        user: FiefUserInfo = Depends(auth2.current_user()),
+):
+    return HTMLResponse(
+        f"<h1>You are authenticated. Your user email is {user['email']}</h1> <script> window.close() </script>"
+
+    )
+
+@app.get("/auth_test")
+async def auth_test(
+        user: FiefUserInfo = Depends(custom_auth),
+):
+    return HTMLResponse(
+        f"<h1>You are authenticated. with -> {user}</h1>"
+    )
+
+
+
+@app.get("/logged_out")
+async def logged_out(
+):
+    return HTMLResponse("<h1>You are logged out</h1><script> window.close()</script>")
+
+@app.get("/logout")
+async def logout(request: Request
+                 ):
+    url = await auth.client.logout_url(request.url_for("logged_out"))
+
+    response = RedirectResponse(url)
+    response.delete_cookie(
+        SESSION_COOKIE_NAME,
+    )
+    return response
+
+
+@app.get("/auth-callback", name="auth_callback")
+async def auth_callback(request: Request, response: Response, code: str = Query(...)):
+    redirect_uri = request.url_for("auth_callback")
+    tokens, _ = await fief.auth_callback(code, redirect_uri)
+    response = RedirectResponse("/login")
+    response.set_cookie(
+        SESSION_COOKIE_NAME,
+        tokens["access_token"],
+        max_age=tokens["expires_in"],
+        httponly=False,
+        secure=False,
+        domain="localhost"
+
+    )
+    return response

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:open_cmms/auth_guard.dart';
 import 'package:open_cmms/pages/assets_management.dart';
 import 'package:open_cmms/pages/dashboard.dart';
+import 'package:open_cmms/pages/login.dart';
 import 'package:open_cmms/pages/road_segment.dart';
 import 'package:open_cmms/pages/road_segments.dart';
 import 'package:open_cmms/pages/service_contracts.dart';
@@ -23,6 +25,7 @@ import 'package:open_cmms/states/action_state.dart';
 import 'package:open_cmms/states/asset_telemetry_state.dart';
 import 'package:open_cmms/states/asset_types_state.dart';
 import 'package:open_cmms/states/asset_types_state_dummy.dart';
+import 'package:open_cmms/states/auth_state.dart';
 import 'package:open_cmms/states/items_state.dart';
 import 'package:open_cmms/states/items_state_dummy.dart';
 import 'package:open_cmms/states/road_segment_state.dart';
@@ -32,6 +35,9 @@ import 'package:open_cmms/states/tasks_state.dart';
 
 void main() async {
   await checkOrLoadEnv();
+
+  // var a = await BackEndService().getUserLoginGetWithHttpInfo();
+
   runApp(const MyApp());
 }
 
@@ -40,6 +46,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(AuthState());
     Get.put(RoadSegmentState());
     Get.put(StationsState());
     Get.put(AssetTypesStateDummy());
@@ -54,46 +61,49 @@ class MyApp extends StatelessWidget {
       defaultTransition: Transition.noTransition,
       getPages: [
         GetPage(
-          name: '/RoadSegments/:id',
-          page: () {
-            return RoadSegment(segmentId: Get.parameters["id"]!);
-          },
-        ),
+            name: '/RoadSegments/:id',
+            page: () {
+              return RoadSegment(segmentId: Get.parameters["id"]!);
+            },
+            middlewares: [AuthGuard()]),
         GetPage(
-          name: '/AssetManagement',
-          page: () {
-            return AssetsManagement();
-          },
-        ),
+            name: '/AssetManagement',
+            page: () {
+              return AssetsManagement();
+            },
+            middlewares: [AuthGuard()]),
         GetPage(
-          name: ServiceContracts.ENDPOINT,
-          page: () {
-            return ServiceContracts();
-          },
-        ),
+            name: ServiceContracts.ENDPOINT,
+            page: () {
+              return ServiceContracts();
+            },
+            middlewares: [AuthGuard()]),
         GetPage(
-          name: '/RoadSegments',
-          page: () {
-            return RoadSegments();
-          },
-        ),
+            name: '/RoadSegments',
+            page: () {
+              return RoadSegments();
+            },
+            middlewares: [AuthGuard()]),
         GetPage(
           name: '/Storage',
           page: () {
             return const Storage();
           },
+          middlewares: [AuthGuard()],
         ),
         GetPage(
           name: Stations.ENDPOINT,
           page: () {
             return Stations();
           },
+          middlewares: [AuthGuard()],
         ),
         GetPage(
           name: '/Tasks/',
           page: () {
             return Tasks();
           },
+          middlewares: [AuthGuard()],
         ),
         GetPage(
           name: '/Tasks/:id',
@@ -102,6 +112,7 @@ class MyApp extends StatelessWidget {
               taskId: Get.parameters["id"]!,
             );
           },
+          middlewares: [AuthGuard()],
         ),
         GetPage(
           name: StationBasePage.ENDPOINT + '/:id',
@@ -111,6 +122,7 @@ class MyApp extends StatelessWidget {
               contextPageEnum: StationBaseContextPageEnum.info,
             );
           },
+          middlewares: [AuthGuard()],
         ),
         GetPage(
           name: StationBasePage.ENDPOINT + '/:id' + StationInfoPage.ENDPOINT,
@@ -120,6 +132,7 @@ class MyApp extends StatelessWidget {
               contextPageEnum: StationBaseContextPageEnum.info,
             );
           },
+          middlewares: [AuthGuard()],
         ),
         GetPage(
           name: StationBasePage.ENDPOINT +
@@ -131,6 +144,7 @@ class MyApp extends StatelessWidget {
               contextPageEnum: StationBaseContextPageEnum.components,
             );
           },
+          middlewares: [AuthGuard()],
         ),
         GetPage(
           name: StationBasePage.ENDPOINT + '/:id' + StationHistoryPage.ENDPOINT,
@@ -140,6 +154,7 @@ class MyApp extends StatelessWidget {
               contextPageEnum: StationBaseContextPageEnum.history,
             );
           },
+          middlewares: [AuthGuard()],
         ),
         GetPage(
           name: StationBasePage.ENDPOINT + '/:id' + StationTasksPage.ENDPOINT,
@@ -149,12 +164,14 @@ class MyApp extends StatelessWidget {
               contextPageEnum: StationBaseContextPageEnum.tasks,
             );
           },
+          middlewares: [AuthGuard()],
         ),
         GetPage(
           name: TaskChangeComponentsPage.ENDPOINT + '/:id',
           page: () {
             return TaskChangeComponentsPage(taskId: Get.parameters["id"]!);
           },
+          middlewares: [AuthGuard()],
         ),
         GetPage(
           name: TaskOnSiteServicePage.ENDPOINT + '/:id',
@@ -167,13 +184,21 @@ class MyApp extends StatelessWidget {
           page: () {
             return TaskRemoteServicePage(taskId: Get.parameters["id"]!);
           },
+          middlewares: [AuthGuard()],
         ),
         GetPage(
-          name: '/',
-          page: () {
-            return const Dashboard();
-          },
-        ),
+            name: '/',
+            page: () {
+              return const Dashboard();
+            },
+            middlewares: [AuthGuard()]),
+        // +++++++++++++++++++++++++++++++++++++++++++++++++++   PUBLIC
+
+        GetPage(
+            name: Login.ENDPOINT,
+            page: () {
+              return Login();
+            })
       ],
       title: 'Flutter Demo',
       theme: ThemeData(

@@ -31,15 +31,12 @@ class AssetTelemetryType {
   static const WIND_DIRECTION = AssetTelemetryType._(r'WIND_DIRECTION');
   static const RAINFALL_INTENSITY = AssetTelemetryType._(r'RAINFALL_INTENSITY');
   static const WIND_GUST_SPEED = AssetTelemetryType._(r'WIND_GUST_SPEED');
-  static const WIND_GUST_DIRECTION =
-      AssetTelemetryType._(r'WIND_GUST_DIRECTION');
+  static const WIND_GUST_DIRECTION = AssetTelemetryType._(r'WIND_GUST_DIRECTION');
   static const AIR_PRESSURE = AssetTelemetryType._(r'AIR_PRESSURE');
   static const AIR_HUMIDITY = AssetTelemetryType._(r'AIR_HUMIDITY');
-  static const ROAD_WARNING_STATUS =
-      AssetTelemetryType._(r'ROAD_WARNING_STATUS');
+  static const ROAD_WARNING_STATUS = AssetTelemetryType._(r'ROAD_WARNING_STATUS');
   static const ROAD_RAIN_STATUS = AssetTelemetryType._(r'ROAD_RAIN_STATUS');
-  static const ROAD_SURFACE_STATUS =
-      AssetTelemetryType._(r'ROAD_SURFACE_STATUS');
+  static const ROAD_SURFACE_STATUS = AssetTelemetryType._(r'ROAD_SURFACE_STATUS');
   static const GRIP = AssetTelemetryType._(r'GRIP');
   static const WATER_HEIGHT = AssetTelemetryType._(r'WATER_HEIGHT');
   static const SNOW_HEIGHT = AssetTelemetryType._(r'SNOW_HEIGHT');
@@ -107,34 +104,20 @@ class AssetTelemetryTypeTypeTransformer {
         case r'GROUND_TEMPERATURE': return AssetTelemetryType.GROUND_TEMPERATURE;
         case r'ROAD_TEMPERATURE': return AssetTelemetryType.ROAD_TEMPERATURE;
         case r'VISIBILITY': return AssetTelemetryType.VISIBILITY;
-        case r'WIND_SPEED':
-          return AssetTelemetryType.WIND_SPEED;
-        case r'WIND_DIRECTION':
-          return AssetTelemetryType.WIND_DIRECTION;
-        case r'RAINFALL_INTENSITY':
-          return AssetTelemetryType.RAINFALL_INTENSITY;
-        case r'WIND_GUST_SPEED':
-          return AssetTelemetryType.WIND_GUST_SPEED;
-        case r'WIND_GUST_DIRECTION':
-          return AssetTelemetryType.WIND_GUST_DIRECTION;
-        case r'AIR_PRESSURE':
-          return AssetTelemetryType.AIR_PRESSURE;
-        case r'AIR_HUMIDITY':
-          return AssetTelemetryType.AIR_HUMIDITY;
-        case r'ROAD_WARNING_STATUS':
-          return AssetTelemetryType.ROAD_WARNING_STATUS;
-        case r'ROAD_RAIN_STATUS':
-          return AssetTelemetryType.ROAD_RAIN_STATUS;
-        case r'ROAD_SURFACE_STATUS':
-          return AssetTelemetryType.ROAD_SURFACE_STATUS;
-        case r'GRIP':
-          return AssetTelemetryType.GRIP;
-        case r'WATER_HEIGHT':
-          return AssetTelemetryType.WATER_HEIGHT;
-        case r'SNOW_HEIGHT':
-          return AssetTelemetryType.SNOW_HEIGHT;
-        case r'ICE_HEIGHT':
-          return AssetTelemetryType.ICE_HEIGHT;
+        case r'WIND_SPEED': return AssetTelemetryType.WIND_SPEED;
+        case r'WIND_DIRECTION': return AssetTelemetryType.WIND_DIRECTION;
+        case r'RAINFALL_INTENSITY': return AssetTelemetryType.RAINFALL_INTENSITY;
+        case r'WIND_GUST_SPEED': return AssetTelemetryType.WIND_GUST_SPEED;
+        case r'WIND_GUST_DIRECTION': return AssetTelemetryType.WIND_GUST_DIRECTION;
+        case r'AIR_PRESSURE': return AssetTelemetryType.AIR_PRESSURE;
+        case r'AIR_HUMIDITY': return AssetTelemetryType.AIR_HUMIDITY;
+        case r'ROAD_WARNING_STATUS': return AssetTelemetryType.ROAD_WARNING_STATUS;
+        case r'ROAD_RAIN_STATUS': return AssetTelemetryType.ROAD_RAIN_STATUS;
+        case r'ROAD_SURFACE_STATUS': return AssetTelemetryType.ROAD_SURFACE_STATUS;
+        case r'GRIP': return AssetTelemetryType.GRIP;
+        case r'WATER_HEIGHT': return AssetTelemetryType.WATER_HEIGHT;
+        case r'SNOW_HEIGHT': return AssetTelemetryType.SNOW_HEIGHT;
+        case r'ICE_HEIGHT': return AssetTelemetryType.ICE_HEIGHT;
         default:
           if (!allowNull) {
             throw ArgumentError('Unknown enum value to decode: $data');
