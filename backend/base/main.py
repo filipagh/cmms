@@ -199,15 +199,6 @@ async def custom_auth(api_key=Depends(get_api_key),
 async def root():
     return {"message": "Hello World"}
 
-
-@app.get("/user", response_class=PlainTextResponse)
-async def get_user(
-        access_token_info: FiefAccessTokenInfo = Depends(auth.authenticated()),
-):
-    dumps = access_token_info.get("id").__str__()
-    return dumps
-
-
 @app.get("/login")
 async def login(
         user: FiefUserInfo = Depends(auth2.current_user()),
@@ -222,7 +213,7 @@ async def auth_test(
         user: FiefUserInfo = Depends(custom_auth),
 ):
     return HTMLResponse(
-        f"<h1>You are authenticated. Your user email is {user}</h1>"
+        f"<h1>You are authenticated. with -> {user}</h1>"
     )
 
 
@@ -231,7 +222,6 @@ async def auth_test(
 async def logged_out(
 ):
     return HTMLResponse("<h1>You are logged out</h1><script> window.close()</script>")
-
 
 @app.get("/logout")
 async def logout(request: Request
