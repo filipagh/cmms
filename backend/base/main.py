@@ -78,7 +78,8 @@ class Services(Enum):
 services = [AssetService, AssetProjector, StorageItemProjector, RoadSegmentProjector, StationProjector,
             AssignedComponentProjector, ActionHistoryProjector, StorageItemService, RoadSegmentService, StationService,
             AssignedComponentsService, TasksProjector,
-            TaskService, TaskServiceOnSiteService, TaskServiceRemoteService, ServiceContractService, ServiceContractProjector]
+            TaskService, TaskServiceOnSiteService, TaskServiceRemoteService, ServiceContractService,
+            ServiceContractProjector]
 
 system = System(pipes=[[AssetService, AssetProjector],
                        [AssetService, StorageItemService],
@@ -184,6 +185,7 @@ auth2 = CustomFiefAuth(fief, scheme)
 
 api_key_header = APIKeyHeader(name="api_key", scheme_name="api_key", auto_error=False)
 
+
 def get_api_key(api_key_headerr: str = Security(api_key_header)):
     if api_key_headerr == os.environ['READ_API_KEY']:
         return api_key_headerr
@@ -192,17 +194,16 @@ def get_api_key(api_key_headerr: str = Security(api_key_header)):
 async def custom_auth(api_key=Depends(get_api_key),
                       fief_user: Optional[FiefAccessTokenInfo] = Depends(auth2.current_user(optional=True)),
                       fief_user2: Optional[FiefAccessTokenInfo] = Depends(auth.authenticated(optional=True))):
-
     if api_key is not None: return api_key
     if fief_user is not None: return fief_user
     if fief_user2 is not None: return fief_user2
-    raise HTTPException(401,"missing auth")
-
+    raise HTTPException(401, "missing auth")
 
 
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
+
 
 @app.get("/login")
 async def login(
@@ -213,7 +214,8 @@ async def login(
 
     )
 
-@app.get("/auth_test")
+
+@app.get("/auth_test", response_class=HTMLResponse)
 async def auth_test(
         user: FiefUserInfo = Depends(custom_auth),
 ):
@@ -222,11 +224,11 @@ async def auth_test(
     )
 
 
-
 @app.get("/logged_out")
 async def logged_out(
 ):
     return HTMLResponse("<h1>You are logged out</h1><script> window.close()</script>")
+
 
 @app.get("/logout")
 async def logout(request: Request
