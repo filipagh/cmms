@@ -179,11 +179,10 @@ app.add_middleware(
 import_assets()
 
 SESSION_COOKIE_NAME = "user_session"
-scheme = APIKeyHeader(name=SESSION_COOKIE_NAME, auto_error=False)
+scheme = APIKeyHeader(name=SESSION_COOKIE_NAME, scheme_name=SESSION_COOKIE_NAME, auto_error=False)
 auth2 = CustomFiefAuth(fief, scheme)
 
-
-api_key_header = APIKeyHeader(name="api_key", auto_error=False)
+api_key_header = APIKeyHeader(name="api_key", scheme_name="api_key", auto_error=False)
 
 def get_api_key(api_key_headerr: str = Security(api_key_header)):
     if api_key_headerr == os.environ['READ_API_KEY']:
