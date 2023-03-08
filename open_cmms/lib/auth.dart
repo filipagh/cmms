@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'dart:html' as html;
 
+// web viewx ???
+
 import 'package:get/get.dart';
+import 'package:open_cmms/service/secrets_manager_service.dart';
 import 'package:open_cmms/states/auth_state.dart';
 
 hasToken() {
@@ -24,16 +27,16 @@ login() {
   AuthState authState = Get.find();
   if (!authState.isAuthWindowOpen.value) {
     authState.isAuthWindowOpen.value = true;
-    html.WindowBase _popup = html.window.open("http://localhost:8080/login",
+    html.WindowBase _popup = html.window.open(getBackendUri() + "/login",
         "login", 'left=100,top=100,width=800,height=600');
-    final duration = Duration(seconds: 1);
+    const duration = Duration(seconds: 1);
     Timer.periodic(duration, (timer) {
-      // Stop the timer when it matches a condition
       if (_popup.closed!) {
         timer.cancel();
         authState.isAuthWindowOpen.value = false;
         if (hasToken()) {
           authState.isAuthenticated.value = true;
+          Get.toNamed("/");
         }
       }
     });
@@ -44,9 +47,9 @@ logout() {
   AuthState authState = Get.find();
   if (!authState.isAuthWindowOpen.value) {
     authState.isAuthWindowOpen.value = true;
-    html.WindowBase _popup = html.window.open("http://localhost:8080/logout",
+    html.WindowBase _popup = html.window.open(getBackendUri() + "/logout",
         "logout", 'left=100,top=100,width=800,height=600');
-    final duration = Duration(seconds: 1);
+    const duration = Duration(seconds: 1);
     Timer.periodic(duration, (timer) {
       // Stop the timer when it matches a condition
       if (_popup.closed!) {
@@ -54,6 +57,7 @@ logout() {
         authState.isAuthWindowOpen.value = false;
         if (!hasToken()) {
           authState.isAuthenticated.value = false;
+          Get.toNamed("/login");
         }
       }
     });
