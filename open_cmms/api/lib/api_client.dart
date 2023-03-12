@@ -270,16 +270,24 @@ class ApiClient {
           return TaskTypeTypeTransformer().decode(value);
         case 'TelemetryOptions':
           return TelemetryOptions.fromJson(value);
+        case 'UserSchema':
+          return UserSchema.fromJson(value);
         case 'ValidationError':
           return ValidationError.fromJson(value);
         default:
           dynamic match;
-          if (value is List && (match = _regList.firstMatch(targetType)?.group(1)) != null) {
+          if (value is List &&
+              (match = _regList.firstMatch(targetType)?.group(1)) != null) {
             return value
-              .map<dynamic>((dynamic v) => _deserialize(v, match, growable: growable,))
-              .toList(growable: growable);
+                .map<dynamic>((dynamic v) => _deserialize(
+                      v,
+                      match,
+                      growable: growable,
+                    ))
+                .toList(growable: growable);
           }
-          if (value is Set && (match = _regSet.firstMatch(targetType)?.group(1)) != null) {
+          if (value is Set &&
+              (match = _regSet.firstMatch(targetType)?.group(1)) != null) {
             return value
               .map<dynamic>((dynamic v) => _deserialize(v, match, growable: growable,))
               .toSet();

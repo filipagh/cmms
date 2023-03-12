@@ -27,7 +27,7 @@ login() {
   AuthState authState = Get.find();
   if (!authState.isAuthWindowOpen.value) {
     authState.isAuthWindowOpen.value = true;
-    html.WindowBase _popup = html.window.open(getBackendUri() + "/login",
+    html.WindowBase _popup = html.window.open(getBackendUri() + "/auth/login",
         "login", 'left=100,top=100,width=800,height=600');
     const duration = Duration(seconds: 1);
     Timer.periodic(duration, (timer) {
@@ -47,7 +47,7 @@ logout() {
   AuthState authState = Get.find();
   if (!authState.isAuthWindowOpen.value) {
     authState.isAuthWindowOpen.value = true;
-    html.WindowBase _popup = html.window.open(getBackendUri() + "/logout",
+    html.WindowBase _popup = html.window.open(getBackendUri() + "/auth/logout",
         "logout", 'left=100,top=100,width=800,height=600');
     const duration = Duration(seconds: 1);
     Timer.periodic(duration, (timer) {
@@ -57,6 +57,7 @@ logout() {
         authState.isAuthWindowOpen.value = false;
         if (!hasToken()) {
           authState.isAuthenticated.value = false;
+          authState.isVerified.value = false;
           Get.toNamed("/login");
         }
       }

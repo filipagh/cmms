@@ -20,6 +20,7 @@ import 'package:open_cmms/pages/tasks/task_change_component.dart';
 import 'package:open_cmms/pages/tasks/task_on_site_service.dart';
 import 'package:open_cmms/pages/tasks/task_remote_service.dart';
 import 'package:open_cmms/pages/unknownPage.dart';
+import 'package:open_cmms/pages/unverified.dart';
 import 'package:open_cmms/service/secrets_manager_service.dart';
 import 'package:open_cmms/states/action_state.dart';
 import 'package:open_cmms/states/asset_telemetry_state.dart';
@@ -192,8 +193,13 @@ class MyApp extends StatelessWidget {
               return const Dashboard();
             },
             middlewares: [AuthGuard()]),
-        // +++++++++++++++++++++++++++++++++++++++++++++++++++   PUBLIC
 
+        // +++++++++++++++++++++++++++++++++++++++++++++++++++   PUBLIC
+        GetPage(
+            name: Unverified.ENDPOINT,
+            page: () {
+              return Unverified();
+            }),
         GetPage(
             name: Login.ENDPOINT,
             page: () {

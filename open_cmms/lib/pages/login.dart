@@ -14,11 +14,8 @@ class Login extends StatelessWidget {
   AuthState authState = Get.find();
 
   @override
+  @override
   Widget build(BuildContext context) {
-    if (!authState.isAuthenticated.value) {
-      login();
-    }
-
     return Scaffold(
       appBar: CustomAppBar(),
       body: Center(
@@ -35,15 +32,25 @@ class Login extends StatelessWidget {
                 return Column(
                   children: [
                     Text("prihlasovaci formular je otvoreny v novom okne"),
+                    Text(
+                      "je potrebne povolit vyskakovacie okno",
+                      style: TextStyle(
+                          color: Colors.red[400], fontWeight: FontWeight.bold),
+                    ),
                     CircularProgressIndicator(),
                   ],
                 );
               }
-              return OutlinedButton(
+              return ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green[400]),
                   onPressed: () {
                     login();
                   },
-                  child: Text("Prihlásiť sa"));
+                  child: Text(
+                    "Prihlásiť sa",
+                    textScaleFactor: 3,
+                  ));
             }),
             Spacer(),
           ],

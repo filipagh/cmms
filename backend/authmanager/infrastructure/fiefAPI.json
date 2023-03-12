@@ -1,0 +1,6779 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Fief Administration API",
+    "version": "0.23.1"
+  },
+  "servers": [
+    {
+      "url": "/admin/api"
+    },
+    {
+      "url": "{scheme}://{host}/admin/api",
+      "variables": {
+        "scheme": {
+          "enum": [
+            "http",
+            "https"
+          ],
+          "default": "https"
+        },
+        "host": {
+          "default": "fief.fief.dev",
+          "description": "Your Fief's workspace hostname"
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/clients/": {
+      "get": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Clients:List",
+        "operationId": "clients_list_clients__get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Query",
+              "type": "string"
+            },
+            "name": "query",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Tenant",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "tenant",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "exclusiveMinimum": 0.0,
+              "type": "integer",
+              "default": 10
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Skip",
+              "minimum": 0.0,
+              "type": "integer",
+              "default": 0
+            },
+            "name": "skip",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Ordering",
+              "type": "string"
+            },
+            "name": "ordering",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResults_Client_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Clients:Create",
+        "operationId": "clients_create_clients__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Client"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ]
+      }
+    },
+    "/clients/{id}": {
+      "patch": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Clients:Update",
+        "operationId": "clients_update_clients__id__patch",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Client"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ]
+      }
+    },
+    "/clients/{id}/encryption-key": {
+      "post": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Clients:Encryption Key",
+        "operationId": "clients_encryption_key_clients__id__encryption_key_post",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ]
+      }
+    },
+    "/email-templates/": {
+      "get": {
+        "tags": [
+          "Email templates"
+        ],
+        "summary": "Email Templates:List",
+        "operationId": "email_templates_list_email_templates__get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "exclusiveMinimum": 0.0,
+              "type": "integer",
+              "default": 10
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Skip",
+              "minimum": 0.0,
+              "type": "integer",
+              "default": 0
+            },
+            "name": "skip",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Ordering",
+              "type": "string"
+            },
+            "name": "ordering",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResults_EmailTemplate_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/email-templates/{id}": {
+      "get": {
+        "tags": [
+          "Email templates"
+        ],
+        "summary": "Email Templates:Get",
+        "operationId": "email_templates_get_email_templates__id__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailTemplate"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Email templates"
+        ],
+        "summary": "Email Templates:Update",
+        "operationId": "email_templates_update_email_templates__id__patch",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EmailTemplateUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EmailTemplate"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ]
+      }
+    },
+    "/oauth-providers/": {
+      "get": {
+        "tags": [
+          "OAuth Providers"
+        ],
+        "summary": "Oauth Providers:List",
+        "operationId": "oauth_providers_list_oauth_providers__get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Query",
+              "type": "string"
+            },
+            "name": "query",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "exclusiveMinimum": 0.0,
+              "type": "integer",
+              "default": 10
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Skip",
+              "minimum": 0.0,
+              "type": "integer",
+              "default": 0
+            },
+            "name": "skip",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Ordering",
+              "type": "string"
+            },
+            "name": "ordering",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResults_OAuthProvider_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "OAuth Providers"
+        ],
+        "summary": "Oauth Providers:Create",
+        "operationId": "oauth_providers_create_oauth_providers__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OAuthProviderCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OAuthProvider"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ]
+      }
+    },
+    "/oauth-providers/{id}": {
+      "delete": {
+        "tags": [
+          "OAuth Providers"
+        ],
+        "summary": "Oauth Providers:Delete",
+        "operationId": "oauth_providers_delete_oauth_providers__id__delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "OAuth Providers"
+        ],
+        "summary": "Oauth Providers:Update",
+        "operationId": "oauth_providers_update_oauth_providers__id__patch",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OAuthProviderUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OAuthProvider"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ]
+      }
+    },
+    "/oauth-providers/{id}/access-token/{user_id}": {
+      "get": {
+        "tags": [
+          "OAuth Providers"
+        ],
+        "summary": "Oauth Providers:Get User Access Token",
+        "operationId": "oauth_providers_get_user_access_token_oauth_providers__id__access_token__user_id__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "User Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "user_id",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Tenant Slug",
+              "type": "string"
+            },
+            "name": "tenant_slug",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OAuthAccountAccessToken"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ]
+      }
+    },
+    "/permissions/": {
+      "get": {
+        "tags": [
+          "Permissions"
+        ],
+        "summary": "Permissions:List",
+        "operationId": "permissions_list_permissions__get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Query",
+              "type": "string"
+            },
+            "name": "query",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "exclusiveMinimum": 0.0,
+              "type": "integer",
+              "default": 10
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Skip",
+              "minimum": 0.0,
+              "type": "integer",
+              "default": 0
+            },
+            "name": "skip",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Ordering",
+              "type": "string"
+            },
+            "name": "ordering",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResults_Permission_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Permissions"
+        ],
+        "summary": "Permissions:Create",
+        "operationId": "permissions_create_permissions__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PermissionCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Permission"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ]
+      }
+    },
+    "/permissions/{id}": {
+      "delete": {
+        "tags": [
+          "Permissions"
+        ],
+        "summary": "Permissions:Delete",
+        "operationId": "permissions_delete_permissions__id__delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Permissions"
+        ],
+        "summary": "Permissions:Update",
+        "operationId": "permissions_update_permissions__id__patch",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PermissionUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Permission"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ]
+      }
+    },
+    "/roles/": {
+      "get": {
+        "tags": [
+          "Roles"
+        ],
+        "summary": "Roles:List",
+        "operationId": "roles_list_roles__get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Query",
+              "type": "string"
+            },
+            "name": "query",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "exclusiveMinimum": 0.0,
+              "type": "integer",
+              "default": 10
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Skip",
+              "minimum": 0.0,
+              "type": "integer",
+              "default": 0
+            },
+            "name": "skip",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Ordering",
+              "type": "string"
+            },
+            "name": "ordering",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResults_Role_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Roles"
+        ],
+        "summary": "Roles:Create",
+        "operationId": "roles_create_roles__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Role"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ]
+      }
+    },
+    "/roles/{id}": {
+      "delete": {
+        "tags": [
+          "Roles"
+        ],
+        "summary": "Roles:Delete",
+        "operationId": "roles_delete_roles__id__delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Roles"
+        ],
+        "summary": "Roles:Update",
+        "operationId": "roles_update_roles__id__patch",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Role"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ]
+      }
+    },
+    "/tenants/": {
+      "get": {
+        "tags": [
+          "Tenants"
+        ],
+        "summary": "Tenants:List",
+        "operationId": "tenants_list_tenants__get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Query",
+              "type": "string"
+            },
+            "name": "query",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "exclusiveMinimum": 0.0,
+              "type": "integer",
+              "default": 10
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Skip",
+              "minimum": 0.0,
+              "type": "integer",
+              "default": 0
+            },
+            "name": "skip",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Ordering",
+              "type": "string"
+            },
+            "name": "ordering",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResults_Tenant_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Tenants"
+        ],
+        "summary": "Tenants:Create",
+        "operationId": "tenants_create_tenants__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TenantCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tenant"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ]
+      }
+    },
+    "/tenants/{id}": {
+      "patch": {
+        "tags": [
+          "Tenants"
+        ],
+        "summary": "Tenants:Update",
+        "operationId": "tenants_update_tenants__id__patch",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TenantUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tenant"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ]
+      }
+    },
+    "/users/": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Users:List",
+        "operationId": "users_list_users__get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "exclusiveMinimum": 0.0,
+              "type": "integer",
+              "default": 10
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Skip",
+              "minimum": 0.0,
+              "type": "integer",
+              "default": 0
+            },
+            "name": "skip",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Ordering",
+              "type": "string"
+            },
+            "name": "ordering",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResults_UserRead_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Users:Create",
+        "operationId": "users_create_users__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserCreateInternal"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ]
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Users:Get",
+        "operationId": "users_get_users__id__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Users:Update",
+        "operationId": "users_update_users__id__patch",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserRead"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ]
+      }
+    },
+    "/users/{id}/permissions": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Users:List Permissions",
+        "operationId": "users_list_permissions_users__id__permissions_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "exclusiveMinimum": 0.0,
+              "type": "integer",
+              "default": 10
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Skip",
+              "minimum": 0.0,
+              "type": "integer",
+              "default": 0
+            },
+            "name": "skip",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Ordering",
+              "type": "string"
+            },
+            "name": "ordering",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResults_UserPermission_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Users:Create Permission",
+        "operationId": "users_create_permission_users__id__permissions_post",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserPermissionCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ]
+      }
+    },
+    "/users/{id}/permissions/{permission_id}": {
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Users:Delete Permission",
+        "operationId": "users_delete_permission_users__id__permissions__permission_id__delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Permission Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "permission_id",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ]
+      }
+    },
+    "/users/{id}/roles": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Users:List Roles",
+        "operationId": "users_list_roles_users__id__roles_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "exclusiveMinimum": 0.0,
+              "type": "integer",
+              "default": 10
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Skip",
+              "minimum": 0.0,
+              "type": "integer",
+              "default": 0
+            },
+            "name": "skip",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Ordering",
+              "type": "string"
+            },
+            "name": "ordering",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResults_UserRole_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Users:Create Role",
+        "operationId": "users_create_role_users__id__roles_post",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRoleCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ]
+      }
+    },
+    "/users/{id}/roles/{role_id}": {
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Users:Delete Role",
+        "operationId": "users_delete_role_users__id__roles__role_id__delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Role Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "role_id",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ]
+      }
+    },
+    "/users/{id}/oauth-accounts": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Users:List Oauth Accounts",
+        "operationId": "users_list_oauth_accounts_users__id__oauth_accounts_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "exclusiveMinimum": 0.0,
+              "type": "integer",
+              "default": 10
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Skip",
+              "minimum": 0.0,
+              "type": "integer",
+              "default": 0
+            },
+            "name": "skip",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Ordering",
+              "type": "string"
+            },
+            "name": "ordering",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResults_OAuthAccount_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/user-fields/": {
+      "get": {
+        "tags": [
+          "User fields"
+        ],
+        "summary": "User Fields:List",
+        "operationId": "user_fields_list_user_fields__get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "exclusiveMinimum": 0.0,
+              "type": "integer",
+              "default": 10
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Skip",
+              "minimum": 0.0,
+              "type": "integer",
+              "default": 0
+            },
+            "name": "skip",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Ordering",
+              "type": "string"
+            },
+            "name": "ordering",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResults_UserField_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "User fields"
+        ],
+        "summary": "User Fields:Create",
+        "operationId": "user_fields_create_user_fields__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserFieldCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserField"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ]
+      }
+    },
+    "/user-fields/{id}": {
+      "delete": {
+        "tags": [
+          "User fields"
+        ],
+        "summary": "User Fields:Delete",
+        "operationId": "user_fields_delete_user_fields__id__delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "User fields"
+        ],
+        "summary": "User Fields:Update",
+        "operationId": "user_fields_update_user_fields__id__patch",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserFieldUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserField"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ]
+      }
+    },
+    "/webhooks/": {
+      "get": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "Webhooks:List",
+        "operationId": "webhooks_list_webhooks__get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "exclusiveMinimum": 0.0,
+              "type": "integer",
+              "default": 10
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Skip",
+              "minimum": 0.0,
+              "type": "integer",
+              "default": 0
+            },
+            "name": "skip",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Ordering",
+              "type": "string"
+            },
+            "name": "ordering",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResults_Webhook_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "Webhooks:Create",
+        "operationId": "webhooks_create_webhooks__post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebhookCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebhookSecret"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ]
+      }
+    },
+    "/webhooks/{id}": {
+      "get": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "Webhooks:Get",
+        "operationId": "webhooks_get_webhooks__id__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Webhook"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "Webhooks:Delete",
+        "operationId": "webhooks_delete_webhooks__id__delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "Webhooks:Update",
+        "operationId": "webhooks_update_webhooks__id__patch",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebhookUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Webhook"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ]
+      }
+    },
+    "/webhooks/{id}/secret": {
+      "post": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "Webhooks:Secret",
+        "operationId": "webhooks_secret_webhooks__id__secret_post",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebhookSecret"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ]
+      }
+    },
+    "/webhooks/{id}/logs": {
+      "get": {
+        "tags": [
+          "Webhooks"
+        ],
+        "summary": "Webhooks:Logs",
+        "operationId": "webhooks_logs_webhooks__id__logs_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Limit",
+              "exclusiveMinimum": 0.0,
+              "type": "integer",
+              "default": 10
+            },
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Skip",
+              "minimum": 0.0,
+              "type": "integer",
+              "default": 0
+            },
+            "name": "skip",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Ordering",
+              "type": "string"
+            },
+            "name": "ordering",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedResults_WebhookLog_"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Address": {
+        "title": "Address",
+        "required": [
+          "line1",
+          "postal_code",
+          "city",
+          "country"
+        ],
+        "type": "object",
+        "properties": {
+          "line1": {
+            "title": "Line1",
+            "minLength": 1,
+            "type": "string"
+          },
+          "line2": {
+            "title": "Line2",
+            "minLength": 1,
+            "type": "string"
+          },
+          "postal_code": {
+            "title": "Postal Code",
+            "minLength": 1,
+            "type": "string"
+          },
+          "city": {
+            "title": "City",
+            "minLength": 1,
+            "type": "string"
+          },
+          "state": {
+            "title": "State",
+            "minLength": 1,
+            "type": "string"
+          },
+          "country": {
+            "title": "Country",
+            "enum": [
+              "AF",
+              "AL",
+              "DZ",
+              "AS",
+              "AD",
+              "AO",
+              "AI",
+              "AQ",
+              "AG",
+              "AR",
+              "AM",
+              "AW",
+              "AU",
+              "AT",
+              "AZ",
+              "BS",
+              "BH",
+              "BD",
+              "BB",
+              "BY",
+              "BE",
+              "BZ",
+              "BJ",
+              "BM",
+              "BT",
+              "BO",
+              "BQ",
+              "BA",
+              "BW",
+              "BV",
+              "BR",
+              "IO",
+              "BN",
+              "BG",
+              "BF",
+              "BI",
+              "CV",
+              "KH",
+              "CM",
+              "CA",
+              "KY",
+              "CF",
+              "TD",
+              "CL",
+              "CN",
+              "CX",
+              "CC",
+              "CO",
+              "KM",
+              "CG",
+              "CD",
+              "CK",
+              "CR",
+              "HR",
+              "CU",
+              "CW",
+              "CY",
+              "CZ",
+              "CI",
+              "DK",
+              "DJ",
+              "DM",
+              "DO",
+              "EC",
+              "EG",
+              "SV",
+              "GQ",
+              "ER",
+              "EE",
+              "SZ",
+              "ET",
+              "FK",
+              "FO",
+              "FJ",
+              "FI",
+              "FR",
+              "GF",
+              "PF",
+              "TF",
+              "GA",
+              "GM",
+              "GE",
+              "DE",
+              "GH",
+              "GI",
+              "GR",
+              "GL",
+              "GD",
+              "GP",
+              "GU",
+              "GT",
+              "GG",
+              "GN",
+              "GW",
+              "GY",
+              "HT",
+              "HM",
+              "VA",
+              "HN",
+              "HK",
+              "HU",
+              "IS",
+              "IN",
+              "ID",
+              "IR",
+              "IQ",
+              "IE",
+              "IM",
+              "IL",
+              "IT",
+              "JM",
+              "JP",
+              "JE",
+              "JO",
+              "KZ",
+              "KE",
+              "KI",
+              "KP",
+              "KR",
+              "KW",
+              "KG",
+              "LA",
+              "LV",
+              "LB",
+              "LS",
+              "LR",
+              "LY",
+              "LI",
+              "LT",
+              "LU",
+              "MO",
+              "MG",
+              "MW",
+              "MY",
+              "MV",
+              "ML",
+              "MT",
+              "MH",
+              "MQ",
+              "MR",
+              "MU",
+              "YT",
+              "MX",
+              "FM",
+              "MD",
+              "MC",
+              "MN",
+              "ME",
+              "MS",
+              "MA",
+              "MZ",
+              "MM",
+              "NA",
+              "NR",
+              "NP",
+              "NL",
+              "NC",
+              "NZ",
+              "NI",
+              "NE",
+              "NG",
+              "NU",
+              "NF",
+              "MK",
+              "MP",
+              "NO",
+              "OM",
+              "PK",
+              "PW",
+              "PS",
+              "PA",
+              "PG",
+              "PY",
+              "PE",
+              "PH",
+              "PN",
+              "PL",
+              "PT",
+              "PR",
+              "QA",
+              "RO",
+              "RU",
+              "RW",
+              "RE",
+              "BL",
+              "SH",
+              "KN",
+              "LC",
+              "MF",
+              "PM",
+              "VC",
+              "WS",
+              "SM",
+              "ST",
+              "SA",
+              "SN",
+              "RS",
+              "SC",
+              "SL",
+              "SG",
+              "SX",
+              "SK",
+              "SI",
+              "SB",
+              "SO",
+              "ZA",
+              "GS",
+              "SS",
+              "ES",
+              "LK",
+              "SD",
+              "SR",
+              "SJ",
+              "SE",
+              "CH",
+              "SY",
+              "TW",
+              "TJ",
+              "TZ",
+              "TH",
+              "TL",
+              "TG",
+              "TK",
+              "TO",
+              "TT",
+              "TN",
+              "TR",
+              "TM",
+              "TC",
+              "TV",
+              "UG",
+              "UA",
+              "AE",
+              "GB",
+              "US",
+              "UM",
+              "UY",
+              "UZ",
+              "VU",
+              "VE",
+              "VN",
+              "VG",
+              "VI",
+              "WF",
+              "EH",
+              "YE",
+              "ZM",
+              "ZW",
+              "AX"
+            ],
+            "type": "enum",
+            "countries": [
+              {
+                "name": "Afghanistan",
+                "alpha_2": "AF"
+              },
+              {
+                "name": "Albania",
+                "alpha_2": "AL"
+              },
+              {
+                "name": "Algeria",
+                "alpha_2": "DZ"
+              },
+              {
+                "name": "American Samoa",
+                "alpha_2": "AS"
+              },
+              {
+                "name": "Andorra",
+                "alpha_2": "AD"
+              },
+              {
+                "name": "Angola",
+                "alpha_2": "AO"
+              },
+              {
+                "name": "Anguilla",
+                "alpha_2": "AI"
+              },
+              {
+                "name": "Antarctica",
+                "alpha_2": "AQ"
+              },
+              {
+                "name": "Antigua and Barbuda",
+                "alpha_2": "AG"
+              },
+              {
+                "name": "Argentina",
+                "alpha_2": "AR"
+              },
+              {
+                "name": "Armenia",
+                "alpha_2": "AM"
+              },
+              {
+                "name": "Aruba",
+                "alpha_2": "AW"
+              },
+              {
+                "name": "Australia",
+                "alpha_2": "AU"
+              },
+              {
+                "name": "Austria",
+                "alpha_2": "AT"
+              },
+              {
+                "name": "Azerbaijan",
+                "alpha_2": "AZ"
+              },
+              {
+                "name": "Bahamas",
+                "alpha_2": "BS"
+              },
+              {
+                "name": "Bahrain",
+                "alpha_2": "BH"
+              },
+              {
+                "name": "Bangladesh",
+                "alpha_2": "BD"
+              },
+              {
+                "name": "Barbados",
+                "alpha_2": "BB"
+              },
+              {
+                "name": "Belarus",
+                "alpha_2": "BY"
+              },
+              {
+                "name": "Belgium",
+                "alpha_2": "BE"
+              },
+              {
+                "name": "Belize",
+                "alpha_2": "BZ"
+              },
+              {
+                "name": "Benin",
+                "alpha_2": "BJ"
+              },
+              {
+                "name": "Bermuda",
+                "alpha_2": "BM"
+              },
+              {
+                "name": "Bhutan",
+                "alpha_2": "BT"
+              },
+              {
+                "name": "Bolivia, Plurinational State of",
+                "alpha_2": "BO"
+              },
+              {
+                "name": "Bonaire, Sint Eustatius and Saba",
+                "alpha_2": "BQ"
+              },
+              {
+                "name": "Bosnia and Herzegovina",
+                "alpha_2": "BA"
+              },
+              {
+                "name": "Botswana",
+                "alpha_2": "BW"
+              },
+              {
+                "name": "Bouvet Island",
+                "alpha_2": "BV"
+              },
+              {
+                "name": "Brazil",
+                "alpha_2": "BR"
+              },
+              {
+                "name": "British Indian Ocean Territory",
+                "alpha_2": "IO"
+              },
+              {
+                "name": "Brunei Darussalam",
+                "alpha_2": "BN"
+              },
+              {
+                "name": "Bulgaria",
+                "alpha_2": "BG"
+              },
+              {
+                "name": "Burkina Faso",
+                "alpha_2": "BF"
+              },
+              {
+                "name": "Burundi",
+                "alpha_2": "BI"
+              },
+              {
+                "name": "Cabo Verde",
+                "alpha_2": "CV"
+              },
+              {
+                "name": "Cambodia",
+                "alpha_2": "KH"
+              },
+              {
+                "name": "Cameroon",
+                "alpha_2": "CM"
+              },
+              {
+                "name": "Canada",
+                "alpha_2": "CA"
+              },
+              {
+                "name": "Cayman Islands",
+                "alpha_2": "KY"
+              },
+              {
+                "name": "Central African Republic",
+                "alpha_2": "CF"
+              },
+              {
+                "name": "Chad",
+                "alpha_2": "TD"
+              },
+              {
+                "name": "Chile",
+                "alpha_2": "CL"
+              },
+              {
+                "name": "China",
+                "alpha_2": "CN"
+              },
+              {
+                "name": "Christmas Island",
+                "alpha_2": "CX"
+              },
+              {
+                "name": "Cocos (Keeling) Islands",
+                "alpha_2": "CC"
+              },
+              {
+                "name": "Colombia",
+                "alpha_2": "CO"
+              },
+              {
+                "name": "Comoros",
+                "alpha_2": "KM"
+              },
+              {
+                "name": "Congo",
+                "alpha_2": "CG"
+              },
+              {
+                "name": "Congo, The Democratic Republic of the",
+                "alpha_2": "CD"
+              },
+              {
+                "name": "Cook Islands",
+                "alpha_2": "CK"
+              },
+              {
+                "name": "Costa Rica",
+                "alpha_2": "CR"
+              },
+              {
+                "name": "Croatia",
+                "alpha_2": "HR"
+              },
+              {
+                "name": "Cuba",
+                "alpha_2": "CU"
+              },
+              {
+                "name": "Curaçao",
+                "alpha_2": "CW"
+              },
+              {
+                "name": "Cyprus",
+                "alpha_2": "CY"
+              },
+              {
+                "name": "Czechia",
+                "alpha_2": "CZ"
+              },
+              {
+                "name": "Côte d'Ivoire",
+                "alpha_2": "CI"
+              },
+              {
+                "name": "Denmark",
+                "alpha_2": "DK"
+              },
+              {
+                "name": "Djibouti",
+                "alpha_2": "DJ"
+              },
+              {
+                "name": "Dominica",
+                "alpha_2": "DM"
+              },
+              {
+                "name": "Dominican Republic",
+                "alpha_2": "DO"
+              },
+              {
+                "name": "Ecuador",
+                "alpha_2": "EC"
+              },
+              {
+                "name": "Egypt",
+                "alpha_2": "EG"
+              },
+              {
+                "name": "El Salvador",
+                "alpha_2": "SV"
+              },
+              {
+                "name": "Equatorial Guinea",
+                "alpha_2": "GQ"
+              },
+              {
+                "name": "Eritrea",
+                "alpha_2": "ER"
+              },
+              {
+                "name": "Estonia",
+                "alpha_2": "EE"
+              },
+              {
+                "name": "Eswatini",
+                "alpha_2": "SZ"
+              },
+              {
+                "name": "Ethiopia",
+                "alpha_2": "ET"
+              },
+              {
+                "name": "Falkland Islands (Malvinas)",
+                "alpha_2": "FK"
+              },
+              {
+                "name": "Faroe Islands",
+                "alpha_2": "FO"
+              },
+              {
+                "name": "Fiji",
+                "alpha_2": "FJ"
+              },
+              {
+                "name": "Finland",
+                "alpha_2": "FI"
+              },
+              {
+                "name": "France",
+                "alpha_2": "FR"
+              },
+              {
+                "name": "French Guiana",
+                "alpha_2": "GF"
+              },
+              {
+                "name": "French Polynesia",
+                "alpha_2": "PF"
+              },
+              {
+                "name": "French Southern Territories",
+                "alpha_2": "TF"
+              },
+              {
+                "name": "Gabon",
+                "alpha_2": "GA"
+              },
+              {
+                "name": "Gambia",
+                "alpha_2": "GM"
+              },
+              {
+                "name": "Georgia",
+                "alpha_2": "GE"
+              },
+              {
+                "name": "Germany",
+                "alpha_2": "DE"
+              },
+              {
+                "name": "Ghana",
+                "alpha_2": "GH"
+              },
+              {
+                "name": "Gibraltar",
+                "alpha_2": "GI"
+              },
+              {
+                "name": "Greece",
+                "alpha_2": "GR"
+              },
+              {
+                "name": "Greenland",
+                "alpha_2": "GL"
+              },
+              {
+                "name": "Grenada",
+                "alpha_2": "GD"
+              },
+              {
+                "name": "Guadeloupe",
+                "alpha_2": "GP"
+              },
+              {
+                "name": "Guam",
+                "alpha_2": "GU"
+              },
+              {
+                "name": "Guatemala",
+                "alpha_2": "GT"
+              },
+              {
+                "name": "Guernsey",
+                "alpha_2": "GG"
+              },
+              {
+                "name": "Guinea",
+                "alpha_2": "GN"
+              },
+              {
+                "name": "Guinea-Bissau",
+                "alpha_2": "GW"
+              },
+              {
+                "name": "Guyana",
+                "alpha_2": "GY"
+              },
+              {
+                "name": "Haiti",
+                "alpha_2": "HT"
+              },
+              {
+                "name": "Heard Island and McDonald Islands",
+                "alpha_2": "HM"
+              },
+              {
+                "name": "Holy See (Vatican City State)",
+                "alpha_2": "VA"
+              },
+              {
+                "name": "Honduras",
+                "alpha_2": "HN"
+              },
+              {
+                "name": "Hong Kong",
+                "alpha_2": "HK"
+              },
+              {
+                "name": "Hungary",
+                "alpha_2": "HU"
+              },
+              {
+                "name": "Iceland",
+                "alpha_2": "IS"
+              },
+              {
+                "name": "India",
+                "alpha_2": "IN"
+              },
+              {
+                "name": "Indonesia",
+                "alpha_2": "ID"
+              },
+              {
+                "name": "Iran, Islamic Republic of",
+                "alpha_2": "IR"
+              },
+              {
+                "name": "Iraq",
+                "alpha_2": "IQ"
+              },
+              {
+                "name": "Ireland",
+                "alpha_2": "IE"
+              },
+              {
+                "name": "Isle of Man",
+                "alpha_2": "IM"
+              },
+              {
+                "name": "Israel",
+                "alpha_2": "IL"
+              },
+              {
+                "name": "Italy",
+                "alpha_2": "IT"
+              },
+              {
+                "name": "Jamaica",
+                "alpha_2": "JM"
+              },
+              {
+                "name": "Japan",
+                "alpha_2": "JP"
+              },
+              {
+                "name": "Jersey",
+                "alpha_2": "JE"
+              },
+              {
+                "name": "Jordan",
+                "alpha_2": "JO"
+              },
+              {
+                "name": "Kazakhstan",
+                "alpha_2": "KZ"
+              },
+              {
+                "name": "Kenya",
+                "alpha_2": "KE"
+              },
+              {
+                "name": "Kiribati",
+                "alpha_2": "KI"
+              },
+              {
+                "name": "Korea, Democratic People's Republic of",
+                "alpha_2": "KP"
+              },
+              {
+                "name": "Korea, Republic of",
+                "alpha_2": "KR"
+              },
+              {
+                "name": "Kuwait",
+                "alpha_2": "KW"
+              },
+              {
+                "name": "Kyrgyzstan",
+                "alpha_2": "KG"
+              },
+              {
+                "name": "Lao People's Democratic Republic",
+                "alpha_2": "LA"
+              },
+              {
+                "name": "Latvia",
+                "alpha_2": "LV"
+              },
+              {
+                "name": "Lebanon",
+                "alpha_2": "LB"
+              },
+              {
+                "name": "Lesotho",
+                "alpha_2": "LS"
+              },
+              {
+                "name": "Liberia",
+                "alpha_2": "LR"
+              },
+              {
+                "name": "Libya",
+                "alpha_2": "LY"
+              },
+              {
+                "name": "Liechtenstein",
+                "alpha_2": "LI"
+              },
+              {
+                "name": "Lithuania",
+                "alpha_2": "LT"
+              },
+              {
+                "name": "Luxembourg",
+                "alpha_2": "LU"
+              },
+              {
+                "name": "Macao",
+                "alpha_2": "MO"
+              },
+              {
+                "name": "Madagascar",
+                "alpha_2": "MG"
+              },
+              {
+                "name": "Malawi",
+                "alpha_2": "MW"
+              },
+              {
+                "name": "Malaysia",
+                "alpha_2": "MY"
+              },
+              {
+                "name": "Maldives",
+                "alpha_2": "MV"
+              },
+              {
+                "name": "Mali",
+                "alpha_2": "ML"
+              },
+              {
+                "name": "Malta",
+                "alpha_2": "MT"
+              },
+              {
+                "name": "Marshall Islands",
+                "alpha_2": "MH"
+              },
+              {
+                "name": "Martinique",
+                "alpha_2": "MQ"
+              },
+              {
+                "name": "Mauritania",
+                "alpha_2": "MR"
+              },
+              {
+                "name": "Mauritius",
+                "alpha_2": "MU"
+              },
+              {
+                "name": "Mayotte",
+                "alpha_2": "YT"
+              },
+              {
+                "name": "Mexico",
+                "alpha_2": "MX"
+              },
+              {
+                "name": "Micronesia, Federated States of",
+                "alpha_2": "FM"
+              },
+              {
+                "name": "Moldova, Republic of",
+                "alpha_2": "MD"
+              },
+              {
+                "name": "Monaco",
+                "alpha_2": "MC"
+              },
+              {
+                "name": "Mongolia",
+                "alpha_2": "MN"
+              },
+              {
+                "name": "Montenegro",
+                "alpha_2": "ME"
+              },
+              {
+                "name": "Montserrat",
+                "alpha_2": "MS"
+              },
+              {
+                "name": "Morocco",
+                "alpha_2": "MA"
+              },
+              {
+                "name": "Mozambique",
+                "alpha_2": "MZ"
+              },
+              {
+                "name": "Myanmar",
+                "alpha_2": "MM"
+              },
+              {
+                "name": "Namibia",
+                "alpha_2": "NA"
+              },
+              {
+                "name": "Nauru",
+                "alpha_2": "NR"
+              },
+              {
+                "name": "Nepal",
+                "alpha_2": "NP"
+              },
+              {
+                "name": "Netherlands",
+                "alpha_2": "NL"
+              },
+              {
+                "name": "New Caledonia",
+                "alpha_2": "NC"
+              },
+              {
+                "name": "New Zealand",
+                "alpha_2": "NZ"
+              },
+              {
+                "name": "Nicaragua",
+                "alpha_2": "NI"
+              },
+              {
+                "name": "Niger",
+                "alpha_2": "NE"
+              },
+              {
+                "name": "Nigeria",
+                "alpha_2": "NG"
+              },
+              {
+                "name": "Niue",
+                "alpha_2": "NU"
+              },
+              {
+                "name": "Norfolk Island",
+                "alpha_2": "NF"
+              },
+              {
+                "name": "North Macedonia",
+                "alpha_2": "MK"
+              },
+              {
+                "name": "Northern Mariana Islands",
+                "alpha_2": "MP"
+              },
+              {
+                "name": "Norway",
+                "alpha_2": "NO"
+              },
+              {
+                "name": "Oman",
+                "alpha_2": "OM"
+              },
+              {
+                "name": "Pakistan",
+                "alpha_2": "PK"
+              },
+              {
+                "name": "Palau",
+                "alpha_2": "PW"
+              },
+              {
+                "name": "Palestine, State of",
+                "alpha_2": "PS"
+              },
+              {
+                "name": "Panama",
+                "alpha_2": "PA"
+              },
+              {
+                "name": "Papua New Guinea",
+                "alpha_2": "PG"
+              },
+              {
+                "name": "Paraguay",
+                "alpha_2": "PY"
+              },
+              {
+                "name": "Peru",
+                "alpha_2": "PE"
+              },
+              {
+                "name": "Philippines",
+                "alpha_2": "PH"
+              },
+              {
+                "name": "Pitcairn",
+                "alpha_2": "PN"
+              },
+              {
+                "name": "Poland",
+                "alpha_2": "PL"
+              },
+              {
+                "name": "Portugal",
+                "alpha_2": "PT"
+              },
+              {
+                "name": "Puerto Rico",
+                "alpha_2": "PR"
+              },
+              {
+                "name": "Qatar",
+                "alpha_2": "QA"
+              },
+              {
+                "name": "Romania",
+                "alpha_2": "RO"
+              },
+              {
+                "name": "Russian Federation",
+                "alpha_2": "RU"
+              },
+              {
+                "name": "Rwanda",
+                "alpha_2": "RW"
+              },
+              {
+                "name": "Réunion",
+                "alpha_2": "RE"
+              },
+              {
+                "name": "Saint Barthélemy",
+                "alpha_2": "BL"
+              },
+              {
+                "name": "Saint Helena, Ascension and Tristan da Cunha",
+                "alpha_2": "SH"
+              },
+              {
+                "name": "Saint Kitts and Nevis",
+                "alpha_2": "KN"
+              },
+              {
+                "name": "Saint Lucia",
+                "alpha_2": "LC"
+              },
+              {
+                "name": "Saint Martin (French part)",
+                "alpha_2": "MF"
+              },
+              {
+                "name": "Saint Pierre and Miquelon",
+                "alpha_2": "PM"
+              },
+              {
+                "name": "Saint Vincent and the Grenadines",
+                "alpha_2": "VC"
+              },
+              {
+                "name": "Samoa",
+                "alpha_2": "WS"
+              },
+              {
+                "name": "San Marino",
+                "alpha_2": "SM"
+              },
+              {
+                "name": "Sao Tome and Principe",
+                "alpha_2": "ST"
+              },
+              {
+                "name": "Saudi Arabia",
+                "alpha_2": "SA"
+              },
+              {
+                "name": "Senegal",
+                "alpha_2": "SN"
+              },
+              {
+                "name": "Serbia",
+                "alpha_2": "RS"
+              },
+              {
+                "name": "Seychelles",
+                "alpha_2": "SC"
+              },
+              {
+                "name": "Sierra Leone",
+                "alpha_2": "SL"
+              },
+              {
+                "name": "Singapore",
+                "alpha_2": "SG"
+              },
+              {
+                "name": "Sint Maarten (Dutch part)",
+                "alpha_2": "SX"
+              },
+              {
+                "name": "Slovakia",
+                "alpha_2": "SK"
+              },
+              {
+                "name": "Slovenia",
+                "alpha_2": "SI"
+              },
+              {
+                "name": "Solomon Islands",
+                "alpha_2": "SB"
+              },
+              {
+                "name": "Somalia",
+                "alpha_2": "SO"
+              },
+              {
+                "name": "South Africa",
+                "alpha_2": "ZA"
+              },
+              {
+                "name": "South Georgia and the South Sandwich Islands",
+                "alpha_2": "GS"
+              },
+              {
+                "name": "South Sudan",
+                "alpha_2": "SS"
+              },
+              {
+                "name": "Spain",
+                "alpha_2": "ES"
+              },
+              {
+                "name": "Sri Lanka",
+                "alpha_2": "LK"
+              },
+              {
+                "name": "Sudan",
+                "alpha_2": "SD"
+              },
+              {
+                "name": "Suriname",
+                "alpha_2": "SR"
+              },
+              {
+                "name": "Svalbard and Jan Mayen",
+                "alpha_2": "SJ"
+              },
+              {
+                "name": "Sweden",
+                "alpha_2": "SE"
+              },
+              {
+                "name": "Switzerland",
+                "alpha_2": "CH"
+              },
+              {
+                "name": "Syrian Arab Republic",
+                "alpha_2": "SY"
+              },
+              {
+                "name": "Taiwan, Province of China",
+                "alpha_2": "TW"
+              },
+              {
+                "name": "Tajikistan",
+                "alpha_2": "TJ"
+              },
+              {
+                "name": "Tanzania, United Republic of",
+                "alpha_2": "TZ"
+              },
+              {
+                "name": "Thailand",
+                "alpha_2": "TH"
+              },
+              {
+                "name": "Timor-Leste",
+                "alpha_2": "TL"
+              },
+              {
+                "name": "Togo",
+                "alpha_2": "TG"
+              },
+              {
+                "name": "Tokelau",
+                "alpha_2": "TK"
+              },
+              {
+                "name": "Tonga",
+                "alpha_2": "TO"
+              },
+              {
+                "name": "Trinidad and Tobago",
+                "alpha_2": "TT"
+              },
+              {
+                "name": "Tunisia",
+                "alpha_2": "TN"
+              },
+              {
+                "name": "Turkey",
+                "alpha_2": "TR"
+              },
+              {
+                "name": "Turkmenistan",
+                "alpha_2": "TM"
+              },
+              {
+                "name": "Turks and Caicos Islands",
+                "alpha_2": "TC"
+              },
+              {
+                "name": "Tuvalu",
+                "alpha_2": "TV"
+              },
+              {
+                "name": "Uganda",
+                "alpha_2": "UG"
+              },
+              {
+                "name": "Ukraine",
+                "alpha_2": "UA"
+              },
+              {
+                "name": "United Arab Emirates",
+                "alpha_2": "AE"
+              },
+              {
+                "name": "United Kingdom",
+                "alpha_2": "GB"
+              },
+              {
+                "name": "United States",
+                "alpha_2": "US"
+              },
+              {
+                "name": "United States Minor Outlying Islands",
+                "alpha_2": "UM"
+              },
+              {
+                "name": "Uruguay",
+                "alpha_2": "UY"
+              },
+              {
+                "name": "Uzbekistan",
+                "alpha_2": "UZ"
+              },
+              {
+                "name": "Vanuatu",
+                "alpha_2": "VU"
+              },
+              {
+                "name": "Venezuela, Bolivarian Republic of",
+                "alpha_2": "VE"
+              },
+              {
+                "name": "Viet Nam",
+                "alpha_2": "VN"
+              },
+              {
+                "name": "Virgin Islands, British",
+                "alpha_2": "VG"
+              },
+              {
+                "name": "Virgin Islands, U.S.",
+                "alpha_2": "VI"
+              },
+              {
+                "name": "Wallis and Futuna",
+                "alpha_2": "WF"
+              },
+              {
+                "name": "Western Sahara",
+                "alpha_2": "EH"
+              },
+              {
+                "name": "Yemen",
+                "alpha_2": "YE"
+              },
+              {
+                "name": "Zambia",
+                "alpha_2": "ZM"
+              },
+              {
+                "name": "Zimbabwe",
+                "alpha_2": "ZW"
+              },
+              {
+                "name": "Åland Islands",
+                "alpha_2": "AX"
+              }
+            ]
+          }
+        }
+      },
+      "AvailableOAuthProvider": {
+        "title": "AvailableOAuthProvider",
+        "enum": [
+          "DISCORD",
+          "FACEBOOK",
+          "GITHUB",
+          "GOOGLE",
+          "LINKEDIN",
+          "MICROSOFT",
+          "REDDIT",
+          "OPENID"
+        ],
+        "type": "string",
+        "description": "An enumeration."
+      },
+      "Client": {
+        "title": "Client",
+        "required": [
+          "created_at",
+          "updated_at",
+          "id",
+          "name",
+          "first_party",
+          "client_type",
+          "client_id",
+          "client_secret",
+          "redirect_uris",
+          "authorization_code_lifetime_seconds",
+          "access_id_token_lifetime_seconds",
+          "refresh_token_lifetime_seconds",
+          "tenant_id",
+          "tenant"
+        ],
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "first_party": {
+            "title": "First Party",
+            "type": "boolean"
+          },
+          "client_type": {
+            "$ref": "#/components/schemas/ClientType"
+          },
+          "client_id": {
+            "title": "Client Id",
+            "type": "string"
+          },
+          "client_secret": {
+            "title": "Client Secret",
+            "type": "string"
+          },
+          "redirect_uris": {
+            "title": "Redirect Uris",
+            "type": "array",
+            "items": {
+              "maxLength": 65536,
+              "minLength": 1,
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          "authorization_code_lifetime_seconds": {
+            "title": "Authorization Code Lifetime Seconds",
+            "type": "integer"
+          },
+          "access_id_token_lifetime_seconds": {
+            "title": "Access Id Token Lifetime Seconds",
+            "type": "integer"
+          },
+          "refresh_token_lifetime_seconds": {
+            "title": "Refresh Token Lifetime Seconds",
+            "type": "integer"
+          },
+          "tenant_id": {
+            "title": "Tenant Id",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "tenant": {
+            "$ref": "#/components/schemas/TenantEmbedded"
+          },
+          "encrypt_jwk": {
+            "title": "Encrypt Jwk",
+            "type": "string",
+            "format": "password",
+            "writeOnly": true
+          }
+        }
+      },
+      "ClientCreate": {
+        "title": "ClientCreate",
+        "required": [
+          "name",
+          "first_party",
+          "client_type",
+          "redirect_uris",
+          "tenant_id"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "first_party": {
+            "title": "First Party",
+            "type": "boolean"
+          },
+          "client_type": {
+            "$ref": "#/components/schemas/ClientType"
+          },
+          "redirect_uris": {
+            "title": "Redirect Uris",
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "maxLength": 65536,
+              "minLength": 1,
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          "authorization_code_lifetime_seconds": {
+            "title": "Authorization Code Lifetime Seconds",
+            "type": "integer",
+            "min": 0
+          },
+          "access_id_token_lifetime_seconds": {
+            "title": "Access Id Token Lifetime Seconds",
+            "type": "integer",
+            "min": 0
+          },
+          "refresh_token_lifetime_seconds": {
+            "title": "Refresh Token Lifetime Seconds",
+            "type": "integer",
+            "min": 0
+          },
+          "tenant_id": {
+            "title": "Tenant Id",
+            "type": "string",
+            "format": "uuid4"
+          }
+        }
+      },
+      "ClientType": {
+        "title": "ClientType",
+        "enum": [
+          "public",
+          "confidential"
+        ],
+        "type": "string",
+        "description": "An enumeration."
+      },
+      "ClientUpdate": {
+        "title": "ClientUpdate",
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "first_party": {
+            "title": "First Party",
+            "type": "boolean"
+          },
+          "client_type": {
+            "$ref": "#/components/schemas/ClientType"
+          },
+          "redirect_uris": {
+            "title": "Redirect Uris",
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "maxLength": 65536,
+              "minLength": 1,
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          "authorization_code_lifetime_seconds": {
+            "title": "Authorization Code Lifetime Seconds",
+            "type": "integer",
+            "min": 0
+          },
+          "access_id_token_lifetime_seconds": {
+            "title": "Access Id Token Lifetime Seconds",
+            "type": "integer",
+            "min": 0
+          },
+          "refresh_token_lifetime_seconds": {
+            "title": "Refresh Token Lifetime Seconds",
+            "type": "integer",
+            "min": 0
+          }
+        }
+      },
+      "EmailTemplate": {
+        "title": "EmailTemplate",
+        "required": [
+          "created_at",
+          "updated_at",
+          "id",
+          "type",
+          "subject",
+          "content"
+        ],
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "type": {
+            "$ref": "#/components/schemas/EmailTemplateType"
+          },
+          "subject": {
+            "title": "Subject",
+            "type": "string"
+          },
+          "content": {
+            "title": "Content",
+            "type": "string"
+          }
+        }
+      },
+      "EmailTemplateType": {
+        "title": "EmailTemplateType",
+        "enum": [
+          "BASE",
+          "WELCOME",
+          "FORGOT_PASSWORD"
+        ],
+        "type": "string",
+        "description": "An enumeration."
+      },
+      "EmailTemplateUpdate": {
+        "title": "EmailTemplateUpdate",
+        "type": "object",
+        "properties": {
+          "subject": {
+            "title": "Subject",
+            "type": "string"
+          },
+          "content": {
+            "title": "Content",
+            "type": "string"
+          }
+        }
+      },
+      "HTTPValidationError": {
+        "title": "HTTPValidationError",
+        "type": "object",
+        "properties": {
+          "detail": {
+            "title": "Detail",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            }
+          }
+        }
+      },
+      "OAuthAccount": {
+        "title": "OAuthAccount",
+        "required": [
+          "created_at",
+          "updated_at",
+          "id",
+          "account_id",
+          "oauth_provider_id",
+          "oauth_provider"
+        ],
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "account_id": {
+            "title": "Account Id",
+            "type": "string"
+          },
+          "oauth_provider_id": {
+            "title": "Oauth Provider Id",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "oauth_provider": {
+            "$ref": "#/components/schemas/OAuthProvider"
+          }
+        }
+      },
+      "OAuthAccountAccessToken": {
+        "title": "OAuthAccountAccessToken",
+        "required": [
+          "id",
+          "account_id",
+          "access_token"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "account_id": {
+            "title": "Account Id",
+            "type": "string"
+          },
+          "access_token": {
+            "title": "Access Token",
+            "type": "string"
+          },
+          "expires_at": {
+            "title": "Expires At",
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "OAuthProvider": {
+        "title": "OAuthProvider",
+        "required": [
+          "created_at",
+          "updated_at",
+          "id",
+          "provider",
+          "client_id",
+          "client_secret",
+          "scopes"
+        ],
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "provider": {
+            "$ref": "#/components/schemas/AvailableOAuthProvider"
+          },
+          "client_id": {
+            "title": "Client Id",
+            "type": "string",
+            "format": "password",
+            "writeOnly": true
+          },
+          "client_secret": {
+            "title": "Client Secret",
+            "type": "string",
+            "format": "password",
+            "writeOnly": true
+          },
+          "scopes": {
+            "title": "Scopes",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "openid_configuration_endpoint": {
+            "title": "Openid Configuration Endpoint",
+            "maxLength": 2083,
+            "minLength": 1,
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "OAuthProviderCreate": {
+        "title": "OAuthProviderCreate",
+        "required": [
+          "provider",
+          "client_id",
+          "client_secret",
+          "scopes"
+        ],
+        "type": "object",
+        "properties": {
+          "provider": {
+            "$ref": "#/components/schemas/AvailableOAuthProvider"
+          },
+          "client_id": {
+            "title": "Client Id",
+            "type": "string"
+          },
+          "client_secret": {
+            "title": "Client Secret",
+            "type": "string"
+          },
+          "scopes": {
+            "title": "Scopes",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "openid_configuration_endpoint": {
+            "title": "Openid Configuration Endpoint",
+            "maxLength": 2083,
+            "minLength": 1,
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "OAuthProviderEmbedded": {
+        "title": "OAuthProviderEmbedded",
+        "required": [
+          "created_at",
+          "updated_at",
+          "id",
+          "provider",
+          "client_id",
+          "client_secret",
+          "scopes"
+        ],
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "provider": {
+            "$ref": "#/components/schemas/AvailableOAuthProvider"
+          },
+          "client_id": {
+            "title": "Client Id",
+            "type": "string",
+            "format": "password",
+            "writeOnly": true
+          },
+          "client_secret": {
+            "title": "Client Secret",
+            "type": "string",
+            "format": "password",
+            "writeOnly": true
+          },
+          "scopes": {
+            "title": "Scopes",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "openid_configuration_endpoint": {
+            "title": "Openid Configuration Endpoint",
+            "maxLength": 2083,
+            "minLength": 1,
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "OAuthProviderUpdate": {
+        "title": "OAuthProviderUpdate",
+        "type": "object",
+        "properties": {
+          "client_id": {
+            "title": "Client Id",
+            "type": "string"
+          },
+          "client_secret": {
+            "title": "Client Secret",
+            "type": "string"
+          },
+          "scopes": {
+            "title": "Scopes",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "openid_configuration_endpoint": {
+            "title": "Openid Configuration Endpoint",
+            "maxLength": 2083,
+            "minLength": 1,
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "PaginatedResults_Client_": {
+        "title": "PaginatedResults[Client]",
+        "required": [
+          "count",
+          "results"
+        ],
+        "type": "object",
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "results": {
+            "title": "Results",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Client"
+            }
+          }
+        }
+      },
+      "PaginatedResults_EmailTemplate_": {
+        "title": "PaginatedResults[EmailTemplate]",
+        "required": [
+          "count",
+          "results"
+        ],
+        "type": "object",
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "results": {
+            "title": "Results",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EmailTemplate"
+            }
+          }
+        }
+      },
+      "PaginatedResults_OAuthAccount_": {
+        "title": "PaginatedResults[OAuthAccount]",
+        "required": [
+          "count",
+          "results"
+        ],
+        "type": "object",
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "results": {
+            "title": "Results",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OAuthAccount"
+            }
+          }
+        }
+      },
+      "PaginatedResults_OAuthProvider_": {
+        "title": "PaginatedResults[OAuthProvider]",
+        "required": [
+          "count",
+          "results"
+        ],
+        "type": "object",
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "results": {
+            "title": "Results",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OAuthProvider"
+            }
+          }
+        }
+      },
+      "PaginatedResults_Permission_": {
+        "title": "PaginatedResults[Permission]",
+        "required": [
+          "count",
+          "results"
+        ],
+        "type": "object",
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "results": {
+            "title": "Results",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Permission"
+            }
+          }
+        }
+      },
+      "PaginatedResults_Role_": {
+        "title": "PaginatedResults[Role]",
+        "required": [
+          "count",
+          "results"
+        ],
+        "type": "object",
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "results": {
+            "title": "Results",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Role"
+            }
+          }
+        }
+      },
+      "PaginatedResults_Tenant_": {
+        "title": "PaginatedResults[Tenant]",
+        "required": [
+          "count",
+          "results"
+        ],
+        "type": "object",
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "results": {
+            "title": "Results",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Tenant"
+            }
+          }
+        }
+      },
+      "PaginatedResults_UserField_": {
+        "title": "PaginatedResults[UserField]",
+        "required": [
+          "count",
+          "results"
+        ],
+        "type": "object",
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "results": {
+            "title": "Results",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserField"
+            }
+          }
+        }
+      },
+      "PaginatedResults_UserPermission_": {
+        "title": "PaginatedResults[UserPermission]",
+        "required": [
+          "count",
+          "results"
+        ],
+        "type": "object",
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "results": {
+            "title": "Results",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserPermission"
+            }
+          }
+        }
+      },
+      "PaginatedResults_UserRead_": {
+        "title": "PaginatedResults[UserRead]",
+        "required": [
+          "count",
+          "results"
+        ],
+        "type": "object",
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "results": {
+            "title": "Results",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserRead"
+            }
+          }
+        }
+      },
+      "PaginatedResults_UserRole_": {
+        "title": "PaginatedResults[UserRole]",
+        "required": [
+          "count",
+          "results"
+        ],
+        "type": "object",
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "results": {
+            "title": "Results",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserRole"
+            }
+          }
+        }
+      },
+      "PaginatedResults_WebhookLog_": {
+        "title": "PaginatedResults[WebhookLog]",
+        "required": [
+          "count",
+          "results"
+        ],
+        "type": "object",
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "results": {
+            "title": "Results",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WebhookLog"
+            }
+          }
+        }
+      },
+      "PaginatedResults_Webhook_": {
+        "title": "PaginatedResults[Webhook]",
+        "required": [
+          "count",
+          "results"
+        ],
+        "type": "object",
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "results": {
+            "title": "Results",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Webhook"
+            }
+          }
+        }
+      },
+      "Permission": {
+        "title": "Permission",
+        "required": [
+          "created_at",
+          "updated_at",
+          "id",
+          "name",
+          "codename"
+        ],
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "codename": {
+            "title": "Codename",
+            "type": "string"
+          }
+        }
+      },
+      "PermissionCreate": {
+        "title": "PermissionCreate",
+        "required": [
+          "name",
+          "codename"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "codename": {
+            "title": "Codename",
+            "type": "string"
+          }
+        }
+      },
+      "PermissionEmbedded": {
+        "title": "PermissionEmbedded",
+        "required": [
+          "created_at",
+          "updated_at",
+          "id",
+          "name",
+          "codename"
+        ],
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "codename": {
+            "title": "Codename",
+            "type": "string"
+          }
+        }
+      },
+      "PermissionUpdate": {
+        "title": "PermissionUpdate",
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "codename": {
+            "title": "Codename",
+            "type": "string"
+          }
+        }
+      },
+      "Role": {
+        "title": "Role",
+        "required": [
+          "created_at",
+          "updated_at",
+          "id",
+          "name",
+          "granted_by_default",
+          "permissions"
+        ],
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "granted_by_default": {
+            "title": "Granted By Default",
+            "type": "boolean"
+          },
+          "permissions": {
+            "title": "Permissions",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PermissionEmbedded"
+            }
+          }
+        }
+      },
+      "RoleCreate": {
+        "title": "RoleCreate",
+        "required": [
+          "name",
+          "granted_by_default",
+          "permissions"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "granted_by_default": {
+            "title": "Granted By Default",
+            "type": "boolean"
+          },
+          "permissions": {
+            "title": "Permissions",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid4"
+            }
+          }
+        }
+      },
+      "RoleEmbedded": {
+        "title": "RoleEmbedded",
+        "required": [
+          "created_at",
+          "updated_at",
+          "id",
+          "name",
+          "granted_by_default"
+        ],
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "granted_by_default": {
+            "title": "Granted By Default",
+            "type": "boolean"
+          }
+        }
+      },
+      "RoleUpdate": {
+        "title": "RoleUpdate",
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "granted_by_default": {
+            "title": "Granted By Default",
+            "type": "boolean"
+          },
+          "permissions": {
+            "title": "Permissions",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid4"
+            }
+          }
+        }
+      },
+      "Tenant": {
+        "title": "Tenant",
+        "required": [
+          "created_at",
+          "updated_at",
+          "id",
+          "name",
+          "default",
+          "slug",
+          "registration_allowed",
+          "oauth_providers"
+        ],
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "default": {
+            "title": "Default",
+            "type": "boolean"
+          },
+          "slug": {
+            "title": "Slug",
+            "type": "string"
+          },
+          "registration_allowed": {
+            "title": "Registration Allowed",
+            "type": "boolean"
+          },
+          "theme_id": {
+            "title": "Theme Id",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "logo_url": {
+            "title": "Logo Url",
+            "maxLength": 65536,
+            "minLength": 1,
+            "type": "string",
+            "format": "uri"
+          },
+          "oauth_providers": {
+            "title": "Oauth Providers",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OAuthProviderEmbedded"
+            }
+          }
+        }
+      },
+      "TenantCreate": {
+        "title": "TenantCreate",
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "registration_allowed": {
+            "title": "Registration Allowed",
+            "type": "boolean",
+            "default": true
+          },
+          "theme_id": {
+            "title": "Theme Id",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "logo_url": {
+            "title": "Logo Url",
+            "maxLength": 65536,
+            "minLength": 1,
+            "type": "string",
+            "format": "uri"
+          },
+          "oauth_providers": {
+            "title": "Oauth Providers",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid4"
+            }
+          }
+        }
+      },
+      "TenantEmbedded": {
+        "title": "TenantEmbedded",
+        "required": [
+          "created_at",
+          "updated_at",
+          "id",
+          "name",
+          "default",
+          "slug",
+          "registration_allowed"
+        ],
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "default": {
+            "title": "Default",
+            "type": "boolean"
+          },
+          "slug": {
+            "title": "Slug",
+            "type": "string"
+          },
+          "registration_allowed": {
+            "title": "Registration Allowed",
+            "type": "boolean"
+          },
+          "theme_id": {
+            "title": "Theme Id",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "logo_url": {
+            "title": "Logo Url",
+            "maxLength": 65536,
+            "minLength": 1,
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "TenantUpdate": {
+        "title": "TenantUpdate",
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "registration_allowed": {
+            "title": "Registration Allowed",
+            "type": "boolean"
+          },
+          "theme_id": {
+            "title": "Theme Id",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "logo_url": {
+            "title": "Logo Url",
+            "maxLength": 65536,
+            "minLength": 1,
+            "type": "string",
+            "format": "uri"
+          },
+          "oauth_providers": {
+            "title": "Oauth Providers",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid4"
+            }
+          }
+        }
+      },
+      "UserCreateInternal": {
+        "title": "UserCreateInternal",
+        "required": [
+          "email",
+          "password",
+          "tenant_id"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "title": "Email",
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "title": "Password",
+            "type": "string"
+          },
+          "is_active": {
+            "title": "Is Active",
+            "type": "boolean",
+            "default": true
+          },
+          "is_superuser": {
+            "title": "Is Superuser",
+            "type": "boolean",
+            "default": false
+          },
+          "is_verified": {
+            "title": "Is Verified",
+            "type": "boolean",
+            "default": false
+          },
+          "fields": {
+            "$ref": "#/components/schemas/UserFields"
+          },
+          "tenant_id": {
+            "title": "Tenant Id",
+            "type": "string",
+            "format": "uuid4"
+          }
+        },
+        "description": "Utility model so that we can hook into the logic of UserManager.create\nand add some attributes before persisting into database."
+      },
+      "UserField": {
+        "title": "UserField",
+        "required": [
+          "created_at",
+          "updated_at",
+          "id",
+          "name",
+          "slug",
+          "type",
+          "configuration"
+        ],
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "slug": {
+            "title": "Slug",
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/UserFieldType"
+          },
+          "configuration": {
+            "$ref": "#/components/schemas/UserFieldConfiguration"
+          }
+        }
+      },
+      "UserFieldConfiguration": {
+        "title": "UserFieldConfiguration",
+        "required": [
+          "at_registration",
+          "required",
+          "at_update"
+        ],
+        "type": "object",
+        "properties": {
+          "at_registration": {
+            "title": "At Registration",
+            "type": "boolean"
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean"
+          },
+          "at_update": {
+            "title": "At Update",
+            "type": "boolean"
+          },
+          "choices": {
+            "title": "Choices",
+            "type": "array",
+            "items": {
+              "maxItems": 2,
+              "minItems": 2,
+              "type": "array",
+              "items": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "default": {
+            "title": "Default",
+            "anyOf": [
+              {
+                "title": "timezone",
+                "enum": [
+                  "Africa/Abidjan",
+                  "Africa/Accra",
+                  "Africa/Addis_Ababa",
+                  "Africa/Algiers",
+                  "Africa/Asmara",
+                  "Africa/Bamako",
+                  "Africa/Bangui",
+                  "Africa/Banjul",
+                  "Africa/Bissau",
+                  "Africa/Blantyre",
+                  "Africa/Brazzaville",
+                  "Africa/Bujumbura",
+                  "Africa/Cairo",
+                  "Africa/Casablanca",
+                  "Africa/Ceuta",
+                  "Africa/Conakry",
+                  "Africa/Dakar",
+                  "Africa/Dar_es_Salaam",
+                  "Africa/Djibouti",
+                  "Africa/Douala",
+                  "Africa/El_Aaiun",
+                  "Africa/Freetown",
+                  "Africa/Gaborone",
+                  "Africa/Harare",
+                  "Africa/Johannesburg",
+                  "Africa/Juba",
+                  "Africa/Kampala",
+                  "Africa/Khartoum",
+                  "Africa/Kigali",
+                  "Africa/Kinshasa",
+                  "Africa/Lagos",
+                  "Africa/Libreville",
+                  "Africa/Lome",
+                  "Africa/Luanda",
+                  "Africa/Lubumbashi",
+                  "Africa/Lusaka",
+                  "Africa/Malabo",
+                  "Africa/Maputo",
+                  "Africa/Maseru",
+                  "Africa/Mbabane",
+                  "Africa/Mogadishu",
+                  "Africa/Monrovia",
+                  "Africa/Nairobi",
+                  "Africa/Ndjamena",
+                  "Africa/Niamey",
+                  "Africa/Nouakchott",
+                  "Africa/Ouagadougou",
+                  "Africa/Porto-Novo",
+                  "Africa/Sao_Tome",
+                  "Africa/Tripoli",
+                  "Africa/Tunis",
+                  "Africa/Windhoek",
+                  "America/Adak",
+                  "America/Anchorage",
+                  "America/Anguilla",
+                  "America/Antigua",
+                  "America/Araguaina",
+                  "America/Argentina/Buenos_Aires",
+                  "America/Argentina/Catamarca",
+                  "America/Argentina/Cordoba",
+                  "America/Argentina/Jujuy",
+                  "America/Argentina/La_Rioja",
+                  "America/Argentina/Mendoza",
+                  "America/Argentina/Rio_Gallegos",
+                  "America/Argentina/Salta",
+                  "America/Argentina/San_Juan",
+                  "America/Argentina/San_Luis",
+                  "America/Argentina/Tucuman",
+                  "America/Argentina/Ushuaia",
+                  "America/Aruba",
+                  "America/Asuncion",
+                  "America/Atikokan",
+                  "America/Bahia",
+                  "America/Bahia_Banderas",
+                  "America/Barbados",
+                  "America/Belem",
+                  "America/Belize",
+                  "America/Blanc-Sablon",
+                  "America/Boa_Vista",
+                  "America/Bogota",
+                  "America/Boise",
+                  "America/Cambridge_Bay",
+                  "America/Campo_Grande",
+                  "America/Cancun",
+                  "America/Caracas",
+                  "America/Cayenne",
+                  "America/Cayman",
+                  "America/Chicago",
+                  "America/Chihuahua",
+                  "America/Ciudad_Juarez",
+                  "America/Costa_Rica",
+                  "America/Creston",
+                  "America/Cuiaba",
+                  "America/Curacao",
+                  "America/Danmarkshavn",
+                  "America/Dawson",
+                  "America/Dawson_Creek",
+                  "America/Denver",
+                  "America/Detroit",
+                  "America/Dominica",
+                  "America/Edmonton",
+                  "America/Eirunepe",
+                  "America/El_Salvador",
+                  "America/Fort_Nelson",
+                  "America/Fortaleza",
+                  "America/Glace_Bay",
+                  "America/Goose_Bay",
+                  "America/Grand_Turk",
+                  "America/Grenada",
+                  "America/Guadeloupe",
+                  "America/Guatemala",
+                  "America/Guayaquil",
+                  "America/Guyana",
+                  "America/Halifax",
+                  "America/Havana",
+                  "America/Hermosillo",
+                  "America/Indiana/Indianapolis",
+                  "America/Indiana/Knox",
+                  "America/Indiana/Marengo",
+                  "America/Indiana/Petersburg",
+                  "America/Indiana/Tell_City",
+                  "America/Indiana/Vevay",
+                  "America/Indiana/Vincennes",
+                  "America/Indiana/Winamac",
+                  "America/Inuvik",
+                  "America/Iqaluit",
+                  "America/Jamaica",
+                  "America/Juneau",
+                  "America/Kentucky/Louisville",
+                  "America/Kentucky/Monticello",
+                  "America/Kralendijk",
+                  "America/La_Paz",
+                  "America/Lima",
+                  "America/Los_Angeles",
+                  "America/Lower_Princes",
+                  "America/Maceio",
+                  "America/Managua",
+                  "America/Manaus",
+                  "America/Marigot",
+                  "America/Martinique",
+                  "America/Matamoros",
+                  "America/Mazatlan",
+                  "America/Menominee",
+                  "America/Merida",
+                  "America/Metlakatla",
+                  "America/Mexico_City",
+                  "America/Miquelon",
+                  "America/Moncton",
+                  "America/Monterrey",
+                  "America/Montevideo",
+                  "America/Montserrat",
+                  "America/Nassau",
+                  "America/New_York",
+                  "America/Nome",
+                  "America/Noronha",
+                  "America/North_Dakota/Beulah",
+                  "America/North_Dakota/Center",
+                  "America/North_Dakota/New_Salem",
+                  "America/Nuuk",
+                  "America/Ojinaga",
+                  "America/Panama",
+                  "America/Paramaribo",
+                  "America/Phoenix",
+                  "America/Port-au-Prince",
+                  "America/Port_of_Spain",
+                  "America/Porto_Velho",
+                  "America/Puerto_Rico",
+                  "America/Punta_Arenas",
+                  "America/Rankin_Inlet",
+                  "America/Recife",
+                  "America/Regina",
+                  "America/Resolute",
+                  "America/Rio_Branco",
+                  "America/Santarem",
+                  "America/Santiago",
+                  "America/Santo_Domingo",
+                  "America/Sao_Paulo",
+                  "America/Scoresbysund",
+                  "America/Sitka",
+                  "America/St_Barthelemy",
+                  "America/St_Johns",
+                  "America/St_Kitts",
+                  "America/St_Lucia",
+                  "America/St_Thomas",
+                  "America/St_Vincent",
+                  "America/Swift_Current",
+                  "America/Tegucigalpa",
+                  "America/Thule",
+                  "America/Tijuana",
+                  "America/Toronto",
+                  "America/Tortola",
+                  "America/Vancouver",
+                  "America/Whitehorse",
+                  "America/Winnipeg",
+                  "America/Yakutat",
+                  "America/Yellowknife",
+                  "Antarctica/Casey",
+                  "Antarctica/Davis",
+                  "Antarctica/DumontDUrville",
+                  "Antarctica/Macquarie",
+                  "Antarctica/Mawson",
+                  "Antarctica/McMurdo",
+                  "Antarctica/Palmer",
+                  "Antarctica/Rothera",
+                  "Antarctica/Syowa",
+                  "Antarctica/Troll",
+                  "Antarctica/Vostok",
+                  "Arctic/Longyearbyen",
+                  "Asia/Aden",
+                  "Asia/Almaty",
+                  "Asia/Amman",
+                  "Asia/Anadyr",
+                  "Asia/Aqtau",
+                  "Asia/Aqtobe",
+                  "Asia/Ashgabat",
+                  "Asia/Atyrau",
+                  "Asia/Baghdad",
+                  "Asia/Bahrain",
+                  "Asia/Baku",
+                  "Asia/Bangkok",
+                  "Asia/Barnaul",
+                  "Asia/Beirut",
+                  "Asia/Bishkek",
+                  "Asia/Brunei",
+                  "Asia/Chita",
+                  "Asia/Choibalsan",
+                  "Asia/Colombo",
+                  "Asia/Damascus",
+                  "Asia/Dhaka",
+                  "Asia/Dili",
+                  "Asia/Dubai",
+                  "Asia/Dushanbe",
+                  "Asia/Famagusta",
+                  "Asia/Gaza",
+                  "Asia/Hebron",
+                  "Asia/Ho_Chi_Minh",
+                  "Asia/Hong_Kong",
+                  "Asia/Hovd",
+                  "Asia/Irkutsk",
+                  "Asia/Jakarta",
+                  "Asia/Jayapura",
+                  "Asia/Jerusalem",
+                  "Asia/Kabul",
+                  "Asia/Kamchatka",
+                  "Asia/Karachi",
+                  "Asia/Kathmandu",
+                  "Asia/Khandyga",
+                  "Asia/Kolkata",
+                  "Asia/Krasnoyarsk",
+                  "Asia/Kuala_Lumpur",
+                  "Asia/Kuching",
+                  "Asia/Kuwait",
+                  "Asia/Macau",
+                  "Asia/Magadan",
+                  "Asia/Makassar",
+                  "Asia/Manila",
+                  "Asia/Muscat",
+                  "Asia/Nicosia",
+                  "Asia/Novokuznetsk",
+                  "Asia/Novosibirsk",
+                  "Asia/Omsk",
+                  "Asia/Oral",
+                  "Asia/Phnom_Penh",
+                  "Asia/Pontianak",
+                  "Asia/Pyongyang",
+                  "Asia/Qatar",
+                  "Asia/Qostanay",
+                  "Asia/Qyzylorda",
+                  "Asia/Riyadh",
+                  "Asia/Sakhalin",
+                  "Asia/Samarkand",
+                  "Asia/Seoul",
+                  "Asia/Shanghai",
+                  "Asia/Singapore",
+                  "Asia/Srednekolymsk",
+                  "Asia/Taipei",
+                  "Asia/Tashkent",
+                  "Asia/Tbilisi",
+                  "Asia/Tehran",
+                  "Asia/Thimphu",
+                  "Asia/Tokyo",
+                  "Asia/Tomsk",
+                  "Asia/Ulaanbaatar",
+                  "Asia/Urumqi",
+                  "Asia/Ust-Nera",
+                  "Asia/Vientiane",
+                  "Asia/Vladivostok",
+                  "Asia/Yakutsk",
+                  "Asia/Yangon",
+                  "Asia/Yekaterinburg",
+                  "Asia/Yerevan",
+                  "Atlantic/Azores",
+                  "Atlantic/Bermuda",
+                  "Atlantic/Canary",
+                  "Atlantic/Cape_Verde",
+                  "Atlantic/Faroe",
+                  "Atlantic/Madeira",
+                  "Atlantic/Reykjavik",
+                  "Atlantic/South_Georgia",
+                  "Atlantic/St_Helena",
+                  "Atlantic/Stanley",
+                  "Australia/Adelaide",
+                  "Australia/Brisbane",
+                  "Australia/Broken_Hill",
+                  "Australia/Darwin",
+                  "Australia/Eucla",
+                  "Australia/Hobart",
+                  "Australia/Lindeman",
+                  "Australia/Lord_Howe",
+                  "Australia/Melbourne",
+                  "Australia/Perth",
+                  "Australia/Sydney",
+                  "Canada/Atlantic",
+                  "Canada/Central",
+                  "Canada/Eastern",
+                  "Canada/Mountain",
+                  "Canada/Newfoundland",
+                  "Canada/Pacific",
+                  "Europe/Amsterdam",
+                  "Europe/Andorra",
+                  "Europe/Astrakhan",
+                  "Europe/Athens",
+                  "Europe/Belgrade",
+                  "Europe/Berlin",
+                  "Europe/Bratislava",
+                  "Europe/Brussels",
+                  "Europe/Bucharest",
+                  "Europe/Budapest",
+                  "Europe/Busingen",
+                  "Europe/Chisinau",
+                  "Europe/Copenhagen",
+                  "Europe/Dublin",
+                  "Europe/Gibraltar",
+                  "Europe/Guernsey",
+                  "Europe/Helsinki",
+                  "Europe/Isle_of_Man",
+                  "Europe/Istanbul",
+                  "Europe/Jersey",
+                  "Europe/Kaliningrad",
+                  "Europe/Kirov",
+                  "Europe/Kyiv",
+                  "Europe/Lisbon",
+                  "Europe/Ljubljana",
+                  "Europe/London",
+                  "Europe/Luxembourg",
+                  "Europe/Madrid",
+                  "Europe/Malta",
+                  "Europe/Mariehamn",
+                  "Europe/Minsk",
+                  "Europe/Monaco",
+                  "Europe/Moscow",
+                  "Europe/Oslo",
+                  "Europe/Paris",
+                  "Europe/Podgorica",
+                  "Europe/Prague",
+                  "Europe/Riga",
+                  "Europe/Rome",
+                  "Europe/Samara",
+                  "Europe/San_Marino",
+                  "Europe/Sarajevo",
+                  "Europe/Saratov",
+                  "Europe/Simferopol",
+                  "Europe/Skopje",
+                  "Europe/Sofia",
+                  "Europe/Stockholm",
+                  "Europe/Tallinn",
+                  "Europe/Tirane",
+                  "Europe/Ulyanovsk",
+                  "Europe/Vaduz",
+                  "Europe/Vatican",
+                  "Europe/Vienna",
+                  "Europe/Vilnius",
+                  "Europe/Volgograd",
+                  "Europe/Warsaw",
+                  "Europe/Zagreb",
+                  "Europe/Zurich",
+                  "GMT",
+                  "Indian/Antananarivo",
+                  "Indian/Chagos",
+                  "Indian/Christmas",
+                  "Indian/Cocos",
+                  "Indian/Comoro",
+                  "Indian/Kerguelen",
+                  "Indian/Mahe",
+                  "Indian/Maldives",
+                  "Indian/Mauritius",
+                  "Indian/Mayotte",
+                  "Indian/Reunion",
+                  "Pacific/Apia",
+                  "Pacific/Auckland",
+                  "Pacific/Bougainville",
+                  "Pacific/Chatham",
+                  "Pacific/Chuuk",
+                  "Pacific/Easter",
+                  "Pacific/Efate",
+                  "Pacific/Fakaofo",
+                  "Pacific/Fiji",
+                  "Pacific/Funafuti",
+                  "Pacific/Galapagos",
+                  "Pacific/Gambier",
+                  "Pacific/Guadalcanal",
+                  "Pacific/Guam",
+                  "Pacific/Honolulu",
+                  "Pacific/Kanton",
+                  "Pacific/Kiritimati",
+                  "Pacific/Kosrae",
+                  "Pacific/Kwajalein",
+                  "Pacific/Majuro",
+                  "Pacific/Marquesas",
+                  "Pacific/Midway",
+                  "Pacific/Nauru",
+                  "Pacific/Niue",
+                  "Pacific/Norfolk",
+                  "Pacific/Noumea",
+                  "Pacific/Pago_Pago",
+                  "Pacific/Palau",
+                  "Pacific/Pitcairn",
+                  "Pacific/Pohnpei",
+                  "Pacific/Port_Moresby",
+                  "Pacific/Rarotonga",
+                  "Pacific/Saipan",
+                  "Pacific/Tahiti",
+                  "Pacific/Tarawa",
+                  "Pacific/Tongatapu",
+                  "Pacific/Wake",
+                  "Pacific/Wallis",
+                  "US/Alaska",
+                  "US/Arizona",
+                  "US/Central",
+                  "US/Eastern",
+                  "US/Hawaii",
+                  "US/Mountain",
+                  "US/Pacific",
+                  "UTC"
+                ],
+                "type": "enum"
+              },
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          }
+        }
+      },
+      "UserFieldCreate": {
+        "title": "UserFieldCreate",
+        "required": [
+          "name",
+          "slug",
+          "type",
+          "configuration"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "slug": {
+            "title": "Slug",
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/UserFieldType"
+          },
+          "configuration": {
+            "$ref": "#/components/schemas/UserFieldConfiguration"
+          }
+        }
+      },
+      "UserFieldType": {
+        "title": "UserFieldType",
+        "enum": [
+          "STRING",
+          "INTEGER",
+          "BOOLEAN",
+          "DATE",
+          "DATETIME",
+          "CHOICE",
+          "PHONE_NUMBER",
+          "ADDRESS",
+          "TIMEZONE"
+        ],
+        "type": "string",
+        "description": "An enumeration."
+      },
+      "UserFieldUpdate": {
+        "title": "UserFieldUpdate",
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "slug": {
+            "title": "Slug",
+            "type": "string"
+          },
+          "configuration": {
+            "$ref": "#/components/schemas/UserFieldConfiguration"
+          }
+        }
+      },
+      "UserFields": {
+        "title": "UserFields",
+        "type": "object",
+        "properties": {}
+      },
+      "UserPermission": {
+        "title": "UserPermission",
+        "required": [
+          "created_at",
+          "updated_at",
+          "user_id",
+          "permission_id",
+          "permission"
+        ],
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "user_id": {
+            "title": "User Id",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "permission_id": {
+            "title": "Permission Id",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "from_role_id": {
+            "title": "From Role Id",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "permission": {
+            "$ref": "#/components/schemas/PermissionEmbedded"
+          },
+          "from_role": {
+            "$ref": "#/components/schemas/RoleEmbedded"
+          }
+        }
+      },
+      "UserPermissionCreate": {
+        "title": "UserPermissionCreate",
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid4"
+          }
+        }
+      },
+      "UserRead": {
+        "title": "UserRead",
+        "required": [
+          "created_at",
+          "updated_at",
+          "email",
+          "tenant_id",
+          "tenant",
+          "fields"
+        ],
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "title": "Id"
+          },
+          "email": {
+            "title": "Email",
+            "type": "string",
+            "format": "email"
+          },
+          "is_active": {
+            "title": "Is Active",
+            "type": "boolean",
+            "default": true
+          },
+          "is_superuser": {
+            "title": "Is Superuser",
+            "type": "boolean",
+            "default": false
+          },
+          "is_verified": {
+            "title": "Is Verified",
+            "type": "boolean",
+            "default": false
+          },
+          "tenant_id": {
+            "title": "Tenant Id",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "tenant": {
+            "$ref": "#/components/schemas/TenantEmbedded"
+          },
+          "fields": {
+            "title": "Fields",
+            "type": "object",
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "$ref": "#/components/schemas/Address"
+                },
+                {
+                  "title": "timezone",
+                  "enum": [
+                    "Africa/Abidjan",
+                    "Africa/Accra",
+                    "Africa/Addis_Ababa",
+                    "Africa/Algiers",
+                    "Africa/Asmara",
+                    "Africa/Bamako",
+                    "Africa/Bangui",
+                    "Africa/Banjul",
+                    "Africa/Bissau",
+                    "Africa/Blantyre",
+                    "Africa/Brazzaville",
+                    "Africa/Bujumbura",
+                    "Africa/Cairo",
+                    "Africa/Casablanca",
+                    "Africa/Ceuta",
+                    "Africa/Conakry",
+                    "Africa/Dakar",
+                    "Africa/Dar_es_Salaam",
+                    "Africa/Djibouti",
+                    "Africa/Douala",
+                    "Africa/El_Aaiun",
+                    "Africa/Freetown",
+                    "Africa/Gaborone",
+                    "Africa/Harare",
+                    "Africa/Johannesburg",
+                    "Africa/Juba",
+                    "Africa/Kampala",
+                    "Africa/Khartoum",
+                    "Africa/Kigali",
+                    "Africa/Kinshasa",
+                    "Africa/Lagos",
+                    "Africa/Libreville",
+                    "Africa/Lome",
+                    "Africa/Luanda",
+                    "Africa/Lubumbashi",
+                    "Africa/Lusaka",
+                    "Africa/Malabo",
+                    "Africa/Maputo",
+                    "Africa/Maseru",
+                    "Africa/Mbabane",
+                    "Africa/Mogadishu",
+                    "Africa/Monrovia",
+                    "Africa/Nairobi",
+                    "Africa/Ndjamena",
+                    "Africa/Niamey",
+                    "Africa/Nouakchott",
+                    "Africa/Ouagadougou",
+                    "Africa/Porto-Novo",
+                    "Africa/Sao_Tome",
+                    "Africa/Tripoli",
+                    "Africa/Tunis",
+                    "Africa/Windhoek",
+                    "America/Adak",
+                    "America/Anchorage",
+                    "America/Anguilla",
+                    "America/Antigua",
+                    "America/Araguaina",
+                    "America/Argentina/Buenos_Aires",
+                    "America/Argentina/Catamarca",
+                    "America/Argentina/Cordoba",
+                    "America/Argentina/Jujuy",
+                    "America/Argentina/La_Rioja",
+                    "America/Argentina/Mendoza",
+                    "America/Argentina/Rio_Gallegos",
+                    "America/Argentina/Salta",
+                    "America/Argentina/San_Juan",
+                    "America/Argentina/San_Luis",
+                    "America/Argentina/Tucuman",
+                    "America/Argentina/Ushuaia",
+                    "America/Aruba",
+                    "America/Asuncion",
+                    "America/Atikokan",
+                    "America/Bahia",
+                    "America/Bahia_Banderas",
+                    "America/Barbados",
+                    "America/Belem",
+                    "America/Belize",
+                    "America/Blanc-Sablon",
+                    "America/Boa_Vista",
+                    "America/Bogota",
+                    "America/Boise",
+                    "America/Cambridge_Bay",
+                    "America/Campo_Grande",
+                    "America/Cancun",
+                    "America/Caracas",
+                    "America/Cayenne",
+                    "America/Cayman",
+                    "America/Chicago",
+                    "America/Chihuahua",
+                    "America/Ciudad_Juarez",
+                    "America/Costa_Rica",
+                    "America/Creston",
+                    "America/Cuiaba",
+                    "America/Curacao",
+                    "America/Danmarkshavn",
+                    "America/Dawson",
+                    "America/Dawson_Creek",
+                    "America/Denver",
+                    "America/Detroit",
+                    "America/Dominica",
+                    "America/Edmonton",
+                    "America/Eirunepe",
+                    "America/El_Salvador",
+                    "America/Fort_Nelson",
+                    "America/Fortaleza",
+                    "America/Glace_Bay",
+                    "America/Goose_Bay",
+                    "America/Grand_Turk",
+                    "America/Grenada",
+                    "America/Guadeloupe",
+                    "America/Guatemala",
+                    "America/Guayaquil",
+                    "America/Guyana",
+                    "America/Halifax",
+                    "America/Havana",
+                    "America/Hermosillo",
+                    "America/Indiana/Indianapolis",
+                    "America/Indiana/Knox",
+                    "America/Indiana/Marengo",
+                    "America/Indiana/Petersburg",
+                    "America/Indiana/Tell_City",
+                    "America/Indiana/Vevay",
+                    "America/Indiana/Vincennes",
+                    "America/Indiana/Winamac",
+                    "America/Inuvik",
+                    "America/Iqaluit",
+                    "America/Jamaica",
+                    "America/Juneau",
+                    "America/Kentucky/Louisville",
+                    "America/Kentucky/Monticello",
+                    "America/Kralendijk",
+                    "America/La_Paz",
+                    "America/Lima",
+                    "America/Los_Angeles",
+                    "America/Lower_Princes",
+                    "America/Maceio",
+                    "America/Managua",
+                    "America/Manaus",
+                    "America/Marigot",
+                    "America/Martinique",
+                    "America/Matamoros",
+                    "America/Mazatlan",
+                    "America/Menominee",
+                    "America/Merida",
+                    "America/Metlakatla",
+                    "America/Mexico_City",
+                    "America/Miquelon",
+                    "America/Moncton",
+                    "America/Monterrey",
+                    "America/Montevideo",
+                    "America/Montserrat",
+                    "America/Nassau",
+                    "America/New_York",
+                    "America/Nome",
+                    "America/Noronha",
+                    "America/North_Dakota/Beulah",
+                    "America/North_Dakota/Center",
+                    "America/North_Dakota/New_Salem",
+                    "America/Nuuk",
+                    "America/Ojinaga",
+                    "America/Panama",
+                    "America/Paramaribo",
+                    "America/Phoenix",
+                    "America/Port-au-Prince",
+                    "America/Port_of_Spain",
+                    "America/Porto_Velho",
+                    "America/Puerto_Rico",
+                    "America/Punta_Arenas",
+                    "America/Rankin_Inlet",
+                    "America/Recife",
+                    "America/Regina",
+                    "America/Resolute",
+                    "America/Rio_Branco",
+                    "America/Santarem",
+                    "America/Santiago",
+                    "America/Santo_Domingo",
+                    "America/Sao_Paulo",
+                    "America/Scoresbysund",
+                    "America/Sitka",
+                    "America/St_Barthelemy",
+                    "America/St_Johns",
+                    "America/St_Kitts",
+                    "America/St_Lucia",
+                    "America/St_Thomas",
+                    "America/St_Vincent",
+                    "America/Swift_Current",
+                    "America/Tegucigalpa",
+                    "America/Thule",
+                    "America/Tijuana",
+                    "America/Toronto",
+                    "America/Tortola",
+                    "America/Vancouver",
+                    "America/Whitehorse",
+                    "America/Winnipeg",
+                    "America/Yakutat",
+                    "America/Yellowknife",
+                    "Antarctica/Casey",
+                    "Antarctica/Davis",
+                    "Antarctica/DumontDUrville",
+                    "Antarctica/Macquarie",
+                    "Antarctica/Mawson",
+                    "Antarctica/McMurdo",
+                    "Antarctica/Palmer",
+                    "Antarctica/Rothera",
+                    "Antarctica/Syowa",
+                    "Antarctica/Troll",
+                    "Antarctica/Vostok",
+                    "Arctic/Longyearbyen",
+                    "Asia/Aden",
+                    "Asia/Almaty",
+                    "Asia/Amman",
+                    "Asia/Anadyr",
+                    "Asia/Aqtau",
+                    "Asia/Aqtobe",
+                    "Asia/Ashgabat",
+                    "Asia/Atyrau",
+                    "Asia/Baghdad",
+                    "Asia/Bahrain",
+                    "Asia/Baku",
+                    "Asia/Bangkok",
+                    "Asia/Barnaul",
+                    "Asia/Beirut",
+                    "Asia/Bishkek",
+                    "Asia/Brunei",
+                    "Asia/Chita",
+                    "Asia/Choibalsan",
+                    "Asia/Colombo",
+                    "Asia/Damascus",
+                    "Asia/Dhaka",
+                    "Asia/Dili",
+                    "Asia/Dubai",
+                    "Asia/Dushanbe",
+                    "Asia/Famagusta",
+                    "Asia/Gaza",
+                    "Asia/Hebron",
+                    "Asia/Ho_Chi_Minh",
+                    "Asia/Hong_Kong",
+                    "Asia/Hovd",
+                    "Asia/Irkutsk",
+                    "Asia/Jakarta",
+                    "Asia/Jayapura",
+                    "Asia/Jerusalem",
+                    "Asia/Kabul",
+                    "Asia/Kamchatka",
+                    "Asia/Karachi",
+                    "Asia/Kathmandu",
+                    "Asia/Khandyga",
+                    "Asia/Kolkata",
+                    "Asia/Krasnoyarsk",
+                    "Asia/Kuala_Lumpur",
+                    "Asia/Kuching",
+                    "Asia/Kuwait",
+                    "Asia/Macau",
+                    "Asia/Magadan",
+                    "Asia/Makassar",
+                    "Asia/Manila",
+                    "Asia/Muscat",
+                    "Asia/Nicosia",
+                    "Asia/Novokuznetsk",
+                    "Asia/Novosibirsk",
+                    "Asia/Omsk",
+                    "Asia/Oral",
+                    "Asia/Phnom_Penh",
+                    "Asia/Pontianak",
+                    "Asia/Pyongyang",
+                    "Asia/Qatar",
+                    "Asia/Qostanay",
+                    "Asia/Qyzylorda",
+                    "Asia/Riyadh",
+                    "Asia/Sakhalin",
+                    "Asia/Samarkand",
+                    "Asia/Seoul",
+                    "Asia/Shanghai",
+                    "Asia/Singapore",
+                    "Asia/Srednekolymsk",
+                    "Asia/Taipei",
+                    "Asia/Tashkent",
+                    "Asia/Tbilisi",
+                    "Asia/Tehran",
+                    "Asia/Thimphu",
+                    "Asia/Tokyo",
+                    "Asia/Tomsk",
+                    "Asia/Ulaanbaatar",
+                    "Asia/Urumqi",
+                    "Asia/Ust-Nera",
+                    "Asia/Vientiane",
+                    "Asia/Vladivostok",
+                    "Asia/Yakutsk",
+                    "Asia/Yangon",
+                    "Asia/Yekaterinburg",
+                    "Asia/Yerevan",
+                    "Atlantic/Azores",
+                    "Atlantic/Bermuda",
+                    "Atlantic/Canary",
+                    "Atlantic/Cape_Verde",
+                    "Atlantic/Faroe",
+                    "Atlantic/Madeira",
+                    "Atlantic/Reykjavik",
+                    "Atlantic/South_Georgia",
+                    "Atlantic/St_Helena",
+                    "Atlantic/Stanley",
+                    "Australia/Adelaide",
+                    "Australia/Brisbane",
+                    "Australia/Broken_Hill",
+                    "Australia/Darwin",
+                    "Australia/Eucla",
+                    "Australia/Hobart",
+                    "Australia/Lindeman",
+                    "Australia/Lord_Howe",
+                    "Australia/Melbourne",
+                    "Australia/Perth",
+                    "Australia/Sydney",
+                    "Canada/Atlantic",
+                    "Canada/Central",
+                    "Canada/Eastern",
+                    "Canada/Mountain",
+                    "Canada/Newfoundland",
+                    "Canada/Pacific",
+                    "Europe/Amsterdam",
+                    "Europe/Andorra",
+                    "Europe/Astrakhan",
+                    "Europe/Athens",
+                    "Europe/Belgrade",
+                    "Europe/Berlin",
+                    "Europe/Bratislava",
+                    "Europe/Brussels",
+                    "Europe/Bucharest",
+                    "Europe/Budapest",
+                    "Europe/Busingen",
+                    "Europe/Chisinau",
+                    "Europe/Copenhagen",
+                    "Europe/Dublin",
+                    "Europe/Gibraltar",
+                    "Europe/Guernsey",
+                    "Europe/Helsinki",
+                    "Europe/Isle_of_Man",
+                    "Europe/Istanbul",
+                    "Europe/Jersey",
+                    "Europe/Kaliningrad",
+                    "Europe/Kirov",
+                    "Europe/Kyiv",
+                    "Europe/Lisbon",
+                    "Europe/Ljubljana",
+                    "Europe/London",
+                    "Europe/Luxembourg",
+                    "Europe/Madrid",
+                    "Europe/Malta",
+                    "Europe/Mariehamn",
+                    "Europe/Minsk",
+                    "Europe/Monaco",
+                    "Europe/Moscow",
+                    "Europe/Oslo",
+                    "Europe/Paris",
+                    "Europe/Podgorica",
+                    "Europe/Prague",
+                    "Europe/Riga",
+                    "Europe/Rome",
+                    "Europe/Samara",
+                    "Europe/San_Marino",
+                    "Europe/Sarajevo",
+                    "Europe/Saratov",
+                    "Europe/Simferopol",
+                    "Europe/Skopje",
+                    "Europe/Sofia",
+                    "Europe/Stockholm",
+                    "Europe/Tallinn",
+                    "Europe/Tirane",
+                    "Europe/Ulyanovsk",
+                    "Europe/Vaduz",
+                    "Europe/Vatican",
+                    "Europe/Vienna",
+                    "Europe/Vilnius",
+                    "Europe/Volgograd",
+                    "Europe/Warsaw",
+                    "Europe/Zagreb",
+                    "Europe/Zurich",
+                    "GMT",
+                    "Indian/Antananarivo",
+                    "Indian/Chagos",
+                    "Indian/Christmas",
+                    "Indian/Cocos",
+                    "Indian/Comoro",
+                    "Indian/Kerguelen",
+                    "Indian/Mahe",
+                    "Indian/Maldives",
+                    "Indian/Mauritius",
+                    "Indian/Mayotte",
+                    "Indian/Reunion",
+                    "Pacific/Apia",
+                    "Pacific/Auckland",
+                    "Pacific/Bougainville",
+                    "Pacific/Chatham",
+                    "Pacific/Chuuk",
+                    "Pacific/Easter",
+                    "Pacific/Efate",
+                    "Pacific/Fakaofo",
+                    "Pacific/Fiji",
+                    "Pacific/Funafuti",
+                    "Pacific/Galapagos",
+                    "Pacific/Gambier",
+                    "Pacific/Guadalcanal",
+                    "Pacific/Guam",
+                    "Pacific/Honolulu",
+                    "Pacific/Kanton",
+                    "Pacific/Kiritimati",
+                    "Pacific/Kosrae",
+                    "Pacific/Kwajalein",
+                    "Pacific/Majuro",
+                    "Pacific/Marquesas",
+                    "Pacific/Midway",
+                    "Pacific/Nauru",
+                    "Pacific/Niue",
+                    "Pacific/Norfolk",
+                    "Pacific/Noumea",
+                    "Pacific/Pago_Pago",
+                    "Pacific/Palau",
+                    "Pacific/Pitcairn",
+                    "Pacific/Pohnpei",
+                    "Pacific/Port_Moresby",
+                    "Pacific/Rarotonga",
+                    "Pacific/Saipan",
+                    "Pacific/Tahiti",
+                    "Pacific/Tarawa",
+                    "Pacific/Tongatapu",
+                    "Pacific/Wake",
+                    "Pacific/Wallis",
+                    "US/Alaska",
+                    "US/Arizona",
+                    "US/Central",
+                    "US/Eastern",
+                    "US/Hawaii",
+                    "US/Mountain",
+                    "US/Pacific",
+                    "UTC"
+                  ],
+                  "type": "enum"
+                },
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "string",
+                  "format": "date"
+                }
+              ]
+            }
+          }
+        },
+        "description": "Base User model."
+      },
+      "UserRole": {
+        "title": "UserRole",
+        "required": [
+          "created_at",
+          "updated_at",
+          "user_id",
+          "role_id",
+          "role"
+        ],
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "user_id": {
+            "title": "User Id",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "role_id": {
+            "title": "Role Id",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "role": {
+            "$ref": "#/components/schemas/RoleEmbedded"
+          }
+        }
+      },
+      "UserRoleCreate": {
+        "title": "UserRoleCreate",
+        "required": [
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid4"
+          }
+        }
+      },
+      "ValidationError": {
+        "title": "ValidationError",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "loc": {
+            "title": "Location",
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            }
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        }
+      },
+      "Webhook": {
+        "title": "Webhook",
+        "required": [
+          "created_at",
+          "updated_at",
+          "id",
+          "url",
+          "events"
+        ],
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "url": {
+            "title": "Url",
+            "maxLength": 2083,
+            "minLength": 1,
+            "type": "string",
+            "format": "uri"
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WebhookEventType"
+            }
+          }
+        }
+      },
+      "WebhookCreate": {
+        "title": "WebhookCreate",
+        "required": [
+          "url",
+          "events"
+        ],
+        "type": "object",
+        "properties": {
+          "url": {
+            "title": "Url",
+            "maxLength": 2083,
+            "minLength": 1,
+            "type": "string",
+            "format": "uri"
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WebhookEventType"
+            }
+          }
+        }
+      },
+      "WebhookEventType": {
+        "title": "WebhookEventType",
+        "enum": [
+          "client.created",
+          "client.updated",
+          "email_template.updated",
+          "oauth_provider.created",
+          "oauth_provider.updated",
+          "oauth_provider.deleted",
+          "permission.created",
+          "permission.updated",
+          "permission.deleted",
+          "role.created",
+          "role.updated",
+          "role.deleted",
+          "tenant.created",
+          "tenant.updated",
+          "user.created",
+          "user.updated",
+          "user.forgot_password_requested",
+          "user.password_reset",
+          "user_field.created",
+          "user_field.updated",
+          "user_field.deleted",
+          "user_permission.created",
+          "user_permission.deleted",
+          "user_role.created",
+          "user_role.deleted"
+        ],
+        "type": "string",
+        "description": "An enumeration."
+      },
+      "WebhookLog": {
+        "title": "WebhookLog",
+        "required": [
+          "created_at",
+          "updated_at",
+          "id",
+          "webhook_id",
+          "event",
+          "attempt",
+          "payload",
+          "success"
+        ],
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "webhook_id": {
+            "title": "Webhook Id",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "event": {
+            "$ref": "#/components/schemas/WebhookEventType"
+          },
+          "attempt": {
+            "title": "Attempt",
+            "type": "integer"
+          },
+          "payload": {
+            "title": "Payload",
+            "type": "string"
+          },
+          "success": {
+            "title": "Success",
+            "type": "boolean"
+          },
+          "response": {
+            "title": "Response",
+            "type": "string"
+          },
+          "error_type": {
+            "title": "Error Type",
+            "type": "string"
+          },
+          "error_message": {
+            "title": "Error Message",
+            "type": "string"
+          }
+        }
+      },
+      "WebhookSecret": {
+        "title": "WebhookSecret",
+        "required": [
+          "created_at",
+          "updated_at",
+          "id",
+          "url",
+          "events",
+          "secret"
+        ],
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "title": "Created At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "title": "Updated At",
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "format": "uuid4"
+          },
+          "url": {
+            "title": "Url",
+            "maxLength": 2083,
+            "minLength": 1,
+            "type": "string",
+            "format": "uri"
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WebhookEventType"
+            }
+          },
+          "secret": {
+            "title": "Secret",
+            "type": "string"
+          }
+        }
+      },
+      "WebhookUpdate": {
+        "title": "WebhookUpdate",
+        "type": "object",
+        "properties": {
+          "url": {
+            "title": "Url",
+            "maxLength": 2083,
+            "minLength": 1,
+            "type": "string",
+            "format": "uri"
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WebhookEventType"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer"
+      },
+      "APIKeyCookie": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "fief_admin_session"
+      }
+    }
+  }
+}
