@@ -42,8 +42,9 @@ class Login extends StatelessWidget {
                 );
               }
               return ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green[400]),
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateColor.resolveWith(
+                          (states) => Colors.green[400]!)),
                   onPressed: () {
                     login();
                   },
