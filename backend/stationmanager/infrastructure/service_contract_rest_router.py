@@ -1,14 +1,14 @@
 import uuid
-from typing import Optional
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from fief_client import FiefUserInfo
 
 from base import main
+from base.auth_def import custom_auth, read_permission, write_permission
 from stationmanager.application.service_contract.model import schema
 from stationmanager.application.service_contract.model.schema import ServiceContractSchema
 from stationmanager.application.service_contract.service_contract_projector import ServiceContractProjector
 from stationmanager.application.service_contract.service_contract_service import ServiceContractService
-from stationmanager.application.station_projector import StationProjector
 from stationmanager.infrastructure.persistence.service_contract_repo import ServiceContractModel, \
     StationServiceContractModel
 
@@ -21,9 +21,11 @@ service_contract_router = APIRouter(
 
 @service_contract_router.post("/create_contract",
                               response_model=uuid.UUID)
-def create_contract(new_contract: schema.ServiceContractNewSchema):
+def create_contract(new_contract: schema.ServiceContractNewSchema,
+                    _user: FiefUserInfo = Depends(custom_auth(write_permission))):
     service_contract_service = main.runner.get(ServiceContractService)
-    return service_contract_service.create_new_contract(new_contract.name,new_contract.valid_from,new_contract.valid_until,new_contract.station_id_list)
+    return service_contract_service.create_new_contract(new_contract.name, new_contract.valid_from,
+                                                        new_contract.valid_until, new_contract.station_id_list)
 
 
 def _model_to_schema(model: ServiceContractModel):
@@ -38,7 +40,7 @@ def _model_to_schema(model: ServiceContractModel):
 
 @service_contract_router.get("/contract_for_station",
                              response_model=list[schema.ServiceContractSchema])
-def get(station_id: uuid.UUID):
+def get(station_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_auth(read_permission))):
     projector = main.runner.get(ServiceContractProjector)
     col = []
     contracts = projector.get_by_station(station_id)
@@ -50,13 +52,14 @@ def get(station_id: uuid.UUID):
 
 @service_contract_router.get("/contract",
                              response_model=schema.ServiceContractSchema)
-def get_contract(contract_id: uuid.UUID):
+def get_contract(contract_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_auth(read_permission))):
     projector = main.runner.get(ServiceContractProjector)
     return _model_to_schema(projector.get_by_id(contract_id))
 
+
 @service_contract_router.get("/contracts",
                              response_model=list[schema.ServiceContractSchema])
-def get_contracts():
+def get_contracts(_user: FiefUserInfo = Depends(custom_auth(read_permission))):
     projector = main.runner.get(ServiceContractProjector)
     col = []
     contracts = projector.get_all()

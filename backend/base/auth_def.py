@@ -9,6 +9,9 @@ from starlette import status
 from starlette.requests import Request
 from starlette.responses import Response
 
+write_permission = ["write:all", "read:all"]
+read_permission = ["write:all", "read:all"]
+
 
 def custom_auth(permissions: list[str]):
     async def _auth_custom(api_key=Depends(get_api_key),

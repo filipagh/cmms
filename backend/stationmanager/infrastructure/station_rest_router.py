@@ -1,9 +1,11 @@
 import uuid
 from typing import Optional
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from fief_client import FiefUserInfo
 
 from base import main
+from base.auth_def import custom_auth, read_permission, write_permission
 from stationmanager.application.model import schema
 from stationmanager.application.station_projector import StationProjector
 from stationmanager.application.station_service import StationService
@@ -17,20 +19,20 @@ station_router = APIRouter(
 
 @station_router.post("/create_station",
                      response_model=uuid.UUID)
-def create_station(new_station: schema.StationNewSchema):
+def create_station(new_station: schema.StationNewSchema, _user: FiefUserInfo = Depends(custom_auth(write_permission))):
     segment_service = main.runner.get(StationService)
     return segment_service.create_station(new_station)
 
 
 @station_router.delete("/remove_station")
-def remove_station(station_id: schema.StationIdSchema):
+def remove_station(station_id: schema.StationIdSchema, _user: FiefUserInfo = Depends(custom_auth(write_permission))):
     segment_service = main.runner.get(StationService)
     segment_service.remove_station(station_id)
 
 
 @station_router.get("/station",
                     response_model=schema.StationSchema)
-def get_by_id(segment_id: uuid.UUID):
+def get_by_id(segment_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_auth(read_permission))):
     projector = main.runner.get(StationProjector)
 
     return schema.StationSchema(**projector.get_by_id(segment_id).__dict__)
@@ -39,7 +41,7 @@ def get_by_id(segment_id: uuid.UUID):
 @station_router.get("/stations",
                     response_model=list[schema.StationSchema])
 def get_all(
-        road_segment_id: Optional[uuid.UUID] = None
+        road_segment_id: Optional[uuid.UUID] = None, _user: FiefUserInfo = Depends(custom_auth(read_permission))
 ):
     projector = main.runner.get(StationProjector)
     col = []

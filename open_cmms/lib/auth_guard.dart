@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:open_cmms/main.dart';
 import 'package:open_cmms/pages/login.dart';
 import 'package:open_cmms/pages/unverified.dart';
 import 'package:open_cmms/service/backend_api/auth_service.dart';
@@ -16,6 +17,7 @@ class AuthGuard extends GetMiddleware {
       AuthService().getMeAuthMeGet().then((value) {
         if (value?.isVerified == true) {
           authService.isVerified.value = true;
+          bootStates();
           Get.toNamed(route ?? "/");
         }
       }, onError: (e) {

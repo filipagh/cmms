@@ -39,6 +39,16 @@ Please follow the [installation procedure](#installation--usage) and then run th
 ```dart
 import 'package:BackendAPI/api.dart';
 
+// TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
+//defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
+// TODO Configure API key authorization: api_key
+//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: user_session
+//defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKeyPrefix = 'Bearer';
 
 final api_instance = ActionHistoryApi();
 final stationId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
@@ -137,22 +147,23 @@ All URIs are relative to *http://localhost*
  - [TaskChangeComponentRequestId](doc//TaskChangeComponentRequestId.md)
  - [TaskChangeComponentsNewSchema](doc//TaskChangeComponentsNewSchema.md)
  - [TaskChangeComponentsSchema](doc//TaskChangeComponentsSchema.md)
- - [TaskComponentAddNewSchema](doc//TaskComponentAddNewSchema.md)
- - [TaskComponentRemoveNewSchema](doc//TaskComponentRemoveNewSchema.md)
- - [TaskComponentState](doc//TaskComponentState.md)
- - [TaskSchema](doc//TaskSchema.md)
- - [TaskServiceOnSiteNewSchema](doc//TaskServiceOnSiteNewSchema.md)
- - [TaskServiceOnSiteSchema](doc//TaskServiceOnSiteSchema.md)
- - [TaskServiceRemoteNewSchema](doc//TaskServiceRemoteNewSchema.md)
- - [TaskServiceRemoteSchema](doc//TaskServiceRemoteSchema.md)
- - [TaskState](doc//TaskState.md)
- - [TaskType](doc//TaskType.md)
+- [TaskComponentAddNewSchema](doc//TaskComponentAddNewSchema.md)
+- [TaskComponentRemoveNewSchema](doc//TaskComponentRemoveNewSchema.md)
+- [TaskComponentState](doc//TaskComponentState.md)
+- [TaskSchema](doc//TaskSchema.md)
+- [TaskServiceOnSiteNewSchema](doc//TaskServiceOnSiteNewSchema.md)
+- [TaskServiceOnSiteSchema](doc//TaskServiceOnSiteSchema.md)
+- [TaskServiceRemoteNewSchema](doc//TaskServiceRemoteNewSchema.md)
+- [TaskServiceRemoteSchema](doc//TaskServiceRemoteSchema.md)
+- [TaskState](doc//TaskState.md)
+- [TaskType](doc//TaskType.md)
 - [TelemetryOptions](doc//TelemetryOptions.md)
 - [UserSchema](doc//UserSchema.md)
 - [ValidationError](doc//ValidationError.md)
 
 
 ## Documentation For Authorization
+
 
 ## OAuth2AuthorizationCodeBearer
 

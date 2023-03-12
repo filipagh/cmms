@@ -78,7 +78,6 @@ async def auth_callback(request: Request, response: Response, code: str = Query(
         max_age=tokens["expires_in"],
         httponly=False,
         secure=False,
-        # domain="localhost"
 
     )
     return response

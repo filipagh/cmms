@@ -42,6 +42,12 @@ void main() async {
   runApp(const MyApp());
 }
 
+void bootStates() {
+  Get.put(AssetTypesState(), permanent: true); //api
+  Get.put(ItemsStorageState(), permanent: true); // api
+  Get.put(AssetTelemetryState(), permanent: true); //api
+}
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -51,13 +57,11 @@ class MyApp extends StatelessWidget {
     Get.put(RoadSegmentState());
     Get.put(StationsState());
     Get.put(AssetTypesStateDummy());
-    Get.put(AssetTypesState());
     Get.put(ItemsState_dummy());
-    Get.put(ItemsStorageState());
     Get.put(TasksState());
     Get.put(ActionState());
     Get.put(TaskComponentState());
-    Get.put(AssetTelemetryState());
+
     return GetMaterialApp(
       defaultTransition: Transition.noTransition,
       getPages: [

@@ -1,11 +1,13 @@
 import uuid
 from typing import Optional
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
+from fief_client import FiefUserInfo
 from starlette.responses import PlainTextResponse
 
 import taskmanager.application.model.task_change_component.schema
 from base import main
+from base.auth_def import custom_auth, read_permission, write_permission
 from taskmanager.application.model.task.schema import TaskSchema
 from taskmanager.application.model.task_change_component import schema as schema_change_comp
 from taskmanager.application.model.task_change_component.schema import TaskChangeComponentRequestId
@@ -25,7 +27,8 @@ task_manager_router = APIRouter(
 @task_manager_router.post("/create_change_component_task",
                           response_model=uuid.UUID)
 def create_component_task(
-        new_task: taskmanager.application.model.task_change_component.schema.TaskChangeComponentsNewSchema):
+        new_task: taskmanager.application.model.task_change_component.schema.TaskChangeComponentsNewSchema,
+        _user: FiefUserInfo = Depends(custom_auth(write_permission))):
     task_service: TaskService = main.runner.get(main.Services.TaskService.value)
     try:
         return task_service.create_component_task(new_task)
@@ -36,7 +39,7 @@ def create_component_task(
 @task_manager_router.post("/create_service_remote_task",
                           response_model=uuid.UUID)
 def create_service_remote_task(
-        new_task: TaskServiceRemoteNewSchema):
+        new_task: TaskServiceRemoteNewSchema, _user: FiefUserInfo = Depends(custom_auth(write_permission))):
     task_service: TaskServiceRemoteService = main.runner.get(TaskServiceRemoteService)
     try:
         return task_service.create_remote_task(new_task)
@@ -46,48 +49,50 @@ def create_service_remote_task(
 
 @task_manager_router.get("/get_component_task/{task_id}",
                          response_model=schema_change_comp.TaskChangeComponentsSchema)
-def load(task_id: uuid.UUID):
+def load(task_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_auth(read_permission))):
     task_service: TaskService = main.runner.get(main.Services.TaskService.value)
     return task_service.load_component_task(task_id)
 
 
 @task_manager_router.get("/get_tasks",
                          response_model=list[TaskSchema])
-def load(station_id: uuid.UUID = None):
+def load(station_id: uuid.UUID = None, _user: FiefUserInfo = Depends(custom_auth(read_permission))):
     tasks_projector: TasksProjector = main.runner.get(TasksProjector)
     return tasks_projector.get_all(station_id)
 
 
 @task_manager_router.get("/get_task",
                          response_model=TaskSchema)
-def load_by_id(task_id: uuid.UUID):
+def load_by_id(task_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_auth(read_permission))):
     tasks_projector: TasksProjector = main.runner.get(TasksProjector)
     return tasks_projector.get_by_id(task_id)
 
 
 @task_manager_router.get("/{task_id}/allocate_components", response_class=PlainTextResponse)
-def allocate_components(task_id: uuid.UUID):
+def allocate_components(task_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_auth(read_permission))):
     task_service: TaskService = main.runner.get(TaskService)
     task_service.request_component_allocation(task_id)
     return "OK"
 
 
 @task_manager_router.post("/{task_id}/compete_task_itmes", response_class=PlainTextResponse)
-def complete_task_items(task_id: uuid.UUID, task_items: list[TaskChangeComponentRequestId]):
+def complete_task_items(task_id: uuid.UUID, task_items: list[TaskChangeComponentRequestId],
+                        _user: FiefUserInfo = Depends(custom_auth(read_permission))):
     task_service: TaskService = main.runner.get(TaskService)
     task_service.complete_task_items(task_id, task_items)
     return "OK"
 
 
 @task_manager_router.post("/{task_id}/change_details", response_class=PlainTextResponse)
-def change_details(task_id: uuid.UUID, new_name: Optional[str] = None, new_description: Optional[str] = None):
+def change_details(task_id: uuid.UUID, new_name: Optional[str] = None, new_description: Optional[str] = None,
+                   _user: FiefUserInfo = Depends(custom_auth(write_permission))):
     task_service: TaskService = main.runner.get(TaskService)
     task_service.change_component_task_details(task_id, new_name, new_description)
     return "OK"
 
 
 @task_manager_router.delete("/{task_id}", response_class=PlainTextResponse)
-def cancel_task(task_id: uuid.UUID):
+def cancel_task(task_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_auth(write_permission))):
     task_proj = main.runner.get(TasksProjector)
     task_type = task_proj.get_by_id(task_id).task_type
     match task_type:

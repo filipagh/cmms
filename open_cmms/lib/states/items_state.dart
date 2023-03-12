@@ -1,10 +1,7 @@
 import 'package:BackendAPI/api.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import 'package:open_cmms/helper.dart';
 import 'package:open_cmms/service/backend_api/storageManager.dart';
-
-import '../models/item.dart';
 
 class ItemsStorageState extends GetxController {
   Map<String, StorageItemSchema> _itemsMap = <String, StorageItemSchema>{}.obs;
@@ -16,10 +13,10 @@ class ItemsStorageState extends GetxController {
   }
 
   void reloadData() {
-    _itemsMap.clear();
     StorageManagerService()
         .getAllStorageItemsStorageManagerAllStorageDataGet()
         .then((value) {
+      _itemsMap.clear();
       value?.forEach((element) {
         _itemsMap[element.id] = element;
       });

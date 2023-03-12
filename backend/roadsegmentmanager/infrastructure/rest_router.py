@@ -1,8 +1,10 @@
 import uuid
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from fief_client import FiefUserInfo
 
 from base import main
+from base.auth_def import custom_auth, write_permission, read_permission
 from roadsegmentmanager.application.model import schema
 from roadsegmentmanager.application.road_segment_projector import RoadSegmentProjector
 from roadsegmentmanager.application.road_segment_service import RoadSegmentService
@@ -14,26 +16,17 @@ road_segment_manager = APIRouter(
 )
 
 
-#
-# @storage_manager.get("/all-storage-data", response_model=list[schema.StorageItemSchema])
-# def get_all_storage_items():
-#     storage_items = []
-#     for i in storage_manager_loader.load_all_storage_items():
-#         storage_items.append(schema.StorageItemSchema(**i.__dict__))
-#
-#     return storage_items
-#
-
 @road_segment_manager.post("/create_road_segment",
                            response_model=uuid.UUID)
-def create_road_segment(new_segment: schema.RoadSegmentNewSchema):
+def create_road_segment(new_segment: schema.RoadSegmentNewSchema,
+                        _user: FiefUserInfo = Depends(custom_auth(write_permission))):
     segment_service = main.runner.get(RoadSegmentService)
     return segment_service.create_road_segment(new_segment)
 
 
 @road_segment_manager.get("/segment",
                           response_model=schema.RoadSegmentSchema)
-def get_by_id(segment_id: uuid.UUID):
+def get_by_id(segment_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_auth(read_permission))):
     segment_projector = main.runner.get(RoadSegmentProjector)
 
     return schema.RoadSegmentSchema(**segment_projector.get_by_id(segment_id).__dict__)
@@ -41,7 +34,7 @@ def get_by_id(segment_id: uuid.UUID):
 
 @road_segment_manager.get("/segments",
                           response_model=list[schema.RoadSegmentSchema])
-def get_all():
+def get_all(_user: FiefUserInfo = Depends(custom_auth(read_permission))):
     segment_projector: RoadSegmentProjector = main.runner.get(RoadSegmentProjector)
     col = []
     for i in segment_projector.get_all():
