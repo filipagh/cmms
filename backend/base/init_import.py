@@ -1,4 +1,5 @@
 import uuid
+from time import sleep
 
 from assetmanager.application.model.schema import AssetCategoryNewSchema, AssetNewSchema, AssetIdSchema
 from assetmanager.domain.model.asset_telemetry import AssetTelemetry, AssetTelemetryType, AssetTelemetryValue
@@ -22,6 +23,7 @@ def import_assets():
         if i.name == default_category:
             print("import skip")
             return
+    sleep(10)
     cat_id = rest_router.create_new_category(
         AssetCategoryNewSchema(name=default_category, description="zakladne komponenty auto-import")).id
     rest_router.create_new_asset(AssetNewSchema(category_id=cat_id, name="HMP155 Teplomer", telemetry=[
