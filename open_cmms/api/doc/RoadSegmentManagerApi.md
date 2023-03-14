@@ -71,7 +71,6 @@ Name | Type | Description  | Notes
 Get All
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
@@ -119,7 +118,6 @@ This endpoint does not need any parameter.
 Get By Id
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer

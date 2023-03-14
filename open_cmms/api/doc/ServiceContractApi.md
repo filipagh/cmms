@@ -72,7 +72,6 @@ Name | Type | Description  | Notes
 Get Contract
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
@@ -124,7 +123,6 @@ Name | Type | Description  | Notes
 Get Contracts
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
@@ -172,7 +170,6 @@ This endpoint does not need any parameter.
 Get
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer

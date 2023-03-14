@@ -73,7 +73,6 @@ Name | Type | Description  | Notes
 Change Details
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
@@ -129,7 +128,6 @@ Name | Type | Description  | Notes
 Complete
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
@@ -181,7 +179,6 @@ Name | Type | Description  | Notes
 Create
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
@@ -233,7 +230,6 @@ Name | Type | Description  | Notes
 Load
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer

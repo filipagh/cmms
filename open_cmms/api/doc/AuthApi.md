@@ -115,7 +115,6 @@ This endpoint does not need any parameter.
 Login
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 // TODO Configure API key authorization: user_session
@@ -157,7 +156,6 @@ This endpoint does not need any parameter.
 Logout
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 

@@ -26,15 +26,19 @@ class AssetTelemetryType {
   static const AIR_TEMPERATURE = AssetTelemetryType._(r'AIR_TEMPERATURE');
   static const GROUND_TEMPERATURE = AssetTelemetryType._(r'GROUND_TEMPERATURE');
   static const ROAD_TEMPERATURE = AssetTelemetryType._(r'ROAD_TEMPERATURE');
+  static const DEW_POINT_TEMPERATURE =
+      AssetTelemetryType._(r'DEW_POINT_TEMPERATURE');
   static const VISIBILITY = AssetTelemetryType._(r'VISIBILITY');
   static const WIND_SPEED = AssetTelemetryType._(r'WIND_SPEED');
   static const WIND_DIRECTION = AssetTelemetryType._(r'WIND_DIRECTION');
   static const RAINFALL_INTENSITY = AssetTelemetryType._(r'RAINFALL_INTENSITY');
   static const WIND_GUST_SPEED = AssetTelemetryType._(r'WIND_GUST_SPEED');
-  static const WIND_GUST_DIRECTION = AssetTelemetryType._(r'WIND_GUST_DIRECTION');
+  static const WIND_GUST_DIRECTION =
+      AssetTelemetryType._(r'WIND_GUST_DIRECTION');
   static const AIR_PRESSURE = AssetTelemetryType._(r'AIR_PRESSURE');
   static const AIR_HUMIDITY = AssetTelemetryType._(r'AIR_HUMIDITY');
-  static const ROAD_WARNING_STATUS = AssetTelemetryType._(r'ROAD_WARNING_STATUS');
+  static const ROAD_WARNING_STATUS =
+      AssetTelemetryType._(r'ROAD_WARNING_STATUS');
   static const ROAD_RAIN_STATUS = AssetTelemetryType._(r'ROAD_RAIN_STATUS');
   static const ROAD_SURFACE_STATUS = AssetTelemetryType._(r'ROAD_SURFACE_STATUS');
   static const GRIP = AssetTelemetryType._(r'GRIP');
@@ -47,6 +51,7 @@ class AssetTelemetryType {
     AIR_TEMPERATURE,
     GROUND_TEMPERATURE,
     ROAD_TEMPERATURE,
+    DEW_POINT_TEMPERATURE,
     VISIBILITY,
     WIND_SPEED,
     WIND_DIRECTION,
@@ -102,8 +107,12 @@ class AssetTelemetryTypeTypeTransformer {
       switch (data.toString()) {
         case r'AIR_TEMPERATURE': return AssetTelemetryType.AIR_TEMPERATURE;
         case r'GROUND_TEMPERATURE': return AssetTelemetryType.GROUND_TEMPERATURE;
-        case r'ROAD_TEMPERATURE': return AssetTelemetryType.ROAD_TEMPERATURE;
-        case r'VISIBILITY': return AssetTelemetryType.VISIBILITY;
+        case r'ROAD_TEMPERATURE':
+          return AssetTelemetryType.ROAD_TEMPERATURE;
+        case r'DEW_POINT_TEMPERATURE':
+          return AssetTelemetryType.DEW_POINT_TEMPERATURE;
+        case r'VISIBILITY':
+          return AssetTelemetryType.VISIBILITY;
         case r'WIND_SPEED': return AssetTelemetryType.WIND_SPEED;
         case r'WIND_DIRECTION': return AssetTelemetryType.WIND_DIRECTION;
         case r'RAINFALL_INTENSITY': return AssetTelemetryType.RAINFALL_INTENSITY;

@@ -73,7 +73,6 @@ Name | Type | Description  | Notes
 Create New Category
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
@@ -125,7 +124,6 @@ Name | Type | Description  | Notes
 Get Asset Categories
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
@@ -173,7 +171,6 @@ This endpoint does not need any parameter.
 Get Assets
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
@@ -221,7 +218,6 @@ This endpoint does not need any parameter.
 Get Telemetry Options
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer

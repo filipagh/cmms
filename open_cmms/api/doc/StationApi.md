@@ -23,7 +23,6 @@ Create Station
 ### Example
 ```dart
 import 'package:BackendAPI/api.dart';
-
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
 //defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
 // TODO Configure API key authorization: api_key
@@ -39,12 +38,10 @@ final api_instance = StationApi();
 final stationNewSchema = StationNewSchema(); // StationNewSchema | 
 
 try {
-final result = api_instance.createStationStationCreateStationPost(stationNewSchema);
-print(result);
-} catch
-(
-e) {
-print('Exception when calling StationApi->createStationStationCreateStationPost: $e\n');
+    final result = api_instance.createStationStationCreateStationPost(stationNewSchema);
+    print(result);
+} catch (e) {
+    print('Exception when calling StationApi->createStationStationCreateStationPost: $e\n');
 }
 ```
 
@@ -75,10 +72,8 @@ Name | Type | Description  | Notes
 Get All
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
-
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
 //defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
 // TODO Configure API key authorization: api_key
@@ -91,18 +86,13 @@ import 'package:BackendAPI/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKeyPrefix = 'Bearer';
 
 final api_instance = StationApi();
-final roadSegmentId = 38400000 - 8
-cf0-11
-bd-b23e-10
-b96e4ef00d; // String | 
+final roadSegmentId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-final result = api_instance.getAllStationStationsGet(roadSegmentId);
-print(result);
-} catch
-(
-e) {
-print('Exception when calling StationApi->getAllStationStationsGet: $e\n');
+    final result = api_instance.getAllStationStationsGet(roadSegmentId);
+    print(result);
+} catch (e) {
+    print('Exception when calling StationApi->getAllStationStationsGet: $e\n');
 }
 ```
 
@@ -133,10 +123,8 @@ Name | Type | Description  | Notes
 Get By Id
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
-
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
 //defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
 // TODO Configure API key authorization: api_key
@@ -149,18 +137,13 @@ import 'package:BackendAPI/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKeyPrefix = 'Bearer';
 
 final api_instance = StationApi();
-final segmentId = 38400000 - 8
-cf0-11
-bd-b23e-10
-b96e4ef00d; // String | 
+final segmentId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-final result = api_instance.getByIdStationStationGet(segmentId);
-print(result);
-} catch
-(
-e) {
-print('Exception when calling StationApi->getByIdStationStationGet: $e\n');
+    final result = api_instance.getByIdStationStationGet(segmentId);
+    print(result);
+} catch (e) {
+    print('Exception when calling StationApi->getByIdStationStationGet: $e\n');
 }
 ```
 
@@ -191,10 +174,8 @@ Name | Type | Description  | Notes
 Remove Station
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
-
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
 //defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
 // TODO Configure API key authorization: api_key
@@ -210,12 +191,10 @@ final api_instance = StationApi();
 final stationIdSchema = StationIdSchema(); // StationIdSchema | 
 
 try {
-final result = api_instance.removeStationStationRemoveStationDelete(stationIdSchema);
-print(result);
-} catch
-(
-e) {
-print('Exception when calling StationApi->removeStationStationRemoveStationDelete: $e\n');
+    final result = api_instance.removeStationStationRemoveStationDelete(stationIdSchema);
+    print(result);
+} catch (e) {
+    print('Exception when calling StationApi->removeStationStationRemoveStationDelete: $e\n');
 }
 ```
 
