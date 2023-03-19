@@ -110,6 +110,14 @@ class ServiceContracts extends StatelessWidget {
                                     contract: _contracts[index],
                                   ));
                                 },
+                                trailing: ElevatedButton.icon(
+                                    onPressed: () {
+                                      showFormDialog(ServiceContractForm(
+                                          contract: _contracts[index],
+                                          isCoppy: true));
+                                    },
+                                    icon: Icon(Icons.copy),
+                                    label: Text("kópia")),
                                 hoverColor: Colors.blue.shade200,
                                 title:
                                     Center(child: Text(_contracts[index].name)),

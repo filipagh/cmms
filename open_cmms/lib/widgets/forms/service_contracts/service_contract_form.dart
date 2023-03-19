@@ -8,7 +8,8 @@ import 'package:open_cmms/snacbars.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 
 class ServiceContractForm extends StatefulWidget implements hasFormTitle {
-  ServiceContractForm({Key? key, ServiceContractSchema? contract})
+  ServiceContractForm(
+      {Key? key, ServiceContractSchema? contract, this.isCoppy = false})
       : super(key: key) {
     RoadSegmentService().getAllRoadSegmentManagerSegmentsGet().then((value) {
       segments.addAll(value ?? []);
@@ -23,6 +24,8 @@ class ServiceContractForm extends StatefulWidget implements hasFormTitle {
   }
 
   ServiceContractSchema? contract;
+
+  bool isCoppy;
 
   loadStationOfSegment(String id) async {
     if (!stations.containsKey(id)) {
@@ -78,6 +81,7 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           TextFormField(
+            readOnly: widget.isCoppy ? false : true,
             controller: name,
             decoration: const InputDecoration(label: Text("nazov zmluvy")),
             validator: (v) {
@@ -85,6 +89,7 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
             },
           ),
           TextFormField(
+              readOnly: widget.isCoppy ? false : true,
               controller: dateFrom,
               validator: (v) {
                 return (v == null || v.isEmpty) ? "zvolte datum" : null;
@@ -92,9 +97,10 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
               decoration:
                   const InputDecoration(labelText: "Datum platnosti od"),
               onTap: () {
-                pickDateRange(context);
+                widget.isCoppy ? pickDateRange(context) : null;
               }),
           TextFormField(
+              readOnly: widget.isCoppy ? false : true,
               controller: dateDue,
               validator: (v) {
                 return (v == null || v.isEmpty) ? "zvolte datum" : null;
@@ -102,7 +108,7 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
               decoration:
                   const InputDecoration(labelText: "Datum platnosti do"),
               onTap: () {
-                pickDateRange(context);
+                widget.isCoppy ? pickDateRange(context) : null;
               }),
           SizedBox(
             width: 600,
@@ -129,17 +135,19 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
                                       title: Text(station.name),
                                       value: widget.selectedStations
                                           .contains(station.id),
-                                      onChanged: (bool? value) {
-                                        if (value!) {
-                                          widget.selectedStations
-                                              .add(station.id);
-                                          widget.segments.refresh();
-                                        } else {
-                                          widget.selectedStations
-                                              .remove(station.id);
-                                          widget.segments.refresh();
-                                        }
-                                      },
+                                      onChanged: widget.isCoppy
+                                          ? (bool? value) {
+                                              if (value!) {
+                                                widget.selectedStations
+                                                    .add(station.id);
+                                                widget.segments.refresh();
+                                              } else {
+                                                widget.selectedStations
+                                                    .remove(station.id);
+                                                widget.segments.refresh();
+                                              }
+                                            }
+                                          : null,
                                     ),
                                   );
                                 })
@@ -151,12 +159,14 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
                           (widget.stations[segment.id]?.isEmpty ?? false)
                               ? const Icon(Icons.close)
                               : Checkbox(
-                                  tristate: true,
+                            tristate: true,
                                   value: getSectionCheckBoxValue(segment.id),
-                                  onChanged: (bool? value) {
-                                    changeAllInSegment(
-                                        segment.id, value ?? false);
-                                  },
+                                  onChanged: widget.isCoppy
+                                      ? (bool? value) {
+                                          changeAllInSegment(
+                                              segment.id, value ?? false);
+                                        }
+                                      : null,
                                 ),
                         ],
                       ),
@@ -172,29 +182,31 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
                     Get.back();
                   },
                   child: const Text("Zrusit")),
-              ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      if (widget.selectedStations.isEmpty) {
-                        showError("zvolte aspon jednu stanicu");
-                        return;
-                      }
-                      ServiceContractService()
-                          .createContractServiceContractCreateContractPost(
-                              ServiceContractNewSchema(
-                                  name: name.value.text,
-                                  validFrom: dateFromDT!,
-                                  validUntil: dateDueDT!,
-                                  stationIdList: widget.selectedStations))
-                          .then((value) {
-                        showOk("Servisna zmluva bola pridana");
-                      });
+              widget.isCoppy
+                  ? ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          if (widget.selectedStations.isEmpty) {
+                            showError("zvolte aspon jednu stanicu");
+                            return;
+                          }
+                          ServiceContractService()
+                              .createContractServiceContractCreateContractPost(
+                                  ServiceContractNewSchema(
+                                      name: name.value.text,
+                                      validFrom: dateFromDT!,
+                                      validUntil: dateDueDT!,
+                                      stationIdList: widget.selectedStations))
+                              .then((value) {
+                            showOk("Servisna zmluva bola pridana");
+                          });
 
-                      Get.closeAllSnackbars();
-                      Get.back();
-                    }
-                  },
-                  child: const Text("Vytvorit zmluvu")),
+                          Get.closeAllSnackbars();
+                          Get.back();
+                        }
+                      },
+                      child: const Text("Vytvorit zmluvu"))
+                  : Container(),
             ],
           )
         ],
