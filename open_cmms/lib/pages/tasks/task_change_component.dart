@@ -95,47 +95,63 @@ class TaskChangeComponentsPage extends StatelessWidget {
           ],
         ),
         const Divider(),
-        buildTaskHeader(),
-
         Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                buildTaskComponents(),
-                const Text("komentare k tasku"),
-                const Placeholder(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Row(
+            children: [
+              Column(
+                children: [
+                  const Text("komentare k tasku"),
+                  Container(width: 600, child: const Placeholder()),
+                ],
+              ),
+              VerticalDivider(),
+              Flexible(
+                child: Column(
                   children: [
-                    ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor: MaterialStateColor.resolveWith(
-                                (x) => Colors.red)),
-                        onPressed: () {
-                          TasksService()
-                              .cancelTaskTaskManagerTaskIdDelete(taskId)
-                              .then((value) => loadTask());
-                        },
-                        child: Text("Zrusit ulohu")),
-                    ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor: MaterialStateColor.resolveWith(
-                                (x) => Colors.green)),
-                        onPressed: () {
-                          showFormDialog(CompleteChangeComponentsTaskForm(
-                                  stationId: taskProjection!.stationId,
-                                  task: task.value!))
-                              .then((value) => loadTask());
-                        },
-                        child: Text("Dokoncit ulohu"))
-                  ],
-                )
-              ],
-            ),
-          ),
-        )
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        ElevatedButton(
+                            style: ButtonStyle(
+                                backgroundColor: MaterialStateColor.resolveWith(
+                                    (x) => Colors.red)),
+                            onPressed: () {
+                              TasksService()
+                                  .cancelTaskTaskManagerTaskIdDelete(taskId)
+                                  .then((value) => loadTask());
+                            },
+                            child: Text("Zrusit ulohu")),
+                        VerticalDivider(),
+                        ElevatedButton(
+                            style: ButtonStyle(
+                                backgroundColor: MaterialStateColor.resolveWith(
+                                    (x) => Colors.green)),
+                            onPressed: () {
+                              showFormDialog(CompleteChangeComponentsTaskForm(
+                                      stationId: taskProjection!.stationId,
+                                      task: task.value!))
+                                  .then((value) => loadTask());
+                            },
+                            child: Text("Dokoncit ulohu"))
+                      ],
+                    ),
+                    Divider(),
+                    buildTaskHeader(),
 
-        // buildTaskComments(),
+                    Expanded(
+                        child: Container(
+                            height: 300,
+                            child: ListView(
+                              children: [...buildTaskComponents()],
+                            ))),
+
+                    // buildTaskComments(),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }
@@ -148,6 +164,7 @@ class TaskChangeComponentsPage extends StatelessWidget {
   // todo deduplikovat 3x
   buildTaskHeader() {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text("Stanica: " + taskProjection!.stationName),
         Text("Cestny usek: " + taskProjection!.roadSegmentName),
@@ -168,13 +185,13 @@ class TaskChangeComponentsPage extends StatelessWidget {
                   icon: const Icon(Icons.edit),
                   onPressed: () async {
                     showFormDialog(TextEditForm(
-                            title: "Zmena opisu ulohy",
-                            text: task.value!.description))
+                        title: "Zmena opisu ulohy",
+                        text: task.value!.description))
                         .then((value) {
                       TasksService()
                           .changeDetailsTaskManagerTaskIdChangeDetailsPost(
-                              taskId,
-                              newDescription: value)
+                          taskId,
+                          newDescription: value)
                           .then((value) => loadTask());
                     });
                   },
@@ -210,9 +227,7 @@ class TaskChangeComponentsPage extends StatelessWidget {
   }
 
   buildTaskComponents() {
-    return Column(
-      children: [...buildAddComponents(), ...buildRemoveComponnets()],
-    );
+    return [...buildAddComponents(), ...buildRemoveComponnets()];
   }
 
   buildAddComponents() {
