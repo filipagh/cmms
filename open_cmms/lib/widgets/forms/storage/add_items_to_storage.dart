@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/models/task_component.dart';
+import 'package:open_cmms/snacbars.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 import 'package:open_cmms/widgets/forms/components/component_picker.dart';
 
@@ -51,21 +52,31 @@ class AddItemsToStorage extends StatelessWidget implements hasFormTitle {
                 onPressed: () {
                   Get.back();
                 },
-                child: const Text("Zrusit")),
+                child: const Text("Zrušiť")),
             ElevatedButton(
                 onPressed: () {
+                  var valid = true;
                   List<AssetItemToAdd> items = [];
-                  _items.forEach((e) => {
-                        items.add(AssetItemToAdd(
-                            storageItemId: e.storageItem.id,
-                            countToAdd: e.count))
-                      });
-                  _itemsState
-                      .addToStorage(items)
-                      .then((value) => _itemsState.reloadData());
+                  for (var e in _items) {
+                    if (e.count <= 0) {
+                      showError("Nesprávne množstvo komponentu " + e.item.name);
+                      valid = false;
+                      break;
+                    }
+
+                    items.add(AssetItemToAdd(
+                        storageItemId: e.storageItem.id, countToAdd: e.count));
+                  }
+                  if (!valid) {
+                    return;
+                  }
+                  _itemsState.addToStorage(items).then((value) {
+                    _itemsState.reloadData();
+                    showOk("Komponenty boli naskladnené");
+                  });
                   Get.back();
                 },
-                child: const Text("Potvrdit")),
+                child: const Text("Potvrdiť")),
           ],
         )
       ],

@@ -51,7 +51,11 @@ class _StorageState extends State<Storage> {
                       child: Icon(Icons.filter_list_alt),
                     ),
                     Spacer(),
-                    ElevatedButton(onPressed: () {showFormDialog(AddItemsToStorage());}, child: Text("Pridat do skladu"))
+                    ElevatedButton(
+                        onPressed: () {
+                          showFormDialog(AddItemsToStorage());
+                        },
+                        child: Text("Pridať do skladu"))
                   ],
                 ),
                 Divider(),

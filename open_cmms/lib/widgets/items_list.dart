@@ -1,8 +1,6 @@
 import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:open_cmms/states/asset_types_state_dummy.dart';
-import 'package:open_cmms/states/items_state_dummy.dart';
 
 import '../states/asset_types_state.dart';
 import '../states/items_state.dart';
@@ -48,14 +46,14 @@ class ItemsList extends StatelessWidget {
               return IntrinsicHeight(
               child: Row(
                 children: [
-                  Text(assets.getAssetById(item.assetId)!.name),
-                  Spacer(),
-                  Text("Na sklade: " + itemActual!.inStorage.toString()),
-                  VerticalDivider(),
-                  Text("Rezervovane: " + itemActual.allocated.toString()),
-                  // VerticalDivider(),
-                  // ElevatedButton(onPressed: (){_.addToStorage(productId);}, child: Text("add 1 to storage"))
-                ],
+                    Text(assets.getAssetById(item.assetId)!.name),
+                    Spacer(),
+                    Text("Na sklade: " + itemActual!.inStorage.toString()),
+                    VerticalDivider(),
+                    Text("Rezervované: " + itemActual.allocated.toString()),
+                    // VerticalDivider(),
+                    // ElevatedButton(onPressed: (){_.addToStorage(productId);}, child: Text("add 1 to storage"))
+                  ],
               ),
             );},
           )),
