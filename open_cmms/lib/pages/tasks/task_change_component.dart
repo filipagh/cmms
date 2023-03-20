@@ -31,6 +31,7 @@ class TaskChangeComponentsPage extends StatelessWidget {
         Get.put(AssignedComponentsState(taskProjection!.stationId),
             tag: taskProjection!.stationId);
       }
+      loadTask();
     });
   }
 
@@ -54,7 +55,6 @@ class TaskChangeComponentsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    loadTask();
     return Scaffold(
       appBar: CustomAppBar(),
       body: Row(
