@@ -2,6 +2,7 @@ import 'package:BackendAPI/api.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:open_cmms/service/backend_api/assetManager.dart';
+import 'package:open_cmms/snacbars.dart';
 
 class AssetTypesState extends GetxController {
   Map<String, AssetCategorySchema> _categoriesTypes =
@@ -32,6 +33,7 @@ class AssetTypesState extends GetxController {
   }
 
   void editType(String id, String name, String description) {
+    showInfo("nie je implementované");
     // todo
     // _categoriesTypes[id]!.name = name;
     // _categoriesTypes[id]!.text = description;
@@ -51,7 +53,10 @@ class AssetTypesState extends GetxController {
       }
       AssetManagerService()
           .createNewCategoryAssetManagerNewCategoryPost(model)
-          .then((value) => reloadData());
+          .then((value) {
+        reloadData();
+        showOk("nová kategória vytvorená");
+      });
     } else {
       AssetManagerService()
           .createNewAssetAssetManagerNewAssetPost(AssetNewSchema(
@@ -59,7 +64,10 @@ class AssetTypesState extends GetxController {
               name: name,
               description: text,
               telemetry: telemetry))
-          .then((value) => reloadData());
+          .then((value) {
+        reloadData();
+        showOk("komponent vytvorený");
+      });
     }
   }
 

@@ -15,6 +15,16 @@ void showError(String message) {
   );
 }
 
+void showInfo(String message) {
+  Get.showSnackbar(GetSnackBar(
+    messageText: Text(
+      message,
+    ),
+    backgroundColor: Colors.yellow[200]!,
+    duration: const Duration(seconds: 3),
+  ));
+}
+
 void showOk(String message) {
   Get.showSnackbar(GetSnackBar(
     messageText: Text(

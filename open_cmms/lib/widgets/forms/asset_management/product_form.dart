@@ -27,8 +27,8 @@ class ProductForm extends StatefulWidget implements hasFormTitle {
 
   String getTitle() {
     return editItem == null
-        ? "Create new Product"
-        : "Edit Product : ${editItem!.name}";
+        ? "Vytvoriť nový produkt"
+        : "Editovať produkt : ${editItem!.name}";
   }
 
   @override
@@ -75,9 +75,9 @@ class ProductFormState extends State<ProductForm> {
                 },
                 initialValue:
                     widget.editItem == null ? "" : widget.editItem!.name,
-                decoration: InputDecoration(labelText: 'name'),
+                decoration: InputDecoration(labelText: 'názov'),
                 validator: (value) {
-                  return value == null || value.isEmpty ? "add name" : null;
+                  return value == null || value.isEmpty ? "pridať názov" : null;
                 },
               ),
               TextFormField(
@@ -86,7 +86,7 @@ class ProductFormState extends State<ProductForm> {
                 },
                 initialValue:
                     widget.editItem == null ? "" : widget.editItem!.name,
-                decoration: InputDecoration(labelText: 'description'),
+                decoration: InputDecoration(labelText: 'popis'),
               ),
               Divider(),
               Text("Hlavna kategoria: " + _mainCat.name),
@@ -135,20 +135,32 @@ class ProductFormState extends State<ProductForm> {
             ],
           ),
         ),
-        TextButton(
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                _formKey.currentState?.save();
-                if (widget.editItem != null) {
-                  assetTypes.editType(widget.editItem!.id, name, description);
-                } else {
-                  assetTypes.createNewType(widget.parent.id, false,
-                      widget.telemetry, name, description);
-                }
-                Get.back();
-              }
-            },
-            child: Text("submit"))
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            ElevatedButton(
+                onPressed: () {
+                  Get.back();
+                },
+                child: Text("zrušiť")),
+            ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    _formKey.currentState?.save();
+                    if (widget.editItem != null) {
+                      Get.back();
+                      assetTypes.editType(
+                          widget.editItem!.id, name, description);
+                    } else {
+                      Get.back();
+                      assetTypes.createNewType(widget.parent.id, false,
+                          widget.telemetry, name, description);
+                    }
+                  }
+                },
+                child: Text("uložiť")),
+          ],
+        )
       ],
     );
   }

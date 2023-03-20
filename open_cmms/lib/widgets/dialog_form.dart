@@ -17,7 +17,6 @@ Future<T?> showFormDialog<T>(hasFormTitle form) async {
       child: ConstrainedBox(
         constraints: BoxConstraints(
             maxHeight: Get.height - 150,
-            minHeight: 500,
             maxWidth: Get.width - 200,
             minWidth: 500),
         child: form.getInstance(),

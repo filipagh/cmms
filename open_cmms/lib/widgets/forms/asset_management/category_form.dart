@@ -12,9 +12,12 @@ class CategoryForm extends StatefulWidget implements hasFormTitle {
   late final AssetCategorySchema? editItem;
   late final AssetCategorySchema? parent;
 
-  CategoryForm.createNewSub({Key? key, required AssetCategorySchema this.parent}) : super(key: key) {
+  CategoryForm.createNewSub(
+      {Key? key, required AssetCategorySchema this.parent})
+      : super(key: key) {
     editItem = null;
   }
+
   CategoryForm.createNewMain({Key? key}) : super(key: key) {
     editItem = null;
     parent = null;
@@ -23,7 +26,9 @@ class CategoryForm extends StatefulWidget implements hasFormTitle {
   CategoryForm.editItem({Key? key, required AssetCategorySchema editItem})
       : super(key: key) {
     this.editItem = editItem;
-    this.parent = assetTypes.getAssetTypeById(editItem.parentId!)!;
+    this.parent = editItem.parentId != null
+        ? assetTypes.getAssetTypeById(editItem.parentId!)
+        : null;
   }
 
   @override
@@ -31,8 +36,8 @@ class CategoryForm extends StatefulWidget implements hasFormTitle {
 
   String getTitle() {
     return editItem == null
-        ? "Create new Category"
-        : "Edit Category : ${editItem!.name}";
+        ? "Vytvoriť novú kategóriu"
+        : "Editovať kategóriu : ${editItem!.name}";
   }
 
   @override
@@ -50,7 +55,6 @@ class CategoryFormState extends State<CategoryForm> {
 
   @override
   void initState() {
-
     super.initState();
   }
 
@@ -60,18 +64,22 @@ class CategoryFormState extends State<CategoryForm> {
       children: [
         Form(
           key: _formKey,
-          child: Expanded(
+          child: Flexible(
             child: Column(
               children: [
+                if (widget.parent != null)
+                  Text("Hlavná kategória: " + widget.parent!.name),
                 TextFormField(
                   onSaved: (value) {
                     name = value!;
                   },
                   initialValue:
                       widget.editItem == null ? "" : widget.editItem!.name,
-                  decoration: InputDecoration(labelText: 'name'),
+                  decoration: InputDecoration(labelText: 'názov'),
                   validator: (value) {
-                    return value == null || value.isEmpty ? "add name" : null;
+                    return value == null || value.isEmpty
+                        ? "pridať názov"
+                        : null;
                   },
                 ),
                 TextFormField(
@@ -80,27 +88,34 @@ class CategoryFormState extends State<CategoryForm> {
                   },
                   initialValue:
                       widget.editItem == null ? "" : widget.editItem!.name,
-                  decoration: InputDecoration(labelText: 'description'),
+                  decoration: InputDecoration(labelText: 'popis'),
                 ),
-                if (widget.parent != null)
-                  Text("main category: " + widget.parent!.name),
-                Text("custom fields"),
-                Flexible(child: Placeholder()),
-                TextButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        _formKey.currentState?.save();
-                        if (widget.editItem != null) {
-                          assetTypes.editType(
-                              widget.editItem!.id, name, description);
-                        } else {
-                          assetTypes.createNewType(
-                              widget.parent?.id, true, [], name, description);
-                        }
-                        Get.back();
-                      }
-                    },
-                    child: Text("submit")),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          Get.back();
+                        },
+                        child: Text("Zrušiť")),
+                    ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            _formKey.currentState?.save();
+                            if (widget.editItem != null) {
+                              Get.back();
+                              assetTypes.editType(
+                                  widget.editItem!.id, name, description);
+                            } else {
+                              Get.back();
+                              assetTypes.createNewType(widget.parent?.id, true,
+                                  [], name, description);
+                            }
+                          }
+                        },
+                        child: Text("Vytvoriť")),
+                  ],
+                ),
               ],
             ),
           ),
