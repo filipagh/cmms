@@ -38,7 +38,7 @@ class StationComponentsPage extends StatelessWidget
                 components.reload();
               },
               icon: Icon(Icons.refresh),
-              label: Text("Nacitat komponenty"),
+              label: Text("Načítať komponenty"),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -49,14 +49,14 @@ class StationComponentsPage extends StatelessWidget
                           SetStationComponentsForm.editComponentsInStation(
                               station: station));
                     },
-                    child: Text('Nastavit komponenty')),
+                    child: Text('Nastaviť komponenty')),
                 VerticalDivider(),
                 ElevatedButton(
                     onPressed: () {
                       showFormDialog(
                           EditStationComponentsForm(station: station));
                     },
-                    child: Text('Editovat komponenty')),
+                    child: Text('Editovať komponenty')),
               ],
             ),
           ],
@@ -102,7 +102,7 @@ class StationComponentsPage extends StatelessWidget
                               buildContextOfComponent(components[index])!,
                               Spacer(),
                               Text(components[index].warrantyPeriodUntil != null
-                                  ? "Zaruka do " +
+                                  ? "Záruka do " +
                                           components[index]
                                               .warrantyPeriodUntil!
                                               .toIso8601String()
@@ -124,38 +124,38 @@ class StationComponentsPage extends StatelessWidget
       case AssignedComponentState.awaiting:
         return RichText(
             text: TextSpan(
-          text: "Bude nainstalovane v ",
+          text: "Bude nainštalované v ",
           children: [
             TextSpan(
                 recognizer: TapGestureRecognizer()
                   ..onTap =
                       () => TaskPageFactory().openTaskPage(component.taskId!),
-                text: "Ulohe",
+                text: "Úlohe",
                 style: TextStyle(
                     color: Colors.blue, decoration: TextDecoration.underline))
           ],
         ));
       case AssignedComponentState.installed:
-        return Text('instalovane dna: ${component.installedAt}');
+        return Text('inštalované dňa: ${component.installedAt}');
       // return Text('installed on: ' + component.installed.toString());
       case AssignedComponentState.willBeRemoved:
         return Column(
           children: [
             RichText(
                 text: TextSpan(
-              text: "Bude odstranene v ",
+                  text: "Bude odstránené v ",
               children: [
                 TextSpan(
                     recognizer: TapGestureRecognizer()
                       ..onTap = () =>
                           TaskPageFactory().openTaskPage(component.taskId!),
-                    text: "Ulohe",
+                    text: "Úlohe",
                     style: TextStyle(
                         color: Colors.blue,
                         decoration: TextDecoration.underline))
               ],
             )),
-            Text('instalovane dna: ${component.installedAt}'),
+            Text('inštalované dňa: ${component.installedAt}'),
           ],
         );
       case AssignedComponentState.removed:
