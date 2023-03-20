@@ -5,6 +5,8 @@ import 'package:open_cmms/models/road_segment_model.dart';
 import 'package:open_cmms/service/backend_api/RoadSegmentManager.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 
+import '../../../snacbars.dart';
+
 class RoadSegmentForm extends StatefulWidget implements hasFormTitle {
   late final RoadSegmentModel? editItem;
 
@@ -23,8 +25,8 @@ class RoadSegmentForm extends StatefulWidget implements hasFormTitle {
   @override
   String getTitle() {
     return editItem == null
-        ? "Create new Road Segment"
-        : "Edit Road Segment : ${editItem!.name}";
+        ? "Vytvoriť cestný segment"
+        : "Editovať cestný segment : ${editItem!.name}";
   }
 
   @override
@@ -54,9 +56,9 @@ class RoadSegmentFormState extends State<RoadSegmentForm> {
               },
               initialValue:
                   widget.editItem == null ? "" : widget.editItem!.name,
-              decoration: const InputDecoration(labelText: 'name'),
+              decoration: const InputDecoration(labelText: 'názov'),
               validator: (value) {
-                return value == null || value.isEmpty ? "add name" : null;
+                return value == null || value.isEmpty ? "pridať názov" : null;
               },
             ),
             //todo
@@ -87,12 +89,13 @@ class RoadSegmentFormState extends State<RoadSegmentForm> {
                     } else {
                       RoadSegmentService()
                           .createRoadSegmentRoadSegmentManagerCreateRoadSegmentPost(
-                              RoadSegmentNewSchema(name: name, ssud: ssud));
+                              RoadSegmentNewSchema(name: name, ssud: ssud))
+                          .then((value) => showOk("Cestný segment vytvorený"));
                     }
                     Get.back();
                   }
                 },
-                child: const Text("submit")),
+                child: const Text("vytvorit")),
           ],
         ),
       ),

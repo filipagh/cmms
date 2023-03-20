@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:open_cmms/service/backend_api/tasks/tasks_remote_service.dart';
 import 'package:open_cmms/widgets/forms/util/text_edit_form.dart';
 
+import '../../snacbars.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/dialog_form.dart';
 import '../../widgets/main_menu_widget.dart';
@@ -100,7 +101,10 @@ class TaskRemoteServicePage extends StatelessWidget {
                         onPressed: () {
                           getService()
                               .cancelTaskServiceRemoteTaskIdDelete(taskId)
-                              .then((value) => loadTask());
+                              .then((value) {
+                            loadTask();
+                            showOk("úloha bola zrusená");
+                          });
                         },
                         child: Text("Zrusit ulohu")),
                     ElevatedButton(
@@ -111,7 +115,10 @@ class TaskRemoteServicePage extends StatelessWidget {
                           getService()
                               .completeTaskServiceRemoteTaskIdCompleteGet(
                                   taskId)
-                              .then((value) => loadTask());
+                              .then((value) {
+                            loadTask();
+                            showOk("úloha bola dokoncená");
+                          });
                         },
                         child: Text("Dokoncit ulohu"))
                   ],

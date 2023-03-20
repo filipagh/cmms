@@ -6,6 +6,7 @@ import 'package:open_cmms/service/backend_api/tasks_service.dart';
 import 'package:open_cmms/states/asset_types_state.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 
+import '../../../snacbars.dart';
 import '../../../states/station/components_state.dart';
 
 class CompleteChangeComponentsTaskForm extends StatelessWidget
@@ -59,7 +60,10 @@ class CompleteChangeComponentsTaskForm extends StatelessWidget
                           selectedItems
                               .map((e) => TaskChangeComponentRequestId(id: e))
                               .toList())
-                      .then((value) => Get.back());
+                      .then((value) {
+                    showOk("komponenty boli zmenené");
+                    Get.back();
+                  });
                 },
                 child: Text("Dokoncit ulohu")),
           ],

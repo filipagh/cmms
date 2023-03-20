@@ -6,6 +6,7 @@ import 'package:open_cmms/widgets/dialog_form.dart';
 import 'package:open_cmms/widgets/forms/tasks/complete_change_components_task.dart';
 import 'package:open_cmms/widgets/forms/util/text_edit_form.dart';
 
+import '../../snacbars.dart';
 import '../../states/asset_types_state.dart';
 import '../../states/station/components_state.dart';
 import '../../widgets/custom_app_bar.dart';
@@ -118,7 +119,10 @@ class TaskChangeComponentsPage extends StatelessWidget {
                             onPressed: () {
                               TasksService()
                                   .cancelTaskTaskManagerTaskIdDelete(taskId)
-                                  .then((value) => loadTask());
+                                  .then((value) {
+                                showOk("úloha bola zrusená");
+                                loadTask();
+                              });
                             },
                             child: Text("Zrusit ulohu")),
                         VerticalDivider(),
@@ -185,13 +189,13 @@ class TaskChangeComponentsPage extends StatelessWidget {
                   icon: const Icon(Icons.edit),
                   onPressed: () async {
                     showFormDialog(TextEditForm(
-                        title: "Zmena opisu ulohy",
-                        text: task.value!.description))
+                            title: "Zmena opisu ulohy",
+                            text: task.value!.description))
                         .then((value) {
                       TasksService()
                           .changeDetailsTaskManagerTaskIdChangeDetailsPost(
-                          taskId,
-                          newDescription: value)
+                              taskId,
+                              newDescription: value)
                           .then((value) => loadTask());
                     });
                   },

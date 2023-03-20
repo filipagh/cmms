@@ -7,6 +7,7 @@ import 'package:open_cmms/widgets/assets_list.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 import 'package:open_cmms/widgets/forms/station/station_form.dart';
 
+import '../snacbars.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/main_menu_widget.dart';
 
@@ -32,9 +33,11 @@ class RoadSegment extends StatelessWidget {
   reloadStations() {
     StationService()
         .getAllStationStationsGet(roadSegmentId: segmentId)
-        .then((stations) {_station.clear(); _station.addAll(stations!);});
+        .then((stations) {
+      _station.clear();
+      _station.addAll(stations!);
+    });
   }
-
 
   Widget buildContent() {
     if (_roadSegment != null) {
@@ -82,13 +85,20 @@ class RoadSegment extends StatelessWidget {
                         Align(
                             alignment: Alignment.centerRight,
                             child: ElevatedButton(
-                                onPressed: () {showFormDialog(StationForm(_roadSegment!));},
+                                onPressed: () {
+                                  showFormDialog(StationForm(_roadSegment!));
+                                },
                                 child: Text("Pridat stanicu"))),
-                        Align(child: Row(
+                        Align(
+                            child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text("Stations", textScaleFactor: 3),
-                            IconButton(onPressed: () {reloadStations();}, icon: Icon(Icons.refresh))
+                            IconButton(
+                                onPressed: () {
+                                  reloadStations();
+                                },
+                                icon: Icon(Icons.refresh))
                           ],
                         )),
                       ],
@@ -125,7 +135,7 @@ class RoadSegment extends StatelessWidget {
         Text("No Stations"),
         ElevatedButton(
           onPressed: () {
-            Get.back();
+            showInfo("not implemented yet");
             // _roadSegment.remove(segmentId);
           },
           child: Text("remove this Road Segment"),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/service/backend_api/tasks/tasks_on_site_service.dart';
 
+import '../../snacbars.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/dialog_form.dart';
 import '../../widgets/forms/util/text_edit_form.dart';
@@ -100,7 +101,10 @@ class TaskOnSiteServicePage extends StatelessWidget {
                         onPressed: () {
                           getService()
                               .cancelTaskServiceOnSiteTaskIdDelete(taskId)
-                              .then((value) => loadTask());
+                              .then((value) {
+                            showOk("úloha bola zrusená");
+                            loadTask();
+                          });
                         },
                         child: Text("Zrusit ulohu")),
                     ElevatedButton(
@@ -111,7 +115,10 @@ class TaskOnSiteServicePage extends StatelessWidget {
                           getService()
                               .completeTaskServiceOnSiteTaskIdCompleteGet(
                                   taskId)
-                              .then((value) => loadTask());
+                              .then((value) {
+                            loadTask();
+                            showOk("úloha bola dokoncená");
+                          });
                         },
                         child: Text("Dokoncit ulohu"))
                   ],
