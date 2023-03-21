@@ -24,6 +24,7 @@ class ServiceContracts extends StatelessWidget {
     ServiceContractService()
         .getContractsServiceContractContractsGet()
         .then((contracts) {
+      contracts?.sort((a, b) => a.validFrom.isBefore(b.validFrom) ? 1 : 0);
       loaded.value = true;
       _contracts.clear();
       _contracts.addAll(contracts!);
