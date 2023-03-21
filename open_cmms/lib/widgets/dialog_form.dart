@@ -5,29 +5,27 @@ abstract class hasFormTitle {
   String getTitle();
 
   Widget getInstance();
-
 }
 
 Future<T?> showFormDialog<T>(hasFormTitle form) async {
   return await Get.defaultDialog(
-
-      title: form.getTitle(),
+    title: form.getTitle(),
 
     content: IntrinsicHeight(
       child: ConstrainedBox(
         constraints: BoxConstraints(
-            maxHeight: Get.height - 150,
+            maxHeight: Get.height - 50,
             maxWidth: Get.width - 200,
             minWidth: 500),
         child: form.getInstance(),
       ),
     ),
     // confirm: TextButton(
-      //     onPressed: () {
-      //
-      //       form.submit() ? Get.back() : null;
-      //
-      //     },
-      //     child: Text("submit"))
+    //     onPressed: () {
+    //
+    //       form.submit() ? Get.back() : null;
+    //
+    //     },
+    //     child: Text("submit"))
   );
 }

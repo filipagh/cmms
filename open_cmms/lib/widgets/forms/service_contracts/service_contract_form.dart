@@ -111,9 +111,10 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
                 widget.isNew ? pickDateRange(context) : null;
               }),
           SizedBox(
-            width: 600,
-            height: 500,
-            child: Obx(() => ListView.builder(
+              width: 600,
+              height: Get.height - 300,
+              child: Obx(
+                () => ListView.builder(
                   itemCount: widget.segments.length,
                   itemBuilder: (context, index) {
                     var segment = widget.segments[index];
@@ -172,8 +173,8 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
                       ),
                     );
                   },
-                )),
-          ),
+                ),
+              )),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

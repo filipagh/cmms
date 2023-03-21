@@ -25,6 +25,7 @@
 ### novinky
 
 - pridana sekcia noviniek 
+- zobrazenie servisnych zmluv pre stanicu (v info casti)
 
 ### oprava
 
