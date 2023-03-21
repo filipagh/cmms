@@ -110,7 +110,7 @@ class ProductFormState extends State<ProductForm> {
               Obx(() {
                 return SizedBox(
                   width: 500,
-                  height: 500,
+                  height: Get.height - 500,
                   child: ListView.builder(
                     itemCount: widget.telemetry.length,
                     itemBuilder: (BuildContext context, int index) {

@@ -29,5 +29,6 @@
 ### oprava
 
 - oprava editacie pridania servisnej zmuvy
+- layout pridania komponentu
 
 ---
