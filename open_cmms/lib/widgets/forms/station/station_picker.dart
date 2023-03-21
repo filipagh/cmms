@@ -15,7 +15,7 @@ class StationPickerForm extends StatelessWidget implements hasFormTitle {
     loadStations();
     return Container(
       width: 800,
-      height: 600,
+      height: Get.height - 400,
       child: Obx(
         () => ListView.builder(
             itemCount: stations.length,

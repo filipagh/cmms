@@ -41,7 +41,7 @@ class AddItemsToStorage extends StatelessWidget implements hasFormTitle {
             child: const Text("Pridať komponent")),
         SizedBox(
             width: 500,
-            height: 600,
+            height: Get.height - 400,
             child: Obx(() {
               return ListView(children: _buildList());
             })),

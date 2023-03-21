@@ -5,9 +5,7 @@ import 'package:open_cmms/widgets/dialog_form.dart';
 import '../../../states/asset_types_state.dart';
 
 class ComponentPickerForm extends StatelessWidget implements hasFormTitle {
-
-  const ComponentPickerForm({Key? key})
-      : super(key: key);
+  const ComponentPickerForm({Key? key}) : super(key: key);
 
   String getTitle() {
     return "Vybrat komponent";
@@ -26,11 +24,10 @@ class ComponentPickerForm extends StatelessWidget implements hasFormTitle {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         const Text("searchbar"),
-
         const SizedBox(height: 50, child: Placeholder()),
         SizedBox(
           width: 500,
-          height: 600,
+          height: Get.height - 300,
           child: ListView.builder(
             itemCount: items.length,
             itemBuilder: (BuildContext context, int index) {
@@ -41,7 +38,8 @@ class ComponentPickerForm extends StatelessWidget implements hasFormTitle {
                   title: Center(child: Text(i.name)),
                 ),
               );
-            },),
+            },
+          ),
         )
       ],
     );
@@ -111,5 +109,4 @@ class ComponentPickerForm extends StatelessWidget implements hasFormTitle {
     //   ),
     // );
   }
-
 }
