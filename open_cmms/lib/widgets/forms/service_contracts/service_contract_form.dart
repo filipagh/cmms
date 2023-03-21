@@ -9,7 +9,7 @@ import 'package:open_cmms/widgets/dialog_form.dart';
 
 class ServiceContractForm extends StatefulWidget implements hasFormTitle {
   ServiceContractForm(
-      {Key? key, ServiceContractSchema? contract, this.isCoppy = false})
+      {Key? key, ServiceContractSchema? contract, this.isNew = false})
       : super(key: key) {
     RoadSegmentService().getAllRoadSegmentManagerSegmentsGet().then((value) {
       segments.addAll(value ?? []);
@@ -25,7 +25,7 @@ class ServiceContractForm extends StatefulWidget implements hasFormTitle {
 
   ServiceContractSchema? contract;
 
-  bool isCoppy;
+  bool isNew;
 
   loadStationOfSegment(String id) async {
     if (!stations.containsKey(id)) {
@@ -81,7 +81,7 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           TextFormField(
-            readOnly: widget.isCoppy ? false : true,
+            readOnly: widget.isNew ? false : true,
             controller: name,
             decoration: const InputDecoration(label: Text("nazov zmluvy")),
             validator: (v) {
@@ -89,7 +89,7 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
             },
           ),
           TextFormField(
-              readOnly: widget.isCoppy ? false : true,
+              readOnly: widget.isNew ? false : true,
               controller: dateFrom,
               validator: (v) {
                 return (v == null || v.isEmpty) ? "zvolte datum" : null;
@@ -97,10 +97,10 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
               decoration:
                   const InputDecoration(labelText: "Datum platnosti od"),
               onTap: () {
-                widget.isCoppy ? pickDateRange(context) : null;
+                widget.isNew ? pickDateRange(context) : null;
               }),
           TextFormField(
-              readOnly: widget.isCoppy ? false : true,
+              readOnly: widget.isNew ? false : true,
               controller: dateDue,
               validator: (v) {
                 return (v == null || v.isEmpty) ? "zvolte datum" : null;
@@ -108,7 +108,7 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
               decoration:
                   const InputDecoration(labelText: "Datum platnosti do"),
               onTap: () {
-                widget.isCoppy ? pickDateRange(context) : null;
+                widget.isNew ? pickDateRange(context) : null;
               }),
           SizedBox(
             width: 600,
@@ -135,7 +135,7 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
                                       title: Text(station.name),
                                       value: widget.selectedStations
                                           .contains(station.id),
-                                      onChanged: widget.isCoppy
+                                      onChanged: widget.isNew
                                           ? (bool? value) {
                                               if (value!) {
                                                 widget.selectedStations
@@ -159,9 +159,9 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
                           (widget.stations[segment.id]?.isEmpty ?? false)
                               ? const Icon(Icons.close)
                               : Checkbox(
-                            tristate: true,
+                                  tristate: true,
                                   value: getSectionCheckBoxValue(segment.id),
-                                  onChanged: widget.isCoppy
+                                  onChanged: widget.isNew
                                       ? (bool? value) {
                                           changeAllInSegment(
                                               segment.id, value ?? false);
@@ -182,7 +182,7 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
                     Get.back();
                   },
                   child: const Text("Zrusit")),
-              widget.isCoppy
+              widget.isNew
                   ? ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {

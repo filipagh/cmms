@@ -84,7 +84,9 @@ class ServiceContracts extends StatelessWidget {
             const Spacer(),
             ElevatedButton(
               onPressed: () {
-                showFormDialog(ServiceContractForm());
+                showFormDialog(ServiceContractForm(
+                  isNew: true,
+                ));
               },
               child: const Text("vytvorit novu zmluvu"),
             ),
@@ -114,7 +116,7 @@ class ServiceContracts extends StatelessWidget {
                                     onPressed: () {
                                       showFormDialog(ServiceContractForm(
                                           contract: _contracts[index],
-                                          isCoppy: true));
+                                          isNew: true));
                                     },
                                     icon: Icon(Icons.copy),
                                     label: Text("kópia")),

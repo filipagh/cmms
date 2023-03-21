@@ -4,6 +4,7 @@ import 'package:open_cmms/auth_guard.dart';
 import 'package:open_cmms/pages/assets_management.dart';
 import 'package:open_cmms/pages/dashboard.dart';
 import 'package:open_cmms/pages/login.dart';
+import 'package:open_cmms/pages/news.dart';
 import 'package:open_cmms/pages/road_segment.dart';
 import 'package:open_cmms/pages/road_segments.dart';
 import 'package:open_cmms/pages/service_contracts.dart';
@@ -203,6 +204,11 @@ class MyApp extends StatelessWidget {
             name: Unverified.ENDPOINT,
             page: () {
               return Unverified();
+            }),
+        GetPage(
+            name: News.ENDPOINT,
+            page: () {
+              return News();
             }),
         GetPage(
             name: Login.ENDPOINT,

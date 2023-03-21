@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:open_cmms/pages/service_contracts.dart';
 import 'package:open_cmms/pages/stations.dart';
 
+import '../pages/news.dart';
+
 class MainMenuWidget extends StatefulWidget {
   MainMenuWidget({
     Key? key,
@@ -93,6 +95,16 @@ class _MainMenuWidgetState extends State<MainMenuWidget>
                       },
                       child: Text("aaa")));
             },
+          ),
+          Spacer(),
+          Tooltip(
+            message: "novinky",
+            child: IconButton(
+              icon: const Icon(Icons.new_releases),
+              onPressed: () {
+                Get.offAllNamed(News.ENDPOINT);
+              },
+            ),
           ),
           // GetX<StateAssetTypes>(
           //     builder: (_) => Text(
