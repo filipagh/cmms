@@ -31,7 +31,9 @@ class RoadSegments extends StatelessWidget {
       list.add(DataRow(
         onSelectChanged: (dd) {
           // Get.toNamed("/RoadSegments/" + i.id);
-          Get.to(RoadSegment(segmentId: i.id,));
+          Get.to(RoadSegment(
+            segmentId: i.id,
+          ));
         },
         cells: [
           DataCell(Text(i.name)),
@@ -58,7 +60,7 @@ class RoadSegments extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      "Road Segments",
+                      "Cestný úsek",
                       textScaleFactor: 5,
                     ),
                     IconButton(
@@ -83,7 +85,7 @@ class RoadSegments extends StatelessWidget {
                         showFormDialog(RoadSegmentForm.createNew())
                             .then((value) => reloadRoadSegments());
                       },
-                      child: const Text("create road segment"),
+                      child: const Text("vytvoriť cestný úsek"),
                     ),
                   ],
                 ),
@@ -102,7 +104,7 @@ class RoadSegments extends StatelessWidget {
                             return Colors.transparent; // Use the default value.
                           }),
                           columns: const [
-                            DataColumn(label: Text("Road segment name")),
+                            DataColumn(label: Text("Cestný úsek názov")),
                             DataColumn(label: Text("text")),
                             DataColumn(label: Text("ssud")),
                           ],

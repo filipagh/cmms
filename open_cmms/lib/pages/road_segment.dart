@@ -70,7 +70,7 @@ class RoadSegment extends StatelessWidget {
     return Column(
       children: [
         Text(
-          "Road Segment " + _roadSegment!.name,
+          "Cestný úsek " + _roadSegment!.name,
           textScaleFactor: 5,
         ),
         Divider(),
@@ -115,7 +115,7 @@ class RoadSegment extends StatelessWidget {
                 width: 300,
                 child: Column(
                   children: [
-                    Text("road segment detail"),
+                    Text("cestný úsek detail"),
                     Expanded(child: Placeholder()),
                   ],
                 ),
@@ -132,13 +132,13 @@ class RoadSegment extends StatelessWidget {
         child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text("No Stations"),
+        Text("žiadne stanice"),
         ElevatedButton(
           onPressed: () {
             showInfo("not implemented yet");
             // _roadSegment.remove(segmentId);
           },
-          child: Text("remove this Road Segment"),
+          child: Text("odstrániť cestný úsek"),
         ),
       ],
     ));

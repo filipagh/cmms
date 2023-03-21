@@ -33,7 +33,7 @@ class Stations extends StatelessWidget {
             child: Column(
               children: [
                 const Text(
-                  "Statios",
+                  "Stanica",
                   textScaleFactor: 5,
                 ),
                 Row(

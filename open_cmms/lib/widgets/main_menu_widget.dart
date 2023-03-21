@@ -43,7 +43,7 @@ class _MainMenuWidgetState extends State<MainMenuWidget>
                 thickness: 1.0,
               )),
           Tooltip(
-            message: "road segments",
+            message: "Cestné úseky",
             child: IconButton(
               icon: const Icon(Icons.edit_road),
               onPressed: () => Get.offAllNamed("/RoadSegments"),
