@@ -22,7 +22,7 @@ class TaskStatusService:
             self.task_service.save(task)
 
     def try_change_state_to_done(self, task: TaskChangeComponents):
-        if task.status != TaskState.READY:
+        if task.status in [TaskState.REMOVED, TaskState.DONE]:
             return
 
         for i in task.components_to_add:

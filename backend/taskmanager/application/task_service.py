@@ -4,6 +4,7 @@ from typing import Optional
 
 from eventsourcing.application import AggregateNotFound
 from eventsourcing.dispatch import singledispatchmethod
+from eventsourcing.domain import ProgrammingError
 from eventsourcing.system import ProcessApplication
 from eventsourcing.utils import EnvType
 
@@ -96,7 +97,10 @@ class TaskService(ProcessApplication):
 
     def complete_task_items(self, task_id: uuid.UUID, items: list[TaskChangeComponentRequestId]):
         task: TaskChangeComponents = self.repository.get(task_id)
-        task.complete_items(items)
+        try:
+            task.complete_items(items)
+        except ProgrammingError as e:
+            raise AttributeError("task is not in correct state") from e
         self.save(task)
         self.task_status_service.try_change_state_to_done(task)
 

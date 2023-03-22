@@ -178,7 +178,13 @@ class TaskChangeComponents(Aggregate):
         self.status = TaskState.REMOVED
 
     def complete_items(self, items: list[TaskChangeComponentRequestId]):
-        if self.status == TaskState.DONE: return
+        """
+        :raise ProgrammingError: if task is already completed or removed
+        :param items:
+        :return:
+        """
+        if self.status == TaskState.DONE or self.status == TaskState.REMOVED:
+            raise ProgrammingError("Task is already completed or removed")
         for i in items:
             for cta in self.components_to_add:
                 if uuid.UUID(cta.id) == i.id:

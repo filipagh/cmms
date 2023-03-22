@@ -56,7 +56,7 @@ def load(task_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_auth(read_perm
 
 @task_manager_router.get("/get_tasks",
                          response_model=list[TaskSchema])
-def load(station_id: uuid.UUID = None, _user: FiefUserInfo = Depends(custom_auth(read_permission))):
+def load_all(station_id: uuid.UUID = None, _user: FiefUserInfo = Depends(custom_auth(read_permission))):
     tasks_projector: TasksProjector = main.runner.get(TasksProjector)
     return tasks_projector.get_all(station_id)
 
