@@ -19,9 +19,18 @@
 [//]: # ()
 [//]: # (---)
 
+## 22.03.2023
+
+### novinky
+
+### oprava
+- zamietnutie dokoncenia instalacie komponentu v zrusenej ulohe
+
+---
 
 
-## 21.3.23
+
+## 21.03.2023
 ### novinky
 
 - pridana sekcia noviniek 
