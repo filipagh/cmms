@@ -53,7 +53,7 @@ class EditStationComponentsForm extends StatelessWidget
               child: Text('Pridat komponent')),
           Container(
             width: 500,
-            height: 600,
+            height: Get.height - 300,
             child: Obx(() {
               return ListView.builder(
                   itemCount: items.length,

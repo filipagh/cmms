@@ -76,7 +76,7 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
                     child: const Text('Pridat komponent')),
                 SizedBox(
                   width: 500,
-                  height: 400,
+                  height: Get.height - 300,
                   child: Obx(() {
                     return ListView.builder(
                         // shrinkWrap: true,
