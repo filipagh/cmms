@@ -23,6 +23,8 @@
 
 ### novinky
 
+- dynamicke tlacidla na zrusenie / dokoncenie ulohy podla stavu
+
 ### oprava
 - zamietnutie dokoncenia instalacie komponentu v zrusenej ulohe
 

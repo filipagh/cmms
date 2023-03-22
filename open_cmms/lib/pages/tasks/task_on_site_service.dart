@@ -91,38 +91,41 @@ class TaskOnSiteServicePage extends StatelessWidget {
               children: [
                 const Text("komentare k tasku"),
                 const Placeholder(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor: MaterialStateColor.resolveWith(
-                                (x) => Colors.red)),
-                        onPressed: () {
-                          getService()
-                              .cancelTaskServiceOnSiteTaskIdDelete(taskId)
-                              .then((value) {
-                            showOk("úloha bola zrusená");
-                            loadTask();
-                          });
-                        },
-                        child: Text("Zrusit ulohu")),
-                    ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor: MaterialStateColor.resolveWith(
-                                (x) => Colors.green)),
-                        onPressed: () {
-                          getService()
-                              .completeTaskServiceOnSiteTaskIdCompleteGet(
-                                  taskId)
-                              .then((value) {
-                            loadTask();
-                            showOk("úloha bola dokoncená");
-                          });
-                        },
-                        child: Text("Dokoncit ulohu"))
-                  ],
-                )
+                if (task.value!.state == TaskState.open ||
+                    task.value!.state == TaskState.ready) ...[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateColor.resolveWith(
+                                  (x) => Colors.red)),
+                          onPressed: () {
+                            getService()
+                                .cancelTaskServiceOnSiteTaskIdDelete(taskId)
+                                .then((value) {
+                              showOk("úloha bola zrusená");
+                              loadTask();
+                            });
+                          },
+                          child: Text("Zrusit ulohu")),
+                      ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateColor.resolveWith(
+                                  (x) => Colors.green)),
+                          onPressed: () {
+                            getService()
+                                .completeTaskServiceOnSiteTaskIdCompleteGet(
+                                    taskId)
+                                .then((value) {
+                              loadTask();
+                              showOk("úloha bola dokoncená");
+                            });
+                          },
+                          child: Text("Dokoncit ulohu"))
+                    ],
+                  )
+                ]
               ],
             ),
           ),

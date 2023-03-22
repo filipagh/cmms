@@ -109,36 +109,41 @@ class TaskChangeComponentsPage extends StatelessWidget {
               Flexible(
                 child: Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        ElevatedButton(
-                            style: ButtonStyle(
-                                backgroundColor: MaterialStateColor.resolveWith(
-                                    (x) => Colors.red)),
-                            onPressed: () {
-                              TasksService()
-                                  .cancelTaskTaskManagerTaskIdDelete(taskId)
-                                  .then((value) {
-                                showOk("úloha bola zrusená");
-                                loadTask();
-                              });
-                            },
-                            child: Text("Zrusit ulohu")),
-                        VerticalDivider(),
-                        ElevatedButton(
-                            style: ButtonStyle(
-                                backgroundColor: MaterialStateColor.resolveWith(
-                                    (x) => Colors.green)),
-                            onPressed: () {
-                              showFormDialog(CompleteChangeComponentsTaskForm(
-                                      stationId: taskProjection!.stationId,
-                                      task: task.value!))
-                                  .then((value) => loadTask());
-                            },
-                            child: Text("Dokoncit ulohu"))
-                      ],
-                    ),
+                    if (task.value!.state == TaskState.open ||
+                        task.value!.state == TaskState.ready) ...[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          ElevatedButton(
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateColor.resolveWith(
+                                          (x) => Colors.red)),
+                              onPressed: () {
+                                TasksService()
+                                    .cancelTaskTaskManagerTaskIdDelete(taskId)
+                                    .then((value) {
+                                  showOk("úloha bola zrusená");
+                                  loadTask();
+                                });
+                              },
+                              child: Text("Zrusit ulohu")),
+                          VerticalDivider(),
+                          ElevatedButton(
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateColor.resolveWith(
+                                          (x) => Colors.green)),
+                              onPressed: () {
+                                showFormDialog(CompleteChangeComponentsTaskForm(
+                                        stationId: taskProjection!.stationId,
+                                        task: task.value!))
+                                    .then((value) => loadTask());
+                              },
+                              child: Text("Dokoncit ulohu"))
+                        ],
+                      ),
+                    ],
                     Divider(),
                     buildTaskHeader(),
 
@@ -248,8 +253,9 @@ class TaskChangeComponentsPage extends StatelessWidget {
             "Pridat Komponenty:",
             style: TextStyle(fontSize: 20),
           ),
-          if (task.value!.add
-              .any((element) => element.state == TaskComponentState.awaiting))
+          if (task.value!.add.any(
+                  (element) => element.state == TaskComponentState.awaiting) &&
+              task.value!.state == TaskState.open)
             ElevatedButton(
                 onPressed: () {
                   TasksService()
