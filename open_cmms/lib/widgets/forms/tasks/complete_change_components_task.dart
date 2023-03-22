@@ -61,8 +61,8 @@ class CompleteChangeComponentsTaskForm extends StatelessWidget
                               .map((e) => TaskChangeComponentRequestId(id: e))
                               .toList())
                       .then((value) {
-                    showOk("komponenty boli zmenené");
                     Get.back();
+                    showOk("komponenty boli zmenené");
                   });
                 },
                 child: Text("Dokoncit ulohu")),

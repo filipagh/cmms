@@ -27,6 +27,7 @@
 
 ### oprava
 - zamietnutie dokoncenia instalacie komponentu v zrusenej ulohe
+- oprava zavretie okna po dokonceni instalacie komponentu vramci ulohy
 
 ---
 
