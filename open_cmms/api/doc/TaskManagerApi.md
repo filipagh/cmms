@@ -15,9 +15,9 @@ Method | HTTP request | Description
 [**completeTaskItemsTaskManagerTaskIdCompeteTaskItmesPost**](TaskManagerApi.md#completetaskitemstaskmanagertaskidcompetetaskitmespost) | **POST** /task-manager/{task_id}/compete_task_itmes | Complete Task Items
 [**createComponentTaskTaskManagerCreateChangeComponentTaskPost**](TaskManagerApi.md#createcomponenttasktaskmanagercreatechangecomponenttaskpost) | **POST** /task-manager/create_change_component_task | Create Component Task
 [**createServiceRemoteTaskTaskManagerCreateServiceRemoteTaskPost**](TaskManagerApi.md#createserviceremotetasktaskmanagercreateserviceremotetaskpost) | **POST** /task-manager/create_service_remote_task | Create Service Remote Task
+[**loadAllTaskManagerGetTasksGet**](TaskManagerApi.md#loadalltaskmanagergettasksget) | **GET** /task-manager/get_tasks | Load All
 [**loadByIdTaskManagerGetTaskGet**](TaskManagerApi.md#loadbyidtaskmanagergettaskget) | **GET** /task-manager/get_task | Load By Id
 [**loadTaskManagerGetComponentTaskTaskIdGet**](TaskManagerApi.md#loadtaskmanagergetcomponenttasktaskidget) | **GET** /task-manager/get_component_task/{task_id} | Load
-[**loadTaskManagerGetTasksGet**](TaskManagerApi.md#loadtaskmanagergettasksget) | **GET** /task-manager/get_tasks | Load
 
 
 # **allocateComponentsTaskManagerTaskIdAllocateComponentsGet**
@@ -332,6 +332,57 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **loadAllTaskManagerGetTasksGet**
+> List<TaskSchema> loadAllTaskManagerGetTasksGet(stationId)
+
+Load All
+
+### Example
+```dart
+import 'package:BackendAPI/api.dart';
+// TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
+//defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
+// TODO Configure API key authorization: api_key
+//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: user_session
+//defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKeyPrefix = 'Bearer';
+
+final api_instance = TaskManagerApi();
+final stationId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+
+try {
+    final result = api_instance.loadAllTaskManagerGetTasksGet(stationId);
+    print(result);
+} catch (e) {
+    print('Exception when calling TaskManagerApi->loadAllTaskManagerGetTasksGet: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **stationId** | **String**|  | [optional] 
+
+### Return type
+
+[**List<TaskSchema>**](TaskSchema.md)
+
+### Authorization
+
+[OAuth2AuthorizationCodeBearer](../README.md#OAuth2AuthorizationCodeBearer), [api_key](../README.md#api_key), [user_session](../README.md#user_session)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **loadByIdTaskManagerGetTaskGet**
 > TaskSchema loadByIdTaskManagerGetTaskGet(taskId)
 
@@ -422,57 +473,6 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**TaskChangeComponentsSchema**](TaskChangeComponentsSchema.md)
-
-### Authorization
-
-[OAuth2AuthorizationCodeBearer](../README.md#OAuth2AuthorizationCodeBearer), [api_key](../README.md#api_key), [user_session](../README.md#user_session)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **loadTaskManagerGetTasksGet**
-> List<TaskSchema> loadTaskManagerGetTasksGet(stationId)
-
-Load
-
-### Example
-```dart
-import 'package:BackendAPI/api.dart';
-// TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
-//defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
-// TODO Configure API key authorization: api_key
-//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKey = 'YOUR_API_KEY';
-// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKeyPrefix = 'Bearer';
-// TODO Configure API key authorization: user_session
-//defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKey = 'YOUR_API_KEY';
-// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKeyPrefix = 'Bearer';
-
-final api_instance = TaskManagerApi();
-final stationId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
-
-try {
-    final result = api_instance.loadTaskManagerGetTasksGet(stationId);
-    print(result);
-} catch (e) {
-    print('Exception when calling TaskManagerApi->loadTaskManagerGetTasksGet: $e\n');
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **stationId** | **String**|  | [optional] 
-
-### Return type
-
-[**List<TaskSchema>**](TaskSchema.md)
 
 ### Authorization
 

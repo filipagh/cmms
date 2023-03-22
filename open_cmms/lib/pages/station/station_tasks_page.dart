@@ -17,7 +17,7 @@ class StationTasksPage extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     TasksService()
-        .loadTaskManagerGetTasksGet(stationId: station.id)
+        .loadAllTaskManagerGetTasksGet(stationId: station.id)
         .then((value) => items.addAll(value ?? []));
     return Column(
       children: [
@@ -36,7 +36,6 @@ class StationTasksPage extends StatelessWidget
     );
   }
 }
-
 
 String getTaskName(TaskType taskType) {
   String name = "";

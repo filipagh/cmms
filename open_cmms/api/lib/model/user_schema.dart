@@ -25,27 +25,26 @@ class UserSchema {
   bool isAdmin;
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is UserSchema &&
-          other.name == name &&
-          other.isVerified == isVerified &&
-          other.isAdmin == isAdmin;
+  bool operator ==(Object other) => identical(this, other) || other is UserSchema &&
+     other.name == name &&
+     other.isVerified == isVerified &&
+     other.isAdmin == isAdmin;
 
   @override
   int get hashCode =>
-      // ignore: unnecessary_parenthesis
-      (name.hashCode) + (isVerified.hashCode) + (isAdmin.hashCode);
+    // ignore: unnecessary_parenthesis
+    (name.hashCode) +
+    (isVerified.hashCode) +
+    (isAdmin.hashCode);
 
   @override
-  String toString() =>
-      'UserSchema[name=$name, isVerified=$isVerified, isAdmin=$isAdmin]';
+  String toString() => 'UserSchema[name=$name, isVerified=$isVerified, isAdmin=$isAdmin]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-    _json[r'name'] = name;
-    _json[r'isVerified'] = isVerified;
-    _json[r'isAdmin'] = isAdmin;
+      _json[r'name'] = name;
+      _json[r'isVerified'] = isVerified;
+      _json[r'isAdmin'] = isAdmin;
     return _json;
   }
 
@@ -61,10 +60,8 @@ class UserSchema {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key),
-              'Required key "UserSchema[$key]" is missing from JSON.');
-          assert(json[key] != null,
-              'Required key "UserSchema[$key]" has a null value in JSON.');
+          assert(json.containsKey(key), 'Required key "UserSchema[$key]" is missing from JSON.');
+          assert(json[key] != null, 'Required key "UserSchema[$key]" has a null value in JSON.');
         });
         return true;
       }());
@@ -78,10 +75,7 @@ class UserSchema {
     return null;
   }
 
-  static List<UserSchema>? listFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static List<UserSchema>? listFromJson(dynamic json, {bool growable = false,}) {
     final result = <UserSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -109,18 +103,12 @@ class UserSchema {
   }
 
   // maps a json object with a list of UserSchema-objects as value to a dart map
-  static Map<String, List<UserSchema>> mapListFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static Map<String, List<UserSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<UserSchema>>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = UserSchema.listFromJson(
-          entry.value,
-          growable: growable,
-        );
+        final value = UserSchema.listFromJson(entry.value, growable: growable,);
         if (value != null) {
           map[entry.key] = value;
         }

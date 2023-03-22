@@ -82,7 +82,7 @@ class Tasks extends StatelessWidget {
   }
 
   loadTasks() {
-    TasksService().loadTaskManagerGetTasksGet().then((value) {
+    TasksService().loadAllTaskManagerGetTasksGet().then((value) {
       tasks.clear();
       tasks.addAll(value ?? []);
       tasks.refresh();
