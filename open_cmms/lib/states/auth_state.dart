@@ -6,6 +6,7 @@ import 'package:open_cmms/auth.dart';
 class AuthState extends GetxController {
   RxBool isAuthenticated = false.obs;
   RxBool isVerified = false.obs;
+  RxBool isAdmin = false.obs;
   RxBool isAuthWindowOpen = false.obs;
 
   @override

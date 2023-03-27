@@ -28,6 +28,7 @@ doc/RemoveComponentRequestSchema.md
 doc/RoadSegmentManagerApi.md
 doc/RoadSegmentNewSchema.md
 doc/RoadSegmentSchema.md
+doc/Role.md
 doc/ServiceContractApi.md
 doc/ServiceContractNewSchema.md
 doc/ServiceContractSchema.md
@@ -98,6 +99,7 @@ lib/model/http_validation_error.dart
 lib/model/remove_component_request_schema.dart
 lib/model/road_segment_new_schema.dart
 lib/model/road_segment_schema.dart
+lib/model/role.dart
 lib/model/service_contract_new_schema.dart
 lib/model/service_contract_schema.dart
 lib/model/station_id_schema.dart

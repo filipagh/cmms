@@ -66,54 +66,56 @@ try {
 
 All URIs are relative to *http://localhost*
 
-Class | Method | HTTP request | Description
------------- | ------------- | ------------- | -------------
-*ActionHistoryApi* | [**getByStationActionHistoryByStationGet**](doc//ActionHistoryApi.md#getbystationactionhistorybystationget) | **GET** /action_history/by_station | Get By Station
-*AssetManagerApi* | [**createNewAssetAssetManagerNewAssetPost**](doc//AssetManagerApi.md#createnewassetassetmanagernewassetpost) | **POST** /assetManager/newAsset | Create New Asset
-*AssetManagerApi* | [**createNewCategoryAssetManagerNewCategoryPost**](doc//AssetManagerApi.md#createnewcategoryassetmanagernewcategorypost) | **POST** /assetManager/newCategory | Create New Category
-*AssetManagerApi* | [**getAssetCategoriesAssetManagerAssetCategoriesGet**](doc//AssetManagerApi.md#getassetcategoriesassetmanagerassetcategoriesget) | **GET** /assetManager/asset-categories | Get Asset Categories
-*AssetManagerApi* | [**getAssetsAssetManagerAssetsGet**](doc//AssetManagerApi.md#getassetsassetmanagerassetsget) | **GET** /assetManager/assets | Get Assets
-*AssetManagerApi* | [**getTelemetryOptionsAssetManagerTelemetryOptionsGet**](doc//AssetManagerApi.md#gettelemetryoptionsassetmanagertelemetryoptionsget) | **GET** /assetManager/telemetry_options | Get Telemetry Options
-*AssignedComponentsApi* | [**createInstalledComponentAssignedComponentsCreateInstalledComponentPost**](doc//AssignedComponentsApi.md#createinstalledcomponentassignedcomponentscreateinstalledcomponentpost) | **POST** /assigned_components/create_installed_component | Create Installed Component
-*AssignedComponentsApi* | [**getAllAssignedComponentsComponentsGet**](doc//AssignedComponentsApi.md#getallassignedcomponentscomponentsget) | **GET** /assigned_components/components | Get All
-*AssignedComponentsApi* | [**removeInstalledComponentAssignedComponentsRemoveInstalledComponentPost**](doc//AssignedComponentsApi.md#removeinstalledcomponentassignedcomponentsremoveinstalledcomponentpost) | **POST** /assigned_components/remove_installed_component | Remove Installed Component
-*AuthApi* | [**authTestAuthAuthTestGet**](doc//AuthApi.md#authtestauthauthtestget) | **GET** /auth/auth_test | Auth Test
-*AuthApi* | [**getMeAuthMeGet**](doc//AuthApi.md#getmeauthmeget) | **GET** /auth/me | Get Me
-*AuthApi* | [**loginAuthLoginGet**](doc//AuthApi.md#loginauthloginget) | **GET** /auth/login | Login
-*AuthApi* | [**logoutAuthLogoutGet**](doc//AuthApi.md#logoutauthlogoutget) | **GET** /auth/logout | Logout
-*DefaultApi* | [**rootGet**](doc//DefaultApi.md#rootget) | **GET** / | Root
-*RoadSegmentManagerApi* | [**createRoadSegmentRoadSegmentManagerCreateRoadSegmentPost**](doc//RoadSegmentManagerApi.md#createroadsegmentroadsegmentmanagercreateroadsegmentpost) | **POST** /road-segment-manager/create_road_segment | Create Road Segment
-*RoadSegmentManagerApi* | [**getAllRoadSegmentManagerSegmentsGet**](doc//RoadSegmentManagerApi.md#getallroadsegmentmanagersegmentsget) | **GET** /road-segment-manager/segments | Get All
-*RoadSegmentManagerApi* | [**getByIdRoadSegmentManagerSegmentGet**](doc//RoadSegmentManagerApi.md#getbyidroadsegmentmanagersegmentget) | **GET** /road-segment-manager/segment | Get By Id
-*ServiceContractApi* | [**createContractServiceContractCreateContractPost**](doc//ServiceContractApi.md#createcontractservicecontractcreatecontractpost) | **POST** /service-contract/create_contract | Create Contract
-*ServiceContractApi* | [**getContractServiceContractContractGet**](doc//ServiceContractApi.md#getcontractservicecontractcontractget) | **GET** /service-contract/contract | Get Contract
-*ServiceContractApi* | [**getContractsServiceContractContractsGet**](doc//ServiceContractApi.md#getcontractsservicecontractcontractsget) | **GET** /service-contract/contracts | Get Contracts
-*ServiceContractApi* | [**getServiceContractContractForStationGet**](doc//ServiceContractApi.md#getservicecontractcontractforstationget) | **GET** /service-contract/contract_for_station | Get
-*StationApi* | [**createStationStationCreateStationPost**](doc//StationApi.md#createstationstationcreatestationpost) | **POST** /station/create_station | Create Station
-*StationApi* | [**getAllStationStationsGet**](doc//StationApi.md#getallstationstationsget) | **GET** /station/stations | Get All
-*StationApi* | [**getByIdStationStationGet**](doc//StationApi.md#getbyidstationstationget) | **GET** /station/station | Get By Id
-*StationApi* | [**removeStationStationRemoveStationDelete**](doc//StationApi.md#removestationstationremovestationdelete) | **DELETE** /station/remove_station | Remove Station
-*StorageManagerApi* | [**getAllStorageItemsStorageManagerAllStorageDataGet**](doc//StorageManagerApi.md#getallstorageitemsstoragemanagerallstoragedataget) | **GET** /storage-manager/all-storage-data | Get All Storage Items
-*StorageManagerApi* | [**storeNewAssetsStorageManagerStoreNewAssetsPost**](doc//StorageManagerApi.md#storenewassetsstoragemanagerstorenewassetspost) | **POST** /storage-manager/store-new-assets | Store New Assets
-*TaskManagerApi* | [**allocateComponentsTaskManagerTaskIdAllocateComponentsGet**](doc//TaskManagerApi.md#allocatecomponentstaskmanagertaskidallocatecomponentsget) | **GET** /task-manager/{task_id}/allocate_components | Allocate Components
-*TaskManagerApi* | [**cancelTaskTaskManagerTaskIdDelete**](doc//TaskManagerApi.md#canceltasktaskmanagertaskiddelete) | **DELETE** /task-manager/{task_id} | Cancel Task
-*TaskManagerApi* | [**changeDetailsTaskManagerTaskIdChangeDetailsPost**](doc//TaskManagerApi.md#changedetailstaskmanagertaskidchangedetailspost) | **POST** /task-manager/{task_id}/change_details | Change Details
-*TaskManagerApi* | [**completeTaskItemsTaskManagerTaskIdCompeteTaskItmesPost**](doc//TaskManagerApi.md#completetaskitemstaskmanagertaskidcompetetaskitmespost) | **POST** /task-manager/{task_id}/compete_task_itmes | Complete Task Items
-*TaskManagerApi* | [**createComponentTaskTaskManagerCreateChangeComponentTaskPost**](doc//TaskManagerApi.md#createcomponenttasktaskmanagercreatechangecomponenttaskpost) | **POST** /task-manager/create_change_component_task | Create Component Task
-*TaskManagerApi* | [**createServiceRemoteTaskTaskManagerCreateServiceRemoteTaskPost**](doc//TaskManagerApi.md#createserviceremotetasktaskmanagercreateserviceremotetaskpost) | **POST** /task-manager/create_service_remote_task | Create Service Remote Task
-*TaskManagerApi* | [**loadAllTaskManagerGetTasksGet**](doc//TaskManagerApi.md#loadalltaskmanagergettasksget) | **GET** /task-manager/get_tasks | Load All
-*TaskManagerApi* | [**loadByIdTaskManagerGetTaskGet**](doc//TaskManagerApi.md#loadbyidtaskmanagergettaskget) | **GET** /task-manager/get_task | Load By Id
-*TaskManagerApi* | [**loadTaskManagerGetComponentTaskTaskIdGet**](doc//TaskManagerApi.md#loadtaskmanagergetcomponenttasktaskidget) | **GET** /task-manager/get_component_task/{task_id} | Load
-*TaskServiceOnSiteApi* | [**cancelTaskServiceOnSiteTaskIdDelete**](doc//TaskServiceOnSiteApi.md#canceltaskserviceonsitetaskiddelete) | **DELETE** /task/service_on_site/{task_id} | Cancel
-*TaskServiceOnSiteApi* | [**changeDetailsTaskServiceOnSiteTaskIdChangeDetailsPost**](doc//TaskServiceOnSiteApi.md#changedetailstaskserviceonsitetaskidchangedetailspost) | **POST** /task/service_on_site/{task_id}/change_details | Change Details
-*TaskServiceOnSiteApi* | [**completeTaskServiceOnSiteTaskIdCompleteGet**](doc//TaskServiceOnSiteApi.md#completetaskserviceonsitetaskidcompleteget) | **GET** /task/service_on_site/{task_id}/complete | Complete
-*TaskServiceOnSiteApi* | [**createTaskServiceOnSiteCreateServiceOnSideTaskPost**](doc//TaskServiceOnSiteApi.md#createtaskserviceonsitecreateserviceonsidetaskpost) | **POST** /task/service_on_site/create_service_on_side_task | Create
-*TaskServiceOnSiteApi* | [**loadTaskServiceOnSiteTaskIdGet**](doc//TaskServiceOnSiteApi.md#loadtaskserviceonsitetaskidget) | **GET** /task/service_on_site/{task_id} | Load
-*TaskServiceRemoteApi* | [**cancelTaskServiceRemoteTaskIdDelete**](doc//TaskServiceRemoteApi.md#canceltaskserviceremotetaskiddelete) | **DELETE** /task/service_remote/{task_id} | Cancel
-*TaskServiceRemoteApi* | [**changeDetailsTaskServiceRemoteTaskIdChangeDetailsPost**](doc//TaskServiceRemoteApi.md#changedetailstaskserviceremotetaskidchangedetailspost) | **POST** /task/service_remote/{task_id}/change_details | Change Details
-*TaskServiceRemoteApi* | [**completeTaskServiceRemoteTaskIdCompleteGet**](doc//TaskServiceRemoteApi.md#completetaskserviceremotetaskidcompleteget) | **GET** /task/service_remote/{task_id}/complete | Complete
-*TaskServiceRemoteApi* | [**createTaskServiceRemoteCreateServiceRemoteTaskPost**](doc//TaskServiceRemoteApi.md#createtaskserviceremotecreateserviceremotetaskpost) | **POST** /task/service_remote/create_service_remote_task | Create
-*TaskServiceRemoteApi* | [**loadTaskServiceRemoteTaskIdGet**](doc//TaskServiceRemoteApi.md#loadtaskserviceremotetaskidget) | **GET** /task/service_remote/{task_id} | Load
+ Class                   | Method                                                                                                                                                                             | HTTP request                                               | Description                
+-------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------|----------------------------
+ *ActionHistoryApi*      | [**getByStationActionHistoryByStationGet**](doc//ActionHistoryApi.md#getbystationactionhistorybystationget)                                                                        | **GET** /action_history/by_station                         | Get By Station             
+ *AssetManagerApi*       | [**createNewAssetAssetManagerNewAssetPost**](doc//AssetManagerApi.md#createnewassetassetmanagernewassetpost)                                                                       | **POST** /assetManager/newAsset                            | Create New Asset           
+ *AssetManagerApi*       | [**createNewCategoryAssetManagerNewCategoryPost**](doc//AssetManagerApi.md#createnewcategoryassetmanagernewcategorypost)                                                           | **POST** /assetManager/newCategory                         | Create New Category        
+ *AssetManagerApi*       | [**getAssetCategoriesAssetManagerAssetCategoriesGet**](doc//AssetManagerApi.md#getassetcategoriesassetmanagerassetcategoriesget)                                                   | **GET** /assetManager/asset-categories                     | Get Asset Categories       
+ *AssetManagerApi*       | [**getAssetsAssetManagerAssetsGet**](doc//AssetManagerApi.md#getassetsassetmanagerassetsget)                                                                                       | **GET** /assetManager/assets                               | Get Assets                 
+ *AssetManagerApi*       | [**getTelemetryOptionsAssetManagerTelemetryOptionsGet**](doc//AssetManagerApi.md#gettelemetryoptionsassetmanagertelemetryoptionsget)                                               | **GET** /assetManager/telemetry_options                    | Get Telemetry Options      
+ *AssignedComponentsApi* | [**createInstalledComponentAssignedComponentsCreateInstalledComponentPost**](doc//AssignedComponentsApi.md#createinstalledcomponentassignedcomponentscreateinstalledcomponentpost) | **POST** /assigned_components/create_installed_component   | Create Installed Component 
+ *AssignedComponentsApi* | [**getAllAssignedComponentsComponentsGet**](doc//AssignedComponentsApi.md#getallassignedcomponentscomponentsget)                                                                   | **GET** /assigned_components/components                    | Get All                    
+ *AssignedComponentsApi* | [**removeInstalledComponentAssignedComponentsRemoveInstalledComponentPost**](doc//AssignedComponentsApi.md#removeinstalledcomponentassignedcomponentsremoveinstalledcomponentpost) | **POST** /assigned_components/remove_installed_component   | Remove Installed Component 
+ *AuthApi*               | [**authTestAuthAuthTestGet**](doc//AuthApi.md#authtestauthauthtestget)                                                                                                             | **GET** /auth/auth_test                                    | Auth Test                  
+ *AuthApi*               | [**getAllAuthUsersGet**](doc//AuthApi.md#getallauthusersget)                                                                                                                       | **GET** /auth/users                                        | Get All                    
+ *AuthApi*               | [**getMeAuthMeGet**](doc//AuthApi.md#getmeauthmeget)                                                                                                                               | **GET** /auth/me                                           | Get Me                     
+ *AuthApi*               | [**loginAuthLoginGet**](doc//AuthApi.md#loginauthloginget)                                                                                                                         | **GET** /auth/login                                        | Login                      
+ *AuthApi*               | [**logoutAuthLogoutGet**](doc//AuthApi.md#logoutauthlogoutget)                                                                                                                     | **GET** /auth/logout                                       | Logout                     
+ *AuthApi*               | [**updateUserRoleAuthUserUserIdRolePost**](doc//AuthApi.md#updateuserroleauthuseruseridrolepost)                                                                                   | **POST** /auth/user/{user_id}/role                         | Update User Role           
+ *DefaultApi*            | [**rootGet**](doc//DefaultApi.md#rootget)                                                                                                                                          | **GET** /                                                  | Root                       
+ *RoadSegmentManagerApi* | [**createRoadSegmentRoadSegmentManagerCreateRoadSegmentPost**](doc//RoadSegmentManagerApi.md#createroadsegmentroadsegmentmanagercreateroadsegmentpost)                             | **POST** /road-segment-manager/create_road_segment         | Create Road Segment        
+ *RoadSegmentManagerApi* | [**getAllRoadSegmentManagerSegmentsGet**](doc//RoadSegmentManagerApi.md#getallroadsegmentmanagersegmentsget)                                                                       | **GET** /road-segment-manager/segments                     | Get All                    
+ *RoadSegmentManagerApi* | [**getByIdRoadSegmentManagerSegmentGet**](doc//RoadSegmentManagerApi.md#getbyidroadsegmentmanagersegmentget)                                                                       | **GET** /road-segment-manager/segment                      | Get By Id                  
+ *ServiceContractApi*    | [**createContractServiceContractCreateContractPost**](doc//ServiceContractApi.md#createcontractservicecontractcreatecontractpost)                                                  | **POST** /service-contract/create_contract                 | Create Contract            
+ *ServiceContractApi*    | [**getContractServiceContractContractGet**](doc//ServiceContractApi.md#getcontractservicecontractcontractget)                                                                      | **GET** /service-contract/contract                         | Get Contract               
+ *ServiceContractApi*    | [**getContractsServiceContractContractsGet**](doc//ServiceContractApi.md#getcontractsservicecontractcontractsget)                                                                  | **GET** /service-contract/contracts                        | Get Contracts              
+ *ServiceContractApi*    | [**getServiceContractContractForStationGet**](doc//ServiceContractApi.md#getservicecontractcontractforstationget)                                                                  | **GET** /service-contract/contract_for_station             | Get                        
+ *StationApi*            | [**createStationStationCreateStationPost**](doc//StationApi.md#createstationstationcreatestationpost)                                                                              | **POST** /station/create_station                           | Create Station             
+ *StationApi*            | [**getAllStationStationsGet**](doc//StationApi.md#getallstationstationsget)                                                                                                        | **GET** /station/stations                                  | Get All                    
+ *StationApi*            | [**getByIdStationStationGet**](doc//StationApi.md#getbyidstationstationget)                                                                                                        | **GET** /station/station                                   | Get By Id                  
+ *StationApi*            | [**removeStationStationRemoveStationDelete**](doc//StationApi.md#removestationstationremovestationdelete)                                                                          | **DELETE** /station/remove_station                         | Remove Station             
+ *StorageManagerApi*     | [**getAllStorageItemsStorageManagerAllStorageDataGet**](doc//StorageManagerApi.md#getallstorageitemsstoragemanagerallstoragedataget)                                               | **GET** /storage-manager/all-storage-data                  | Get All Storage Items      
+ *StorageManagerApi*     | [**storeNewAssetsStorageManagerStoreNewAssetsPost**](doc//StorageManagerApi.md#storenewassetsstoragemanagerstorenewassetspost)                                                     | **POST** /storage-manager/store-new-assets                 | Store New Assets           
+ *TaskManagerApi*        | [**allocateComponentsTaskManagerTaskIdAllocateComponentsGet**](doc//TaskManagerApi.md#allocatecomponentstaskmanagertaskidallocatecomponentsget)                                    | **GET** /task-manager/{task_id}/allocate_components        | Allocate Components        
+ *TaskManagerApi*        | [**cancelTaskTaskManagerTaskIdDelete**](doc//TaskManagerApi.md#canceltasktaskmanagertaskiddelete)                                                                                  | **DELETE** /task-manager/{task_id}                         | Cancel Task                
+ *TaskManagerApi*        | [**changeDetailsTaskManagerTaskIdChangeDetailsPost**](doc//TaskManagerApi.md#changedetailstaskmanagertaskidchangedetailspost)                                                      | **POST** /task-manager/{task_id}/change_details            | Change Details             
+ *TaskManagerApi*        | [**completeTaskItemsTaskManagerTaskIdCompeteTaskItmesPost**](doc//TaskManagerApi.md#completetaskitemstaskmanagertaskidcompetetaskitmespost)                                        | **POST** /task-manager/{task_id}/compete_task_itmes        | Complete Task Items        
+ *TaskManagerApi*        | [**createComponentTaskTaskManagerCreateChangeComponentTaskPost**](doc//TaskManagerApi.md#createcomponenttasktaskmanagercreatechangecomponenttaskpost)                              | **POST** /task-manager/create_change_component_task        | Create Component Task      
+ *TaskManagerApi*        | [**createServiceRemoteTaskTaskManagerCreateServiceRemoteTaskPost**](doc//TaskManagerApi.md#createserviceremotetasktaskmanagercreateserviceremotetaskpost)                          | **POST** /task-manager/create_service_remote_task          | Create Service Remote Task 
+ *TaskManagerApi*        | [**loadAllTaskManagerGetTasksGet**](doc//TaskManagerApi.md#loadalltaskmanagergettasksget)                                                                                          | **GET** /task-manager/get_tasks                            | Load All                   
+ *TaskManagerApi*        | [**loadByIdTaskManagerGetTaskGet**](doc//TaskManagerApi.md#loadbyidtaskmanagergettaskget)                                                                                          | **GET** /task-manager/get_task                             | Load By Id                 
+ *TaskManagerApi*        | [**loadTaskManagerGetComponentTaskTaskIdGet**](doc//TaskManagerApi.md#loadtaskmanagergetcomponenttasktaskidget)                                                                    | **GET** /task-manager/get_component_task/{task_id}         | Load                       
+ *TaskServiceOnSiteApi*  | [**cancelTaskServiceOnSiteTaskIdDelete**](doc//TaskServiceOnSiteApi.md#canceltaskserviceonsitetaskiddelete)                                                                        | **DELETE** /task/service_on_site/{task_id}                 | Cancel                     
+ *TaskServiceOnSiteApi*  | [**changeDetailsTaskServiceOnSiteTaskIdChangeDetailsPost**](doc//TaskServiceOnSiteApi.md#changedetailstaskserviceonsitetaskidchangedetailspost)                                    | **POST** /task/service_on_site/{task_id}/change_details    | Change Details             
+ *TaskServiceOnSiteApi*  | [**completeTaskServiceOnSiteTaskIdCompleteGet**](doc//TaskServiceOnSiteApi.md#completetaskserviceonsitetaskidcompleteget)                                                          | **GET** /task/service_on_site/{task_id}/complete           | Complete                   
+ *TaskServiceOnSiteApi*  | [**createTaskServiceOnSiteCreateServiceOnSideTaskPost**](doc//TaskServiceOnSiteApi.md#createtaskserviceonsitecreateserviceonsidetaskpost)                                          | **POST** /task/service_on_site/create_service_on_side_task | Create                     
+ *TaskServiceOnSiteApi*  | [**loadTaskServiceOnSiteTaskIdGet**](doc//TaskServiceOnSiteApi.md#loadtaskserviceonsitetaskidget)                                                                                  | **GET** /task/service_on_site/{task_id}                    | Load                       
+ *TaskServiceRemoteApi*  | [**cancelTaskServiceRemoteTaskIdDelete**](doc//TaskServiceRemoteApi.md#canceltaskserviceremotetaskiddelete)                                                                        | **DELETE** /task/service_remote/{task_id}                  | Cancel                     
+ *TaskServiceRemoteApi*  | [**changeDetailsTaskServiceRemoteTaskIdChangeDetailsPost**](doc//TaskServiceRemoteApi.md#changedetailstaskserviceremotetaskidchangedetailspost)                                    | **POST** /task/service_remote/{task_id}/change_details     | Change Details             
+ *TaskServiceRemoteApi*  | [**completeTaskServiceRemoteTaskIdCompleteGet**](doc//TaskServiceRemoteApi.md#completetaskserviceremotetaskidcompleteget)                                                          | **GET** /task/service_remote/{task_id}/complete            | Complete                   
+ *TaskServiceRemoteApi*  | [**createTaskServiceRemoteCreateServiceRemoteTaskPost**](doc//TaskServiceRemoteApi.md#createtaskserviceremotecreateserviceremotetaskpost)                                          | **POST** /task/service_remote/create_service_remote_task   | Create                     
+ *TaskServiceRemoteApi*  | [**loadTaskServiceRemoteTaskIdGet**](doc//TaskServiceRemoteApi.md#loadtaskserviceremotetaskidget)                                                                                  | **GET** /task/service_remote/{task_id}                     | Load                       
 
 
 ## Documentation For Models
@@ -138,6 +140,7 @@ Class | Method | HTTP request | Description
  - [RemoveComponentRequestSchema](doc//RemoveComponentRequestSchema.md)
  - [RoadSegmentNewSchema](doc//RoadSegmentNewSchema.md)
  - [RoadSegmentSchema](doc//RoadSegmentSchema.md)
+ - [Role](doc//Role.md)
  - [ServiceContractNewSchema](doc//ServiceContractNewSchema.md)
  - [ServiceContractSchema](doc//ServiceContractSchema.md)
  - [StationIdSchema](doc//StationIdSchema.md)
@@ -170,9 +173,9 @@ Class | Method | HTTP request | Description
 - **Type**: OAuth
 - **Flow**: accessCode
 - **Authorization URL**: https://cmms.fief.dev/authorize
-- **Scopes**: 
- - **openid**: openid
- - **offline_access**: offline_access
+- **Scopes**:
+- **openid**: openid
+- **offline_access**: offline_access
 
 ## api_key
 
@@ -184,8 +187,7 @@ Class | Method | HTTP request | Description
 
 - **Type**: API key
 - **API key parameter name**: user_session
-- **Location**: 
-
+- **Location**:
 
 ## Author
 

@@ -2,7 +2,16 @@
   "openapi": "3.0.2",
   "info": {
     "title": "Fief Administration API",
-    "version": "0.23.1"
+    "contact": {
+      "name": "Fief",
+      "url": "https://docs.fief.dev",
+      "email": "contact@fief.dev"
+    },
+    "license": {
+      "name": "Elastic License 2.0 (ELv2)",
+      "url": "https://github.com/fief-dev/fief/blob/main/LICENSE.md"
+    },
+    "version": "0.23.2"
   },
   "servers": [
     {
@@ -57,7 +66,7 @@
             "required": false,
             "schema": {
               "title": "Limit",
-              "exclusiveMinimum": 0.0,
+              "minimum": 0.0,
               "type": "integer",
               "default": 10
             },
@@ -162,6 +171,94 @@
       }
     },
     "/clients/{id}": {
+      "get": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Clients:Get",
+        "operationId": "clients_get_clients__id__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Client"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Clients"
+        ],
+        "summary": "Clients:Delete",
+        "operationId": "clients_delete_clients__id__delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ]
+      },
       "patch": {
         "tags": [
           "Clients"
@@ -283,7 +380,7 @@
             "required": false,
             "schema": {
               "title": "Limit",
-              "exclusiveMinimum": 0.0,
+              "minimum": 0.0,
               "type": "integer",
               "default": 10
             },
@@ -468,7 +565,7 @@
             "required": false,
             "schema": {
               "title": "Limit",
-              "exclusiveMinimum": 0.0,
+              "minimum": 0.0,
               "type": "integer",
               "default": 10
             },
@@ -573,6 +670,52 @@
       }
     },
     "/oauth-providers/{id}": {
+      "get": {
+        "tags": [
+          "OAuth Providers"
+        ],
+        "summary": "Oauth Providers:Get",
+        "operationId": "oauth_providers_get_oauth_providers__id__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OAuthProvider"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
       "delete": {
         "tags": [
           "OAuth Providers"
@@ -766,7 +909,7 @@
             "required": false,
             "schema": {
               "title": "Limit",
-              "exclusiveMinimum": 0.0,
+              "minimum": 0.0,
               "type": "integer",
               "default": 10
             },
@@ -871,6 +1014,52 @@
       }
     },
     "/permissions/{id}": {
+      "get": {
+        "tags": [
+          "Permissions"
+        ],
+        "summary": "Permissions:Get",
+        "operationId": "permissions_get_permissions__id__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Permission"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
       "delete": {
         "tags": [
           "Permissions"
@@ -994,7 +1183,7 @@
             "required": false,
             "schema": {
               "title": "Limit",
-              "exclusiveMinimum": 0.0,
+              "minimum": 0.0,
               "type": "integer",
               "default": 10
             },
@@ -1099,6 +1288,52 @@
       }
     },
     "/roles/{id}": {
+      "get": {
+        "tags": [
+          "Roles"
+        ],
+        "summary": "Roles:Get",
+        "operationId": "roles_get_roles__id__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Role"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
       "delete": {
         "tags": [
           "Roles"
@@ -1222,7 +1457,7 @@
             "required": false,
             "schema": {
               "title": "Limit",
-              "exclusiveMinimum": 0.0,
+              "minimum": 0.0,
               "type": "integer",
               "default": 10
             },
@@ -1327,6 +1562,94 @@
       }
     },
     "/tenants/{id}": {
+      "get": {
+        "tags": [
+          "Tenants"
+        ],
+        "summary": "Tenants:Get",
+        "operationId": "tenants_get_tenants__id__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Tenant"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Tenants"
+        ],
+        "summary": "Tenants:Delete",
+        "operationId": "tenants_delete_tenants__id__delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ]
+      },
       "patch": {
         "tags": [
           "Tenants"
@@ -1399,7 +1722,7 @@
             "required": false,
             "schema": {
               "title": "Limit",
-              "exclusiveMinimum": 0.0,
+              "minimum": 0.0,
               "type": "integer",
               "default": 10
             },
@@ -1550,6 +1873,48 @@
           }
         ]
       },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Users:Delete",
+        "operationId": "users_delete_users__id__delete",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          },
+          {
+            "APIKeyCookie": []
+          }
+        ]
+      },
       "patch": {
         "tags": [
           "Users"
@@ -1622,7 +1987,7 @@
             "required": false,
             "schema": {
               "title": "Limit",
-              "exclusiveMinimum": 0.0,
+              "minimum": 0.0,
               "type": "integer",
               "default": 10
             },
@@ -1812,7 +2177,7 @@
             "required": false,
             "schema": {
               "title": "Limit",
-              "exclusiveMinimum": 0.0,
+              "minimum": 0.0,
               "type": "integer",
               "default": 10
             },
@@ -2002,7 +2367,7 @@
             "required": false,
             "schema": {
               "title": "Limit",
-              "exclusiveMinimum": 0.0,
+              "minimum": 0.0,
               "type": "integer",
               "default": 10
             },
@@ -2071,7 +2436,7 @@
             "required": false,
             "schema": {
               "title": "Limit",
-              "exclusiveMinimum": 0.0,
+              "minimum": 0.0,
               "type": "integer",
               "default": 10
             },
@@ -2176,6 +2541,52 @@
       }
     },
     "/user-fields/{id}": {
+      "get": {
+        "tags": [
+          "User fields"
+        ],
+        "summary": "User Fields:Get",
+        "operationId": "user_fields_get_user_fields__id__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "format": "uuid4"
+            },
+            "name": "id",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserField"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
       "delete": {
         "tags": [
           "User fields"
@@ -2290,7 +2701,7 @@
             "required": false,
             "schema": {
               "title": "Limit",
-              "exclusiveMinimum": 0.0,
+              "minimum": 0.0,
               "type": "integer",
               "default": 10
             },
@@ -2616,7 +3027,7 @@
             "required": false,
             "schema": {
               "title": "Limit",
-              "exclusiveMinimum": 0.0,
+              "minimum": 0.0,
               "type": "integer",
               "default": 10
             },
@@ -2676,1296 +3087,6 @@
   },
   "components": {
     "schemas": {
-      "Address": {
-        "title": "Address",
-        "required": [
-          "line1",
-          "postal_code",
-          "city",
-          "country"
-        ],
-        "type": "object",
-        "properties": {
-          "line1": {
-            "title": "Line1",
-            "minLength": 1,
-            "type": "string"
-          },
-          "line2": {
-            "title": "Line2",
-            "minLength": 1,
-            "type": "string"
-          },
-          "postal_code": {
-            "title": "Postal Code",
-            "minLength": 1,
-            "type": "string"
-          },
-          "city": {
-            "title": "City",
-            "minLength": 1,
-            "type": "string"
-          },
-          "state": {
-            "title": "State",
-            "minLength": 1,
-            "type": "string"
-          },
-          "country": {
-            "title": "Country",
-            "enum": [
-              "AF",
-              "AL",
-              "DZ",
-              "AS",
-              "AD",
-              "AO",
-              "AI",
-              "AQ",
-              "AG",
-              "AR",
-              "AM",
-              "AW",
-              "AU",
-              "AT",
-              "AZ",
-              "BS",
-              "BH",
-              "BD",
-              "BB",
-              "BY",
-              "BE",
-              "BZ",
-              "BJ",
-              "BM",
-              "BT",
-              "BO",
-              "BQ",
-              "BA",
-              "BW",
-              "BV",
-              "BR",
-              "IO",
-              "BN",
-              "BG",
-              "BF",
-              "BI",
-              "CV",
-              "KH",
-              "CM",
-              "CA",
-              "KY",
-              "CF",
-              "TD",
-              "CL",
-              "CN",
-              "CX",
-              "CC",
-              "CO",
-              "KM",
-              "CG",
-              "CD",
-              "CK",
-              "CR",
-              "HR",
-              "CU",
-              "CW",
-              "CY",
-              "CZ",
-              "CI",
-              "DK",
-              "DJ",
-              "DM",
-              "DO",
-              "EC",
-              "EG",
-              "SV",
-              "GQ",
-              "ER",
-              "EE",
-              "SZ",
-              "ET",
-              "FK",
-              "FO",
-              "FJ",
-              "FI",
-              "FR",
-              "GF",
-              "PF",
-              "TF",
-              "GA",
-              "GM",
-              "GE",
-              "DE",
-              "GH",
-              "GI",
-              "GR",
-              "GL",
-              "GD",
-              "GP",
-              "GU",
-              "GT",
-              "GG",
-              "GN",
-              "GW",
-              "GY",
-              "HT",
-              "HM",
-              "VA",
-              "HN",
-              "HK",
-              "HU",
-              "IS",
-              "IN",
-              "ID",
-              "IR",
-              "IQ",
-              "IE",
-              "IM",
-              "IL",
-              "IT",
-              "JM",
-              "JP",
-              "JE",
-              "JO",
-              "KZ",
-              "KE",
-              "KI",
-              "KP",
-              "KR",
-              "KW",
-              "KG",
-              "LA",
-              "LV",
-              "LB",
-              "LS",
-              "LR",
-              "LY",
-              "LI",
-              "LT",
-              "LU",
-              "MO",
-              "MG",
-              "MW",
-              "MY",
-              "MV",
-              "ML",
-              "MT",
-              "MH",
-              "MQ",
-              "MR",
-              "MU",
-              "YT",
-              "MX",
-              "FM",
-              "MD",
-              "MC",
-              "MN",
-              "ME",
-              "MS",
-              "MA",
-              "MZ",
-              "MM",
-              "NA",
-              "NR",
-              "NP",
-              "NL",
-              "NC",
-              "NZ",
-              "NI",
-              "NE",
-              "NG",
-              "NU",
-              "NF",
-              "MK",
-              "MP",
-              "NO",
-              "OM",
-              "PK",
-              "PW",
-              "PS",
-              "PA",
-              "PG",
-              "PY",
-              "PE",
-              "PH",
-              "PN",
-              "PL",
-              "PT",
-              "PR",
-              "QA",
-              "RO",
-              "RU",
-              "RW",
-              "RE",
-              "BL",
-              "SH",
-              "KN",
-              "LC",
-              "MF",
-              "PM",
-              "VC",
-              "WS",
-              "SM",
-              "ST",
-              "SA",
-              "SN",
-              "RS",
-              "SC",
-              "SL",
-              "SG",
-              "SX",
-              "SK",
-              "SI",
-              "SB",
-              "SO",
-              "ZA",
-              "GS",
-              "SS",
-              "ES",
-              "LK",
-              "SD",
-              "SR",
-              "SJ",
-              "SE",
-              "CH",
-              "SY",
-              "TW",
-              "TJ",
-              "TZ",
-              "TH",
-              "TL",
-              "TG",
-              "TK",
-              "TO",
-              "TT",
-              "TN",
-              "TR",
-              "TM",
-              "TC",
-              "TV",
-              "UG",
-              "UA",
-              "AE",
-              "GB",
-              "US",
-              "UM",
-              "UY",
-              "UZ",
-              "VU",
-              "VE",
-              "VN",
-              "VG",
-              "VI",
-              "WF",
-              "EH",
-              "YE",
-              "ZM",
-              "ZW",
-              "AX"
-            ],
-            "type": "enum",
-            "countries": [
-              {
-                "name": "Afghanistan",
-                "alpha_2": "AF"
-              },
-              {
-                "name": "Albania",
-                "alpha_2": "AL"
-              },
-              {
-                "name": "Algeria",
-                "alpha_2": "DZ"
-              },
-              {
-                "name": "American Samoa",
-                "alpha_2": "AS"
-              },
-              {
-                "name": "Andorra",
-                "alpha_2": "AD"
-              },
-              {
-                "name": "Angola",
-                "alpha_2": "AO"
-              },
-              {
-                "name": "Anguilla",
-                "alpha_2": "AI"
-              },
-              {
-                "name": "Antarctica",
-                "alpha_2": "AQ"
-              },
-              {
-                "name": "Antigua and Barbuda",
-                "alpha_2": "AG"
-              },
-              {
-                "name": "Argentina",
-                "alpha_2": "AR"
-              },
-              {
-                "name": "Armenia",
-                "alpha_2": "AM"
-              },
-              {
-                "name": "Aruba",
-                "alpha_2": "AW"
-              },
-              {
-                "name": "Australia",
-                "alpha_2": "AU"
-              },
-              {
-                "name": "Austria",
-                "alpha_2": "AT"
-              },
-              {
-                "name": "Azerbaijan",
-                "alpha_2": "AZ"
-              },
-              {
-                "name": "Bahamas",
-                "alpha_2": "BS"
-              },
-              {
-                "name": "Bahrain",
-                "alpha_2": "BH"
-              },
-              {
-                "name": "Bangladesh",
-                "alpha_2": "BD"
-              },
-              {
-                "name": "Barbados",
-                "alpha_2": "BB"
-              },
-              {
-                "name": "Belarus",
-                "alpha_2": "BY"
-              },
-              {
-                "name": "Belgium",
-                "alpha_2": "BE"
-              },
-              {
-                "name": "Belize",
-                "alpha_2": "BZ"
-              },
-              {
-                "name": "Benin",
-                "alpha_2": "BJ"
-              },
-              {
-                "name": "Bermuda",
-                "alpha_2": "BM"
-              },
-              {
-                "name": "Bhutan",
-                "alpha_2": "BT"
-              },
-              {
-                "name": "Bolivia, Plurinational State of",
-                "alpha_2": "BO"
-              },
-              {
-                "name": "Bonaire, Sint Eustatius and Saba",
-                "alpha_2": "BQ"
-              },
-              {
-                "name": "Bosnia and Herzegovina",
-                "alpha_2": "BA"
-              },
-              {
-                "name": "Botswana",
-                "alpha_2": "BW"
-              },
-              {
-                "name": "Bouvet Island",
-                "alpha_2": "BV"
-              },
-              {
-                "name": "Brazil",
-                "alpha_2": "BR"
-              },
-              {
-                "name": "British Indian Ocean Territory",
-                "alpha_2": "IO"
-              },
-              {
-                "name": "Brunei Darussalam",
-                "alpha_2": "BN"
-              },
-              {
-                "name": "Bulgaria",
-                "alpha_2": "BG"
-              },
-              {
-                "name": "Burkina Faso",
-                "alpha_2": "BF"
-              },
-              {
-                "name": "Burundi",
-                "alpha_2": "BI"
-              },
-              {
-                "name": "Cabo Verde",
-                "alpha_2": "CV"
-              },
-              {
-                "name": "Cambodia",
-                "alpha_2": "KH"
-              },
-              {
-                "name": "Cameroon",
-                "alpha_2": "CM"
-              },
-              {
-                "name": "Canada",
-                "alpha_2": "CA"
-              },
-              {
-                "name": "Cayman Islands",
-                "alpha_2": "KY"
-              },
-              {
-                "name": "Central African Republic",
-                "alpha_2": "CF"
-              },
-              {
-                "name": "Chad",
-                "alpha_2": "TD"
-              },
-              {
-                "name": "Chile",
-                "alpha_2": "CL"
-              },
-              {
-                "name": "China",
-                "alpha_2": "CN"
-              },
-              {
-                "name": "Christmas Island",
-                "alpha_2": "CX"
-              },
-              {
-                "name": "Cocos (Keeling) Islands",
-                "alpha_2": "CC"
-              },
-              {
-                "name": "Colombia",
-                "alpha_2": "CO"
-              },
-              {
-                "name": "Comoros",
-                "alpha_2": "KM"
-              },
-              {
-                "name": "Congo",
-                "alpha_2": "CG"
-              },
-              {
-                "name": "Congo, The Democratic Republic of the",
-                "alpha_2": "CD"
-              },
-              {
-                "name": "Cook Islands",
-                "alpha_2": "CK"
-              },
-              {
-                "name": "Costa Rica",
-                "alpha_2": "CR"
-              },
-              {
-                "name": "Croatia",
-                "alpha_2": "HR"
-              },
-              {
-                "name": "Cuba",
-                "alpha_2": "CU"
-              },
-              {
-                "name": "Curaçao",
-                "alpha_2": "CW"
-              },
-              {
-                "name": "Cyprus",
-                "alpha_2": "CY"
-              },
-              {
-                "name": "Czechia",
-                "alpha_2": "CZ"
-              },
-              {
-                "name": "Côte d'Ivoire",
-                "alpha_2": "CI"
-              },
-              {
-                "name": "Denmark",
-                "alpha_2": "DK"
-              },
-              {
-                "name": "Djibouti",
-                "alpha_2": "DJ"
-              },
-              {
-                "name": "Dominica",
-                "alpha_2": "DM"
-              },
-              {
-                "name": "Dominican Republic",
-                "alpha_2": "DO"
-              },
-              {
-                "name": "Ecuador",
-                "alpha_2": "EC"
-              },
-              {
-                "name": "Egypt",
-                "alpha_2": "EG"
-              },
-              {
-                "name": "El Salvador",
-                "alpha_2": "SV"
-              },
-              {
-                "name": "Equatorial Guinea",
-                "alpha_2": "GQ"
-              },
-              {
-                "name": "Eritrea",
-                "alpha_2": "ER"
-              },
-              {
-                "name": "Estonia",
-                "alpha_2": "EE"
-              },
-              {
-                "name": "Eswatini",
-                "alpha_2": "SZ"
-              },
-              {
-                "name": "Ethiopia",
-                "alpha_2": "ET"
-              },
-              {
-                "name": "Falkland Islands (Malvinas)",
-                "alpha_2": "FK"
-              },
-              {
-                "name": "Faroe Islands",
-                "alpha_2": "FO"
-              },
-              {
-                "name": "Fiji",
-                "alpha_2": "FJ"
-              },
-              {
-                "name": "Finland",
-                "alpha_2": "FI"
-              },
-              {
-                "name": "France",
-                "alpha_2": "FR"
-              },
-              {
-                "name": "French Guiana",
-                "alpha_2": "GF"
-              },
-              {
-                "name": "French Polynesia",
-                "alpha_2": "PF"
-              },
-              {
-                "name": "French Southern Territories",
-                "alpha_2": "TF"
-              },
-              {
-                "name": "Gabon",
-                "alpha_2": "GA"
-              },
-              {
-                "name": "Gambia",
-                "alpha_2": "GM"
-              },
-              {
-                "name": "Georgia",
-                "alpha_2": "GE"
-              },
-              {
-                "name": "Germany",
-                "alpha_2": "DE"
-              },
-              {
-                "name": "Ghana",
-                "alpha_2": "GH"
-              },
-              {
-                "name": "Gibraltar",
-                "alpha_2": "GI"
-              },
-              {
-                "name": "Greece",
-                "alpha_2": "GR"
-              },
-              {
-                "name": "Greenland",
-                "alpha_2": "GL"
-              },
-              {
-                "name": "Grenada",
-                "alpha_2": "GD"
-              },
-              {
-                "name": "Guadeloupe",
-                "alpha_2": "GP"
-              },
-              {
-                "name": "Guam",
-                "alpha_2": "GU"
-              },
-              {
-                "name": "Guatemala",
-                "alpha_2": "GT"
-              },
-              {
-                "name": "Guernsey",
-                "alpha_2": "GG"
-              },
-              {
-                "name": "Guinea",
-                "alpha_2": "GN"
-              },
-              {
-                "name": "Guinea-Bissau",
-                "alpha_2": "GW"
-              },
-              {
-                "name": "Guyana",
-                "alpha_2": "GY"
-              },
-              {
-                "name": "Haiti",
-                "alpha_2": "HT"
-              },
-              {
-                "name": "Heard Island and McDonald Islands",
-                "alpha_2": "HM"
-              },
-              {
-                "name": "Holy See (Vatican City State)",
-                "alpha_2": "VA"
-              },
-              {
-                "name": "Honduras",
-                "alpha_2": "HN"
-              },
-              {
-                "name": "Hong Kong",
-                "alpha_2": "HK"
-              },
-              {
-                "name": "Hungary",
-                "alpha_2": "HU"
-              },
-              {
-                "name": "Iceland",
-                "alpha_2": "IS"
-              },
-              {
-                "name": "India",
-                "alpha_2": "IN"
-              },
-              {
-                "name": "Indonesia",
-                "alpha_2": "ID"
-              },
-              {
-                "name": "Iran, Islamic Republic of",
-                "alpha_2": "IR"
-              },
-              {
-                "name": "Iraq",
-                "alpha_2": "IQ"
-              },
-              {
-                "name": "Ireland",
-                "alpha_2": "IE"
-              },
-              {
-                "name": "Isle of Man",
-                "alpha_2": "IM"
-              },
-              {
-                "name": "Israel",
-                "alpha_2": "IL"
-              },
-              {
-                "name": "Italy",
-                "alpha_2": "IT"
-              },
-              {
-                "name": "Jamaica",
-                "alpha_2": "JM"
-              },
-              {
-                "name": "Japan",
-                "alpha_2": "JP"
-              },
-              {
-                "name": "Jersey",
-                "alpha_2": "JE"
-              },
-              {
-                "name": "Jordan",
-                "alpha_2": "JO"
-              },
-              {
-                "name": "Kazakhstan",
-                "alpha_2": "KZ"
-              },
-              {
-                "name": "Kenya",
-                "alpha_2": "KE"
-              },
-              {
-                "name": "Kiribati",
-                "alpha_2": "KI"
-              },
-              {
-                "name": "Korea, Democratic People's Republic of",
-                "alpha_2": "KP"
-              },
-              {
-                "name": "Korea, Republic of",
-                "alpha_2": "KR"
-              },
-              {
-                "name": "Kuwait",
-                "alpha_2": "KW"
-              },
-              {
-                "name": "Kyrgyzstan",
-                "alpha_2": "KG"
-              },
-              {
-                "name": "Lao People's Democratic Republic",
-                "alpha_2": "LA"
-              },
-              {
-                "name": "Latvia",
-                "alpha_2": "LV"
-              },
-              {
-                "name": "Lebanon",
-                "alpha_2": "LB"
-              },
-              {
-                "name": "Lesotho",
-                "alpha_2": "LS"
-              },
-              {
-                "name": "Liberia",
-                "alpha_2": "LR"
-              },
-              {
-                "name": "Libya",
-                "alpha_2": "LY"
-              },
-              {
-                "name": "Liechtenstein",
-                "alpha_2": "LI"
-              },
-              {
-                "name": "Lithuania",
-                "alpha_2": "LT"
-              },
-              {
-                "name": "Luxembourg",
-                "alpha_2": "LU"
-              },
-              {
-                "name": "Macao",
-                "alpha_2": "MO"
-              },
-              {
-                "name": "Madagascar",
-                "alpha_2": "MG"
-              },
-              {
-                "name": "Malawi",
-                "alpha_2": "MW"
-              },
-              {
-                "name": "Malaysia",
-                "alpha_2": "MY"
-              },
-              {
-                "name": "Maldives",
-                "alpha_2": "MV"
-              },
-              {
-                "name": "Mali",
-                "alpha_2": "ML"
-              },
-              {
-                "name": "Malta",
-                "alpha_2": "MT"
-              },
-              {
-                "name": "Marshall Islands",
-                "alpha_2": "MH"
-              },
-              {
-                "name": "Martinique",
-                "alpha_2": "MQ"
-              },
-              {
-                "name": "Mauritania",
-                "alpha_2": "MR"
-              },
-              {
-                "name": "Mauritius",
-                "alpha_2": "MU"
-              },
-              {
-                "name": "Mayotte",
-                "alpha_2": "YT"
-              },
-              {
-                "name": "Mexico",
-                "alpha_2": "MX"
-              },
-              {
-                "name": "Micronesia, Federated States of",
-                "alpha_2": "FM"
-              },
-              {
-                "name": "Moldova, Republic of",
-                "alpha_2": "MD"
-              },
-              {
-                "name": "Monaco",
-                "alpha_2": "MC"
-              },
-              {
-                "name": "Mongolia",
-                "alpha_2": "MN"
-              },
-              {
-                "name": "Montenegro",
-                "alpha_2": "ME"
-              },
-              {
-                "name": "Montserrat",
-                "alpha_2": "MS"
-              },
-              {
-                "name": "Morocco",
-                "alpha_2": "MA"
-              },
-              {
-                "name": "Mozambique",
-                "alpha_2": "MZ"
-              },
-              {
-                "name": "Myanmar",
-                "alpha_2": "MM"
-              },
-              {
-                "name": "Namibia",
-                "alpha_2": "NA"
-              },
-              {
-                "name": "Nauru",
-                "alpha_2": "NR"
-              },
-              {
-                "name": "Nepal",
-                "alpha_2": "NP"
-              },
-              {
-                "name": "Netherlands",
-                "alpha_2": "NL"
-              },
-              {
-                "name": "New Caledonia",
-                "alpha_2": "NC"
-              },
-              {
-                "name": "New Zealand",
-                "alpha_2": "NZ"
-              },
-              {
-                "name": "Nicaragua",
-                "alpha_2": "NI"
-              },
-              {
-                "name": "Niger",
-                "alpha_2": "NE"
-              },
-              {
-                "name": "Nigeria",
-                "alpha_2": "NG"
-              },
-              {
-                "name": "Niue",
-                "alpha_2": "NU"
-              },
-              {
-                "name": "Norfolk Island",
-                "alpha_2": "NF"
-              },
-              {
-                "name": "North Macedonia",
-                "alpha_2": "MK"
-              },
-              {
-                "name": "Northern Mariana Islands",
-                "alpha_2": "MP"
-              },
-              {
-                "name": "Norway",
-                "alpha_2": "NO"
-              },
-              {
-                "name": "Oman",
-                "alpha_2": "OM"
-              },
-              {
-                "name": "Pakistan",
-                "alpha_2": "PK"
-              },
-              {
-                "name": "Palau",
-                "alpha_2": "PW"
-              },
-              {
-                "name": "Palestine, State of",
-                "alpha_2": "PS"
-              },
-              {
-                "name": "Panama",
-                "alpha_2": "PA"
-              },
-              {
-                "name": "Papua New Guinea",
-                "alpha_2": "PG"
-              },
-              {
-                "name": "Paraguay",
-                "alpha_2": "PY"
-              },
-              {
-                "name": "Peru",
-                "alpha_2": "PE"
-              },
-              {
-                "name": "Philippines",
-                "alpha_2": "PH"
-              },
-              {
-                "name": "Pitcairn",
-                "alpha_2": "PN"
-              },
-              {
-                "name": "Poland",
-                "alpha_2": "PL"
-              },
-              {
-                "name": "Portugal",
-                "alpha_2": "PT"
-              },
-              {
-                "name": "Puerto Rico",
-                "alpha_2": "PR"
-              },
-              {
-                "name": "Qatar",
-                "alpha_2": "QA"
-              },
-              {
-                "name": "Romania",
-                "alpha_2": "RO"
-              },
-              {
-                "name": "Russian Federation",
-                "alpha_2": "RU"
-              },
-              {
-                "name": "Rwanda",
-                "alpha_2": "RW"
-              },
-              {
-                "name": "Réunion",
-                "alpha_2": "RE"
-              },
-              {
-                "name": "Saint Barthélemy",
-                "alpha_2": "BL"
-              },
-              {
-                "name": "Saint Helena, Ascension and Tristan da Cunha",
-                "alpha_2": "SH"
-              },
-              {
-                "name": "Saint Kitts and Nevis",
-                "alpha_2": "KN"
-              },
-              {
-                "name": "Saint Lucia",
-                "alpha_2": "LC"
-              },
-              {
-                "name": "Saint Martin (French part)",
-                "alpha_2": "MF"
-              },
-              {
-                "name": "Saint Pierre and Miquelon",
-                "alpha_2": "PM"
-              },
-              {
-                "name": "Saint Vincent and the Grenadines",
-                "alpha_2": "VC"
-              },
-              {
-                "name": "Samoa",
-                "alpha_2": "WS"
-              },
-              {
-                "name": "San Marino",
-                "alpha_2": "SM"
-              },
-              {
-                "name": "Sao Tome and Principe",
-                "alpha_2": "ST"
-              },
-              {
-                "name": "Saudi Arabia",
-                "alpha_2": "SA"
-              },
-              {
-                "name": "Senegal",
-                "alpha_2": "SN"
-              },
-              {
-                "name": "Serbia",
-                "alpha_2": "RS"
-              },
-              {
-                "name": "Seychelles",
-                "alpha_2": "SC"
-              },
-              {
-                "name": "Sierra Leone",
-                "alpha_2": "SL"
-              },
-              {
-                "name": "Singapore",
-                "alpha_2": "SG"
-              },
-              {
-                "name": "Sint Maarten (Dutch part)",
-                "alpha_2": "SX"
-              },
-              {
-                "name": "Slovakia",
-                "alpha_2": "SK"
-              },
-              {
-                "name": "Slovenia",
-                "alpha_2": "SI"
-              },
-              {
-                "name": "Solomon Islands",
-                "alpha_2": "SB"
-              },
-              {
-                "name": "Somalia",
-                "alpha_2": "SO"
-              },
-              {
-                "name": "South Africa",
-                "alpha_2": "ZA"
-              },
-              {
-                "name": "South Georgia and the South Sandwich Islands",
-                "alpha_2": "GS"
-              },
-              {
-                "name": "South Sudan",
-                "alpha_2": "SS"
-              },
-              {
-                "name": "Spain",
-                "alpha_2": "ES"
-              },
-              {
-                "name": "Sri Lanka",
-                "alpha_2": "LK"
-              },
-              {
-                "name": "Sudan",
-                "alpha_2": "SD"
-              },
-              {
-                "name": "Suriname",
-                "alpha_2": "SR"
-              },
-              {
-                "name": "Svalbard and Jan Mayen",
-                "alpha_2": "SJ"
-              },
-              {
-                "name": "Sweden",
-                "alpha_2": "SE"
-              },
-              {
-                "name": "Switzerland",
-                "alpha_2": "CH"
-              },
-              {
-                "name": "Syrian Arab Republic",
-                "alpha_2": "SY"
-              },
-              {
-                "name": "Taiwan, Province of China",
-                "alpha_2": "TW"
-              },
-              {
-                "name": "Tajikistan",
-                "alpha_2": "TJ"
-              },
-              {
-                "name": "Tanzania, United Republic of",
-                "alpha_2": "TZ"
-              },
-              {
-                "name": "Thailand",
-                "alpha_2": "TH"
-              },
-              {
-                "name": "Timor-Leste",
-                "alpha_2": "TL"
-              },
-              {
-                "name": "Togo",
-                "alpha_2": "TG"
-              },
-              {
-                "name": "Tokelau",
-                "alpha_2": "TK"
-              },
-              {
-                "name": "Tonga",
-                "alpha_2": "TO"
-              },
-              {
-                "name": "Trinidad and Tobago",
-                "alpha_2": "TT"
-              },
-              {
-                "name": "Tunisia",
-                "alpha_2": "TN"
-              },
-              {
-                "name": "Turkey",
-                "alpha_2": "TR"
-              },
-              {
-                "name": "Turkmenistan",
-                "alpha_2": "TM"
-              },
-              {
-                "name": "Turks and Caicos Islands",
-                "alpha_2": "TC"
-              },
-              {
-                "name": "Tuvalu",
-                "alpha_2": "TV"
-              },
-              {
-                "name": "Uganda",
-                "alpha_2": "UG"
-              },
-              {
-                "name": "Ukraine",
-                "alpha_2": "UA"
-              },
-              {
-                "name": "United Arab Emirates",
-                "alpha_2": "AE"
-              },
-              {
-                "name": "United Kingdom",
-                "alpha_2": "GB"
-              },
-              {
-                "name": "United States",
-                "alpha_2": "US"
-              },
-              {
-                "name": "United States Minor Outlying Islands",
-                "alpha_2": "UM"
-              },
-              {
-                "name": "Uruguay",
-                "alpha_2": "UY"
-              },
-              {
-                "name": "Uzbekistan",
-                "alpha_2": "UZ"
-              },
-              {
-                "name": "Vanuatu",
-                "alpha_2": "VU"
-              },
-              {
-                "name": "Venezuela, Bolivarian Republic of",
-                "alpha_2": "VE"
-              },
-              {
-                "name": "Viet Nam",
-                "alpha_2": "VN"
-              },
-              {
-                "name": "Virgin Islands, British",
-                "alpha_2": "VG"
-              },
-              {
-                "name": "Virgin Islands, U.S.",
-                "alpha_2": "VI"
-              },
-              {
-                "name": "Wallis and Futuna",
-                "alpha_2": "WF"
-              },
-              {
-                "name": "Western Sahara",
-                "alpha_2": "EH"
-              },
-              {
-                "name": "Yemen",
-                "alpha_2": "YE"
-              },
-              {
-                "name": "Zambia",
-                "alpha_2": "ZM"
-              },
-              {
-                "name": "Zimbabwe",
-                "alpha_2": "ZW"
-              },
-              {
-                "name": "Åland Islands",
-                "alpha_2": "AX"
-              }
-            ]
-          }
-        }
-      },
       "AvailableOAuthProvider": {
         "title": "AvailableOAuthProvider",
         "enum": [
@@ -4108,18 +3229,18 @@
           },
           "authorization_code_lifetime_seconds": {
             "title": "Authorization Code Lifetime Seconds",
-            "type": "integer",
-            "min": 0
+            "minimum": 0.0,
+            "type": "integer"
           },
           "access_id_token_lifetime_seconds": {
             "title": "Access Id Token Lifetime Seconds",
-            "type": "integer",
-            "min": 0
+            "minimum": 0.0,
+            "type": "integer"
           },
           "refresh_token_lifetime_seconds": {
             "title": "Refresh Token Lifetime Seconds",
-            "type": "integer",
-            "min": 0
+            "minimum": 0.0,
+            "type": "integer"
           },
           "tenant_id": {
             "title": "Tenant Id",
@@ -4165,18 +3286,18 @@
           },
           "authorization_code_lifetime_seconds": {
             "title": "Authorization Code Lifetime Seconds",
-            "type": "integer",
-            "min": 0
+            "minimum": 0.0,
+            "type": "integer"
           },
           "access_id_token_lifetime_seconds": {
             "title": "Access Id Token Lifetime Seconds",
-            "type": "integer",
-            "min": 0
+            "minimum": 0.0,
+            "type": "integer"
           },
           "refresh_token_lifetime_seconds": {
             "title": "Refresh Token Lifetime Seconds",
-            "type": "integer",
-            "min": 0
+            "minimum": 0.0,
+            "type": "integer"
           }
         }
       },
@@ -5341,17 +4462,8 @@
             "title": "Choices",
             "type": "array",
             "items": {
-              "maxItems": 2,
-              "minItems": 2,
               "type": "array",
-              "items": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "string"
-                }
-              ]
+              "items": {}
             }
           },
           "default": {
@@ -5795,7 +4907,7 @@
                   "US/Pacific",
                   "UTC"
                 ],
-                "type": "enum"
+                "type": "string"
               },
               {
                 "type": "boolean"
@@ -5987,471 +5099,7 @@
           },
           "fields": {
             "title": "Fields",
-            "type": "object",
-            "additionalProperties": {
-              "anyOf": [
-                {
-                  "$ref": "#/components/schemas/Address"
-                },
-                {
-                  "title": "timezone",
-                  "enum": [
-                    "Africa/Abidjan",
-                    "Africa/Accra",
-                    "Africa/Addis_Ababa",
-                    "Africa/Algiers",
-                    "Africa/Asmara",
-                    "Africa/Bamako",
-                    "Africa/Bangui",
-                    "Africa/Banjul",
-                    "Africa/Bissau",
-                    "Africa/Blantyre",
-                    "Africa/Brazzaville",
-                    "Africa/Bujumbura",
-                    "Africa/Cairo",
-                    "Africa/Casablanca",
-                    "Africa/Ceuta",
-                    "Africa/Conakry",
-                    "Africa/Dakar",
-                    "Africa/Dar_es_Salaam",
-                    "Africa/Djibouti",
-                    "Africa/Douala",
-                    "Africa/El_Aaiun",
-                    "Africa/Freetown",
-                    "Africa/Gaborone",
-                    "Africa/Harare",
-                    "Africa/Johannesburg",
-                    "Africa/Juba",
-                    "Africa/Kampala",
-                    "Africa/Khartoum",
-                    "Africa/Kigali",
-                    "Africa/Kinshasa",
-                    "Africa/Lagos",
-                    "Africa/Libreville",
-                    "Africa/Lome",
-                    "Africa/Luanda",
-                    "Africa/Lubumbashi",
-                    "Africa/Lusaka",
-                    "Africa/Malabo",
-                    "Africa/Maputo",
-                    "Africa/Maseru",
-                    "Africa/Mbabane",
-                    "Africa/Mogadishu",
-                    "Africa/Monrovia",
-                    "Africa/Nairobi",
-                    "Africa/Ndjamena",
-                    "Africa/Niamey",
-                    "Africa/Nouakchott",
-                    "Africa/Ouagadougou",
-                    "Africa/Porto-Novo",
-                    "Africa/Sao_Tome",
-                    "Africa/Tripoli",
-                    "Africa/Tunis",
-                    "Africa/Windhoek",
-                    "America/Adak",
-                    "America/Anchorage",
-                    "America/Anguilla",
-                    "America/Antigua",
-                    "America/Araguaina",
-                    "America/Argentina/Buenos_Aires",
-                    "America/Argentina/Catamarca",
-                    "America/Argentina/Cordoba",
-                    "America/Argentina/Jujuy",
-                    "America/Argentina/La_Rioja",
-                    "America/Argentina/Mendoza",
-                    "America/Argentina/Rio_Gallegos",
-                    "America/Argentina/Salta",
-                    "America/Argentina/San_Juan",
-                    "America/Argentina/San_Luis",
-                    "America/Argentina/Tucuman",
-                    "America/Argentina/Ushuaia",
-                    "America/Aruba",
-                    "America/Asuncion",
-                    "America/Atikokan",
-                    "America/Bahia",
-                    "America/Bahia_Banderas",
-                    "America/Barbados",
-                    "America/Belem",
-                    "America/Belize",
-                    "America/Blanc-Sablon",
-                    "America/Boa_Vista",
-                    "America/Bogota",
-                    "America/Boise",
-                    "America/Cambridge_Bay",
-                    "America/Campo_Grande",
-                    "America/Cancun",
-                    "America/Caracas",
-                    "America/Cayenne",
-                    "America/Cayman",
-                    "America/Chicago",
-                    "America/Chihuahua",
-                    "America/Ciudad_Juarez",
-                    "America/Costa_Rica",
-                    "America/Creston",
-                    "America/Cuiaba",
-                    "America/Curacao",
-                    "America/Danmarkshavn",
-                    "America/Dawson",
-                    "America/Dawson_Creek",
-                    "America/Denver",
-                    "America/Detroit",
-                    "America/Dominica",
-                    "America/Edmonton",
-                    "America/Eirunepe",
-                    "America/El_Salvador",
-                    "America/Fort_Nelson",
-                    "America/Fortaleza",
-                    "America/Glace_Bay",
-                    "America/Goose_Bay",
-                    "America/Grand_Turk",
-                    "America/Grenada",
-                    "America/Guadeloupe",
-                    "America/Guatemala",
-                    "America/Guayaquil",
-                    "America/Guyana",
-                    "America/Halifax",
-                    "America/Havana",
-                    "America/Hermosillo",
-                    "America/Indiana/Indianapolis",
-                    "America/Indiana/Knox",
-                    "America/Indiana/Marengo",
-                    "America/Indiana/Petersburg",
-                    "America/Indiana/Tell_City",
-                    "America/Indiana/Vevay",
-                    "America/Indiana/Vincennes",
-                    "America/Indiana/Winamac",
-                    "America/Inuvik",
-                    "America/Iqaluit",
-                    "America/Jamaica",
-                    "America/Juneau",
-                    "America/Kentucky/Louisville",
-                    "America/Kentucky/Monticello",
-                    "America/Kralendijk",
-                    "America/La_Paz",
-                    "America/Lima",
-                    "America/Los_Angeles",
-                    "America/Lower_Princes",
-                    "America/Maceio",
-                    "America/Managua",
-                    "America/Manaus",
-                    "America/Marigot",
-                    "America/Martinique",
-                    "America/Matamoros",
-                    "America/Mazatlan",
-                    "America/Menominee",
-                    "America/Merida",
-                    "America/Metlakatla",
-                    "America/Mexico_City",
-                    "America/Miquelon",
-                    "America/Moncton",
-                    "America/Monterrey",
-                    "America/Montevideo",
-                    "America/Montserrat",
-                    "America/Nassau",
-                    "America/New_York",
-                    "America/Nome",
-                    "America/Noronha",
-                    "America/North_Dakota/Beulah",
-                    "America/North_Dakota/Center",
-                    "America/North_Dakota/New_Salem",
-                    "America/Nuuk",
-                    "America/Ojinaga",
-                    "America/Panama",
-                    "America/Paramaribo",
-                    "America/Phoenix",
-                    "America/Port-au-Prince",
-                    "America/Port_of_Spain",
-                    "America/Porto_Velho",
-                    "America/Puerto_Rico",
-                    "America/Punta_Arenas",
-                    "America/Rankin_Inlet",
-                    "America/Recife",
-                    "America/Regina",
-                    "America/Resolute",
-                    "America/Rio_Branco",
-                    "America/Santarem",
-                    "America/Santiago",
-                    "America/Santo_Domingo",
-                    "America/Sao_Paulo",
-                    "America/Scoresbysund",
-                    "America/Sitka",
-                    "America/St_Barthelemy",
-                    "America/St_Johns",
-                    "America/St_Kitts",
-                    "America/St_Lucia",
-                    "America/St_Thomas",
-                    "America/St_Vincent",
-                    "America/Swift_Current",
-                    "America/Tegucigalpa",
-                    "America/Thule",
-                    "America/Tijuana",
-                    "America/Toronto",
-                    "America/Tortola",
-                    "America/Vancouver",
-                    "America/Whitehorse",
-                    "America/Winnipeg",
-                    "America/Yakutat",
-                    "America/Yellowknife",
-                    "Antarctica/Casey",
-                    "Antarctica/Davis",
-                    "Antarctica/DumontDUrville",
-                    "Antarctica/Macquarie",
-                    "Antarctica/Mawson",
-                    "Antarctica/McMurdo",
-                    "Antarctica/Palmer",
-                    "Antarctica/Rothera",
-                    "Antarctica/Syowa",
-                    "Antarctica/Troll",
-                    "Antarctica/Vostok",
-                    "Arctic/Longyearbyen",
-                    "Asia/Aden",
-                    "Asia/Almaty",
-                    "Asia/Amman",
-                    "Asia/Anadyr",
-                    "Asia/Aqtau",
-                    "Asia/Aqtobe",
-                    "Asia/Ashgabat",
-                    "Asia/Atyrau",
-                    "Asia/Baghdad",
-                    "Asia/Bahrain",
-                    "Asia/Baku",
-                    "Asia/Bangkok",
-                    "Asia/Barnaul",
-                    "Asia/Beirut",
-                    "Asia/Bishkek",
-                    "Asia/Brunei",
-                    "Asia/Chita",
-                    "Asia/Choibalsan",
-                    "Asia/Colombo",
-                    "Asia/Damascus",
-                    "Asia/Dhaka",
-                    "Asia/Dili",
-                    "Asia/Dubai",
-                    "Asia/Dushanbe",
-                    "Asia/Famagusta",
-                    "Asia/Gaza",
-                    "Asia/Hebron",
-                    "Asia/Ho_Chi_Minh",
-                    "Asia/Hong_Kong",
-                    "Asia/Hovd",
-                    "Asia/Irkutsk",
-                    "Asia/Jakarta",
-                    "Asia/Jayapura",
-                    "Asia/Jerusalem",
-                    "Asia/Kabul",
-                    "Asia/Kamchatka",
-                    "Asia/Karachi",
-                    "Asia/Kathmandu",
-                    "Asia/Khandyga",
-                    "Asia/Kolkata",
-                    "Asia/Krasnoyarsk",
-                    "Asia/Kuala_Lumpur",
-                    "Asia/Kuching",
-                    "Asia/Kuwait",
-                    "Asia/Macau",
-                    "Asia/Magadan",
-                    "Asia/Makassar",
-                    "Asia/Manila",
-                    "Asia/Muscat",
-                    "Asia/Nicosia",
-                    "Asia/Novokuznetsk",
-                    "Asia/Novosibirsk",
-                    "Asia/Omsk",
-                    "Asia/Oral",
-                    "Asia/Phnom_Penh",
-                    "Asia/Pontianak",
-                    "Asia/Pyongyang",
-                    "Asia/Qatar",
-                    "Asia/Qostanay",
-                    "Asia/Qyzylorda",
-                    "Asia/Riyadh",
-                    "Asia/Sakhalin",
-                    "Asia/Samarkand",
-                    "Asia/Seoul",
-                    "Asia/Shanghai",
-                    "Asia/Singapore",
-                    "Asia/Srednekolymsk",
-                    "Asia/Taipei",
-                    "Asia/Tashkent",
-                    "Asia/Tbilisi",
-                    "Asia/Tehran",
-                    "Asia/Thimphu",
-                    "Asia/Tokyo",
-                    "Asia/Tomsk",
-                    "Asia/Ulaanbaatar",
-                    "Asia/Urumqi",
-                    "Asia/Ust-Nera",
-                    "Asia/Vientiane",
-                    "Asia/Vladivostok",
-                    "Asia/Yakutsk",
-                    "Asia/Yangon",
-                    "Asia/Yekaterinburg",
-                    "Asia/Yerevan",
-                    "Atlantic/Azores",
-                    "Atlantic/Bermuda",
-                    "Atlantic/Canary",
-                    "Atlantic/Cape_Verde",
-                    "Atlantic/Faroe",
-                    "Atlantic/Madeira",
-                    "Atlantic/Reykjavik",
-                    "Atlantic/South_Georgia",
-                    "Atlantic/St_Helena",
-                    "Atlantic/Stanley",
-                    "Australia/Adelaide",
-                    "Australia/Brisbane",
-                    "Australia/Broken_Hill",
-                    "Australia/Darwin",
-                    "Australia/Eucla",
-                    "Australia/Hobart",
-                    "Australia/Lindeman",
-                    "Australia/Lord_Howe",
-                    "Australia/Melbourne",
-                    "Australia/Perth",
-                    "Australia/Sydney",
-                    "Canada/Atlantic",
-                    "Canada/Central",
-                    "Canada/Eastern",
-                    "Canada/Mountain",
-                    "Canada/Newfoundland",
-                    "Canada/Pacific",
-                    "Europe/Amsterdam",
-                    "Europe/Andorra",
-                    "Europe/Astrakhan",
-                    "Europe/Athens",
-                    "Europe/Belgrade",
-                    "Europe/Berlin",
-                    "Europe/Bratislava",
-                    "Europe/Brussels",
-                    "Europe/Bucharest",
-                    "Europe/Budapest",
-                    "Europe/Busingen",
-                    "Europe/Chisinau",
-                    "Europe/Copenhagen",
-                    "Europe/Dublin",
-                    "Europe/Gibraltar",
-                    "Europe/Guernsey",
-                    "Europe/Helsinki",
-                    "Europe/Isle_of_Man",
-                    "Europe/Istanbul",
-                    "Europe/Jersey",
-                    "Europe/Kaliningrad",
-                    "Europe/Kirov",
-                    "Europe/Kyiv",
-                    "Europe/Lisbon",
-                    "Europe/Ljubljana",
-                    "Europe/London",
-                    "Europe/Luxembourg",
-                    "Europe/Madrid",
-                    "Europe/Malta",
-                    "Europe/Mariehamn",
-                    "Europe/Minsk",
-                    "Europe/Monaco",
-                    "Europe/Moscow",
-                    "Europe/Oslo",
-                    "Europe/Paris",
-                    "Europe/Podgorica",
-                    "Europe/Prague",
-                    "Europe/Riga",
-                    "Europe/Rome",
-                    "Europe/Samara",
-                    "Europe/San_Marino",
-                    "Europe/Sarajevo",
-                    "Europe/Saratov",
-                    "Europe/Simferopol",
-                    "Europe/Skopje",
-                    "Europe/Sofia",
-                    "Europe/Stockholm",
-                    "Europe/Tallinn",
-                    "Europe/Tirane",
-                    "Europe/Ulyanovsk",
-                    "Europe/Vaduz",
-                    "Europe/Vatican",
-                    "Europe/Vienna",
-                    "Europe/Vilnius",
-                    "Europe/Volgograd",
-                    "Europe/Warsaw",
-                    "Europe/Zagreb",
-                    "Europe/Zurich",
-                    "GMT",
-                    "Indian/Antananarivo",
-                    "Indian/Chagos",
-                    "Indian/Christmas",
-                    "Indian/Cocos",
-                    "Indian/Comoro",
-                    "Indian/Kerguelen",
-                    "Indian/Mahe",
-                    "Indian/Maldives",
-                    "Indian/Mauritius",
-                    "Indian/Mayotte",
-                    "Indian/Reunion",
-                    "Pacific/Apia",
-                    "Pacific/Auckland",
-                    "Pacific/Bougainville",
-                    "Pacific/Chatham",
-                    "Pacific/Chuuk",
-                    "Pacific/Easter",
-                    "Pacific/Efate",
-                    "Pacific/Fakaofo",
-                    "Pacific/Fiji",
-                    "Pacific/Funafuti",
-                    "Pacific/Galapagos",
-                    "Pacific/Gambier",
-                    "Pacific/Guadalcanal",
-                    "Pacific/Guam",
-                    "Pacific/Honolulu",
-                    "Pacific/Kanton",
-                    "Pacific/Kiritimati",
-                    "Pacific/Kosrae",
-                    "Pacific/Kwajalein",
-                    "Pacific/Majuro",
-                    "Pacific/Marquesas",
-                    "Pacific/Midway",
-                    "Pacific/Nauru",
-                    "Pacific/Niue",
-                    "Pacific/Norfolk",
-                    "Pacific/Noumea",
-                    "Pacific/Pago_Pago",
-                    "Pacific/Palau",
-                    "Pacific/Pitcairn",
-                    "Pacific/Pohnpei",
-                    "Pacific/Port_Moresby",
-                    "Pacific/Rarotonga",
-                    "Pacific/Saipan",
-                    "Pacific/Tahiti",
-                    "Pacific/Tarawa",
-                    "Pacific/Tongatapu",
-                    "Pacific/Wake",
-                    "Pacific/Wallis",
-                    "US/Alaska",
-                    "US/Arizona",
-                    "US/Central",
-                    "US/Eastern",
-                    "US/Hawaii",
-                    "US/Mountain",
-                    "US/Pacific",
-                    "UTC"
-                  ],
-                  "type": "enum"
-                },
-                {
-                  "type": "boolean"
-                },
-                {
-                  "type": "integer"
-                },
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                {
-                  "type": "string",
-                  "format": "date"
-                }
-              ]
-            }
+            "type": "object"
           }
         },
         "description": "Base User model."
@@ -6608,6 +5256,7 @@
         "enum": [
           "client.created",
           "client.updated",
+          "client.deleted",
           "email_template.updated",
           "oauth_provider.created",
           "oauth_provider.updated",
@@ -6620,8 +5269,10 @@
           "role.deleted",
           "tenant.created",
           "tenant.updated",
+          "tenant.deleted",
           "user.created",
           "user.updated",
+          "user.deleted",
           "user.forgot_password_requested",
           "user.password_reset",
           "user_field.created",

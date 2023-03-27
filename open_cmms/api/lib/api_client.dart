@@ -230,6 +230,8 @@ class ApiClient {
           return RoadSegmentNewSchema.fromJson(value);
         case 'RoadSegmentSchema':
           return RoadSegmentSchema.fromJson(value);
+        case 'Role':
+          return RoleTypeTransformer().decode(value);
         case 'ServiceContractNewSchema':
           return ServiceContractNewSchema.fromJson(value);
         case 'ServiceContractSchema':
