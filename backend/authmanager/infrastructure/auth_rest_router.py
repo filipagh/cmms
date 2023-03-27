@@ -25,11 +25,10 @@ class Role(str, Enum):
 
 @auth_router.get("/me",
                  response_model=UserSchema)
-def get_me(user: FiefUserInfo = Depends(custom_auth(["write:all", "read:all"]))):
-    permisions = FiefUsersApi().users_list_permissions_users_id_permissions_get(user['sub'])
+def get_me(user: FiefUserInfo = Depends(custom_auth(["write:all", "read:all"])), permisions = Depends(auth.authenticated(optional=True))):
     admin = False
-    for p in permisions.results:
-        if p.permission.codename == "users:manage":
+    for p in permisions['permissions']:
+        if p == "users:manage":
             admin = True
             break
     return UserSchema(id=user['sub'], name=user['email'], isVerified=True, isAdmin=admin)
