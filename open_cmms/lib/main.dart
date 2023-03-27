@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:open_cmms/auth_guard.dart';
 import 'package:open_cmms/pages/assets_management.dart';
 import 'package:open_cmms/pages/dashboard.dart';
+import 'package:open_cmms/pages/forbidden.dart';
 import 'package:open_cmms/pages/login.dart';
 import 'package:open_cmms/pages/news.dart';
 import 'package:open_cmms/pages/road_segment.dart';
@@ -22,6 +23,7 @@ import 'package:open_cmms/pages/tasks/task_on_site_service.dart';
 import 'package:open_cmms/pages/tasks/task_remote_service.dart';
 import 'package:open_cmms/pages/unknownPage.dart';
 import 'package:open_cmms/pages/unverified.dart';
+import 'package:open_cmms/pages/users.dart';
 import 'package:open_cmms/service/secrets_manager_service.dart';
 import 'package:open_cmms/states/action_state.dart';
 import 'package:open_cmms/states/asset_telemetry_state.dart';
@@ -43,7 +45,7 @@ void main() async {
   runApp(const MyApp());
 }
 
-void bootStates() {
+void loadPostLoginStates() {
   Get.put(AssetTypesState(), permanent: true); //api
   Get.put(ItemsStorageState(), permanent: true); // api
   Get.put(AssetTelemetryState(), permanent: true); //api
@@ -199,7 +201,21 @@ class MyApp extends StatelessWidget {
             },
             middlewares: [AuthGuard()]),
 
+        // +++++++++++++++++++++++++++++++++++++++++++++++++++   ADMIN
+
+        GetPage(
+            name: Users.ENDPOINT,
+            page: () {
+              return Users();
+            },
+            middlewares: [AuthGuard(), AdminGuard()]),
+
         // +++++++++++++++++++++++++++++++++++++++++++++++++++   PUBLIC
+        GetPage(
+            name: Forbidden.ENDPOINT,
+            page: () {
+              return Forbidden();
+            }),
         GetPage(
             name: Unverified.ENDPOINT,
             page: () {

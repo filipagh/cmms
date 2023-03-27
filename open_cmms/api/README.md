@@ -164,7 +164,9 @@ All URIs are relative to *http://localhost*
  - [UserSchema](doc//UserSchema.md)
  - [ValidationError](doc//ValidationError.md)
 
+
 ## Documentation For Authorization
+
 
 ## OAuth2AuthorizationCodeBearer
 

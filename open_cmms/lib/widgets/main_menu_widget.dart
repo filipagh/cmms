@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/pages/service_contracts.dart';
 import 'package:open_cmms/pages/stations.dart';
+import 'package:open_cmms/snacbars.dart';
 
 import '../pages/news.dart';
+import '../pages/users.dart';
+import '../states/auth_state.dart';
 
 class MainMenuWidget extends StatefulWidget {
   MainMenuWidget({
@@ -19,6 +22,7 @@ class _MainMenuWidgetState extends State<MainMenuWidget>
     with AutomaticKeepAliveClientMixin<MainMenuWidget> {
   @override
   Widget build(BuildContext context) {
+    final authService = Get.find<AuthState>();
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -82,20 +86,21 @@ class _MainMenuWidgetState extends State<MainMenuWidget>
               onPressed: () => Get.offAllNamed("/AssetManagement"),
             ),
           ),
-          IconButton(
-            icon: const Icon(Icons.settings),
-            onPressed: () {
-              Get.defaultDialog(
-                  confirm: TextButton(
-                      onPressed: () {
-                        setState(() {
-                          widget.aa = "LLLLL";
-                        });
-                        Get.back();
-                      },
-                      child: Text("aaa")));
-            },
-          ),
+          if (authService.isAdmin.isTrue) ...[
+            IconButton(
+              icon: const Icon(Icons.settings),
+              onPressed: () {
+                showInfo("zatial nic nerobim");
+              },
+            ),
+            Tooltip(
+              message: "manazment pouzivatelov",
+              child: IconButton(
+                icon: const Icon(Icons.person),
+                onPressed: () => Get.offAllNamed(Users.ENDPOINT),
+              ),
+            ),
+          ],
           Spacer(),
           Tooltip(
             message: "novinky",
