@@ -1,8 +1,13 @@
+from enum import Enum
+
 from fastapi import APIRouter, Depends, Request, Response, Query
 from fief_client import FiefUserInfo
 from starlette.responses import HTMLResponse, RedirectResponse
 
 from authmanager.application.model.schema import UserSchema
+from authmanager.infrastructure.fief.fief_role_api import FiefRoleApi
+from authmanager.infrastructure.fief.fief_users_api import FiefUsersApi
+from authmanager.infrastructure.fief.fiefapi.openapi_client import UserRoleCreate
 from base.auth_def import custom_auth, auth2, auth, fix_server_protocol, fief, SESSION_COOKIE_NAME
 
 auth_router = APIRouter(
@@ -12,23 +17,74 @@ auth_router = APIRouter(
 )
 
 
+class Role(str, Enum):
+    ADMIN = "admin",
+    VERIFIED = "verified",
+    UNVERIFIED = "unverified"
+
+
 @auth_router.get("/me",
                  response_model=UserSchema)
 def get_me(user: FiefUserInfo = Depends(custom_auth(["write:all", "read:all"]))):
-    return UserSchema(name=user['email'], isVerified=True, isAdmin=False)
+    permisions = FiefUsersApi().users_list_permissions_users_id_permissions_get(user['sub'])
+    admin = False
+    for p in permisions.results:
+        if p.permission.codename == "users:manage":
+            admin = True
+            break
+    return UserSchema(id=user['sub'], name=user['email'], isVerified=True, isAdmin=admin)
 
 
-# @auth_router.get("/users",
-#                  response_model=UserSchema)
-# def get_all(new_station: schema.StationNewSchema):
-#     segment_service = main.runner.get(StationService)
-#     return segment_service.create_station(new_station)
-#
-# @auth_router.post("/",
-#                  response_model=UserSchema)
-# def create_station(new_station: schema.StationNewSchema):
-#     segment_service = main.runner.get(StationService)
-#     return segment_service.create_station(new_station)
+@auth_router.get("/users",
+                 response_model=list[UserSchema])
+def get_all(
+        _user: FiefUserInfo = Depends(custom_auth(permissions=["users:manage"])),
+):
+    col = []
+    users = FiefUsersApi().users_list_users_get(limit=1000)
+
+    for u in users.results:
+        verifed = False
+        admin = False
+        for p in FiefUsersApi().users_list_permissions_users_id_permissions_get(u.id).results:
+            if p.permission.codename == "users:manage":
+                admin = True
+            if p.permission.codename == "write:all":
+                verifed = True
+
+        col.append(UserSchema(id=u.id, name=u.email, isVerified=verifed, isAdmin=admin))
+
+    return col
+
+
+@auth_router.post("/user/{user_id}/role")
+def update_user_role(user_id, role: Role, _user: FiefUserInfo = Depends(custom_auth(permissions=["users:manage"]))):
+    roles = FiefRoleApi().roles_list_roles_get().results
+    user_roles = FiefUsersApi().users_list_roles_users_id_roles_get(user_id).results
+
+    for r in user_roles:
+        FiefUsersApi().users_delete_role_users_id_roles_role_id_delete(role_id=r.role_id, id=user_id)
+
+    new_role = None
+
+    if role == Role.ADMIN:
+        for r in roles:
+            if r.name == "admin":
+                new_role = r
+                break
+
+    if role == Role.VERIFIED:
+        for r in roles:
+            if r.name == "verified user":
+                new_role = r
+                break
+
+    if role == Role.UNVERIFIED:
+        return {"status": "ok"}
+
+    FiefUsersApi().users_create_role_users_id_roles_post(id=user_id, user_role_create=UserRoleCreate(id=new_role.id))
+
+    return {"status": "ok"}
 
 
 @auth_router.get("/login", response_class=HTMLResponse)
