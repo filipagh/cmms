@@ -13,10 +13,14 @@ part of openapi.api;
 class UserSchema {
   /// Returns a new [UserSchema] instance.
   UserSchema({
+    required this.id,
     required this.name,
     required this.isVerified,
     required this.isAdmin,
+    required this.role,
   });
+
+  String id;
 
   String name;
 
@@ -24,27 +28,38 @@ class UserSchema {
 
   bool isAdmin;
 
+  Role role;
+
   @override
-  bool operator ==(Object other) => identical(this, other) || other is UserSchema &&
-     other.name == name &&
-     other.isVerified == isVerified &&
-     other.isAdmin == isAdmin;
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is UserSchema &&
+          other.id == id &&
+          other.name == name &&
+          other.isVerified == isVerified &&
+          other.isAdmin == isAdmin &&
+          other.role == role;
 
   @override
   int get hashCode =>
-    // ignore: unnecessary_parenthesis
-    (name.hashCode) +
-    (isVerified.hashCode) +
-    (isAdmin.hashCode);
+      // ignore: unnecessary_parenthesis
+      (id.hashCode) +
+      (name.hashCode) +
+      (isVerified.hashCode) +
+      (isAdmin.hashCode) +
+      (role.hashCode);
 
   @override
-  String toString() => 'UserSchema[name=$name, isVerified=$isVerified, isAdmin=$isAdmin]';
+  String toString() =>
+      'UserSchema[id=$id, name=$name, isVerified=$isVerified, isAdmin=$isAdmin, role=$role]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-      _json[r'name'] = name;
-      _json[r'isVerified'] = isVerified;
-      _json[r'isAdmin'] = isAdmin;
+    _json[r'id'] = id;
+    _json[r'name'] = name;
+    _json[r'isVerified'] = isVerified;
+    _json[r'isAdmin'] = isAdmin;
+    _json[r'role'] = role;
     return _json;
   }
 
@@ -67,9 +82,11 @@ class UserSchema {
       }());
 
       return UserSchema(
+        id: mapValueOfType<String>(json, r'id')!,
         name: mapValueOfType<String>(json, r'name')!,
         isVerified: mapValueOfType<bool>(json, r'isVerified')!,
         isAdmin: mapValueOfType<bool>(json, r'isAdmin')!,
+        role: Role.fromJson(json[r'role'])!,
       );
     }
     return null;
@@ -119,9 +136,11 @@ class UserSchema {
 
   /// The list of required keys that must be present in a JSON.
   static const requiredKeys = <String>{
+    'id',
     'name',
     'isVerified',
     'isAdmin',
+    'role',
   };
 }
 

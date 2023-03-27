@@ -64,6 +64,9 @@ String parameterToString(dynamic value) {
   if (value is AssignedComponentState) {
     return AssignedComponentStateTypeTransformer().encode(value).toString();
   }
+  if (value is Role) {
+    return RoleTypeTransformer().encode(value).toString();
+  }
   if (value is TaskComponentState) {
     return TaskComponentStateTypeTransformer().encode(value).toString();
   }
