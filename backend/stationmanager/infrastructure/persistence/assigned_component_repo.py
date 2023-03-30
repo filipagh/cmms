@@ -21,6 +21,7 @@ class AssignedComponentModel(Base):
     warranty_period_days = Column(postgresql.INTEGER, nullable=True)
     warranty_period_until = Column(Date, nullable=True)
     removed_at = Column(DateTime, nullable=True)
+    serial_number = Column(postgresql.TEXT, nullable=True)
 
 
 def _get_db():

@@ -58,7 +58,8 @@ class CompleteChangeComponentsTaskForm extends StatelessWidget
                       .completeTaskItemsTaskManagerTaskIdCompeteTaskItmesPost(
                           task.id,
                           selectedItems
-                              .map((e) => TaskChangeComponentRequestId(id: e))
+                              .map((e) => TaskChangeComponentRequestCompleted(
+                                  id: e, serialNumber: "123"))
                               .toList())
                       .then((value) {
                     Get.back();

@@ -24,7 +24,8 @@ class AssignedComponentProjector(ProcessApplication):
             task_id=domain_event.task_id,
             installed_at=domain_event.timestamp,
             warranty_period_days=domain_event.warranty_period_days,
-            warranty_period_until=domain_event.warranty_period_until
+            warranty_period_until=domain_event.warranty_period_until,
+            serial_number=domain_event.serial_number
         )
         assigned_component_repo.save(model)
 
@@ -55,6 +56,7 @@ class AssignedComponentProjector(ProcessApplication):
         component.status = domain_event.new_status
         component.task_id = None
         component.warranty_period_until = domain_event.warranty_period_until
+        component.serial_number = domain_event.serial_number
 
         assigned_component_repo.save(component)
 

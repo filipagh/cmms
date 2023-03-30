@@ -15,7 +15,7 @@ from storagemanager.application.storage_item_service import StorageItemService
 from storagemanager.domain.model.sotrageitem import StorageItem
 from taskmanager.application.model.task_change_component.schema import TaskChangeComponentsNewSchema, \
     TaskComponentAddNewSchema, TaskComponentRemoveNewSchema, TaskChangeComponentsSchema, AddComponentRequestSchema, \
-    RemoveComponentRequestSchema, TaskChangeComponentRequestId
+    RemoveComponentRequestSchema, TaskChangeComponentRequestCompleted
 from taskmanager.domain.change_components.task_status_service import TaskStatusService
 from taskmanager.domain.model.task_component_state import TaskComponentState
 from taskmanager.domain.model.task_state import TaskState
@@ -95,7 +95,7 @@ class TaskService(ProcessApplication):
             if c.state == TaskComponentState.AWAITING:
                 storage_service.try_to_allocate_component(c.new_asset_id, task_id)
 
-    def complete_task_items(self, task_id: uuid.UUID, items: list[TaskChangeComponentRequestId]):
+    def complete_task_items(self, task_id: uuid.UUID, items: list[TaskChangeComponentRequestCompleted]):
         task: TaskChangeComponents = self.repository.get(task_id)
         try:
             task.complete_items(items)

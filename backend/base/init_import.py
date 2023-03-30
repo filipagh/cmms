@@ -150,7 +150,8 @@ def import_assets():
 def _get_all_assets_to_install(station_id):
     col = []
     for a in rest_router.get_assets():
-        col.append(AssignedComponentNewSchema(asset_id=a.id, station_id=station_id))
+        # todo: fix this ked budu realne serial numbers udaje k dispozicii
+        col.append(AssignedComponentNewSchema(asset_id=a.id, station_id=station_id, serial_number="123456"))
     return col
 
 
@@ -158,5 +159,6 @@ def _get_selected_assets_to_install(asset_ids: list[uuid.UUID], station_id):
     col = []
     a: AssetIdSchema
     for a in asset_ids:
-        col.append(AssignedComponentNewSchema(asset_id=a.id, station_id=station_id))
+        # todo: fix this ked budu realne serial numbers udaje k dispozicii
+        col.append(AssignedComponentNewSchema(asset_id=a.id, station_id=station_id, serial_number="123456"))
     return col

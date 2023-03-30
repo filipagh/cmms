@@ -101,14 +101,24 @@ class StationComponentsPage extends StatelessWidget
                               Spacer(),
                               buildContextOfComponent(components[index])!,
                               Spacer(),
-                              Text(components[index].warrantyPeriodUntil != null
-                                  ? "Záruka do " +
-                                          components[index]
-                                              .warrantyPeriodUntil!
-                                              .toIso8601String()
-                                              .substring(0, 10) ??
-                                      ''
-                                  : "")
+                              Column(
+                                children: [
+                                  if (components[index].warrantyPeriodUntil !=
+                                      null) ...[
+                                    Text("Záruka do " +
+                                            components[index]
+                                                .warrantyPeriodUntil!
+                                                .toIso8601String()
+                                                .substring(0, 10) ??
+                                        '')
+                                  ],
+                                  if (components[index].serialNumber !=
+                                      null) ...[
+                                    Text("seriové číslo: " +
+                                        components[index].serialNumber!)
+                                  ]
+                                ],
+                              )
                               // Text(components[index].assignedComponentId),
                             ],
 

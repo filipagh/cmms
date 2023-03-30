@@ -1,22 +1,20 @@
 # example test
-import uuid
 
 import pytest
 from sqlalchemy.testing import assert_raises
 
 import roadsegmentmanager.infrastructure.rest_router as rs_api
-import stationmanager.infrastructure.station_rest_router as api
+import taskmanager.infrastructure.task_rest_router as task_router
 from assetmanager.application.model.schema import AssetCategoryNewSchema, AssetNewSchema
 from assetmanager.infrastructure.rest_router import create_new_asset, create_new_category
 from roadsegmentmanager.application.model.schema import RoadSegmentNewSchema
 from stationmanager.application.model.schema import StationNewSchema
-import taskmanager.infrastructure.task_rest_router as task_router
 from stationmanager.infrastructure.station_rest_router import create_station
 from storagemanager.application.model.schema import AssetItemToAdd
 from storagemanager.application.storage_manager_loader import load_all_storage_items
 from storagemanager.infrastructure.rest_router import store_new_assets
 from taskmanager.application.model.task_change_component.schema import TaskChangeComponentsNewSchema, \
-    TaskComponentAddNewSchema, TaskChangeComponentRequestId
+    TaskComponentAddNewSchema, TaskChangeComponentRequestId, TaskChangeComponentRequestCompleted
 from taskmanager.domain.model.task_component_state import TaskComponentState
 from taskmanager.domain.model.task_state import TaskState
 from test.db_test_util import db_app_setup, db_app_clean
@@ -96,7 +94,7 @@ async def test_complete_task(mocker):
     assert store_item.allocated == 1
 
     task_router.complete_task_items(task_id=task_id, task_items=[
-        TaskChangeComponentRequestId(id=task.add[0].id)])
+        TaskChangeComponentRequestCompleted(id=task.add[0].id)])
 
     store_item = load_all_storage_items()[0]
     assert store_item.in_storage == 0
@@ -104,7 +102,7 @@ async def test_complete_task(mocker):
 
     try:
         task_router.complete_task_items(task_id=task_id, task_items=[
-            TaskChangeComponentRequestId(id=task.add[0].id)])
+            TaskChangeComponentRequestCompleted(id=task.add[0].id)])
     except Exception:
         pass
     try:

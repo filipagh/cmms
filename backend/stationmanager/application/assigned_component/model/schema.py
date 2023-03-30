@@ -10,6 +10,7 @@ from stationmanager.domain.model.assigned_component import AssignedComponentStat
 class AssignedComponentSchemaBASE(BaseModel):
     asset_id: uuid.UUID
     station_id: uuid.UUID
+    serial_number: Optional[str]
 
 
 class AssignedComponentNewSchema(AssignedComponentSchemaBASE):

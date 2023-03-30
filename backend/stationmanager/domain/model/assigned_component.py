@@ -21,6 +21,7 @@ class AssignedComponent(Aggregate):
         station_id: uuid
         status: AssignedComponentState
         task_id: uuid
+        serial_number: Optional[str]
         warranty_period_until: Optional[datetime.date]
         warranty_period_days: int
 
@@ -47,16 +48,19 @@ class AssignedComponent(Aggregate):
         new_status: AssignedComponentState
         task_id: uuid.UUID
         installed_at: datetime.datetime
+        serial_number: Optional[str]
 
     @event(CreatedEvent)
     def __init__(self, asset_id, station_id, status: AssignedComponentState,
-                 task_id: uuid, warranty_period_until: Optional[datetime.date], warranty_period_days: int):
+                 task_id: uuid, warranty_period_until: Optional[datetime.date], warranty_period_days: int,
+                 serial_number: Optional[str]):
         self.status = status
         self.asset_id = asset_id
         self.station_id = station_id
         self.task_id = task_id
         self.warranty_period_until = warranty_period_until
         self.warranty_period_days = warranty_period_days
+        self.serial_number = serial_number
 
     def force_remove_component(self):
         self._remove_component(new_status=AssignedComponentState.REMOVED, removed_at=datetime.datetime.now(),
@@ -81,19 +85,21 @@ class AssignedComponent(Aggregate):
     def revert_install(self):
         self.task_id = None
 
-    def install_component(self, task_id, installed_at: datetime):
+    def install_component(self, task_id, installed_at: datetime, serial_number: Optional[str]):
         if self.status != AssignedComponentState.AWAITING:
             raise ProgrammingError(f"assigned component {self.id} is in wrong state")
 
         warranty_period_until = warranty_until_date_calc(installed_at.date(), self.warranty_period_days)
-        self._install_component(task_id, installed_at, AssignedComponentState.INSTALLED, warranty_period_until)
+        self._install_component(task_id, installed_at, AssignedComponentState.INSTALLED, warranty_period_until,
+                                serial_number)
 
     @event(AssignedComponentInstalled)
     def _install_component(self, task_id, installed_at: datetime.datetime, new_status,
-                           warranty_period_until: datetime.date):
+                           warranty_period_until: datetime.date, serial_number: Optional[str]):
         self.warranty_period_until = warranty_period_until
         self.status = new_status
         self.task_id = None
+        self.serial_number = serial_number
 
     def remove_component(self, task_id, removed_at):
         if self.status != AssignedComponentState.WILL_BE_REMOVED:

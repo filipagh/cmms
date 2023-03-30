@@ -10,17 +10,14 @@
 
 part of openapi.api;
 
-class AssignedComponentNewSchema {
-  /// Returns a new [AssignedComponentNewSchema] instance.
-  AssignedComponentNewSchema({
-    required this.assetId,
-    required this.stationId,
+class TaskChangeComponentRequestCompleted {
+  /// Returns a new [TaskChangeComponentRequestCompleted] instance.
+  TaskChangeComponentRequestCompleted({
+    required this.id,
     this.serialNumber,
   });
 
-  String assetId;
-
-  String stationId;
+  String id;
 
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
@@ -33,36 +30,32 @@ class AssignedComponentNewSchema {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is AssignedComponentNewSchema &&
-          other.assetId == assetId &&
-          other.stationId == stationId &&
+      other is TaskChangeComponentRequestCompleted &&
+          other.id == id &&
           other.serialNumber == serialNumber;
 
   @override
   int get hashCode =>
       // ignore: unnecessary_parenthesis
-      (assetId.hashCode) +
-      (stationId.hashCode) +
-      (serialNumber == null ? 0 : serialNumber!.hashCode);
+      (id.hashCode) + (serialNumber == null ? 0 : serialNumber!.hashCode);
 
   @override
   String toString() =>
-      'AssignedComponentNewSchema[assetId=$assetId, stationId=$stationId, serialNumber=$serialNumber]';
+      'TaskChangeComponentRequestCompleted[id=$id, serialNumber=$serialNumber]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-    _json[r'asset_id'] = assetId;
-    _json[r'station_id'] = stationId;
+    _json[r'id'] = id;
     if (serialNumber != null) {
       _json[r'serial_number'] = serialNumber;
     }
     return _json;
   }
 
-  /// Returns a new [AssignedComponentNewSchema] instance and imports its values from
+  /// Returns a new [TaskChangeComponentRequestCompleted] instance and imports its values from
   /// [value] if it's a [Map], null otherwise.
   // ignore: prefer_constructors_over_static_methods
-  static AssignedComponentNewSchema? fromJson(dynamic value) {
+  static TaskChangeComponentRequestCompleted? fromJson(dynamic value) {
     if (value is Map) {
       final json = value.cast<String, dynamic>();
 
@@ -71,26 +64,30 @@ class AssignedComponentNewSchema {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key), 'Required key "AssignedComponentNewSchema[$key]" is missing from JSON.');
-          assert(json[key] != null, 'Required key "AssignedComponentNewSchema[$key]" has a null value in JSON.');
+          assert(json.containsKey(key),
+              'Required key "TaskChangeComponentRequestCompleted[$key]" is missing from JSON.');
+          assert(json[key] != null,
+              'Required key "TaskChangeComponentRequestCompleted[$key]" has a null value in JSON.');
         });
         return true;
       }());
 
-      return AssignedComponentNewSchema(
-        assetId: mapValueOfType<String>(json, r'asset_id')!,
-        stationId: mapValueOfType<String>(json, r'station_id')!,
+      return TaskChangeComponentRequestCompleted(
+        id: mapValueOfType<String>(json, r'id')!,
         serialNumber: mapValueOfType<String>(json, r'serial_number'),
       );
     }
     return null;
   }
 
-  static List<AssignedComponentNewSchema>? listFromJson(dynamic json, {bool growable = false,}) {
-    final result = <AssignedComponentNewSchema>[];
+  static List<TaskChangeComponentRequestCompleted>? listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
+    final result = <TaskChangeComponentRequestCompleted>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
-        final value = AssignedComponentNewSchema.fromJson(row);
+        final value = TaskChangeComponentRequestCompleted.fromJson(row);
         if (value != null) {
           result.add(value);
         }
@@ -99,12 +96,13 @@ class AssignedComponentNewSchema {
     return result.toList(growable: growable);
   }
 
-  static Map<String, AssignedComponentNewSchema> mapFromJson(dynamic json) {
-    final map = <String, AssignedComponentNewSchema>{};
+  static Map<String, TaskChangeComponentRequestCompleted> mapFromJson(
+      dynamic json) {
+    final map = <String, TaskChangeComponentRequestCompleted>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = AssignedComponentNewSchema.fromJson(entry.value);
+        final value = TaskChangeComponentRequestCompleted.fromJson(entry.value);
         if (value != null) {
           map[entry.key] = value;
         }
@@ -113,13 +111,19 @@ class AssignedComponentNewSchema {
     return map;
   }
 
-  // maps a json object with a list of AssignedComponentNewSchema-objects as value to a dart map
-  static Map<String, List<AssignedComponentNewSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
-    final map = <String, List<AssignedComponentNewSchema>>{};
+  // maps a json object with a list of TaskChangeComponentRequestCompleted-objects as value to a dart map
+  static Map<String, List<TaskChangeComponentRequestCompleted>> mapListFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
+    final map = <String, List<TaskChangeComponentRequestCompleted>>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = AssignedComponentNewSchema.listFromJson(entry.value, growable: growable,);
+        final value = TaskChangeComponentRequestCompleted.listFromJson(
+          entry.value,
+          growable: growable,
+        );
         if (value != null) {
           map[entry.key] = value;
         }
@@ -130,8 +134,7 @@ class AssignedComponentNewSchema {
 
   /// The list of required keys that must be present in a JSON.
   static const requiredKeys = <String>{
-    'asset_id',
-    'station_id',
+    'id',
   };
 }
 

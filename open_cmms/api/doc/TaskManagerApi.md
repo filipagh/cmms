@@ -178,7 +178,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **completeTaskItemsTaskManagerTaskIdCompeteTaskItmesPost**
-> String completeTaskItemsTaskManagerTaskIdCompeteTaskItmesPost(taskId, taskChangeComponentRequestId)
+> String completeTaskItemsTaskManagerTaskIdCompeteTaskItmesPost(taskId, taskChangeComponentRequestCompleted)
 
 Complete Task Items
 
@@ -198,10 +198,10 @@ import 'package:BackendAPI/api.dart';
 
 final api_instance = TaskManagerApi();
 final taskId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
-final taskChangeComponentRequestId = [List<TaskChangeComponentRequestId>()]; // List<TaskChangeComponentRequestId> | 
+final taskChangeComponentRequestCompleted = [List<TaskChangeComponentRequestCompleted>()]; // List<TaskChangeComponentRequestCompleted> | 
 
 try {
-    final result = api_instance.completeTaskItemsTaskManagerTaskIdCompeteTaskItmesPost(taskId, taskChangeComponentRequestId);
+    final result = api_instance.completeTaskItemsTaskManagerTaskIdCompeteTaskItmesPost(taskId, taskChangeComponentRequestCompleted);
     print(result);
 } catch (e) {
     print('Exception when calling TaskManagerApi->completeTaskItemsTaskManagerTaskIdCompeteTaskItmesPost: $e\n');
@@ -210,10 +210,10 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **taskId** | **String**|  | 
- **taskChangeComponentRequestId** | [**List<TaskChangeComponentRequestId>**](TaskChangeComponentRequestId.md)|  | 
+ Name                                    | Type                                                                                    | Description | Notes 
+-----------------------------------------|-----------------------------------------------------------------------------------------|-------------|-------
+ **taskId**                              | **String**                                                                              |             |
+ **taskChangeComponentRequestCompleted** | [**List<TaskChangeComponentRequestCompleted>**](TaskChangeComponentRequestCompleted.md) |             |
 
 ### Return type
 

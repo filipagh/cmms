@@ -176,7 +176,8 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
                           getNewItems().forEach((element) {
                             col.add(schema.AssignedComponentNewSchema(
                                 assetId: element.assetId,
-                                stationId: station.id));
+                                stationId: station.id,
+                                serialNumber: "123"));
                           });
                           if (col.isNotEmpty) {
                             if (!_formKey.currentState!.validate()) {
