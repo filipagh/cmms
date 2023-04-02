@@ -23,10 +23,11 @@ class StationComponentsPage extends StatelessWidget
   Widget build(BuildContext context) {
     AssignedComponentsState components;
     try {
-      components = Get.find();
+      components = Get.find(tag: station.id);
     } catch (e) {
       print("put");
-      components = Get.put(AssignedComponentsState(station.id));
+      components =
+          Get.put(AssignedComponentsState(station.id), tag: station.id);
     }
     return Column(
       children: [
@@ -63,7 +64,7 @@ class StationComponentsPage extends StatelessWidget
         ),
         Divider(),
         GetBuilder<AssignedComponentsState>(
-            builder: (_) => buildComponentList(_.components)),
+            tag: station.id, builder: (_) => buildComponentList(_.components)),
       ],
     );
   }
@@ -101,14 +102,24 @@ class StationComponentsPage extends StatelessWidget
                               Spacer(),
                               buildContextOfComponent(components[index])!,
                               Spacer(),
-                              Text(components[index].warrantyPeriodUntil != null
-                                  ? "Záruka do " +
-                                          components[index]
-                                              .warrantyPeriodUntil!
-                                              .toIso8601String()
-                                              .substring(0, 10) ??
-                                      ''
-                                  : "")
+                              Column(
+                                children: [
+                                  if (components[index].warrantyPeriodUntil !=
+                                      null) ...[
+                                    Text("Záruka do " +
+                                            components[index]
+                                                .warrantyPeriodUntil!
+                                                .toIso8601String()
+                                                .substring(0, 10) ??
+                                        '')
+                                  ],
+                                  if (components[index].serialNumber !=
+                                      null) ...[
+                                    Text("seriové číslo: " +
+                                        components[index].serialNumber!)
+                                  ]
+                                ],
+                              )
                               // Text(components[index].assignedComponentId),
                             ],
 

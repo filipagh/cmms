@@ -32,9 +32,12 @@ class TaskChangeComponentsNewSchema(TaskChangeComponentSchemaBASE):
     remove: list[TaskComponentRemoveNewSchema]
 
 
-
 class TaskChangeComponentRequestId(BaseModel):
     id: uuid.UUID
+
+
+class TaskChangeComponentRequestCompleted(TaskChangeComponentRequestId):
+    serial_number: Optional[str]
 
 
 class AddComponentRequestSchema(TaskChangeComponentRequestId):

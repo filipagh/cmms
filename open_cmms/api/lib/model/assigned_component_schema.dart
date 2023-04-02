@@ -15,6 +15,7 @@ class AssignedComponentSchema {
   AssignedComponentSchema({
     required this.assetId,
     required this.stationId,
+    this.serialNumber,
     required this.id,
     required this.status,
     this.taskId,
@@ -27,6 +28,14 @@ class AssignedComponentSchema {
   String assetId;
 
   String stationId;
+
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  String? serialNumber;
 
   String id;
 
@@ -61,10 +70,12 @@ class AssignedComponentSchema {
   DateTime? warrantyPeriodUntil;
 
   @override
-  bool operator ==(Object other) => identical(this, other) || other is AssignedComponentSchema &&
-     other.assetId == assetId &&
-     other.stationId == stationId &&
-     other.id == id &&
+  bool operator ==(Object other) => identical(this, other) ||
+      other is AssignedComponentSchema &&
+          other.assetId == assetId &&
+          other.stationId == stationId &&
+          other.serialNumber == serialNumber &&
+          other.id == id &&
      other.status == status &&
      other.taskId == taskId &&
      other.installedAt == installedAt &&
@@ -75,9 +86,10 @@ class AssignedComponentSchema {
   @override
   int get hashCode =>
     // ignore: unnecessary_parenthesis
-    (assetId.hashCode) +
-    (stationId.hashCode) +
-    (id.hashCode) +
+  (assetId.hashCode) +
+      (stationId.hashCode) +
+      (serialNumber == null ? 0 : serialNumber!.hashCode) +
+      (id.hashCode) +
     (status.hashCode) +
     (taskId == null ? 0 : taskId!.hashCode) +
     (installedAt.hashCode) +
@@ -86,22 +98,26 @@ class AssignedComponentSchema {
     (warrantyPeriodUntil == null ? 0 : warrantyPeriodUntil!.hashCode);
 
   @override
-  String toString() => 'AssignedComponentSchema[assetId=$assetId, stationId=$stationId, id=$id, status=$status, taskId=$taskId, installedAt=$installedAt, removedAt=$removedAt, warrantyPeriodDays=$warrantyPeriodDays, warrantyPeriodUntil=$warrantyPeriodUntil]';
+  String toString() =>
+      'AssignedComponentSchema[assetId=$assetId, stationId=$stationId, serialNumber=$serialNumber, id=$id, status=$status, taskId=$taskId, installedAt=$installedAt, removedAt=$removedAt, warrantyPeriodDays=$warrantyPeriodDays, warrantyPeriodUntil=$warrantyPeriodUntil]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-      _json[r'asset_id'] = assetId;
-      _json[r'station_id'] = stationId;
-      _json[r'id'] = id;
-      _json[r'status'] = status;
+    _json[r'asset_id'] = assetId;
+    _json[r'station_id'] = stationId;
+    if (serialNumber != null) {
+      _json[r'serial_number'] = serialNumber;
+    }
+    _json[r'id'] = id;
+    _json[r'status'] = status;
     if (taskId != null) {
       _json[r'task_id'] = taskId;
     }
-      _json[r'installed_at'] = installedAt.toUtc().toIso8601String();
+    _json[r'installed_at'] = installedAt.toUtc().toIso8601String();
     if (removedAt != null) {
       _json[r'removed_at'] = removedAt!.toUtc().toIso8601String();
     }
-      _json[r'warranty_period_days'] = warrantyPeriodDays;
+    _json[r'warranty_period_days'] = warrantyPeriodDays;
     if (warrantyPeriodUntil != null) {
       _json[r'warranty_period_until'] = _dateFormatter.format(warrantyPeriodUntil!.toUtc());
     }
@@ -129,6 +145,7 @@ class AssignedComponentSchema {
       return AssignedComponentSchema(
         assetId: mapValueOfType<String>(json, r'asset_id')!,
         stationId: mapValueOfType<String>(json, r'station_id')!,
+        serialNumber: mapValueOfType<String>(json, r'serial_number'),
         id: mapValueOfType<String>(json, r'id')!,
         status: AssignedComponentState.fromJson(json[r'status'])!,
         taskId: mapValueOfType<String>(json, r'task_id'),

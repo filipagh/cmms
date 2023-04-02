@@ -1,22 +1,22 @@
 # example test
-import uuid
 
 import pytest
 from sqlalchemy.testing import assert_raises
 
 import roadsegmentmanager.infrastructure.rest_router as rs_api
-import stationmanager.infrastructure.station_rest_router as api
+import stationmanager.infrastructure.assigned_component_rest_router as ac_router
+import taskmanager.infrastructure.task_rest_router as task_router
 from assetmanager.application.model.schema import AssetCategoryNewSchema, AssetNewSchema
 from assetmanager.infrastructure.rest_router import create_new_asset, create_new_category
 from roadsegmentmanager.application.model.schema import RoadSegmentNewSchema
 from stationmanager.application.model.schema import StationNewSchema
-import taskmanager.infrastructure.task_rest_router as task_router
+from stationmanager.domain.model.assigned_component import AssignedComponentState
 from stationmanager.infrastructure.station_rest_router import create_station
 from storagemanager.application.model.schema import AssetItemToAdd
 from storagemanager.application.storage_manager_loader import load_all_storage_items
 from storagemanager.infrastructure.rest_router import store_new_assets
 from taskmanager.application.model.task_change_component.schema import TaskChangeComponentsNewSchema, \
-    TaskComponentAddNewSchema, TaskChangeComponentRequestId
+    TaskComponentAddNewSchema, TaskChangeComponentRequestCompleted
 from taskmanager.domain.model.task_component_state import TaskComponentState
 from taskmanager.domain.model.task_state import TaskState
 from test.db_test_util import db_app_setup, db_app_clean
@@ -66,7 +66,18 @@ async def test_cancel_task(mocker):
     assert store_item.in_storage == 0
     assert store_item.allocated == 1
 
+    componnents = ac_router.get_all(station_id=station_id)
+    assert len(componnents) == 1
+    for c in componnents:
+        if c.asset_id == asset_id:
+            assert c.serial_number == None
+            assert c.status == AssignedComponentState.AWAITING
+            break
+
     task_router.cancel_task(task_id=task_id)
+
+    componnents = ac_router.get_all(station_id=station_id)
+    assert len(componnents) == 0
 
     store_item = load_all_storage_items()[0]
     assert store_item.in_storage == 1
@@ -74,7 +85,7 @@ async def test_cancel_task(mocker):
 
     try:
         task_router.complete_task_items(task_id=task_id, task_items=[
-            TaskChangeComponentRequestId(id=task.add[0].id)])
+            TaskChangeComponentRequestCompleted(id=task.add[0].id)])
     except Exception:
         pass
     try:
@@ -95,16 +106,33 @@ async def test_complete_task(mocker):
     assert store_item.in_storage == 0
     assert store_item.allocated == 1
 
+    componnents = ac_router.get_all(station_id=station_id)
+    assert len(componnents) == 1
+    for c in componnents:
+        if c.asset_id == asset_id:
+            assert c.serial_number == None
+            assert c.status == AssignedComponentState.AWAITING
+            break
+
+    serial_number = "serial_number"
     task_router.complete_task_items(task_id=task_id, task_items=[
-        TaskChangeComponentRequestId(id=task.add[0].id)])
+        TaskChangeComponentRequestCompleted(id=task.add[0].id, serial_number=serial_number)])
 
     store_item = load_all_storage_items()[0]
     assert store_item.in_storage == 0
     assert store_item.allocated == 0
 
+    componnents = ac_router.get_all(station_id=station_id)
+    assert len(componnents) == 1
+    for c in componnents:
+        if c.asset_id == asset_id:
+            assert c.status == AssignedComponentState.INSTALLED
+            assert c.serial_number == serial_number
+            break
+
     try:
         task_router.complete_task_items(task_id=task_id, task_items=[
-            TaskChangeComponentRequestId(id=task.add[0].id)])
+            TaskChangeComponentRequestCompleted(id=task.add[0].id)])
     except Exception:
         pass
     try:
@@ -116,8 +144,10 @@ async def test_complete_task(mocker):
     assert store_item.in_storage == 0
     assert store_item.allocated == 0
 
-    # expected_schema_dict = new_schema.dict()
-    # expected_schema_dict["legacy_ids"] = ''
-    # station_dict = expected_schema_dict
-    # station_dict['id'] = station_id
-    # assert api.get_by_id(station_id).dict() == station_dict
+    componnents = ac_router.get_all(station_id=station_id)
+    assert len(componnents) == 1
+    for c in componnents:
+        if c.asset_id == asset_id:
+            assert c.status == AssignedComponentState.INSTALLED
+            assert c.serial_number == serial_number
+            break

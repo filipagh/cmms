@@ -25,9 +25,10 @@ class CreateChangeComponentsTaskForm extends StatefulWidget
       required this.remove})
       : super(key: key) {
     try {
-      components = Get.find();
+      components = Get.find(tag: station.id);
     } catch (e) {
-      components = Get.put(AssignedComponentsState(station.id));
+      components =
+          Get.put(AssignedComponentsState(station.id), tag: station.id);
     }
   }
 

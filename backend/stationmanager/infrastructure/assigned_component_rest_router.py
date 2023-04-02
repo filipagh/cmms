@@ -24,7 +24,8 @@ def create_installed_component(new_components: list[schema.AssignedComponentNewS
     segment_service = main.runner.get(AssignedComponentsService)
     ids = []
     for c in new_components:
-        ids.append(segment_service.create_installed_component(c.asset_id, c.station_id, warranty_period_days))
+        ids.append(
+            segment_service.create_installed_component(c.asset_id, c.station_id, warranty_period_days, c.serial_number))
     return ids
 
 

@@ -26,6 +26,7 @@ class AssignedComponentsState extends GetxController {
         .then((value) {
       components.clear();
       components.addAll(value ?? []);
+      refresh();
       update();
     });
   }

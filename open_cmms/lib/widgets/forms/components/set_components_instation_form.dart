@@ -6,6 +6,7 @@ import 'package:open_cmms/service/backend_api/assigned_components_service.dart';
 import 'package:open_cmms/states/asset_types_state.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 import 'package:open_cmms/widgets/forms/components/component_picker.dart';
+import 'package:open_cmms/widgets/forms/components/serial_number_form.dart';
 
 import '../../../states/station/components_state.dart';
 
@@ -14,7 +15,9 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
 
   SetStationComponentsForm.editComponentsInStation(
       {Key? key, required this.station})
-      : super(key: key);
+      : super(key: key) {
+    _assignedComponentState = Get.find(tag: station.id);
+  }
 
   String getTitle() {
     return "Zmena komponentov v stanici: ${station.name}";
@@ -26,7 +29,7 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
   }
 
   RxList<FormItem> items = <FormItem>[].obs;
-  final AssignedComponentsState _assignedComponentState = Get.find();
+  late AssignedComponentsState _assignedComponentState;
   final AssetTypesState _assets = Get.find();
   final TextEditingController warrantyDate = TextEditingController();
   final TextEditingController warrantyDays = TextEditingController();
@@ -69,8 +72,12 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
                 ElevatedButton(
                     onPressed: () {
                       showFormDialog<AssetSchema>(const ComponentPickerForm())
-                          .then((value) {
-                        items.insert(0, FormItem(value!.id));
+                          .then((asset) {
+                        if (asset != null) {
+                          showFormDialog(SerialNumberForm(asset: asset)).then(
+                              (serialNumber) => items.insert(
+                                  0, FormItem(asset.id, serialNumber)));
+                        }
                       });
                     },
                     child: const Text('Pridat komponent')),
@@ -176,7 +183,8 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
                           getNewItems().forEach((element) {
                             col.add(schema.AssignedComponentNewSchema(
                                 assetId: element.assetId,
-                                stationId: station.id));
+                                stationId: station.id,
+                                serialNumber: element.serialNumber));
                           });
                           if (col.isNotEmpty) {
                             if (!_formKey.currentState!.validate()) {
@@ -223,42 +231,48 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
   }
 
   Card buildCardFromFormItem(FormItem item) {
+    const String serialNumberPrefix = "sériové číslo: ";
+    var noSerialNumber = "žiadné sériové číslo";
     switch (item.status) {
       case FormItemStatus.instaled:
         return Card(
           color: Colors.white,
           child: ListTile(
-            trailing: IconButton(
-              onPressed: () => removeItem(item),
-              icon: const Icon(Icons.delete),
-            ),
-            title: Text(_assets.getAssetById(item.assetId)!.name),
-          ),
+              trailing: IconButton(
+                onPressed: () => removeItem(item),
+                icon: const Icon(Icons.delete),
+              ),
+              title: Text(_assets.getAssetById(item.assetId)!.name),
+              subtitle: Text(
+                  serialNumberPrefix + (item.serialNumber ?? noSerialNumber))),
         );
       case FormItemStatus.tobeinstaled:
         return Card(
           color: Colors.green[200],
           child: ListTile(
-            title: Text(_assets.getAssetById(item.assetId)!.name),
-          ),
+              title: Text(_assets.getAssetById(item.assetId)!.name),
+              subtitle: Text(
+                  serialNumberPrefix + (item.serialNumber ?? noSerialNumber))),
         );
       case FormItemStatus.toberemoved:
         return Card(
           color: Colors.red[200],
           child: ListTile(
-            title: Text(_assets.getAssetById(item.assetId)!.name),
-          ),
+              title: Text(_assets.getAssetById(item.assetId)!.name),
+              subtitle: Text(
+                  serialNumberPrefix + (item.serialNumber ?? noSerialNumber))),
         );
       case FormItemStatus.nowadded:
         return Card(
           color: Colors.green[400],
           child: ListTile(
-            trailing: IconButton(
-              onPressed: () => removeNowAddedItem(item),
-              icon: const Icon(Icons.close),
-            ),
-            title: Text(_assets.getAssetById(item.assetId)!.name),
-          ),
+              trailing: IconButton(
+                onPressed: () => removeNowAddedItem(item),
+                icon: const Icon(Icons.close),
+              ),
+              title: Text(_assets.getAssetById(item.assetId)!.name),
+              subtitle: Text(
+                  serialNumberPrefix + (item.serialNumber ?? noSerialNumber))),
         );
       case FormItemStatus.nowremoved:
         return Card(
@@ -269,6 +283,8 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
               icon: const Icon(Icons.rotate_left),
             ),
             title: Text(_assets.getAssetById(item.assetId)!.name),
+            subtitle: Text(
+                serialNumberPrefix + (item.serialNumber ?? noSerialNumber)),
           ),
         );
     }
@@ -321,8 +337,9 @@ class FormItem {
   late String? assignedComponentId;
   late String assetId;
   late FormItemStatus status;
+  late String? serialNumber;
 
-  FormItem.new(this.assetId) {
+  FormItem.new(this.assetId, this.serialNumber) {
     status = FormItemStatus.nowadded;
   }
 
@@ -330,5 +347,6 @@ class FormItem {
       schema.AssignedComponentSchema assignedComponent, this.status) {
     assignedComponentId = assignedComponent.id;
     assetId = assignedComponent.assetId;
+    serialNumber = assignedComponent.serialNumber;
   }
 }

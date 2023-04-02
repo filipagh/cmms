@@ -10,7 +10,7 @@ from base import main
 from base.auth_def import custom_auth, read_permission, write_permission
 from taskmanager.application.model.task.schema import TaskSchema
 from taskmanager.application.model.task_change_component import schema as schema_change_comp
-from taskmanager.application.model.task_change_component.schema import TaskChangeComponentRequestId
+from taskmanager.application.model.task_change_component.schema import TaskChangeComponentRequestCompleted
 from taskmanager.application.model.task_service_remote.schema import TaskServiceRemoteNewSchema
 from taskmanager.application.task_service import TaskService
 from taskmanager.application.task_service_remote_service import TaskServiceRemoteService
@@ -76,7 +76,7 @@ def allocate_components(task_id: uuid.UUID, _user: FiefUserInfo = Depends(custom
 
 
 @task_manager_router.post("/{task_id}/compete_task_itmes", response_class=PlainTextResponse)
-def complete_task_items(task_id: uuid.UUID, task_items: list[TaskChangeComponentRequestId],
+def complete_task_items(task_id: uuid.UUID, task_items: list[TaskChangeComponentRequestCompleted],
                         _user: FiefUserInfo = Depends(custom_auth(read_permission))):
     task_service: TaskService = main.runner.get(TaskService)
     task_service.complete_task_items(task_id, task_items)
