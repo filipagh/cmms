@@ -22,6 +22,19 @@
 
 [//]: # (---)
 
+## 1.4.23
+
+### novinky
+
+- pridanie serioveho cisla pre komponenty
+- formular na zadanie serioveho cisla pri instalacii komponentu
+
+### oprava
+
+- zruseny task vrati komponent zo stavu na odstranenie do stavu nainstalovany
+
+---
+
 ## 27.3.23
 
 ### novinky
