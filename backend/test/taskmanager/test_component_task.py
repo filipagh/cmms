@@ -16,7 +16,7 @@ from storagemanager.application.model.schema import AssetItemToAdd
 from storagemanager.application.storage_manager_loader import load_all_storage_items
 from storagemanager.infrastructure.rest_router import store_new_assets
 from taskmanager.application.model.task_change_component.schema import TaskChangeComponentsNewSchema, \
-    TaskComponentAddNewSchema, TaskChangeComponentRequestId, TaskChangeComponentRequestCompleted
+    TaskComponentAddNewSchema, TaskChangeComponentRequestCompleted
 from taskmanager.domain.model.task_component_state import TaskComponentState
 from taskmanager.domain.model.task_state import TaskState
 from test.db_test_util import db_app_setup, db_app_clean
@@ -85,7 +85,7 @@ async def test_cancel_task(mocker):
 
     try:
         task_router.complete_task_items(task_id=task_id, task_items=[
-            TaskChangeComponentRequestId(id=task.add[0].id)])
+            TaskChangeComponentRequestCompleted(id=task.add[0].id)])
     except Exception:
         pass
     try:
@@ -151,9 +151,3 @@ async def test_complete_task(mocker):
             assert c.status == AssignedComponentState.INSTALLED
             assert c.serial_number == serial_number
             break
-
-    # expected_schema_dict = new_schema.dict()
-    # expected_schema_dict["legacy_ids"] = ''
-    # station_dict = expected_schema_dict
-    # station_dict['id'] = station_id
-    # assert api.get_by_id(station_id).dict() == station_dict
