@@ -168,7 +168,7 @@ class TaskChangeComponents(Aggregate):
             if c.state == TaskComponentState.ALLOCATED: assets_to_free.append(c.new_asset_id)
 
         for ac in self.components_to_remove:
-            if ac.state == TaskComponentState.AWAITING: assigned_comp_to_free.append(ac.assigned_component_id)
+            if ac.state == TaskComponentState.INSTALLED: assigned_comp_to_free.append(ac.assigned_component_id)
 
         self._cancel_task(assigned_component_to_revert=assigned_comp_to_free, assets_to_free=assets_to_free,
                           new_status=TaskState.REMOVED)

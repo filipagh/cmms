@@ -23,10 +23,11 @@ class StationComponentsPage extends StatelessWidget
   Widget build(BuildContext context) {
     AssignedComponentsState components;
     try {
-      components = Get.find();
+      components = Get.find(tag: station.id);
     } catch (e) {
       print("put");
-      components = Get.put(AssignedComponentsState(station.id));
+      components =
+          Get.put(AssignedComponentsState(station.id), tag: station.id);
     }
     return Column(
       children: [
@@ -63,7 +64,7 @@ class StationComponentsPage extends StatelessWidget
         ),
         Divider(),
         GetBuilder<AssignedComponentsState>(
-            builder: (_) => buildComponentList(_.components)),
+            tag: station.id, builder: (_) => buildComponentList(_.components)),
       ],
     );
   }

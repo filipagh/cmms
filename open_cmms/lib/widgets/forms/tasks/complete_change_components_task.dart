@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:open_cmms/service/backend_api/tasks_service.dart';
 import 'package:open_cmms/states/asset_types_state.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
+import 'package:open_cmms/widgets/forms/components/serial_number_form.dart';
 
 import '../../../snacbars.dart';
 import '../../../states/station/components_state.dart';
@@ -16,7 +17,8 @@ class CompleteChangeComponentsTaskForm extends StatelessWidget
   final AssetTypesState _assets = Get.find();
 
   late AssignedComponentsState components;
-  final List<String> selectedItems = <String>[].obs;
+  final List<TaskChangeComponentRequestCompleted> completedItems =
+      <TaskChangeComponentRequestCompleted>[].obs;
 
   CompleteChangeComponentsTaskForm(
       {Key? key, required this.stationId, required this.task})
@@ -56,11 +58,7 @@ class CompleteChangeComponentsTaskForm extends StatelessWidget
                 onPressed: () {
                   TasksService()
                       .completeTaskItemsTaskManagerTaskIdCompeteTaskItmesPost(
-                          task.id,
-                          selectedItems
-                              .map((e) => TaskChangeComponentRequestCompleted(
-                                  id: e, serialNumber: "123"))
-                              .toList())
+                          task.id, completedItems)
                       .then((value) {
                     Get.back();
                     showOk("komponenty boli zmenené");
@@ -85,19 +83,31 @@ class CompleteChangeComponentsTaskForm extends StatelessWidget
       title: Text("Pridat komponenty:"),
     ));
     task.add.forEach((element) {
+      if (element.state == TaskComponentState.installed) {
+        return;
+      }
+      var assetSchema = _assets.getAssetById(element.newAssetId);
+      TaskChangeComponentRequestCompleted? asDoneObject =
+          completedItems.firstWhereOrNull((item) => item.id == element.id);
       tiles.add(ListTile(
-        title: Text(_assets.getAssetById(element.newAssetId)!.name),
+        title: Text(assetSchema!.name),
+        subtitle: asDoneObject != null
+            ? Text("sériové čislo: " + (asDoneObject.serialNumber ?? ""))
+            : null,
         selectedTileColor: Colors.green[200],
-        selected: selectedItems.contains(element.id),
+        selected: asDoneObject != null,
         onTap: element.state != TaskComponentState.allocated
             ? null
-            : () {
-                if (selectedItems.contains(element.id)) {
-                  selectedItems.remove(element.id);
+            : () async {
+                if (asDoneObject != null) {
+                  completedItems.remove(asDoneObject);
                 } else {
-                  selectedItems.add(element.id);
+                  completedItems.add(TaskChangeComponentRequestCompleted(
+                      id: element.id,
+                      serialNumber: await showFormDialog(
+                          SerialNumberForm(asset: assetSchema))));
                 }
-                selectedItems.obs.refresh();
+                completedItems.obs.refresh();
               },
       ));
     });
@@ -106,28 +116,45 @@ class CompleteChangeComponentsTaskForm extends StatelessWidget
       title: Text("Odobrat komponenty:"),
     ));
     task.remove.forEach((element) {
-      tiles.add(ListTile(
-        title: GetBuilder<AssignedComponentsState>(
-            tag: stationId,
-            builder: (_components) {
-              final comp = _components.getById(element.assignedComponentId);
-              if (comp == null) return const Text("loading...");
-              final asset = _assets.getAssetById(comp.assetId);
-              if (asset == null) return const Text("loading...");
-              return Text(asset.name);
-            }),
-        selectedTileColor: Colors.green[200],
-        selected: selectedItems.contains(element.id),
-        onTap: element.state != TaskComponentState.installed
-            ? null
-            : () {
-                if (selectedItems.contains(element.id)) {
-                  selectedItems.remove(element.id);
-                } else {
-                  selectedItems.add(element.id);
-                }
-                selectedItems.obs.refresh();
-              },
+      if (element.state == TaskComponentState.removed) {
+        return;
+      }
+      tiles.add(GetBuilder<AssignedComponentsState>(
+        tag: stationId,
+        builder: (_components) {
+          var title = "";
+          final comp = _components.getById(element.assignedComponentId);
+          if (comp == null)
+            title = "loading...";
+          else {
+            final asset = _assets.getAssetById(comp.assetId);
+            if (asset == null)
+              title = "loading...";
+            else
+              title = asset.name;
+          }
+          TaskChangeComponentRequestCompleted? asDoneObject =
+              completedItems.firstWhereOrNull((item) => element.id == item.id);
+
+          return ListTile(
+            title: Text(title),
+            subtitle: Text("sériové čislo: " + (comp?.serialNumber ?? "")),
+            selectedTileColor: Colors.green[200],
+            selected: asDoneObject != null,
+            onTap: element.state != TaskComponentState.installed
+                ? null
+                : () {
+                    if (asDoneObject != null) {
+                      completedItems.remove(asDoneObject);
+                    } else {
+                      completedItems.add(
+                          TaskChangeComponentRequestCompleted(id: element.id));
+                    }
+
+                    completedItems.obs.refresh();
+                  },
+          );
+        },
       ));
     });
 

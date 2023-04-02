@@ -7,7 +7,7 @@ void showError(String message) {
       content: Text(message),
       actions: [
         TextButton(
-          child: const Text("spat"),
+          child: const Text("OK"),
           onPressed: () => Get.back(),
         ),
       ],

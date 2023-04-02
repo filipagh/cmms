@@ -16,9 +16,10 @@ class EditStationComponentsForm extends StatelessWidget
   EditStationComponentsForm({Key? key, required this.station})
       : super(key: key) {
     try {
-      _assignedComponentState = Get.find();
+      _assignedComponentState = Get.find(tag: station.id);
     } catch (e) {
-      _assignedComponentState = Get.put(AssignedComponentsState(station.id));
+      _assignedComponentState =
+          Get.put(AssignedComponentsState(station.id), tag: station.id);
     }
   }
 
@@ -138,6 +139,9 @@ class EditStationComponentsForm extends StatelessWidget
   }
 
   Card buildCardFromFormItem(FormItem item) {
+    const String serialNumberPrefix = "sériové číslo: ";
+    var noSerialNumber = "žiadné sériové číslo";
+    var serialNumberWillAddTechnic = "sériové číslo bude pridané technikom";
     switch (item.status) {
       case FormItemStatus.instaled:
         return Card(
@@ -148,6 +152,8 @@ class EditStationComponentsForm extends StatelessWidget
               icon: Icon(Icons.delete),
             ),
             title: Text(_assets.getAssetById(item.assetId)!.name),
+            subtitle: Text(
+                serialNumberPrefix + (item.serialNumber ?? noSerialNumber)),
           ),
         );
       case FormItemStatus.tobeinstaled:
@@ -155,6 +161,8 @@ class EditStationComponentsForm extends StatelessWidget
           color: Colors.green[200],
           child: ListTile(
             title: Text(_assets.getAssetById(item.assetId)!.name),
+            subtitle: Text(serialNumberPrefix +
+                (item.serialNumber ?? serialNumberWillAddTechnic)),
           ),
         );
       case FormItemStatus.toberemoved:
@@ -162,6 +170,8 @@ class EditStationComponentsForm extends StatelessWidget
           color: Colors.red[200],
           child: ListTile(
             title: Text(_assets.getAssetById(item.assetId)!.name),
+            subtitle: Text(
+                serialNumberPrefix + (item.serialNumber ?? noSerialNumber)),
           ),
         );
       case FormItemStatus.nowadded:
@@ -173,18 +183,21 @@ class EditStationComponentsForm extends StatelessWidget
               icon: Icon(Icons.close),
             ),
             title: Text(_assets.getAssetById(item.assetId)!.name),
+            subtitle: Text(serialNumberPrefix +
+                (item.serialNumber ?? serialNumberWillAddTechnic)),
           ),
         );
       case FormItemStatus.nowremoved:
         return Card(
           color: Colors.red[400],
           child: ListTile(
-            trailing: IconButton(
-              onPressed: () => rollBackRemove(item),
-              icon: Icon(Icons.rotate_left),
-            ),
-            title: Text(_assets.getAssetById(item.assetId)!.name),
-          ),
+              trailing: IconButton(
+                onPressed: () => rollBackRemove(item),
+                icon: Icon(Icons.rotate_left),
+              ),
+              title: Text(_assets.getAssetById(item.assetId)!.name),
+              subtitle: Text(
+                  serialNumberPrefix + (item.serialNumber ?? noSerialNumber))),
         );
     }
   }
@@ -236,6 +249,7 @@ class FormItem {
   late String? assignedComponentId;
   late String assetId;
   late FormItemStatus status;
+  String? serialNumber;
 
   FormItem.new(this.assetId) {
     status = FormItemStatus.nowadded;
@@ -245,5 +259,6 @@ class FormItem {
       schema.AssignedComponentSchema assignedComponent, this.status) {
     assignedComponentId = assignedComponent.id;
     assetId = assignedComponent.assetId;
+    serialNumber = assignedComponent.serialNumber;
   }
 }

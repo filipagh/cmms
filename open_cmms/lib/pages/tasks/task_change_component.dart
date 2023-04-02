@@ -27,9 +27,10 @@ class TaskChangeComponentsPage extends StatelessWidget {
     TasksService().loadByIdTaskManagerGetTaskGet(taskId).then((value) {
       taskProjection = value;
       try {
-        Get.find(tag: taskProjection!.stationId);
+        AssignedComponentsState com = Get.find(tag: taskProjection!.stationId);
       } catch (e) {
-        Get.put(AssignedComponentsState(taskProjection!.stationId),
+        AssignedComponentsState com = Get.put(
+            AssignedComponentsState(taskProjection!.stationId),
             tag: taskProjection!.stationId);
       }
       loadTask();

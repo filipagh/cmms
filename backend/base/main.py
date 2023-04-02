@@ -109,6 +109,7 @@ add_transconder(AssetTelemetryAsJSON())
 # runner.get(TasksProjector).pull_and_process("TaskService")
 # runner.get(TasksProjector).pull_and_process("TaskServiceOnSiteService")
 # runner.get(TasksProjector).pull_and_process("TaskServiceRemoteService")
+# runner.get(AssignedComponentsService).pull_and_process("TaskService")
 
 
 app = FastAPI(debug=True)
