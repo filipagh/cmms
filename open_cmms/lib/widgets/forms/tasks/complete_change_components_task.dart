@@ -72,9 +72,7 @@ class CompleteChangeComponentsTaskForm extends StatelessWidget
   }
 
   Widget buildComponentsEditList() {
-    return Obx(() {
-      return ListView(children: buildActionsTiles());
-    });
+    return ListView(children: buildActionsTiles());
   }
 
   List<Widget> buildActionsTiles() {
@@ -87,29 +85,33 @@ class CompleteChangeComponentsTaskForm extends StatelessWidget
         return;
       }
       var assetSchema = _assets.getAssetById(element.newAssetId);
-      TaskChangeComponentRequestCompleted? asDoneObject =
-          completedItems.firstWhereOrNull((item) => item.id == element.id);
-      tiles.add(ListTile(
-        title: Text(assetSchema!.name),
-        subtitle: asDoneObject != null
-            ? Text("sériové čislo: " + (asDoneObject.serialNumber ?? ""))
-            : null,
-        selectedTileColor: Colors.green[200],
-        selected: asDoneObject != null,
-        onTap: element.state != TaskComponentState.allocated
-            ? null
-            : () async {
-                if (asDoneObject != null) {
-                  completedItems.remove(asDoneObject);
-                } else {
-                  completedItems.add(TaskChangeComponentRequestCompleted(
-                      id: element.id,
-                      serialNumber: await showFormDialog(
-                          SerialNumberForm(asset: assetSchema))));
-                }
-                completedItems.obs.refresh();
-              },
-      ));
+
+      tiles.add(Obx(() {
+        TaskChangeComponentRequestCompleted? asDoneObject = completedItems
+            .toList()
+            .firstWhereOrNull((item) => item.id == element.id);
+        return ListTile(
+          title: Text(assetSchema!.name),
+          subtitle: asDoneObject != null
+              ? Text("sériové čislo: " + (asDoneObject.serialNumber ?? ""))
+              : null,
+          selectedTileColor: Colors.green[200],
+          selected: asDoneObject != null,
+          onTap: element.state != TaskComponentState.allocated
+              ? null
+              : () async {
+                  if (asDoneObject != null) {
+                    completedItems.remove(asDoneObject);
+                  } else {
+                    completedItems.add(TaskChangeComponentRequestCompleted(
+                        id: element.id,
+                        serialNumber: await showFormDialog(
+                            SerialNumberForm(asset: assetSchema))));
+                  }
+                  completedItems.obs.refresh();
+                },
+        );
+      }));
     });
 
     tiles.add(ListTile(
@@ -133,26 +135,32 @@ class CompleteChangeComponentsTaskForm extends StatelessWidget
             else
               title = asset.name;
           }
-          TaskChangeComponentRequestCompleted? asDoneObject =
-              completedItems.firstWhereOrNull((item) => element.id == item.id);
 
-          return ListTile(
-            title: Text(title),
-            subtitle: Text("sériové čislo: " + (comp?.serialNumber ?? "")),
-            selectedTileColor: Colors.green[200],
-            selected: asDoneObject != null,
-            onTap: element.state != TaskComponentState.installed
-                ? null
-                : () {
-                    if (asDoneObject != null) {
-                      completedItems.remove(asDoneObject);
-                    } else {
-                      completedItems.add(
-                          TaskChangeComponentRequestCompleted(id: element.id));
-                    }
+          return Obx(
+            () {
+              TaskChangeComponentRequestCompleted? asDoneObject = completedItems
+                  .toList()
+                  .firstWhereOrNull((item) => element.id == item.id);
+              return ListTile(
+                title: Text(title),
+                subtitle: Text("sériové čislo: " + (comp?.serialNumber ?? "")),
+                selectedTileColor: Colors.green[200],
+                selected: asDoneObject != null,
+                onTap: element.state != TaskComponentState.installed
+                    ? null
+                    : () {
+                        if (asDoneObject != null) {
+                          completedItems.remove(asDoneObject);
+                        } else {
+                          completedItems.add(
+                              TaskChangeComponentRequestCompleted(
+                                  id: element.id));
+                        }
 
-                    completedItems.obs.refresh();
-                  },
+                        completedItems.obs.refresh();
+                      },
+              );
+            },
           );
         },
       ));
