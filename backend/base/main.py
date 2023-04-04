@@ -30,11 +30,13 @@ from stationmanager.infrastructure.service_contract_rest_router import service_c
 from stationmanager.infrastructure.station_rest_router import station_router
 from storagemanager.application.storage_item_projector import StorageItemProjector
 from storagemanager.application.storage_item_service import StorageItemService
+from taskmanager.application.redmine_projector import RedmineProjector
 from taskmanager.application.task_service import TaskService
 from taskmanager.application.task_service_on_site_service import TaskServiceOnSiteService
 from taskmanager.application.task_service_remote_service import TaskServiceRemoteService
 from taskmanager.application.tasks_projector import TasksProjector
 from taskmanager.domain.model.tasks.task_change_components import AddComponentRequestAsStr, RemoveComponentRequestAsStr
+from taskmanager.infrastructure.redmine_rest_router import redmine_router
 from taskmanager.infrastructure.task_rest_router import task_manager_router
 from taskmanager.infrastructure.task_servis_on_site_rest_router import task_servis_on_site
 from taskmanager.infrastructure.task_servis_remote_rest_router import task_servis_remote
@@ -75,7 +77,7 @@ services = [AssetService, AssetProjector, StorageItemProjector, RoadSegmentProje
             AssignedComponentProjector, ActionHistoryProjector, StorageItemService, RoadSegmentService, StationService,
             AssignedComponentsService, TasksProjector,
             TaskService, TaskServiceOnSiteService, TaskServiceRemoteService, ServiceContractService,
-            ServiceContractProjector]
+            ServiceContractProjector, RedmineProjector]
 
 system = System(pipes=[[AssetService, AssetProjector],
                        [AssetService, StorageItemService],
@@ -91,6 +93,9 @@ system = System(pipes=[[AssetService, AssetProjector],
                        [TaskService, StorageItemService],
                        [TaskServiceOnSiteService, TasksProjector],
                        [TaskServiceRemoteService, TasksProjector],
+                       [TaskService, RedmineProjector],
+                       [TaskServiceOnSiteService, RedmineProjector],
+                       [TaskServiceRemoteService, RedmineProjector],
                        [ServiceContractService, ServiceContractProjector]
                        ])
 
@@ -100,11 +105,12 @@ runner.start()
 runner.get(TaskService).mapper.transcoder.register(AddComponentRequestAsStr())
 runner.get(TaskService).mapper.transcoder.register(RemoveComponentRequestAsStr())
 
-register_tansconder([TasksProjector, AssignedComponentsService, StorageItemService], AddComponentRequestAsStr())
-register_tansconder([TasksProjector, AssignedComponentsService, StorageItemService], RemoveComponentRequestAsStr())
+register_tansconder([TasksProjector, AssignedComponentsService, StorageItemService, RedmineProjector],
+                    AddComponentRequestAsStr())
+register_tansconder([TasksProjector, AssignedComponentsService, StorageItemService, RedmineProjector],
+                    RemoveComponentRequestAsStr())
 add_transconder(DateAsIso())
 add_transconder(AssetTelemetryAsJSON())
-
 
 # runner.get(TasksProjector).pull_and_process("TaskService")
 # runner.get(TasksProjector).pull_and_process("TaskServiceOnSiteService")
@@ -124,6 +130,7 @@ app.include_router(task_servis_on_site)
 app.include_router(task_servis_remote)
 app.include_router(service_contract_router)
 app.include_router(auth_router)
+app.include_router(redmine_router)
 
 origins = [
     "http://localhost:5000",
