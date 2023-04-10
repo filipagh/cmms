@@ -41,7 +41,6 @@ class _Redmine_auth_formState extends State<Redmine_auth_form> {
               decoration: const InputDecoration(
                 labelText: "Redmine URL (https://redmine.example.com)",
               ),
-              initialValue: "http://pumec.zapto.org:3000", //todo remove
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Prosím zadajte URL';
@@ -53,7 +52,6 @@ class _Redmine_auth_formState extends State<Redmine_auth_form> {
               onSaved: (value) {
                 apiKey = value!;
               },
-              initialValue: "bc8b009a1288a37abb234abdf3de2a20229862cd",
               //todo remove
               decoration: const InputDecoration(
                 labelText: "Redmine API key",
