@@ -75,6 +75,7 @@ class _CreateChangeComponentsTaskFormState
 
   @override
   Widget build(BuildContext context) {
+    taskName.text = widget.station.name + ": Zmena komponentov";
     return Form(
       key: _formKey,
       child: Column(
@@ -118,45 +119,45 @@ class _CreateChangeComponentsTaskFormState
                     children: [
                       Expanded(
                           child: TextFormField(
-                        decoration:
+                            decoration:
                             const InputDecoration(labelText: "Zaruka do"),
-                        controller: warrantyDate,
-                        validator: (v) {
-                          return widget.add.isNotEmpty &&
+                            controller: warrantyDate,
+                            validator: (v) {
+                              return widget.add.isNotEmpty &&
                                   (v == null || v.isEmpty)
-                              ? "zvolte datum"
-                              : null;
-                        },
-                        onTap: () {
-                          var now = DateTime.now();
-                          showDatePicker(
+                                  ? "zvolte datum"
+                                  : null;
+                            },
+                            onTap: () {
+                              var now = DateTime.now();
+                              showDatePicker(
                                   context: context,
                                   firstDate: now,
                                   lastDate:
-                                      now.add(const Duration(days: 365 * 20)),
+                                  now.add(const Duration(days: 365 * 20)),
                                   initialDate: DateTime(
                                       now.year + 2, now.month, now.day))
-                              .then((value) {
-                            updateWarranty(value!);
-                          });
-                        },
-                      )),
+                                  .then((value) {
+                                updateWarranty(value!);
+                              });
+                            },
+                          )),
                       const Spacer(),
                       Expanded(
                           child: TextFormField(
-                        decoration: const InputDecoration(
-                            labelText: "Pocet dni na zaruku"),
-                        validator: (v) {
-                          return widget.add.isNotEmpty &&
+                            decoration: const InputDecoration(
+                                labelText: "Pocet dni na zaruku"),
+                            validator: (v) {
+                              return widget.add.isNotEmpty &&
                                   (v == null || v.isEmpty)
-                              ? "zvolte pocet dni"
-                              : null;
-                        },
-                        onChanged: (v) {
-                          updateWarrantyDays(int.parse(v));
-                        },
-                        controller: warrantyDays,
-                      )),
+                                  ? "zvolte pocet dni"
+                                  : null;
+                            },
+                            onChanged: (v) {
+                              updateWarrantyDays(int.parse(v));
+                            },
+                            controller: warrantyDays,
+                          )),
                     ],
                   ),
                 )
@@ -178,15 +179,15 @@ class _CreateChangeComponentsTaskFormState
                       if (_formKey.currentState!.validate()) {
                         TasksService()
                             .createComponentTaskTaskManagerCreateChangeComponentTaskPost(
-                                // todo warANT
-                                TaskChangeComponentsNewSchema(
-                                    stationId: widget.station.id,
-                                    name: taskName.text,
-                                    description: taskDescription.text,
-                                    add: widget.add,
-                                    remove: widget.remove,
-                                    warrantyPeriodDays:
-                                        warrantyPeriodDays ?? 0));
+                          // todo warANT
+                            TaskChangeComponentsNewSchema(
+                                stationId: widget.station.id,
+                                name: taskName.text,
+                                description: taskDescription.text,
+                                add: widget.add,
+                                remove: widget.remove,
+                                warrantyPeriodDays:
+                                warrantyPeriodDays ?? 0));
                         Get.back();
                       }
                     },

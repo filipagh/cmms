@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class SettingsEnum(Enum):
+class SettingsEnum(str, Enum):
     redmine_feature = "redmine_feature",
     redmine_url = "redmine_url",
     redmine_api_key = "redmine_api_key",

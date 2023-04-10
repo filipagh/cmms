@@ -70,32 +70,33 @@ class AssignedComponentSchema {
   DateTime? warrantyPeriodUntil;
 
   @override
-  bool operator ==(Object other) => identical(this, other) ||
+  bool operator ==(Object other) =>
+      identical(this, other) ||
       other is AssignedComponentSchema &&
           other.assetId == assetId &&
           other.stationId == stationId &&
           other.serialNumber == serialNumber &&
           other.id == id &&
-     other.status == status &&
-     other.taskId == taskId &&
-     other.installedAt == installedAt &&
-     other.removedAt == removedAt &&
-     other.warrantyPeriodDays == warrantyPeriodDays &&
-     other.warrantyPeriodUntil == warrantyPeriodUntil;
+          other.status == status &&
+          other.taskId == taskId &&
+          other.installedAt == installedAt &&
+          other.removedAt == removedAt &&
+          other.warrantyPeriodDays == warrantyPeriodDays &&
+          other.warrantyPeriodUntil == warrantyPeriodUntil;
 
   @override
   int get hashCode =>
-    // ignore: unnecessary_parenthesis
-  (assetId.hashCode) +
+      // ignore: unnecessary_parenthesis
+      (assetId.hashCode) +
       (stationId.hashCode) +
       (serialNumber == null ? 0 : serialNumber!.hashCode) +
       (id.hashCode) +
-    (status.hashCode) +
-    (taskId == null ? 0 : taskId!.hashCode) +
-    (installedAt.hashCode) +
-    (removedAt == null ? 0 : removedAt!.hashCode) +
-    (warrantyPeriodDays.hashCode) +
-    (warrantyPeriodUntil == null ? 0 : warrantyPeriodUntil!.hashCode);
+      (status.hashCode) +
+      (taskId == null ? 0 : taskId!.hashCode) +
+      (installedAt.hashCode) +
+      (removedAt == null ? 0 : removedAt!.hashCode) +
+      (warrantyPeriodDays.hashCode) +
+      (warrantyPeriodUntil == null ? 0 : warrantyPeriodUntil!.hashCode);
 
   @override
   String toString() =>
@@ -119,7 +120,8 @@ class AssignedComponentSchema {
     }
     _json[r'warranty_period_days'] = warrantyPeriodDays;
     if (warrantyPeriodUntil != null) {
-      _json[r'warranty_period_until'] = _dateFormatter.format(warrantyPeriodUntil!.toUtc());
+      _json[r'warranty_period_until'] =
+          _dateFormatter.format(warrantyPeriodUntil!.toUtc());
     }
     return _json;
   }

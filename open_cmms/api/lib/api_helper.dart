@@ -67,6 +67,9 @@ String parameterToString(dynamic value) {
   if (value is Role) {
     return RoleTypeTransformer().encode(value).toString();
   }
+  if (value is SettingsEnum) {
+    return SettingsEnumTypeTransformer().encode(value).toString();
+  }
   if (value is TaskComponentState) {
     return TaskComponentStateTypeTransformer().encode(value).toString();
   }

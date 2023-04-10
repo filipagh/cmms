@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from pydantic import BaseModel
 
 
@@ -17,7 +19,21 @@ class RedmineObjectSchema(BaseModel):
     name: str
 
 
-class RedmineAuthResponseSchema(BaseModel):
+class RedmineAuthResponseSchema(RedmineAuthSchema):
     projects: list[RedmineObjectSchema]
     trackers: list[RedmineObjectSchema]
     users: list[RedmineObjectSchema]
+
+
+class RedmineCommentDataSchema(BaseModel):
+    comment: str
+    author: str
+    created_on: datetime
+
+
+class RedmineIssueDataSchema(BaseModel):
+    task_id: int
+    description: str
+    assigned_to: str
+    link_to_redmine: str
+    comments: list[RedmineCommentDataSchema]

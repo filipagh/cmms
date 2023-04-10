@@ -5,10 +5,20 @@ from base.appsettings.settings_enum import SettingsEnum
 from base.database import Base
 
 
+class SettingModel(Base):
+    __tablename__ = "settings"
+    key = Column(String, primary_key=True, index=True)
+    value = Column(String)
+
+
 class SettingsRepo:
     def get_settings(self, key: SettingsEnum) -> str:
         with base.database.get_db() as db:
             return db.query(SettingModel).filter(SettingModel.key == key.name).first().value
+
+    def get_all(self) -> list[SettingModel]:
+        with base.database.get_db() as db:
+            return db.query(SettingModel).all()
 
     def set_setting(self, key: SettingsEnum, value):
         with base.database.get_db() as db:
@@ -19,9 +29,3 @@ class SettingsRepo:
             else:
                 setting.value = value
             db.commit()
-
-
-class SettingModel(Base):
-    __tablename__ = "settings"
-    key = Column(String, primary_key=True, index=True)
-    value = Column(String)

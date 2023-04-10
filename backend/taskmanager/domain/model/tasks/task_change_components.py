@@ -128,6 +128,7 @@ class TaskChangeComponents(Aggregate):
 
     @event(TaskChangeComponentsComponentAssigned)
     def assign_component(self, asset_id, assigned_component_id: uuid.UUID):
+        if self.status in [TaskState.REMOVED, TaskState.DONE]: return
         for c in self.components_to_add:
             if c.new_asset_id != asset_id:
                 continue
@@ -141,6 +142,7 @@ class TaskChangeComponents(Aggregate):
 
     @event(TaskChangeComponentsComponentAllocated)
     def allocate_component(self, asset_id):
+        if self.status in [TaskState.REMOVED, TaskState.DONE]: return
         for c in self.components_to_add:
             if c.new_asset_id != asset_id:
                 continue

@@ -224,6 +224,18 @@ class ApiClient {
           return AssignedComponentStateTypeTransformer().decode(value);
         case 'HTTPValidationError':
           return HTTPValidationError.fromJson(value);
+        case 'RedmineAuthResponseSchema':
+          return RedmineAuthResponseSchema.fromJson(value);
+        case 'RedmineAuthSchema':
+          return RedmineAuthSchema.fromJson(value);
+        case 'RedmineCommentDataSchema':
+          return RedmineCommentDataSchema.fromJson(value);
+        case 'RedmineIssueDataSchema':
+          return RedmineIssueDataSchema.fromJson(value);
+        case 'RedmineObjectSchema':
+          return RedmineObjectSchema.fromJson(value);
+        case 'RedmineSetupRequestSchema':
+          return RedmineSetupRequestSchema.fromJson(value);
         case 'RemoveComponentRequestSchema':
           return RemoveComponentRequestSchema.fromJson(value);
         case 'RoadSegmentNewSchema':
@@ -236,6 +248,10 @@ class ApiClient {
           return ServiceContractNewSchema.fromJson(value);
         case 'ServiceContractSchema':
           return ServiceContractSchema.fromJson(value);
+        case 'SettingSchema':
+          return SettingSchema.fromJson(value);
+        case 'SettingsEnum':
+          return SettingsEnumTypeTransformer().decode(value);
         case 'StationIdSchema':
           return StationIdSchema.fromJson(value);
         case 'StationNewSchema':

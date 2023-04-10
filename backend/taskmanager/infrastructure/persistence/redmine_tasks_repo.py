@@ -1,4 +1,5 @@
 import uuid
+from typing import Optional
 
 from sqlalchemy import Column, String
 from sqlalchemy.dialects import postgresql
@@ -22,9 +23,10 @@ def save(task: RedmineTaskModel):
     with _get_db() as db:
         db.add(task)
         db.commit()
+        return task.redmine_id
 
 
-def get_by_id(task_id: uuid.UUID) -> RedmineTaskModel:
+def get_by_id(task_id: uuid.UUID) -> Optional[RedmineTaskModel]:
     db: Session
     with _get_db() as db:
         return db.query(RedmineTaskModel).get(task_id)

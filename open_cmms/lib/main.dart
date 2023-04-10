@@ -37,6 +37,8 @@ import 'package:open_cmms/states/stations_state.dart';
 import 'package:open_cmms/states/task_component_state.dart';
 import 'package:open_cmms/states/tasks_state.dart';
 
+import 'pages/config/config.dart';
+
 void main() async {
   await checkOrLoadEnv();
 
@@ -114,7 +116,27 @@ class MyApp extends StatelessWidget {
           middlewares: [AuthGuard()],
         ),
         GetPage(
-          name: '/Tasks/:id',
+          name: TaskChangeComponentsPage.ENDPOINT + '/:id',
+          page: () {
+            return TaskChangeComponentsPage(taskId: Get.parameters["id"]!);
+          },
+          middlewares: [AuthGuard()],
+        ),
+        GetPage(
+          name: TaskOnSiteServicePage.ENDPOINT + '/:id',
+          page: () {
+            return TaskOnSiteServicePage(taskId: Get.parameters["id"]!);
+          },
+        ),
+        GetPage(
+          name: TaskRemoteServicePage.ENDPOINT + '/:id',
+          page: () {
+            return TaskRemoteServicePage(taskId: Get.parameters["id"]!);
+          },
+          middlewares: [AuthGuard()],
+        ),
+        GetPage(
+          name: TaskPage.ENDPOINT + '/:id',
           page: () {
             return TaskPage(
               taskId: Get.parameters["id"]!,
@@ -174,26 +196,7 @@ class MyApp extends StatelessWidget {
           },
           middlewares: [AuthGuard()],
         ),
-        GetPage(
-          name: TaskChangeComponentsPage.ENDPOINT + '/:id',
-          page: () {
-            return TaskChangeComponentsPage(taskId: Get.parameters["id"]!);
-          },
-          middlewares: [AuthGuard()],
-        ),
-        GetPage(
-          name: TaskOnSiteServicePage.ENDPOINT + '/:id',
-          page: () {
-            return TaskOnSiteServicePage(taskId: Get.parameters["id"]!);
-          },
-        ),
-        GetPage(
-          name: TaskRemoteServicePage.ENDPOINT + '/:id',
-          page: () {
-            return TaskRemoteServicePage(taskId: Get.parameters["id"]!);
-          },
-          middlewares: [AuthGuard()],
-        ),
+
         GetPage(
             name: '/',
             page: () {
@@ -207,6 +210,12 @@ class MyApp extends StatelessWidget {
             name: Users.ENDPOINT,
             page: () {
               return Users();
+            },
+            middlewares: [AuthGuard(), AdminGuard()]),
+        GetPage(
+            name: Config.ENDPOINT,
+            page: () {
+              return Config();
             },
             middlewares: [AuthGuard(), AdminGuard()]),
 

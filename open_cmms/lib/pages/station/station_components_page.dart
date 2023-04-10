@@ -140,7 +140,7 @@ class StationComponentsPage extends StatelessWidget
             TextSpan(
                 recognizer: TapGestureRecognizer()
                   ..onTap =
-                      () => TaskPageFactory().openTaskPage(component.taskId!),
+                      () => TaskPageFactory().openTaskFromId(component.taskId!),
                 text: "Úlohe",
                 style: TextStyle(
                     color: Colors.blue, decoration: TextDecoration.underline))
@@ -159,7 +159,7 @@ class StationComponentsPage extends StatelessWidget
                 TextSpan(
                     recognizer: TapGestureRecognizer()
                       ..onTap = () =>
-                          TaskPageFactory().openTaskPage(component.taskId!),
+                          TaskPageFactory().openTaskFromId(component.taskId!),
                     text: "Úlohe",
                     style: TextStyle(
                         color: Colors.blue,

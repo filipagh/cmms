@@ -84,6 +84,11 @@ All URIs are relative to *http://localhost*
  *AuthApi*               | [**logoutAuthLogoutGet**](doc//AuthApi.md#logoutauthlogoutget)                                                                                                                     | **GET** /auth/logout                                       | Logout                     
  *AuthApi*               | [**updateUserRoleAuthUserUserIdRolePost**](doc//AuthApi.md#updateuserroleauthuseruseridrolepost)                                                                                   | **POST** /auth/user/{user_id}/role                         | Update User Role           
  *DefaultApi*            | [**rootGet**](doc//DefaultApi.md#rootget)                                                                                                                                          | **GET** /                                                  | Root                       
+ *DefaultApi*            | [**settingsSettingsGet**](doc//DefaultApi.md#settingssettingsget)                                                                                                                  | **GET** /settings                                          | Settings                   
+ *RedmineApi*            | [**authRedmineAuthPost**](doc//RedmineApi.md#authredmineauthpost)                                                                                                                  | **POST** /redmine/auth                                     | Auth                       
+ *RedmineApi*            | [**authRedmineSetupPost**](doc//RedmineApi.md#authredminesetuppost)                                                                                                                | **POST** /redmine/setup                                    | Auth                       
+ *RedmineApi*            | [**loadRedmineTaskIdLoadGet**](doc//RedmineApi.md#loadredminetaskidloadget)                                                                                                        | **GET** /redmine/{task_id}/load                            | Load                       
+ *RedmineApi*            | [**removeIntegrationRedmineSetupDelete**](doc//RedmineApi.md#removeintegrationredminesetupdelete)                                                                                  | **DELETE** /redmine/setup                                  | Remove Integration         
  *RoadSegmentManagerApi* | [**createRoadSegmentRoadSegmentManagerCreateRoadSegmentPost**](doc//RoadSegmentManagerApi.md#createroadsegmentroadsegmentmanagercreateroadsegmentpost)                             | **POST** /road-segment-manager/create_road_segment         | Create Road Segment        
  *RoadSegmentManagerApi* | [**getAllRoadSegmentManagerSegmentsGet**](doc//RoadSegmentManagerApi.md#getallroadsegmentmanagersegmentsget)                                                                       | **GET** /road-segment-manager/segments                     | Get All                    
  *RoadSegmentManagerApi* | [**getByIdRoadSegmentManagerSegmentGet**](doc//RoadSegmentManagerApi.md#getbyidroadsegmentmanagersegmentget)                                                                       | **GET** /road-segment-manager/segment                      | Get By Id                  
@@ -137,18 +142,26 @@ All URIs are relative to *http://localhost*
  - [AssignedComponentSchema](doc//AssignedComponentSchema.md)
  - [AssignedComponentState](doc//AssignedComponentState.md)
  - [HTTPValidationError](doc//HTTPValidationError.md)
+ - [RedmineAuthResponseSchema](doc//RedmineAuthResponseSchema.md)
+ - [RedmineAuthSchema](doc//RedmineAuthSchema.md)
+ - [RedmineCommentDataSchema](doc//RedmineCommentDataSchema.md)
+ - [RedmineIssueDataSchema](doc//RedmineIssueDataSchema.md)
+ - [RedmineObjectSchema](doc//RedmineObjectSchema.md)
+ - [RedmineSetupRequestSchema](doc//RedmineSetupRequestSchema.md)
  - [RemoveComponentRequestSchema](doc//RemoveComponentRequestSchema.md)
  - [RoadSegmentNewSchema](doc//RoadSegmentNewSchema.md)
  - [RoadSegmentSchema](doc//RoadSegmentSchema.md)
  - [Role](doc//Role.md)
  - [ServiceContractNewSchema](doc//ServiceContractNewSchema.md)
  - [ServiceContractSchema](doc//ServiceContractSchema.md)
+ - [SettingSchema](doc//SettingSchema.md)
+ - [SettingsEnum](doc//SettingsEnum.md)
  - [StationIdSchema](doc//StationIdSchema.md)
  - [StationNewSchema](doc//StationNewSchema.md)
  - [StationSchema](doc//StationSchema.md)
-- [StorageItemSchema](doc//StorageItemSchema.md)
-- [TaskChangeComponentRequestCompleted](doc//TaskChangeComponentRequestCompleted.md)
-- [TaskChangeComponentsNewSchema](doc//TaskChangeComponentsNewSchema.md)
+ - [StorageItemSchema](doc//StorageItemSchema.md)
+ - [TaskChangeComponentRequestCompleted](doc//TaskChangeComponentRequestCompleted.md)
+ - [TaskChangeComponentsNewSchema](doc//TaskChangeComponentsNewSchema.md)
  - [TaskChangeComponentsSchema](doc//TaskChangeComponentsSchema.md)
  - [TaskComponentAddNewSchema](doc//TaskComponentAddNewSchema.md)
  - [TaskComponentRemoveNewSchema](doc//TaskComponentRemoveNewSchema.md)

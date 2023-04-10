@@ -13,6 +13,9 @@ from assetmanager.application.asset_projector import AssetProjector
 from assetmanager.application.asset_service import AssetService
 from assetmanager.infrastructure.rest_router import asset_manager_router
 from authmanager.infrastructure.auth_rest_router import auth_router
+from base.appsettings.schema import SettingSchema
+from base.appsettings.settings_enum import SettingsEnum
+from base.appsettings.settings_repo import SettingsRepo
 from base.init_import import import_assets
 from base.transcoding import DateAsIso, AssetTelemetryAsJSON
 from roadsegmentmanager.application.road_segment_projector import RoadSegmentProjector
@@ -149,10 +152,35 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 # imports
+def import_settings():
+    if len(SettingsRepo().get_all()) == 0:
+        for s in SettingsEnum:
+            SettingsRepo().set_setting(SettingsEnum(s), '')
+
+
+import_settings()
 import_assets()
 
 
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
+
+
+@app.get("/settings", response_model=list[SettingSchema])
+async def settings():
+    _list = []
+
+    for s in SettingsRepo().get_all():
+        if s.value == '':
+            continue
+        _list.append(SettingSchema(key=SettingsEnum(s.key)
+                                   , value=s.value, enabled=True if s.value is not None or s.value != "" else False))
+
+    for s in SettingsEnum:
+        if s not in [x.key for x in _list]:
+            _list.append(SettingSchema(key=SettingsEnum(s), value="", enabled=False))
+
+    return _list
