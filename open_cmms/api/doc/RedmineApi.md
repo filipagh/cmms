@@ -1,7 +1,6 @@
 # BackendAPI.api.RedmineApi
 
 ## Load the API package
-
 ```dart
 import 'package:BackendAPI/api.dart';
 ```
@@ -15,14 +14,13 @@ All URIs are relative to *http://localhost*
  [**loadRedmineTaskIdLoadGet**](RedmineApi.md#loadredminetaskidloadget)                       | **GET** /redmine/{task_id}/load | Load               
  [**removeIntegrationRedmineSetupDelete**](RedmineApi.md#removeintegrationredminesetupdelete) | **DELETE** /redmine/setup       | Remove Integration 
 
-# **authRedmineAuthPost**
 
+# **authRedmineAuthPost**
 > RedmineAuthResponseSchema authRedmineAuthPost(redmineAuthSchema)
 
 Auth
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
@@ -69,13 +67,11 @@ try {
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **authRedmineSetupPost**
-
 > String authRedmineSetupPost(redmineSetupRequestSchema)
 
 Auth
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
@@ -122,13 +118,11 @@ try {
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **loadRedmineTaskIdLoadGet**
-
 > RedmineIssueDataSchema loadRedmineTaskIdLoadGet(taskId)
 
 Load
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
@@ -175,13 +169,11 @@ try {
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **removeIntegrationRedmineSetupDelete**
-
 > String removeIntegrationRedmineSetupDelete()
 
 Remove Integration
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
@@ -206,7 +198,6 @@ try {
 ```
 
 ### Parameters
-
 This endpoint does not need any parameter.
 
 ### Return type

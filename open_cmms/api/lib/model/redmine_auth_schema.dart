@@ -129,3 +129,4 @@ class RedmineAuthSchema {
     'redmine_api_key',
   };
 }
+

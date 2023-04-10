@@ -105,3 +105,4 @@ class SettingsEnumTypeTransformer {
   /// Singleton [SettingsEnumTypeTransformer] instance.
   static SettingsEnumTypeTransformer? _instance;
 }
+

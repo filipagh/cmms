@@ -126,3 +126,4 @@ class RedmineObjectSchema {
     'name',
   };
 }
+

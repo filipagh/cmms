@@ -97,28 +97,35 @@ class RedmineProjector(ProcessApplication):
 
     @policy.register(TaskServiceOnSite.TaskCreated)
     def _(self, domain_event: TaskServiceOnSite.TaskCreated, process_event):
-        pass
-        # self._create_redmine_task(domain_event.originator_id)
+        issue = self.load_issue(domain_event.originator_id)
+        if issue is None:
+            self._create_redmine_task(domain_event.originator_id, domain_event.name,
+                                      domain_event.description,
+                                      self._get_road_segment_name(domain_event.station_id))
 
     @policy.register(TaskServiceOnSite.TaskComplete)
     def _(self, domain_event: TaskServiceOnSite.TaskComplete, process_event):
-        pass
+        self._complete_redmine_task(domain_event.originator_id)
 
     @policy.register(TaskServiceOnSite.TaskCanceled)
     def _(self, domain_event: TaskServiceOnSite.TaskCanceled, process_event):
-        pass
+        self._close_redmine_task(domain_event.originator_id)
 
     @policy.register(TaskServiceRemote.TaskCreated)
     def _(self, domain_event: TaskServiceRemote.TaskCreated, process_event):
-        pass
+        issue = self.load_issue(domain_event.originator_id)
+        if issue is None:
+            self._create_redmine_task(domain_event.originator_id, domain_event.name,
+                                      domain_event.description,
+                                      self._get_road_segment_name(domain_event.station_id))
 
     @policy.register(TaskServiceRemote.TaskCanceled)
     def _(self, domain_event: TaskServiceRemote.TaskCreated, process_event):
-        pass
+        self._close_redmine_task(domain_event.originator_id)
 
     @policy.register(TaskServiceRemote.TaskComplete)
     def _(self, domain_event: TaskServiceRemote.TaskCreated, process_event):
-        pass
+        self._complete_redmine_task(domain_event.originator_id)
 
     def _get_road_segment_name(self, station_id: uuid.UUID):
         road_segment_id = base.main.runner.get(StationProjector).get_by_id(station_id).road_segment_id

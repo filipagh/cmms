@@ -2,6 +2,7 @@ import 'package:BackendAPI/api.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:open_cmms/pages/tasks/task_utils.dart';
 import 'package:open_cmms/service/backend_api/tasks_service.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 import 'package:open_cmms/widgets/forms/tasks/complete_change_components_task.dart';
@@ -109,22 +110,7 @@ class TaskChangeComponentsPage extends StatelessWidget {
                 child: Column(
                   children: [
                     const Text("komentare: "),
-                    Obx(() => Expanded(
-                          child: ListView.builder(
-                            itemCount: redmineData.value?.comments.length ?? 0,
-                            itemBuilder: (context, index) {
-                              var comment = redmineData.value!.comments[index];
-                              return ListTile(
-                                title: Text(
-                                    comment.author + ": " + comment.comment),
-                                subtitle: Text("napisal v case: " +
-                                    comment.createdOn
-                                        .toString()
-                                        .substring(0, 19)),
-                              );
-                            },
-                          ),
-                        )),
+                    Obx(() => buildRedmineComments(redmineData.value!)),
                   ],
                 ),
               ),
@@ -176,8 +162,6 @@ class TaskChangeComponentsPage extends StatelessWidget {
                             child: ListView(
                               children: [...buildTaskComponents()],
                             ))),
-
-                    // buildTaskComments(),
                   ],
                 ),
               ),
@@ -372,7 +356,6 @@ class TaskChangeComponentsPage extends StatelessWidget {
     return col;
   }
 
-  buildTaskComments() {}
 
   IconData getComponentStatusIcon(TaskComponentState state, goalState) {
     switch (state) {
