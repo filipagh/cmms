@@ -1,9 +1,13 @@
 import 'package:BackendAPI/api.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:open_cmms/pages/tasks/task_utils.dart';
 import 'package:open_cmms/service/backend_api/tasks/tasks_remote_service.dart';
 import 'package:open_cmms/widgets/forms/util/text_edit_form.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import '../../service/backend_api/redmine_service.dart';
 import '../../snacbars.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/dialog_form.dart';
@@ -13,6 +17,7 @@ class TaskRemoteServicePage extends StatelessWidget {
   static const String ENDPOINT = '/TaskRemoteService';
   final String taskId;
   final Rxn<TaskServiceRemoteSchema> task = Rxn<TaskServiceRemoteSchema>();
+  final Rxn<RedmineIssueDataSchema> redmineData = Rxn<RedmineIssueDataSchema>();
 
   TaskRemoteServicePage({
     Key? key,
@@ -27,6 +32,7 @@ class TaskRemoteServicePage extends StatelessWidget {
     getService().loadTaskServiceRemoteTaskIdGet(taskId).then((value) {
       task.value = value;
       task.refresh();
+      loadRedmineData(task.value!.id);
     });
   }
 
@@ -86,48 +92,52 @@ class TaskRemoteServicePage extends StatelessWidget {
         buildTaskHeader(),
 
         Expanded(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const Text("komentare k tasku"),
-                const Placeholder(),
-                if (task.value!.state == TaskState.open ||
-                    task.value!.state == TaskState.ready) ...[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ElevatedButton(
-                          style: ButtonStyle(
-                              backgroundColor: MaterialStateColor.resolveWith(
-                                  (x) => Colors.red)),
-                          onPressed: () {
-                            getService()
-                                .cancelTaskServiceRemoteTaskIdDelete(taskId)
-                                .then((value) {
-                              loadTask();
-                              showOk("úloha bola zrusená");
-                            });
-                          },
-                          child: Text("Zrusit ulohu")),
-                      ElevatedButton(
-                          style: ButtonStyle(
-                              backgroundColor: MaterialStateColor.resolveWith(
-                                  (x) => Colors.green)),
-                          onPressed: () {
-                            getService()
-                                .completeTaskServiceRemoteTaskIdCompleteGet(
-                                    taskId)
-                                .then((value) {
-                              loadTask();
-                              showOk("úloha bola dokoncená");
-                            });
-                          },
-                          child: Text("Dokoncit ulohu"))
-                    ],
-                  )
-                ]
+          child: Column(
+            children: [
+              if (task.value!.state == TaskState.open ||
+                  task.value!.state == TaskState.ready) ...[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateColor.resolveWith(
+                                (x) => Colors.red)),
+                        onPressed: () {
+                          getService()
+                              .cancelTaskServiceRemoteTaskIdDelete(taskId)
+                              .then((value) {
+                            loadTask();
+                            showOk("úloha bola zrusená");
+                          });
+                        },
+                        child: Text("Zrusit ulohu")),
+                    ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateColor.resolveWith(
+                                (x) => Colors.green)),
+                        onPressed: () {
+                          getService()
+                              .completeTaskServiceRemoteTaskIdCompleteGet(
+                                  taskId)
+                              .then((value) {
+                            loadTask();
+                            showOk("úloha bola dokoncená");
+                          });
+                        },
+                        child: Text("Dokoncit ulohu"))
+                  ],
+                ),
+                const Divider(),
               ],
-            ),
+              const Text("komentare k tasku"),
+              Obx(() {
+                if (redmineData.value != null)
+                  return buildRedmineComments(redmineData.value!);
+                else
+                  return Text("Ziadne komentáre");
+              }),
+            ],
           ),
         )
 
@@ -146,7 +156,26 @@ class TaskRemoteServicePage extends StatelessWidget {
       children: [
         Text("Datum vytovrenia: " + task.value!.createdAt.toString()),
         Text("Stav: " + buildTaskStatusString()),
-        const Text("Priradeny k: " + "Jozko Mrkvicka"),
+        Obx(() =>
+            Text("Priradeny k: " + (redmineData.value?.assignedTo ?? ""))),
+        Obx(() => RichText(
+                    text: TextSpan(
+                  text: "Link na redmine: ",
+                  children: [
+                    TextSpan(
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () => launchUrl(
+                              Uri.parse(redmineData.value!.linkToRedmine)),
+                        text: redmineData.value?.linkToRedmine ?? "",
+                        style: const TextStyle(
+                            color: Colors.blue,
+                            decoration: TextDecoration.underline))
+                  ],
+                ))
+            //
+            // Text(
+            // "Link na redmine: " + (redmineData.value?.linkToRedmine ?? ""))
+            ),
         const Divider(),
         Column(
           children: [
@@ -157,21 +186,21 @@ class TaskRemoteServicePage extends StatelessWidget {
                   "Opis",
                   style: TextStyle(fontSize: 20),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.edit),
-                  onPressed: () async {
-                    showFormDialog(TextEditForm(
-                            title: "Zmena opisu ulohy",
-                            text: task.value!.description))
-                        .then((value) {
-                      getService()
-                          .changeDetailsTaskServiceRemoteTaskIdChangeDetailsPost(
-                              taskId,
-                              newDescription: value)
-                          .then((value) => loadTask());
-                    });
-                  },
-                )
+                // IconButton(
+                //   icon: const Icon(Icons.edit),
+                //   onPressed: () async {
+                //     showFormDialog(TextEditForm(
+                //             title: "Zmena opisu ulohy",
+                //             text: task.value!.description))
+                //         .then((value) {
+                //       getService()
+                //           .changeDetailsTaskServiceRemoteTaskIdChangeDetailsPost(
+                //               taskId,
+                //               newDescription: value)
+                //           .then((value) => loadTask());
+                //     });
+                //   },
+                // )
               ],
             ),
             Text(buildDescription(),
@@ -200,5 +229,13 @@ class TaskRemoteServicePage extends StatelessWidget {
         return "Uloha je zrusena";
     }
     return "Neznamy stav";
+  }
+
+  void loadRedmineData(String task_id) {
+    RedmineService().loadRedmineTaskIdLoadGet(task_id).then((value) {
+      redmineData.value = value;
+    }, onError: (error) {
+      redmineData.value = null;
+    });
   }
 }

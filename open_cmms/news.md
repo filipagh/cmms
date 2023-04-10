@@ -22,6 +22,17 @@
 
 [//]: # (---)
 
+## 10.4.23
+
+### novinky
+
+- pridana moznost redmine integracia uloh
+- pridane nastavenie pre admina v aplikacii
+
+### oprava
+
+---
+
 ## 1.4.23
 
 ### novinky

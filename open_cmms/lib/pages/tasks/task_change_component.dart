@@ -1,11 +1,15 @@
 import 'package:BackendAPI/api.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:open_cmms/pages/tasks/task_utils.dart';
 import 'package:open_cmms/service/backend_api/tasks_service.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 import 'package:open_cmms/widgets/forms/tasks/complete_change_components_task.dart';
 import 'package:open_cmms/widgets/forms/util/text_edit_form.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import '../../service/backend_api/redmine_service.dart';
 import '../../snacbars.dart';
 import '../../states/asset_types_state.dart';
 import '../../states/station/components_state.dart';
@@ -19,6 +23,7 @@ class TaskChangeComponentsPage extends StatelessWidget {
   final AssetTypesState _assets = Get.find();
   final Rxn<TaskChangeComponentsSchema> task =
       Rxn<TaskChangeComponentsSchema>();
+  final Rxn<RedmineIssueDataSchema> redmineData = Rxn<RedmineIssueDataSchema>();
 
   TaskChangeComponentsPage({
     Key? key,
@@ -33,11 +38,12 @@ class TaskChangeComponentsPage extends StatelessWidget {
             AssignedComponentsState(taskProjection!.stationId),
             tag: taskProjection!.stationId);
       }
-      loadTask();
+      loadTaskItems();
+      loadRedmineData(taskProjection!.id);
     });
   }
 
-  loadTask() {
+  loadTaskItems() {
     TasksService()
         .loadTaskManagerGetComponentTaskTaskIdGet(taskId)
         .then((value) {
@@ -90,7 +96,7 @@ class TaskChangeComponentsPage extends StatelessWidget {
                   TasksService()
                       .changeDetailsTaskManagerTaskIdChangeDetailsPost(taskId,
                           newName: value)
-                      .then((value) => loadTask());
+                      .then((value) => loadTaskItems());
                 });
               },
             )
@@ -100,13 +106,15 @@ class TaskChangeComponentsPage extends StatelessWidget {
         Expanded(
           child: Row(
             children: [
-              Column(
-                children: [
-                  const Text("komentare k tasku"),
-                  Container(width: 600, child: const Placeholder()),
-                ],
+              Expanded(
+                child: Column(
+                  children: [
+                    const Text("komentare: "),
+                    Obx(() => buildRedmineComments(redmineData.value!)),
+                  ],
+                ),
               ),
-              VerticalDivider(),
+              const VerticalDivider(),
               Flexible(
                 child: Column(
                   children: [
@@ -125,11 +133,11 @@ class TaskChangeComponentsPage extends StatelessWidget {
                                     .cancelTaskTaskManagerTaskIdDelete(taskId)
                                     .then((value) {
                                   showOk("úloha bola zrusená");
-                                  loadTask();
+                                  loadTaskItems();
                                 });
                               },
-                              child: Text("Zrusit ulohu")),
-                          VerticalDivider(),
+                              child: const Text("Zrusit ulohu")),
+                          const VerticalDivider(),
                           ElevatedButton(
                               style: ButtonStyle(
                                   backgroundColor:
@@ -139,13 +147,13 @@ class TaskChangeComponentsPage extends StatelessWidget {
                                 showFormDialog(CompleteChangeComponentsTaskForm(
                                         stationId: taskProjection!.stationId,
                                         task: task.value!))
-                                    .then((value) => loadTask());
+                                    .then((value) => loadTaskItems());
                               },
-                              child: Text("Dokoncit ulohu"))
+                              child: const Text("Dokoncit ulohu"))
                         ],
                       ),
                     ],
-                    Divider(),
+                    const Divider(),
                     buildTaskHeader(),
 
                     Expanded(
@@ -154,8 +162,6 @@ class TaskChangeComponentsPage extends StatelessWidget {
                             child: ListView(
                               children: [...buildTaskComponents()],
                             ))),
-
-                    // buildTaskComments(),
                   ],
                 ),
               ),
@@ -180,35 +186,54 @@ class TaskChangeComponentsPage extends StatelessWidget {
         Text("Cestny usek: " + taskProjection!.roadSegmentName),
         Text("Datum vytovrenia: " + task.value!.createdAt.toString()),
         Text("Stav: " + buildTaskStatusString()),
-        const Text("Priradeny k: " + "Jozko Mrkvicka"),
+        Obx(() =>
+            Text("Priradeny k: " + (redmineData.value?.assignedTo ?? ""))),
+        Obx(() => RichText(
+                    text: TextSpan(
+                  text: "Link na redmine: ",
+                  children: [
+                    TextSpan(
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () => launchUrl(
+                              Uri.parse(redmineData.value!.linkToRedmine)),
+                        text: redmineData.value?.linkToRedmine ?? "",
+                        style: const TextStyle(
+                            color: Colors.blue,
+                            decoration: TextDecoration.underline))
+                  ],
+                ))
+            //
+            // Text(
+            // "Link na redmine: " + (redmineData.value?.linkToRedmine ?? ""))
+            ),
         const Divider(),
         Column(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
+              children: const [
+                Text(
                   "Opis",
                   style: TextStyle(fontSize: 20),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.edit),
-                  onPressed: () async {
-                    showFormDialog(TextEditForm(
-                            title: "Zmena opisu ulohy",
-                            text: task.value!.description))
-                        .then((value) {
-                      TasksService()
-                          .changeDetailsTaskManagerTaskIdChangeDetailsPost(
-                              taskId,
-                              newDescription: value)
-                          .then((value) => loadTask());
-                    });
-                  },
-                ),
+                // IconButton(
+                //   icon: const Icon(Icons.edit),
+                //   onPressed: () async {
+                //     showFormDialog(TextEditForm(
+                //             title: "Zmena opisu ulohy",
+                //             text: task.value!.description))
+                //         .then((value) {
+                //       TasksService()
+                //           .changeDetailsTaskManagerTaskIdChangeDetailsPost(
+                //               taskId,
+                //               newDescription: value)
+                //           .then((value) => loadTaskItems());
+                //     });
+                //   },
+                // ),
               ],
             ),
-            Text(buildDescription(),
+            Text(redmineData.value?.description ?? "bez popisu",
                 style: const TextStyle(height: 3), maxLines: 10)
           ],
         ),
@@ -262,7 +287,7 @@ class TaskChangeComponentsPage extends StatelessWidget {
                   TasksService()
                       .allocateComponentsTaskManagerTaskIdAllocateComponentsGet(
                           taskId)
-                      .then((value) => loadTask());
+                      .then((value) => loadTaskItems());
                 },
                 child: const Text("Priradit komponenty")),
         ],
@@ -318,8 +343,8 @@ class TaskChangeComponentsPage extends StatelessWidget {
                                   .substring(0, 10) ??
                               "")),
                       task.value!.createdAt.isBefore(comp.warrantyPeriodUntil!)
-                          ? Icon(Icons.check)
-                          : Icon(Icons.close)
+                          ? const Icon(Icons.check)
+                          : const Icon(Icons.close)
                     ],
                   ),
                 ],
@@ -331,7 +356,6 @@ class TaskChangeComponentsPage extends StatelessWidget {
     return col;
   }
 
-  buildTaskComments() {}
 
   IconData getComponentStatusIcon(TaskComponentState state, goalState) {
     switch (state) {
@@ -366,5 +390,13 @@ class TaskChangeComponentsPage extends StatelessWidget {
         return "komponent je odstraneny";
     }
     return "Neznamy stav";
+  }
+
+  void loadRedmineData(String task_id) {
+    RedmineService().loadRedmineTaskIdLoadGet(task_id).then((value) {
+      redmineData.value = value;
+    }, onError: (error) {
+      redmineData.value = null;
+    });
   }
 }

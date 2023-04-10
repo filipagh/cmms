@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/pages/service_contracts.dart';
 import 'package:open_cmms/pages/stations.dart';
-import 'package:open_cmms/snacbars.dart';
 
+import '../pages/config/config.dart';
 import '../pages/news.dart';
 import '../pages/users.dart';
 import '../states/auth_state.dart';
@@ -89,9 +89,7 @@ class _MainMenuWidgetState extends State<MainMenuWidget>
           if (authService.isAdmin.isTrue) ...[
             IconButton(
               icon: const Icon(Icons.settings),
-              onPressed: () {
-                showInfo("zatial nic nerobim");
-              },
+              onPressed: () => Get.offAllNamed(Config.ENDPOINT),
             ),
             Tooltip(
               message: "manazment pouzivatelov",

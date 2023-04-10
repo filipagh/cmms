@@ -1,5 +1,6 @@
 import os
 import sys
+
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -33,6 +34,10 @@ def get_sesionmaker():
         create_sesionmaker()
 
     return SessionLocal()
+
+
+def get_db():
+    return get_sesionmaker()
 
 
 def create_sesionmaker():

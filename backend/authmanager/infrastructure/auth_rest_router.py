@@ -6,7 +6,8 @@ from authmanager.application.model.schema import UserSchema, Role
 from authmanager.infrastructure.fief.fief_role_api import FiefRoleApi
 from authmanager.infrastructure.fief.fief_users_api import FiefUsersApi
 from authmanager.infrastructure.fief.fiefapi.openapi_client import UserRoleCreate
-from base.auth_def import custom_auth, auth2, auth, fix_server_protocol, fief, SESSION_COOKIE_NAME
+from base.auth_def import custom_auth, auth2, auth, fix_server_protocol, fief, SESSION_COOKIE_NAME, admin_permission, \
+    write_permission
 
 auth_router = APIRouter(
     prefix="/auth",
@@ -17,7 +18,7 @@ auth_router = APIRouter(
 
 @auth_router.get("/me",
                  response_model=UserSchema)
-def get_me(user: FiefUserInfo = Depends(custom_auth(["write:all", "read:all"])),
+def get_me(user: FiefUserInfo = Depends(custom_auth(write_permission)),
            permisions=Depends(auth.authenticated(optional=True))):
     role = Role.VERIFIED
     admin = False
@@ -32,7 +33,7 @@ def get_me(user: FiefUserInfo = Depends(custom_auth(["write:all", "read:all"])),
 @auth_router.get("/users",
                  response_model=list[UserSchema])
 def get_all(
-        _user: FiefUserInfo = Depends(custom_auth(permissions=["users:manage"])),
+        _user: FiefUserInfo = Depends(custom_auth(permissions=admin_permission)),
 ):
     col = []
     users = FiefUsersApi().users_list_users_get(limit=1000)
@@ -57,7 +58,7 @@ def get_all(
 
 
 @auth_router.post("/user/{user_id}/role", response_class=PlainTextResponse)
-def update_user_role(user_id, role: Role, _user: FiefUserInfo = Depends(custom_auth(permissions=["users:manage"]))):
+def update_user_role(user_id, role: Role, _user: FiefUserInfo = Depends(custom_auth(permissions=admin_permission))):
     roles = FiefRoleApi().roles_list_roles_get().results
     user_roles = FiefUsersApi().users_list_roles_users_id_roles_get(user_id).results
 

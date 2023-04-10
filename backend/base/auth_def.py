@@ -11,6 +11,7 @@ from starlette.responses import Response
 
 write_permission = ["write:all", "read:all"]
 read_permission = ["read:all"]
+admin_permission = ["users:manage"]
 
 
 def custom_auth(permissions: list[str]):
