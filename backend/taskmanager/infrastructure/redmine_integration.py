@@ -21,10 +21,10 @@ def _redmine_connect():
 
 def redmine_auth(auth: RedmineAuthSchema) -> RedmineAuthResponseSchema:
     try:
-        redmine = Redmine(auth.redmine_url, version='5.0.5', key=auth.redmine_api_key)
+        redmine = Redmine(auth.redmine_url, key=auth.redmine_api_key, requests={'verify': False})
         projects = list(redmine.project.all())
-    except:
-        raise Exception("Invalid redmine credentials")
+    except Exception as e:
+        raise Exception("Invalid login: " + e.__str__(), e)
     trackers = list(redmine.tracker.all())
     users = list(redmine.user.all())
 
