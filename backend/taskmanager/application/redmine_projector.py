@@ -68,12 +68,18 @@ class RedmineProjector(ProcessApplication):
     def _close_redmine_task(self, task_id: uuid.UUID):
         if not is_redmine_active():
             return
-        close_issue(redmine_tasks_repo.get_by_id(task_id=task_id).redmine_id)
+        issue = redmine_tasks_repo.get_by_id(task_id=task_id)
+        if issue is None:
+            return
+        close_issue(issue.redmine_id)
 
     def _complete_redmine_task(self, task_id: uuid.UUID):
         if not is_redmine_active():
             return
-        complete_issue(redmine_tasks_repo.get_by_id(task_id=task_id).redmine_id)
+        issue = redmine_tasks_repo.get_by_id(task_id=task_id)
+        if issue is None:
+            return
+        complete_issue(issue.redmine_id)
 
     @policy.register(TaskChangeComponents.TaskChangeComponentsCreated)
     def _(self, domain_event: TaskChangeComponents.TaskChangeComponentsCreated, process_event):
