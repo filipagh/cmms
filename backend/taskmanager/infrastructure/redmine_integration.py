@@ -16,7 +16,7 @@ SUPER_VYSOR = 'Supervízor'
 def _redmine_connect():
     redmine_url = SettingsRepo().get_settings(key=SettingsEnum.redmine_url)
     redmine_api_key = SettingsRepo().get_settings(key=SettingsEnum.redmine_api_key)
-    return Redmine(redmine_url, version='5.0.5', key=redmine_api_key)
+    return Redmine(redmine_url, key=redmine_api_key, requests={'verify': False})
 
 
 def redmine_auth(auth: RedmineAuthSchema) -> RedmineAuthResponseSchema:
@@ -37,7 +37,7 @@ def redmine_auth(auth: RedmineAuthSchema) -> RedmineAuthResponseSchema:
 
 
 def redmine_setup(auth: RedmineSetupRequestSchema):
-    redmine = Redmine(auth.redmine_url, version='5.0.5', key=auth.redmine_api_key)
+    redmine = Redmine(auth.redmine_url, key=auth.redmine_api_key, requests={'verify': False})
     # check if project exists
     try:
         project = redmine.project.get(auth.redmine_project_id)
