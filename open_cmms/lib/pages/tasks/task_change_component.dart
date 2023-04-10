@@ -109,8 +109,13 @@ class TaskChangeComponentsPage extends StatelessWidget {
               Expanded(
                 child: Column(
                   children: [
-                    const Text("komentare: "),
-                    Obx(() => buildRedmineComments(redmineData.value!)),
+                    const Text("komentáre: "),
+                    Obx(() {
+                      if (redmineData.value != null)
+                        return buildRedmineComments(redmineData.value!);
+                      else
+                        return Text("Ziadne komentáre");
+                    }),
                   ],
                 ),
               ),

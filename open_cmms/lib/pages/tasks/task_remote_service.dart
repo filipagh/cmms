@@ -130,7 +130,7 @@ class TaskRemoteServicePage extends StatelessWidget {
                 ),
                 const Divider(),
               ],
-              const Text("komentare k tasku"),
+              const Text("komentáre k tasku"),
               Obx(() {
                 if (redmineData.value != null)
                   return buildRedmineComments(redmineData.value!);
