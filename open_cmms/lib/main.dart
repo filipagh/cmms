@@ -200,7 +200,7 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: '/',
             page: () {
-              return const Dashboard();
+              return Dashboard();
             },
             middlewares: [AuthGuard()]),
 
