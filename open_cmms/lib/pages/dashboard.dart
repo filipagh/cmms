@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:open_cmms/service/backend_api/issues_service.dart';
 import 'package:open_cmms/service/backend_api/station_service.dart';
 
 import '../widgets/custom_app_bar.dart';
@@ -14,12 +15,12 @@ class Dashboard extends StatelessWidget {
   }) : super(key: key);
 
   RxList<StationSchema> stations = <StationSchema>[].obs;
-
-  final _mapController = MapController();
+  RxList<IssueSchema> issues = <IssueSchema>[].obs;
 
   @override
   Widget build(BuildContext context) {
     loadStation();
+    loadIssues();
     return Scaffold(
       appBar: CustomAppBar(),
       body: Row(
@@ -55,8 +56,21 @@ class Dashboard extends StatelessWidget {
                                     builder: (ctx) => Container(
                                       child: Column(
                                         children: [
-                                          Text(e.name),
-                                          Icon(Icons.location_on),
+                                          Text(
+                                            e.name,
+                                            style: TextStyle(
+                                                backgroundColor: Colors.white),
+                                          ),
+                                          Icon(
+                                            Icons.location_on,
+                                            color: issues.value.firstWhereOrNull(
+                                                        (element) =>
+                                                            element.stationId ==
+                                                            e.id) ==
+                                                    null
+                                                ? Colors.green
+                                                : Colors.red,
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -78,6 +92,12 @@ class Dashboard extends StatelessWidget {
   void loadStation() {
     StationService().getAllStationStationsGet().then((value) {
       stations.assignAll(value!);
+    });
+  }
+
+  void loadIssues() {
+    IssuesService().getActiveIssuesIssuesActiveGet().then((value) {
+      issues.assignAll(value!);
     });
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:open_cmms/pages/issues.dart';
 import 'package:open_cmms/pages/service_contracts.dart';
 import 'package:open_cmms/pages/stations.dart';
 
@@ -39,6 +40,13 @@ class _MainMenuWidgetState extends State<MainMenuWidget>
             child: IconButton(
               icon: const Icon(Icons.note_outlined),
               onPressed: () => Get.offAllNamed("/Tasks"),
+            ),
+          ),
+          Tooltip(
+            message: "Issues",
+            child: IconButton(
+              icon: const Icon(Icons.report_problem_outlined),
+              onPressed: () => Get.offAllNamed(IssuesPage.ENDPOINT),
             ),
           ),
           Container(

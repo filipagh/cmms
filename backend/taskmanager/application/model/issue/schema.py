@@ -1,3 +1,4 @@
+import uuid
 from datetime import datetime
 from typing import Optional
 
@@ -5,7 +6,7 @@ from pydantic import BaseModel
 
 
 class IssueSchema(BaseModel):
-    id: int
+    id: uuid.UUID
     subject: str
     description: str
     station_id: Optional[str]

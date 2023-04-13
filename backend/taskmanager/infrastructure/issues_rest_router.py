@@ -21,8 +21,9 @@ issue_router = APIRouter(
 def create(
         subject: str, description: str, user: str, station_id: Optional[str] = None,
         component_id: Optional[str] = None):
-    IssueService().create_issue(subject, description, user, station_id, component_id)
-    return "OK"
+    _id = IssueService().create_issue(subject=subject, description=description, user=user, station_id=station_id,
+                                      component_id=component_id)
+    return str(_id)
 
 
 @issue_router.get("/active", response_model=list[IssueSchema])

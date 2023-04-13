@@ -22,6 +22,18 @@
 
 [//]: # (---)
 
+## 13.4.23
+
+### novinky
+
+- pridana moznost nahlasenia chyby ([url]/#/issue_report)
+- pridane zoznamu nahlasenych chyb v agent aplikacii
+- pridana mapa so stanicami v dashboarde so statusom ci dana stanica ma nahlasenu chybu
+
+### oprava
+
+---
+
 ## 10.4.23
 
 ### novinky
