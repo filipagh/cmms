@@ -224,6 +224,8 @@ class ApiClient {
           return AssignedComponentStateTypeTransformer().decode(value);
         case 'HTTPValidationError':
           return HTTPValidationError.fromJson(value);
+        case 'IssueSchema':
+          return IssueSchema.fromJson(value);
         case 'RedmineAuthResponseSchema':
           return RedmineAuthResponseSchema.fromJson(value);
         case 'RedmineAuthSchema':

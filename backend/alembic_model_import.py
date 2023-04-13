@@ -9,5 +9,6 @@ from stationmanager.infrastructure.persistence.service_contract_repo import Serv
 from stationmanager.infrastructure.persistence.service_contract_repo import StationServiceContractModel  # noqa
 from stationmanager.infrastructure.persistence.station_repo import StationModel  # noqa
 from storagemanager.infrastructure.persistance.storage_item_repo import StorageItemModel  # noqa
+from taskmanager.infrastructure.persistence.issue_repo import IssueModel  # noqa
 from taskmanager.infrastructure.persistence.redmine_tasks_repo import RedmineTaskModel  # noqa
 from taskmanager.infrastructure.persistence.tasks_repo import TaskModel  # noqa

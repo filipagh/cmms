@@ -39,6 +39,7 @@ from taskmanager.application.task_service_on_site_service import TaskServiceOnSi
 from taskmanager.application.task_service_remote_service import TaskServiceRemoteService
 from taskmanager.application.tasks_projector import TasksProjector
 from taskmanager.domain.model.tasks.task_change_components import AddComponentRequestAsStr, RemoveComponentRequestAsStr
+from taskmanager.infrastructure.issues_rest_router import issue_router
 from taskmanager.infrastructure.redmine_rest_router import redmine_router
 from taskmanager.infrastructure.task_rest_router import task_manager_router
 from taskmanager.infrastructure.task_servis_on_site_rest_router import task_servis_on_site
@@ -134,6 +135,7 @@ app.include_router(task_servis_remote)
 app.include_router(service_contract_router)
 app.include_router(auth_router)
 app.include_router(redmine_router)
+app.include_router(issue_router)
 
 origins = [
     "http://localhost:5000",

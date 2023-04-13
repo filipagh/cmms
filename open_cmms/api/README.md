@@ -85,6 +85,10 @@ All URIs are relative to *http://localhost*
  *AuthApi*               | [**updateUserRoleAuthUserUserIdRolePost**](doc//AuthApi.md#updateuserroleauthuseruseridrolepost)                                                                                   | **POST** /auth/user/{user_id}/role                         | Update User Role           
  *DefaultApi*            | [**rootGet**](doc//DefaultApi.md#rootget)                                                                                                                                          | **GET** /                                                  | Root                       
  *DefaultApi*            | [**settingsSettingsGet**](doc//DefaultApi.md#settingssettingsget)                                                                                                                  | **GET** /settings                                          | Settings                   
+ *IssuesApi*             | [**createIssuesPost**](doc//IssuesApi.md#createissuespost)                                                                                                                         | **POST** /issues/                                          | Create                     
+ *IssuesApi*             | [**getActiveIssuesIssuesActiveGet**](doc//IssuesApi.md#getactiveissuesissuesactiveget)                                                                                             | **GET** /issues/active                                     | Get Active Issues          
+ *IssuesApi*             | [**getIssueIssuesTaskIdGet**](doc//IssuesApi.md#getissueissuestaskidget)                                                                                                           | **GET** /issues/{task_id}                                  | Get Issue                  
+ *IssuesApi*             | [**resolveIssueIssuesResolveTaskIdPost**](doc//IssuesApi.md#resolveissueissuesresolvetaskidpost)                                                                                   | **POST** /issues/resolve/{task_id}                         | Resolve Issue              
  *RedmineApi*            | [**authRedmineAuthPost**](doc//RedmineApi.md#authredmineauthpost)                                                                                                                  | **POST** /redmine/auth                                     | Auth                       
  *RedmineApi*            | [**authRedmineSetupPost**](doc//RedmineApi.md#authredminesetuppost)                                                                                                                | **POST** /redmine/setup                                    | Auth                       
  *RedmineApi*            | [**loadRedmineTaskIdLoadGet**](doc//RedmineApi.md#loadredminetaskidloadget)                                                                                                        | **GET** /redmine/{task_id}/load                            | Load                       
@@ -141,8 +145,9 @@ All URIs are relative to *http://localhost*
  - [AssignedComponentNewSchema](doc//AssignedComponentNewSchema.md)
  - [AssignedComponentSchema](doc//AssignedComponentSchema.md)
  - [AssignedComponentState](doc//AssignedComponentState.md)
- - [HTTPValidationError](doc//HTTPValidationError.md)
- - [RedmineAuthResponseSchema](doc//RedmineAuthResponseSchema.md)
+- [HTTPValidationError](doc//HTTPValidationError.md)
+- [IssueSchema](doc//IssueSchema.md)
+- [RedmineAuthResponseSchema](doc//RedmineAuthResponseSchema.md)
  - [RedmineAuthSchema](doc//RedmineAuthSchema.md)
  - [RedmineCommentDataSchema](doc//RedmineCommentDataSchema.md)
  - [RedmineIssueDataSchema](doc//RedmineIssueDataSchema.md)

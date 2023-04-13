@@ -4,6 +4,8 @@ import 'package:open_cmms/auth_guard.dart';
 import 'package:open_cmms/pages/assets_management.dart';
 import 'package:open_cmms/pages/dashboard.dart';
 import 'package:open_cmms/pages/forbidden.dart';
+import 'package:open_cmms/pages/issue_report.dart';
+import 'package:open_cmms/pages/issues.dart';
 import 'package:open_cmms/pages/login.dart';
 import 'package:open_cmms/pages/news.dart';
 import 'package:open_cmms/pages/road_segment.dart';
@@ -200,7 +202,13 @@ class MyApp extends StatelessWidget {
         GetPage(
             name: '/',
             page: () {
-              return const Dashboard();
+              return Dashboard();
+            },
+            middlewares: [AuthGuard()]),
+        GetPage(
+            name: IssuesPage.ENDPOINT,
+            page: () {
+              return IssuesPage();
             },
             middlewares: [AuthGuard()]),
 
@@ -220,6 +228,11 @@ class MyApp extends StatelessWidget {
             middlewares: [AuthGuard(), AdminGuard()]),
 
         // +++++++++++++++++++++++++++++++++++++++++++++++++++   PUBLIC
+        GetPage(
+            name: IssueReportPage.ENDPOINT,
+            page: () {
+              return IssueReportPage();
+            }),
         GetPage(
             name: Forbidden.ENDPOINT,
             page: () {

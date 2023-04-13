@@ -24,6 +24,8 @@ doc/AssignedComponentsApi.md
 doc/AuthApi.md
 doc/DefaultApi.md
 doc/HTTPValidationError.md
+doc/IssueSchema.md
+doc/IssuesApi.md
 doc/RedmineApi.md
 doc/RedmineAuthResponseSchema.md
 doc/RedmineAuthSchema.md
@@ -73,6 +75,7 @@ lib/api/asset_manager_api.dart
 lib/api/assigned_components_api.dart
 lib/api/auth_api.dart
 lib/api/default_api.dart
+lib/api/issues_api.dart
 lib/api/redmine_api.dart
 lib/api/road_segment_manager_api.dart
 lib/api/service_contract_api.dart
@@ -106,6 +109,7 @@ lib/model/assigned_component_new_schema.dart
 lib/model/assigned_component_schema.dart
 lib/model/assigned_component_state.dart
 lib/model/http_validation_error.dart
+lib/model/issue_schema.dart
 lib/model/redmine_auth_response_schema.dart
 lib/model/redmine_auth_schema.dart
 lib/model/redmine_comment_data_schema.dart
