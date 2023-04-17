@@ -139,12 +139,12 @@ def create_issue(task_id, subject, description, assigned_to_id, category_name) -
         raise Exception('Redmine custom fields not found')
 
     project_id = SettingsRepo().get_settings(key=SettingsEnum.redmine_project_id)
-    supervisor_id = SettingsRepo().get_settings(key=SettingsEnum.redmine_supervisor_id)
+    supervisor_user_id = SettingsRepo().get_settings(key=SettingsEnum.redmine_supervisor_id)
     category_id = _load_or_create_redmine_category(redmine, project_id, category_name).id
     cmms_url = os.environ.get('FE_URL') + '/task/' + str(task_id)
 
     issue = redmine.issue.new()
-    issue.custom_fields = ({'id': supervisor_id, 'value': supervisor_id}, {'id': link_to_cmms_id, 'value': cmms_url})
+    issue.custom_fields = ({'id': supervisor_id, 'value': supervisor_user_id}, {'id': link_to_cmms_id, 'value': cmms_url})
 
     issue.project_id = project_id
     issue.subject = subject
