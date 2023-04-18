@@ -25,27 +25,26 @@ class RedmineCommentDataSchema {
   DateTime createdOn;
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is RedmineCommentDataSchema &&
-          other.comment == comment &&
-          other.author == author &&
-          other.createdOn == createdOn;
+  bool operator ==(Object other) => identical(this, other) || other is RedmineCommentDataSchema &&
+     other.comment == comment &&
+     other.author == author &&
+     other.createdOn == createdOn;
 
   @override
   int get hashCode =>
-      // ignore: unnecessary_parenthesis
-      (comment.hashCode) + (author.hashCode) + (createdOn.hashCode);
+    // ignore: unnecessary_parenthesis
+    (comment.hashCode) +
+    (author.hashCode) +
+    (createdOn.hashCode);
 
   @override
-  String toString() =>
-      'RedmineCommentDataSchema[comment=$comment, author=$author, createdOn=$createdOn]';
+  String toString() => 'RedmineCommentDataSchema[comment=$comment, author=$author, createdOn=$createdOn]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-    _json[r'comment'] = comment;
-    _json[r'author'] = author;
-    _json[r'created_on'] = createdOn.toUtc().toIso8601String();
+      _json[r'comment'] = comment;
+      _json[r'author'] = author;
+      _json[r'created_on'] = createdOn.toUtc().toIso8601String();
     return _json;
   }
 
@@ -61,10 +60,8 @@ class RedmineCommentDataSchema {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key),
-              'Required key "RedmineCommentDataSchema[$key]" is missing from JSON.');
-          assert(json[key] != null,
-              'Required key "RedmineCommentDataSchema[$key]" has a null value in JSON.');
+          assert(json.containsKey(key), 'Required key "RedmineCommentDataSchema[$key]" is missing from JSON.');
+          assert(json[key] != null, 'Required key "RedmineCommentDataSchema[$key]" has a null value in JSON.');
         });
         return true;
       }());
@@ -78,10 +75,7 @@ class RedmineCommentDataSchema {
     return null;
   }
 
-  static List<RedmineCommentDataSchema>? listFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static List<RedmineCommentDataSchema>? listFromJson(dynamic json, {bool growable = false,}) {
     final result = <RedmineCommentDataSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -109,18 +103,12 @@ class RedmineCommentDataSchema {
   }
 
   // maps a json object with a list of RedmineCommentDataSchema-objects as value to a dart map
-  static Map<String, List<RedmineCommentDataSchema>> mapListFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static Map<String, List<RedmineCommentDataSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<RedmineCommentDataSchema>>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = RedmineCommentDataSchema.listFromJson(
-          entry.value,
-          growable: growable,
-        );
+        final value = RedmineCommentDataSchema.listFromJson(entry.value, growable: growable,);
         if (value != null) {
           map[entry.key] = value;
         }

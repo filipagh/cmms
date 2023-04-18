@@ -22,22 +22,23 @@ class RedmineObjectSchema {
   String name;
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is RedmineObjectSchema && other.id == id && other.name == name;
+  bool operator ==(Object other) => identical(this, other) || other is RedmineObjectSchema &&
+     other.id == id &&
+     other.name == name;
 
   @override
   int get hashCode =>
-      // ignore: unnecessary_parenthesis
-      (id.hashCode) + (name.hashCode);
+    // ignore: unnecessary_parenthesis
+    (id.hashCode) +
+    (name.hashCode);
 
   @override
   String toString() => 'RedmineObjectSchema[id=$id, name=$name]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-    _json[r'id'] = id;
-    _json[r'name'] = name;
+      _json[r'id'] = id;
+      _json[r'name'] = name;
     return _json;
   }
 
@@ -53,10 +54,8 @@ class RedmineObjectSchema {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key),
-              'Required key "RedmineObjectSchema[$key]" is missing from JSON.');
-          assert(json[key] != null,
-              'Required key "RedmineObjectSchema[$key]" has a null value in JSON.');
+          assert(json.containsKey(key), 'Required key "RedmineObjectSchema[$key]" is missing from JSON.');
+          assert(json[key] != null, 'Required key "RedmineObjectSchema[$key]" has a null value in JSON.');
         });
         return true;
       }());
@@ -69,10 +68,7 @@ class RedmineObjectSchema {
     return null;
   }
 
-  static List<RedmineObjectSchema>? listFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static List<RedmineObjectSchema>? listFromJson(dynamic json, {bool growable = false,}) {
     final result = <RedmineObjectSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -100,18 +96,12 @@ class RedmineObjectSchema {
   }
 
   // maps a json object with a list of RedmineObjectSchema-objects as value to a dart map
-  static Map<String, List<RedmineObjectSchema>> mapListFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static Map<String, List<RedmineObjectSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<RedmineObjectSchema>>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = RedmineObjectSchema.listFromJson(
-          entry.value,
-          growable: growable,
-        );
+        final value = RedmineObjectSchema.listFromJson(entry.value, growable: growable,);
         if (value != null) {
           map[entry.key] = value;
         }

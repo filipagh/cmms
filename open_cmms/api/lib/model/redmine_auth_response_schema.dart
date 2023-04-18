@@ -31,35 +31,32 @@ class RedmineAuthResponseSchema {
   List<RedmineObjectSchema> users;
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is RedmineAuthResponseSchema &&
-          other.redmineUrl == redmineUrl &&
-          other.redmineApiKey == redmineApiKey &&
-          other.projects == projects &&
-          other.trackers == trackers &&
-          other.users == users;
+  bool operator ==(Object other) => identical(this, other) || other is RedmineAuthResponseSchema &&
+     other.redmineUrl == redmineUrl &&
+     other.redmineApiKey == redmineApiKey &&
+     other.projects == projects &&
+     other.trackers == trackers &&
+     other.users == users;
 
   @override
   int get hashCode =>
-      // ignore: unnecessary_parenthesis
-      (redmineUrl.hashCode) +
-      (redmineApiKey.hashCode) +
-      (projects.hashCode) +
-      (trackers.hashCode) +
-      (users.hashCode);
+    // ignore: unnecessary_parenthesis
+    (redmineUrl.hashCode) +
+    (redmineApiKey.hashCode) +
+    (projects.hashCode) +
+    (trackers.hashCode) +
+    (users.hashCode);
 
   @override
-  String toString() =>
-      'RedmineAuthResponseSchema[redmineUrl=$redmineUrl, redmineApiKey=$redmineApiKey, projects=$projects, trackers=$trackers, users=$users]';
+  String toString() => 'RedmineAuthResponseSchema[redmineUrl=$redmineUrl, redmineApiKey=$redmineApiKey, projects=$projects, trackers=$trackers, users=$users]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-    _json[r'redmine_url'] = redmineUrl;
-    _json[r'redmine_api_key'] = redmineApiKey;
-    _json[r'projects'] = projects;
-    _json[r'trackers'] = trackers;
-    _json[r'users'] = users;
+      _json[r'redmine_url'] = redmineUrl;
+      _json[r'redmine_api_key'] = redmineApiKey;
+      _json[r'projects'] = projects;
+      _json[r'trackers'] = trackers;
+      _json[r'users'] = users;
     return _json;
   }
 
@@ -75,10 +72,8 @@ class RedmineAuthResponseSchema {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key),
-              'Required key "RedmineAuthResponseSchema[$key]" is missing from JSON.');
-          assert(json[key] != null,
-              'Required key "RedmineAuthResponseSchema[$key]" has a null value in JSON.');
+          assert(json.containsKey(key), 'Required key "RedmineAuthResponseSchema[$key]" is missing from JSON.');
+          assert(json[key] != null, 'Required key "RedmineAuthResponseSchema[$key]" has a null value in JSON.');
         });
         return true;
       }());
@@ -94,10 +89,7 @@ class RedmineAuthResponseSchema {
     return null;
   }
 
-  static List<RedmineAuthResponseSchema>? listFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static List<RedmineAuthResponseSchema>? listFromJson(dynamic json, {bool growable = false,}) {
     final result = <RedmineAuthResponseSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -125,18 +117,12 @@ class RedmineAuthResponseSchema {
   }
 
   // maps a json object with a list of RedmineAuthResponseSchema-objects as value to a dart map
-  static Map<String, List<RedmineAuthResponseSchema>> mapListFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static Map<String, List<RedmineAuthResponseSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<RedmineAuthResponseSchema>>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = RedmineAuthResponseSchema.listFromJson(
-          entry.value,
-          growable: growable,
-        );
+        final value = RedmineAuthResponseSchema.listFromJson(entry.value, growable: growable,);
         if (value != null) {
           map[entry.key] = value;
         }

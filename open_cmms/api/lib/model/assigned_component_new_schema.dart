@@ -31,28 +31,25 @@ class AssignedComponentNewSchema {
   String? serialNumber;
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is AssignedComponentNewSchema &&
-          other.assetId == assetId &&
-          other.stationId == stationId &&
-          other.serialNumber == serialNumber;
+  bool operator ==(Object other) => identical(this, other) || other is AssignedComponentNewSchema &&
+     other.assetId == assetId &&
+     other.stationId == stationId &&
+     other.serialNumber == serialNumber;
 
   @override
   int get hashCode =>
-      // ignore: unnecessary_parenthesis
-      (assetId.hashCode) +
-      (stationId.hashCode) +
-      (serialNumber == null ? 0 : serialNumber!.hashCode);
+    // ignore: unnecessary_parenthesis
+    (assetId.hashCode) +
+    (stationId.hashCode) +
+    (serialNumber == null ? 0 : serialNumber!.hashCode);
 
   @override
-  String toString() =>
-      'AssignedComponentNewSchema[assetId=$assetId, stationId=$stationId, serialNumber=$serialNumber]';
+  String toString() => 'AssignedComponentNewSchema[assetId=$assetId, stationId=$stationId, serialNumber=$serialNumber]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-    _json[r'asset_id'] = assetId;
-    _json[r'station_id'] = stationId;
+      _json[r'asset_id'] = assetId;
+      _json[r'station_id'] = stationId;
     if (serialNumber != null) {
       _json[r'serial_number'] = serialNumber;
     }

@@ -25,27 +25,26 @@ class SettingSchema {
   String value;
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is SettingSchema &&
-          other.key == key &&
-          other.enabled == enabled &&
-          other.value == value;
+  bool operator ==(Object other) => identical(this, other) || other is SettingSchema &&
+     other.key == key &&
+     other.enabled == enabled &&
+     other.value == value;
 
   @override
   int get hashCode =>
-      // ignore: unnecessary_parenthesis
-      (key.hashCode) + (enabled.hashCode) + (value.hashCode);
+    // ignore: unnecessary_parenthesis
+    (key.hashCode) +
+    (enabled.hashCode) +
+    (value.hashCode);
 
   @override
-  String toString() =>
-      'SettingSchema[key=$key, enabled=$enabled, value=$value]';
+  String toString() => 'SettingSchema[key=$key, enabled=$enabled, value=$value]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-    _json[r'key'] = key;
-    _json[r'enabled'] = enabled;
-    _json[r'value'] = value;
+      _json[r'key'] = key;
+      _json[r'enabled'] = enabled;
+      _json[r'value'] = value;
     return _json;
   }
 
@@ -61,10 +60,8 @@ class SettingSchema {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key),
-              'Required key "SettingSchema[$key]" is missing from JSON.');
-          assert(json[key] != null,
-              'Required key "SettingSchema[$key]" has a null value in JSON.');
+          assert(json.containsKey(key), 'Required key "SettingSchema[$key]" is missing from JSON.');
+          assert(json[key] != null, 'Required key "SettingSchema[$key]" has a null value in JSON.');
         });
         return true;
       }());
@@ -78,10 +75,7 @@ class SettingSchema {
     return null;
   }
 
-  static List<SettingSchema>? listFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static List<SettingSchema>? listFromJson(dynamic json, {bool growable = false,}) {
     final result = <SettingSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -109,18 +103,12 @@ class SettingSchema {
   }
 
   // maps a json object with a list of SettingSchema-objects as value to a dart map
-  static Map<String, List<SettingSchema>> mapListFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static Map<String, List<SettingSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<SettingSchema>>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = SettingSchema.listFromJson(
-          entry.value,
-          growable: growable,
-        );
+        final value = SettingSchema.listFromJson(entry.value, growable: growable,);
         if (value != null) {
           map[entry.key] = value;
         }

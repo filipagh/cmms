@@ -1,28 +1,26 @@
 # BackendAPI.api.IssuesApi
 
 ## Load the API package
-
 ```dart
 import 'package:BackendAPI/api.dart';
 ```
 
 All URIs are relative to *http://localhost*
 
- Method                                                                                      | HTTP request                       | Description       
----------------------------------------------------------------------------------------------|------------------------------------|-------------------
- [**createIssuesPost**](IssuesApi.md#createissuespost)                                       | **POST** /issues/                  | Create            
- [**getActiveIssuesIssuesActiveGet**](IssuesApi.md#getactiveissuesissuesactiveget)           | **GET** /issues/active             | Get Active Issues 
- [**getIssueIssuesTaskIdGet**](IssuesApi.md#getissueissuestaskidget)                         | **GET** /issues/{task_id}          | Get Issue         
- [**resolveIssueIssuesResolveTaskIdPost**](IssuesApi.md#resolveissueissuesresolvetaskidpost) | **POST** /issues/resolve/{task_id} | Resolve Issue     
+Method | HTTP request | Description
+------------- | ------------- | -------------
+[**createIssuesPost**](IssuesApi.md#createissuespost) | **POST** /issues/ | Create
+[**getActiveIssuesIssuesActiveGet**](IssuesApi.md#getactiveissuesissuesactiveget) | **GET** /issues/active | Get Active Issues
+[**getIssueIssuesTaskIdGet**](IssuesApi.md#getissueissuestaskidget) | **GET** /issues/{task_id} | Get Issue
+[**resolveIssueIssuesResolveTaskIdPost**](IssuesApi.md#resolveissueissuesresolvetaskidpost) | **POST** /issues/resolve/{task_id} | Resolve Issue
+
 
 # **createIssuesPost**
-
 > String createIssuesPost(subject, description, user, stationId, componentId)
 
 Create
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 
@@ -34,24 +32,22 @@ final stationId = stationId_example; // String |
 final componentId = componentId_example; // String | 
 
 try {
-final result = api_instance.createIssuesPost(subject, description, user, stationId, componentId);
-print(result);
-} catch
-(
-e) {
-print('Exception when calling IssuesApi->createIssuesPost: $e\n');
+    final result = api_instance.createIssuesPost(subject, description, user, stationId, componentId);
+    print(result);
+} catch (e) {
+    print('Exception when calling IssuesApi->createIssuesPost: $e\n');
 }
 ```
 
 ### Parameters
 
- Name            | Type       | Description | Notes      
------------------|------------|-------------|------------
- **subject**     | **String** |             |
- **description** | **String** |             |
- **user**        | **String** |             |
- **stationId**   | **String** |             | [optional] 
- **componentId** | **String** |             | [optional] 
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **subject** | **String**|  | 
+ **description** | **String**|  | 
+ **user** | **String**|  | 
+ **stationId** | **String**|  | [optional] 
+ **componentId** | **String**|  | [optional] 
 
 ### Return type
 
@@ -63,22 +59,19 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: text/plain, application/json
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getActiveIssuesIssuesActiveGet**
-
 > List<IssueSchema> getActiveIssuesIssuesActiveGet()
 
 Get Active Issues
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
-
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
 //defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
 // TODO Configure API key authorization: api_key
@@ -93,17 +86,14 @@ import 'package:BackendAPI/api.dart';
 final api_instance = IssuesApi();
 
 try {
-final result = api_instance.getActiveIssuesIssuesActiveGet();
-print(result);
-} catch
-(
-e) {
-print('Exception when calling IssuesApi->getActiveIssuesIssuesActiveGet: $e\n');
+    final result = api_instance.getActiveIssuesIssuesActiveGet();
+    print(result);
+} catch (e) {
+    print('Exception when calling IssuesApi->getActiveIssuesIssuesActiveGet: $e\n');
 }
 ```
 
 ### Parameters
-
 This endpoint does not need any parameter.
 
 ### Return type
@@ -116,22 +106,19 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: application/json
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getIssueIssuesTaskIdGet**
-
 > IssueSchema getIssueIssuesTaskIdGet(taskId)
 
 Get Issue
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
-
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
 //defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
 // TODO Configure API key authorization: api_key
@@ -144,26 +131,21 @@ import 'package:BackendAPI/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKeyPrefix = 'Bearer';
 
 final api_instance = IssuesApi();
-final taskId = 38400000 - 8
-cf0-11
-bd-b23e-10
-b96e4ef00d; // String | 
+final taskId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-final result = api_instance.getIssueIssuesTaskIdGet(taskId);
-print(result);
-} catch
-(
-e) {
-print('Exception when calling IssuesApi->getIssueIssuesTaskIdGet: $e\n');
+    final result = api_instance.getIssueIssuesTaskIdGet(taskId);
+    print(result);
+} catch (e) {
+    print('Exception when calling IssuesApi->getIssueIssuesTaskIdGet: $e\n');
 }
 ```
 
 ### Parameters
 
- Name       | Type       | Description | Notes 
-------------|------------|-------------|-------
- **taskId** | **String** |             |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **taskId** | **String**|  | 
 
 ### Return type
 
@@ -175,22 +157,19 @@ print('Exception when calling IssuesApi->getIssueIssuesTaskIdGet: $e\n');
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: application/json
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **resolveIssueIssuesResolveTaskIdPost**
-
 > String resolveIssueIssuesResolveTaskIdPost(taskId)
 
 Resolve Issue
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
-
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
 //defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
 // TODO Configure API key authorization: api_key
@@ -203,26 +182,21 @@ import 'package:BackendAPI/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKeyPrefix = 'Bearer';
 
 final api_instance = IssuesApi();
-final taskId = 38400000 - 8
-cf0-11
-bd-b23e-10
-b96e4ef00d; // String | 
+final taskId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-final result = api_instance.resolveIssueIssuesResolveTaskIdPost(taskId);
-print(result);
-} catch
-(
-e) {
-print('Exception when calling IssuesApi->resolveIssueIssuesResolveTaskIdPost: $e\n');
+    final result = api_instance.resolveIssueIssuesResolveTaskIdPost(taskId);
+    print(result);
+} catch (e) {
+    print('Exception when calling IssuesApi->resolveIssueIssuesResolveTaskIdPost: $e\n');
 }
 ```
 
 ### Parameters
 
- Name       | Type       | Description | Notes 
-------------|------------|-------------|-------
- **taskId** | **String** |             |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **taskId** | **String**|  | 
 
 ### Return type
 
@@ -234,8 +208,8 @@ print('Exception when calling IssuesApi->resolveIssueIssuesResolveTaskIdPost: $e
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: text/plain, application/json
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

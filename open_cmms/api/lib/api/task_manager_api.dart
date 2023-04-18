@@ -64,6 +64,7 @@ class TaskManagerApi {
     // FormatException when trying to decode an empty string.
     if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
       return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'String',) as String;
+    
     }
     return null;
   }
@@ -116,6 +117,7 @@ class TaskManagerApi {
     // FormatException when trying to decode an empty string.
     if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
       return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'String',) as String;
+    
     }
     return null;
   }
@@ -183,6 +185,7 @@ class TaskManagerApi {
     // FormatException when trying to decode an empty string.
     if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
       return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'String',) as String;
+    
     }
     return null;
   }
@@ -196,15 +199,10 @@ class TaskManagerApi {
   /// * [String] taskId (required):
   ///
   /// * [List<TaskChangeComponentRequestCompleted>] taskChangeComponentRequestCompleted (required):
-  Future<Response>
-      completeTaskItemsTaskManagerTaskIdCompeteTaskItmesPostWithHttpInfo(
-    String taskId,
-    List<TaskChangeComponentRequestCompleted>
-        taskChangeComponentRequestCompleted,
-  ) async {
+  Future<Response> completeTaskItemsTaskManagerTaskIdCompeteTaskItmesPostWithHttpInfo(String taskId, List<TaskChangeComponentRequestCompleted> taskChangeComponentRequestCompleted,) async {
     // ignore: prefer_const_declarations
     final path = r'/task-manager/{task_id}/compete_task_itmes'
-        .replaceAll('{task_id}', taskId);
+      .replaceAll('{task_id}', taskId);
 
     // ignore: prefer_final_locals
     Object? postBody = taskChangeComponentRequestCompleted;
@@ -214,6 +212,7 @@ class TaskManagerApi {
     final formParams = <String, String>{};
 
     const contentTypes = <String>['application/json'];
+
 
     return apiClient.invokeAPI(
       path,
@@ -233,28 +232,17 @@ class TaskManagerApi {
   /// * [String] taskId (required):
   ///
   /// * [List<TaskChangeComponentRequestCompleted>] taskChangeComponentRequestCompleted (required):
-  Future<String?> completeTaskItemsTaskManagerTaskIdCompeteTaskItmesPost(
-    String taskId,
-    List<TaskChangeComponentRequestCompleted>
-        taskChangeComponentRequestCompleted,
-  ) async {
-    final response =
-        await completeTaskItemsTaskManagerTaskIdCompeteTaskItmesPostWithHttpInfo(
-      taskId,
-      taskChangeComponentRequestCompleted,
-    );
+  Future<String?> completeTaskItemsTaskManagerTaskIdCompeteTaskItmesPost(String taskId, List<TaskChangeComponentRequestCompleted> taskChangeComponentRequestCompleted,) async {
+    final response = await completeTaskItemsTaskManagerTaskIdCompeteTaskItmesPostWithHttpInfo(taskId, taskChangeComponentRequestCompleted,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
     // When a remote server returns no body with a status of 204, we shall not decode it.
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty &&
-        response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(
-        await _decodeBodyBytes(response),
-        'String',
-      ) as String;
+    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'String',) as String;
+    
     }
     return null;
   }
@@ -306,6 +294,7 @@ class TaskManagerApi {
     // FormatException when trying to decode an empty string.
     if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
       return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'String',) as String;
+    
     }
     return null;
   }
@@ -357,6 +346,7 @@ class TaskManagerApi {
     // FormatException when trying to decode an empty string.
     if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
       return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'String',) as String;
+    
     }
     return null;
   }
@@ -469,6 +459,7 @@ class TaskManagerApi {
     // FormatException when trying to decode an empty string.
     if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
       return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'TaskSchema',) as TaskSchema;
+    
     }
     return null;
   }
@@ -521,6 +512,7 @@ class TaskManagerApi {
     // FormatException when trying to decode an empty string.
     if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
       return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'TaskChangeComponentsSchema',) as TaskChangeComponentsSchema;
+    
     }
     return null;
   }

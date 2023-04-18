@@ -31,35 +31,32 @@ class RedmineIssueDataSchema {
   List<RedmineCommentDataSchema> comments;
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is RedmineIssueDataSchema &&
-          other.taskId == taskId &&
-          other.description == description &&
-          other.assignedTo == assignedTo &&
-          other.linkToRedmine == linkToRedmine &&
-          other.comments == comments;
+  bool operator ==(Object other) => identical(this, other) || other is RedmineIssueDataSchema &&
+     other.taskId == taskId &&
+     other.description == description &&
+     other.assignedTo == assignedTo &&
+     other.linkToRedmine == linkToRedmine &&
+     other.comments == comments;
 
   @override
   int get hashCode =>
-      // ignore: unnecessary_parenthesis
-      (taskId.hashCode) +
-      (description.hashCode) +
-      (assignedTo.hashCode) +
-      (linkToRedmine.hashCode) +
-      (comments.hashCode);
+    // ignore: unnecessary_parenthesis
+    (taskId.hashCode) +
+    (description.hashCode) +
+    (assignedTo.hashCode) +
+    (linkToRedmine.hashCode) +
+    (comments.hashCode);
 
   @override
-  String toString() =>
-      'RedmineIssueDataSchema[taskId=$taskId, description=$description, assignedTo=$assignedTo, linkToRedmine=$linkToRedmine, comments=$comments]';
+  String toString() => 'RedmineIssueDataSchema[taskId=$taskId, description=$description, assignedTo=$assignedTo, linkToRedmine=$linkToRedmine, comments=$comments]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-    _json[r'task_id'] = taskId;
-    _json[r'description'] = description;
-    _json[r'assigned_to'] = assignedTo;
-    _json[r'link_to_redmine'] = linkToRedmine;
-    _json[r'comments'] = comments;
+      _json[r'task_id'] = taskId;
+      _json[r'description'] = description;
+      _json[r'assigned_to'] = assignedTo;
+      _json[r'link_to_redmine'] = linkToRedmine;
+      _json[r'comments'] = comments;
     return _json;
   }
 
@@ -75,10 +72,8 @@ class RedmineIssueDataSchema {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key),
-              'Required key "RedmineIssueDataSchema[$key]" is missing from JSON.');
-          assert(json[key] != null,
-              'Required key "RedmineIssueDataSchema[$key]" has a null value in JSON.');
+          assert(json.containsKey(key), 'Required key "RedmineIssueDataSchema[$key]" is missing from JSON.');
+          assert(json[key] != null, 'Required key "RedmineIssueDataSchema[$key]" has a null value in JSON.');
         });
         return true;
       }());
@@ -94,10 +89,7 @@ class RedmineIssueDataSchema {
     return null;
   }
 
-  static List<RedmineIssueDataSchema>? listFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static List<RedmineIssueDataSchema>? listFromJson(dynamic json, {bool growable = false,}) {
     final result = <RedmineIssueDataSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -125,18 +117,12 @@ class RedmineIssueDataSchema {
   }
 
   // maps a json object with a list of RedmineIssueDataSchema-objects as value to a dart map
-  static Map<String, List<RedmineIssueDataSchema>> mapListFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static Map<String, List<RedmineIssueDataSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<RedmineIssueDataSchema>>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = RedmineIssueDataSchema.listFromJson(
-          entry.value,
-          growable: growable,
-        );
+        final value = RedmineIssueDataSchema.listFromJson(entry.value, growable: growable,);
         if (value != null) {
           map[entry.key] = value;
         }

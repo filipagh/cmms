@@ -10,9 +10,9 @@
 
 part of openapi.api;
 
+
 class RedmineApi {
-  RedmineApi([ApiClient? apiClient])
-      : apiClient = apiClient ?? defaultApiClient;
+  RedmineApi([ApiClient? apiClient]) : apiClient = apiClient ?? defaultApiClient;
 
   final ApiClient apiClient;
 
@@ -23,9 +23,7 @@ class RedmineApi {
   /// Parameters:
   ///
   /// * [RedmineAuthSchema] redmineAuthSchema (required):
-  Future<Response> authRedmineAuthPostWithHttpInfo(
-    RedmineAuthSchema redmineAuthSchema,
-  ) async {
+  Future<Response> authRedmineAuthPostWithHttpInfo(RedmineAuthSchema redmineAuthSchema,) async {
     // ignore: prefer_const_declarations
     final path = r'/redmine/auth';
 
@@ -38,6 +36,7 @@ class RedmineApi {
 
     const contentTypes = <String>['application/json'];
 
+
     return apiClient.invokeAPI(
       path,
       'POST',
@@ -54,24 +53,17 @@ class RedmineApi {
   /// Parameters:
   ///
   /// * [RedmineAuthSchema] redmineAuthSchema (required):
-  Future<RedmineAuthResponseSchema?> authRedmineAuthPost(
-    RedmineAuthSchema redmineAuthSchema,
-  ) async {
-    final response = await authRedmineAuthPostWithHttpInfo(
-      redmineAuthSchema,
-    );
+  Future<RedmineAuthResponseSchema?> authRedmineAuthPost(RedmineAuthSchema redmineAuthSchema,) async {
+    final response = await authRedmineAuthPostWithHttpInfo(redmineAuthSchema,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
     // When a remote server returns no body with a status of 204, we shall not decode it.
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty &&
-        response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(
-        await _decodeBodyBytes(response),
-        'RedmineAuthResponseSchema',
-      ) as RedmineAuthResponseSchema;
+    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'RedmineAuthResponseSchema',) as RedmineAuthResponseSchema;
+    
     }
     return null;
   }
@@ -83,9 +75,7 @@ class RedmineApi {
   /// Parameters:
   ///
   /// * [RedmineSetupRequestSchema] redmineSetupRequestSchema (required):
-  Future<Response> authRedmineSetupPostWithHttpInfo(
-    RedmineSetupRequestSchema redmineSetupRequestSchema,
-  ) async {
+  Future<Response> authRedmineSetupPostWithHttpInfo(RedmineSetupRequestSchema redmineSetupRequestSchema,) async {
     // ignore: prefer_const_declarations
     final path = r'/redmine/setup';
 
@@ -97,6 +87,7 @@ class RedmineApi {
     final formParams = <String, String>{};
 
     const contentTypes = <String>['application/json'];
+
 
     return apiClient.invokeAPI(
       path,
@@ -114,24 +105,17 @@ class RedmineApi {
   /// Parameters:
   ///
   /// * [RedmineSetupRequestSchema] redmineSetupRequestSchema (required):
-  Future<String?> authRedmineSetupPost(
-    RedmineSetupRequestSchema redmineSetupRequestSchema,
-  ) async {
-    final response = await authRedmineSetupPostWithHttpInfo(
-      redmineSetupRequestSchema,
-    );
+  Future<String?> authRedmineSetupPost(RedmineSetupRequestSchema redmineSetupRequestSchema,) async {
+    final response = await authRedmineSetupPostWithHttpInfo(redmineSetupRequestSchema,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
     // When a remote server returns no body with a status of 204, we shall not decode it.
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty &&
-        response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(
-        await _decodeBodyBytes(response),
-        'String',
-      ) as String;
+    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'String',) as String;
+    
     }
     return null;
   }
@@ -143,11 +127,10 @@ class RedmineApi {
   /// Parameters:
   ///
   /// * [String] taskId (required):
-  Future<Response> loadRedmineTaskIdLoadGetWithHttpInfo(
-    String taskId,
-  ) async {
+  Future<Response> loadRedmineTaskIdLoadGetWithHttpInfo(String taskId,) async {
     // ignore: prefer_const_declarations
-    final path = r'/redmine/{task_id}/load'.replaceAll('{task_id}', taskId);
+    final path = r'/redmine/{task_id}/load'
+      .replaceAll('{task_id}', taskId);
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -157,6 +140,7 @@ class RedmineApi {
     final formParams = <String, String>{};
 
     const contentTypes = <String>[];
+
 
     return apiClient.invokeAPI(
       path,
@@ -174,24 +158,17 @@ class RedmineApi {
   /// Parameters:
   ///
   /// * [String] taskId (required):
-  Future<RedmineIssueDataSchema?> loadRedmineTaskIdLoadGet(
-    String taskId,
-  ) async {
-    final response = await loadRedmineTaskIdLoadGetWithHttpInfo(
-      taskId,
-    );
+  Future<RedmineIssueDataSchema?> loadRedmineTaskIdLoadGet(String taskId,) async {
+    final response = await loadRedmineTaskIdLoadGetWithHttpInfo(taskId,);
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
     // When a remote server returns no body with a status of 204, we shall not decode it.
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty &&
-        response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(
-        await _decodeBodyBytes(response),
-        'RedmineIssueDataSchema',
-      ) as RedmineIssueDataSchema;
+    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'RedmineIssueDataSchema',) as RedmineIssueDataSchema;
+    
     }
     return null;
   }
@@ -211,6 +188,7 @@ class RedmineApi {
     final formParams = <String, String>{};
 
     const contentTypes = <String>[];
+
 
     return apiClient.invokeAPI(
       path,
@@ -232,12 +210,9 @@ class RedmineApi {
     // When a remote server returns no body with a status of 204, we shall not decode it.
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty &&
-        response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(
-        await _decodeBodyBytes(response),
-        'String',
-      ) as String;
+    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'String',) as String;
+    
     }
     return null;
   }

@@ -31,35 +31,32 @@ class RedmineSetupRequestSchema {
   String redmineSupervisorId;
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is RedmineSetupRequestSchema &&
-          other.redmineUrl == redmineUrl &&
-          other.redmineApiKey == redmineApiKey &&
-          other.redmineProjectId == redmineProjectId &&
-          other.redmineTrackerId == redmineTrackerId &&
-          other.redmineSupervisorId == redmineSupervisorId;
+  bool operator ==(Object other) => identical(this, other) || other is RedmineSetupRequestSchema &&
+     other.redmineUrl == redmineUrl &&
+     other.redmineApiKey == redmineApiKey &&
+     other.redmineProjectId == redmineProjectId &&
+     other.redmineTrackerId == redmineTrackerId &&
+     other.redmineSupervisorId == redmineSupervisorId;
 
   @override
   int get hashCode =>
-      // ignore: unnecessary_parenthesis
-      (redmineUrl.hashCode) +
-      (redmineApiKey.hashCode) +
-      (redmineProjectId.hashCode) +
-      (redmineTrackerId.hashCode) +
-      (redmineSupervisorId.hashCode);
+    // ignore: unnecessary_parenthesis
+    (redmineUrl.hashCode) +
+    (redmineApiKey.hashCode) +
+    (redmineProjectId.hashCode) +
+    (redmineTrackerId.hashCode) +
+    (redmineSupervisorId.hashCode);
 
   @override
-  String toString() =>
-      'RedmineSetupRequestSchema[redmineUrl=$redmineUrl, redmineApiKey=$redmineApiKey, redmineProjectId=$redmineProjectId, redmineTrackerId=$redmineTrackerId, redmineSupervisorId=$redmineSupervisorId]';
+  String toString() => 'RedmineSetupRequestSchema[redmineUrl=$redmineUrl, redmineApiKey=$redmineApiKey, redmineProjectId=$redmineProjectId, redmineTrackerId=$redmineTrackerId, redmineSupervisorId=$redmineSupervisorId]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-    _json[r'redmine_url'] = redmineUrl;
-    _json[r'redmine_api_key'] = redmineApiKey;
-    _json[r'redmine_project_id'] = redmineProjectId;
-    _json[r'redmine_tracker_id'] = redmineTrackerId;
-    _json[r'redmine_supervisor_id'] = redmineSupervisorId;
+      _json[r'redmine_url'] = redmineUrl;
+      _json[r'redmine_api_key'] = redmineApiKey;
+      _json[r'redmine_project_id'] = redmineProjectId;
+      _json[r'redmine_tracker_id'] = redmineTrackerId;
+      _json[r'redmine_supervisor_id'] = redmineSupervisorId;
     return _json;
   }
 
@@ -75,10 +72,8 @@ class RedmineSetupRequestSchema {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key),
-              'Required key "RedmineSetupRequestSchema[$key]" is missing from JSON.');
-          assert(json[key] != null,
-              'Required key "RedmineSetupRequestSchema[$key]" has a null value in JSON.');
+          assert(json.containsKey(key), 'Required key "RedmineSetupRequestSchema[$key]" is missing from JSON.');
+          assert(json[key] != null, 'Required key "RedmineSetupRequestSchema[$key]" has a null value in JSON.');
         });
         return true;
       }());
@@ -88,17 +83,13 @@ class RedmineSetupRequestSchema {
         redmineApiKey: mapValueOfType<String>(json, r'redmine_api_key')!,
         redmineProjectId: mapValueOfType<String>(json, r'redmine_project_id')!,
         redmineTrackerId: mapValueOfType<String>(json, r'redmine_tracker_id')!,
-        redmineSupervisorId:
-            mapValueOfType<String>(json, r'redmine_supervisor_id')!,
+        redmineSupervisorId: mapValueOfType<String>(json, r'redmine_supervisor_id')!,
       );
     }
     return null;
   }
 
-  static List<RedmineSetupRequestSchema>? listFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static List<RedmineSetupRequestSchema>? listFromJson(dynamic json, {bool growable = false,}) {
     final result = <RedmineSetupRequestSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -126,18 +117,12 @@ class RedmineSetupRequestSchema {
   }
 
   // maps a json object with a list of RedmineSetupRequestSchema-objects as value to a dart map
-  static Map<String, List<RedmineSetupRequestSchema>> mapListFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static Map<String, List<RedmineSetupRequestSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<RedmineSetupRequestSchema>>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = RedmineSetupRequestSchema.listFromJson(
-          entry.value,
-          growable: growable,
-        );
+        final value = RedmineSetupRequestSchema.listFromJson(entry.value, growable: growable,);
         if (value != null) {
           map[entry.key] = value;
         }

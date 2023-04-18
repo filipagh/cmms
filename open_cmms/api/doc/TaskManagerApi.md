@@ -210,10 +210,10 @@ try {
 
 ### Parameters
 
- Name                                    | Type                                                                                    | Description | Notes 
------------------------------------------|-----------------------------------------------------------------------------------------|-------------|-------
- **taskId**                              | **String**                                                                              |             |
- **taskChangeComponentRequestCompleted** | [**List<TaskChangeComponentRequestCompleted>**](TaskChangeComponentRequestCompleted.md) |             |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **taskId** | **String**|  | 
+ **taskChangeComponentRequestCompleted** | [**List<TaskChangeComponentRequestCompleted>**](TaskChangeComponentRequestCompleted.md)|  | 
 
 ### Return type
 

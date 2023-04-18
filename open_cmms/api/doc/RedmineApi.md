@@ -7,12 +7,12 @@ import 'package:BackendAPI/api.dart';
 
 All URIs are relative to *http://localhost*
 
- Method                                                                                       | HTTP request                    | Description        
-----------------------------------------------------------------------------------------------|---------------------------------|--------------------
- [**authRedmineAuthPost**](RedmineApi.md#authredmineauthpost)                                 | **POST** /redmine/auth          | Auth               
- [**authRedmineSetupPost**](RedmineApi.md#authredminesetuppost)                               | **POST** /redmine/setup         | Auth               
- [**loadRedmineTaskIdLoadGet**](RedmineApi.md#loadredminetaskidloadget)                       | **GET** /redmine/{task_id}/load | Load               
- [**removeIntegrationRedmineSetupDelete**](RedmineApi.md#removeintegrationredminesetupdelete) | **DELETE** /redmine/setup       | Remove Integration 
+Method | HTTP request | Description
+------------- | ------------- | -------------
+[**authRedmineAuthPost**](RedmineApi.md#authredmineauthpost) | **POST** /redmine/auth | Auth
+[**authRedmineSetupPost**](RedmineApi.md#authredminesetuppost) | **POST** /redmine/setup | Auth
+[**loadRedmineTaskIdLoadGet**](RedmineApi.md#loadredminetaskidloadget) | **GET** /redmine/{task_id}/load | Load
+[**removeIntegrationRedmineSetupDelete**](RedmineApi.md#removeintegrationredminesetupdelete) | **DELETE** /redmine/setup | Remove Integration
 
 
 # **authRedmineAuthPost**
@@ -47,9 +47,9 @@ try {
 
 ### Parameters
 
- Name                  | Type                                          | Description | Notes 
------------------------|-----------------------------------------------|-------------|-------
- **redmineAuthSchema** | [**RedmineAuthSchema**](RedmineAuthSchema.md) |             |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **redmineAuthSchema** | [**RedmineAuthSchema**](RedmineAuthSchema.md)|  | 
 
 ### Return type
 
@@ -61,8 +61,8 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: application/json
-- **Accept**: application/json
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -98,9 +98,9 @@ try {
 
 ### Parameters
 
- Name                          | Type                                                          | Description | Notes 
--------------------------------|---------------------------------------------------------------|-------------|-------
- **redmineSetupRequestSchema** | [**RedmineSetupRequestSchema**](RedmineSetupRequestSchema.md) |             |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **redmineSetupRequestSchema** | [**RedmineSetupRequestSchema**](RedmineSetupRequestSchema.md)|  | 
 
 ### Return type
 
@@ -112,8 +112,8 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: application/json
-- **Accept**: text/plain, application/json
+ - **Content-Type**: application/json
+ - **Accept**: text/plain, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -149,9 +149,9 @@ try {
 
 ### Parameters
 
- Name       | Type       | Description | Notes 
-------------|------------|-------------|-------
- **taskId** | **String** |             |
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **taskId** | **String**|  | 
 
 ### Return type
 
@@ -163,8 +163,8 @@ try {
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: application/json
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -210,8 +210,8 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
-- **Accept**: text/plain
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

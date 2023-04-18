@@ -9,7 +9,10 @@ import 'package:open_cmms/widgets/dialog_form.dart';
 
 class ServiceContractForm extends StatefulWidget implements hasFormTitle {
   ServiceContractForm(
-      {Key? key, ServiceContractSchema? contract, this.isNew = false})
+      {Key? key,
+      ServiceContractSchema? contract,
+      this.isNew = false,
+      this.stationsWithoutContract = const []})
       : super(key: key) {
     RoadSegmentService().getAllRoadSegmentManagerSegmentsGet().then((value) {
       segments.addAll(value ?? []);
@@ -42,6 +45,7 @@ class ServiceContractForm extends StatefulWidget implements hasFormTitle {
   RxMap<String, List<StationSchema>> stations =
       <String, List<StationSchema>>{}.obs;
   RxList<String> selectedStations = <String>[].obs;
+  List<StationIdSchema> stationsWithoutContract;
 
   @override
   State<ServiceContractForm> createState() => _ServiceContractFormState();
@@ -134,6 +138,11 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
                                   return Obx(
                                     () => CheckboxListTile(
                                       title: Text(station.name),
+                                      subtitle: widget.stationsWithoutContract
+                                              .contains(StationIdSchema(
+                                                  id: station.id))
+                                          ? Text("stanica nemá servisnú zmluvu")
+                                          : null,
                                       value: widget.selectedStations
                                           .contains(station.id),
                                       onChanged: widget.isNew

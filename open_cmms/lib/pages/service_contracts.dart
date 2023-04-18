@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/service/backend_api/service_contract_service.dart';
 import 'package:open_cmms/widgets/forms/service_contracts/service_contract_form.dart';
+import 'package:open_cmms/widgets/forms/service_contracts/stations_missing_service_contract_form.dart';
 
 import '../widgets/custom_app_bar.dart';
 import '../widgets/dialog_form.dart';
@@ -12,6 +13,8 @@ class ServiceContracts extends StatelessWidget {
   static const String ENDPOINT = '/service_contracts';
 
   final List<ServiceContractSchema> _contracts = <ServiceContractSchema>[].obs;
+  final List<StationIdSchema> _stationsIdsWithoutContracts =
+      <StationIdSchema>[].obs;
   final RxBool loaded = false.obs;
 
   ServiceContracts({
@@ -21,13 +24,20 @@ class ServiceContracts extends StatelessWidget {
   }
 
   reloadContracts() {
-    ServiceContractService()
+    var serviceContractService = ServiceContractService();
+    serviceContractService
         .getContractsServiceContractContractsGet()
         .then((contracts) {
       contracts?.sort((a, b) => a.validFrom.isBefore(b.validFrom) ? 1 : 0);
       loaded.value = true;
       _contracts.clear();
       _contracts.addAll(contracts!);
+    });
+    serviceContractService
+        .getStationsWithoutContractServiceContractStationsWithoutContractGet()
+        .then((value) {
+      _stationsIdsWithoutContracts.clear();
+      _stationsIdsWithoutContracts.addAll(value!);
     });
   }
 
@@ -85,8 +95,16 @@ class ServiceContracts extends StatelessWidget {
             const Spacer(),
             ElevatedButton(
               onPressed: () {
+                showFormDialog(StationsMissingServiceContractForm(
+                    station_list: _stationsIdsWithoutContracts.toList()));
+              },
+              child: const Text("zobraziť stanice bez zmluvy"),
+            ),
+            ElevatedButton(
+              onPressed: () {
                 showFormDialog(ServiceContractForm(
                   isNew: true,
+                  stationsWithoutContract: _stationsIdsWithoutContracts,
                 ));
               },
               child: const Text("vytvorit novu zmluvu"),
@@ -111,13 +129,18 @@ class ServiceContracts extends StatelessWidget {
                                 onTap: () {
                                   showFormDialog(ServiceContractForm(
                                     contract: _contracts[index],
+                                    stationsWithoutContract:
+                                        _stationsIdsWithoutContracts,
                                   ));
                                 },
                                 trailing: ElevatedButton.icon(
                                     onPressed: () {
                                       showFormDialog(ServiceContractForm(
-                                          contract: _contracts[index],
-                                          isNew: true));
+                                        contract: _contracts[index],
+                                        isNew: true,
+                                        stationsWithoutContract:
+                                            _stationsIdsWithoutContracts,
+                                      ));
                                     },
                                     icon: Icon(Icons.copy),
                                     label: Text("kópia")),

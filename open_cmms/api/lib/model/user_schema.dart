@@ -31,35 +31,32 @@ class UserSchema {
   Role role;
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is UserSchema &&
-          other.id == id &&
-          other.name == name &&
-          other.isVerified == isVerified &&
-          other.isAdmin == isAdmin &&
-          other.role == role;
+  bool operator ==(Object other) => identical(this, other) || other is UserSchema &&
+     other.id == id &&
+     other.name == name &&
+     other.isVerified == isVerified &&
+     other.isAdmin == isAdmin &&
+     other.role == role;
 
   @override
   int get hashCode =>
-      // ignore: unnecessary_parenthesis
-      (id.hashCode) +
-      (name.hashCode) +
-      (isVerified.hashCode) +
-      (isAdmin.hashCode) +
-      (role.hashCode);
+    // ignore: unnecessary_parenthesis
+    (id.hashCode) +
+    (name.hashCode) +
+    (isVerified.hashCode) +
+    (isAdmin.hashCode) +
+    (role.hashCode);
 
   @override
-  String toString() =>
-      'UserSchema[id=$id, name=$name, isVerified=$isVerified, isAdmin=$isAdmin, role=$role]';
+  String toString() => 'UserSchema[id=$id, name=$name, isVerified=$isVerified, isAdmin=$isAdmin, role=$role]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-    _json[r'id'] = id;
-    _json[r'name'] = name;
-    _json[r'isVerified'] = isVerified;
-    _json[r'isAdmin'] = isAdmin;
-    _json[r'role'] = role;
+      _json[r'id'] = id;
+      _json[r'name'] = name;
+      _json[r'isVerified'] = isVerified;
+      _json[r'isAdmin'] = isAdmin;
+      _json[r'role'] = role;
     return _json;
   }
 

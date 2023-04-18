@@ -1,4 +1,5 @@
 import uuid
+from datetime import datetime
 
 from sqlalchemy import Column, String, ForeignKey, DateTime, Date
 from sqlalchemy.dialects import postgresql
@@ -49,6 +50,9 @@ def get_contract_by_id(contract_id) -> ServiceContractModel:
         return db.query(ServiceContractModel).get(contract_id)
 
 
-def get_all_contracts():
+def get_all_contracts(only_active=False):
     with _get_db() as db:
-        return db.query(ServiceContractModel).all()
+        query = db.query(ServiceContractModel)
+        if only_active:
+            query = query.filter(ServiceContractModel.valid_until >= datetime.now().date())
+        return query.all()

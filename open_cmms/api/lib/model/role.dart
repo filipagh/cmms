@@ -36,10 +36,7 @@ class Role {
 
   static Role? fromJson(dynamic value) => RoleTypeTransformer().decode(value);
 
-  static List<Role>? listFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static List<Role>? listFromJson(dynamic json, {bool growable = false,}) {
     final result = <Role>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -73,12 +70,9 @@ class RoleTypeTransformer {
   Role? decode(dynamic data, {bool allowNull = true}) {
     if (data != null) {
       switch (data.toString()) {
-        case r'admin':
-          return Role.admin;
-        case r'verified':
-          return Role.verified;
-        case r'unverified':
-          return Role.unverified;
+        case r'admin': return Role.admin;
+        case r'verified': return Role.verified;
+        case r'unverified': return Role.unverified;
         default:
           if (!allowNull) {
             throw ArgumentError('Unknown enum value to decode: $data');

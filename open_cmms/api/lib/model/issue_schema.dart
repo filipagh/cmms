@@ -52,48 +52,45 @@ class IssueSchema {
   bool active;
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is IssueSchema &&
-          other.id == id &&
-          other.subject == subject &&
-          other.description == description &&
-          other.stationId == stationId &&
-          other.componentId == componentId &&
-          other.user == user &&
-          other.createdOn == createdOn &&
-          other.active == active;
+  bool operator ==(Object other) => identical(this, other) || other is IssueSchema &&
+     other.id == id &&
+     other.subject == subject &&
+     other.description == description &&
+     other.stationId == stationId &&
+     other.componentId == componentId &&
+     other.user == user &&
+     other.createdOn == createdOn &&
+     other.active == active;
 
   @override
   int get hashCode =>
-      // ignore: unnecessary_parenthesis
-      (id.hashCode) +
-      (subject.hashCode) +
-      (description.hashCode) +
-      (stationId == null ? 0 : stationId!.hashCode) +
-      (componentId == null ? 0 : componentId!.hashCode) +
-      (user.hashCode) +
-      (createdOn.hashCode) +
-      (active.hashCode);
+    // ignore: unnecessary_parenthesis
+    (id.hashCode) +
+    (subject.hashCode) +
+    (description.hashCode) +
+    (stationId == null ? 0 : stationId!.hashCode) +
+    (componentId == null ? 0 : componentId!.hashCode) +
+    (user.hashCode) +
+    (createdOn.hashCode) +
+    (active.hashCode);
 
   @override
-  String toString() =>
-      'IssueSchema[id=$id, subject=$subject, description=$description, stationId=$stationId, componentId=$componentId, user=$user, createdOn=$createdOn, active=$active]';
+  String toString() => 'IssueSchema[id=$id, subject=$subject, description=$description, stationId=$stationId, componentId=$componentId, user=$user, createdOn=$createdOn, active=$active]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-    _json[r'id'] = id;
-    _json[r'subject'] = subject;
-    _json[r'description'] = description;
+      _json[r'id'] = id;
+      _json[r'subject'] = subject;
+      _json[r'description'] = description;
     if (stationId != null) {
       _json[r'station_id'] = stationId;
     }
     if (componentId != null) {
       _json[r'component_id'] = componentId;
     }
-    _json[r'user'] = user;
-    _json[r'created_on'] = createdOn.toUtc().toIso8601String();
-    _json[r'active'] = active;
+      _json[r'user'] = user;
+      _json[r'created_on'] = createdOn.toUtc().toIso8601String();
+      _json[r'active'] = active;
     return _json;
   }
 
@@ -109,10 +106,8 @@ class IssueSchema {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key),
-              'Required key "IssueSchema[$key]" is missing from JSON.');
-          assert(json[key] != null,
-              'Required key "IssueSchema[$key]" has a null value in JSON.');
+          assert(json.containsKey(key), 'Required key "IssueSchema[$key]" is missing from JSON.');
+          assert(json[key] != null, 'Required key "IssueSchema[$key]" has a null value in JSON.');
         });
         return true;
       }());
@@ -131,10 +126,7 @@ class IssueSchema {
     return null;
   }
 
-  static List<IssueSchema>? listFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static List<IssueSchema>? listFromJson(dynamic json, {bool growable = false,}) {
     final result = <IssueSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -162,18 +154,12 @@ class IssueSchema {
   }
 
   // maps a json object with a list of IssueSchema-objects as value to a dart map
-  static Map<String, List<IssueSchema>> mapListFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static Map<String, List<IssueSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<IssueSchema>>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = IssueSchema.listFromJson(
-          entry.value,
-          growable: growable,
-        );
+        final value = IssueSchema.listFromJson(entry.value, growable: growable,);
         if (value != null) {
           map[entry.key] = value;
         }
@@ -192,3 +178,4 @@ class IssueSchema {
     'active',
   };
 }
+

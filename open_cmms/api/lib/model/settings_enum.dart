@@ -40,13 +40,9 @@ class SettingsEnum {
     supervisorId,
   ];
 
-  static SettingsEnum? fromJson(dynamic value) =>
-      SettingsEnumTypeTransformer().decode(value);
+  static SettingsEnum? fromJson(dynamic value) => SettingsEnumTypeTransformer().decode(value);
 
-  static List<SettingsEnum>? listFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static List<SettingsEnum>? listFromJson(dynamic json, {bool growable = false,}) {
     final result = <SettingsEnum>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -63,8 +59,7 @@ class SettingsEnum {
 /// Transformation class that can [encode] an instance of [SettingsEnum] to String,
 /// and [decode] dynamic data back to [SettingsEnum].
 class SettingsEnumTypeTransformer {
-  factory SettingsEnumTypeTransformer() =>
-      _instance ??= const SettingsEnumTypeTransformer._();
+  factory SettingsEnumTypeTransformer() => _instance ??= const SettingsEnumTypeTransformer._();
 
   const SettingsEnumTypeTransformer._();
 
@@ -81,18 +76,12 @@ class SettingsEnumTypeTransformer {
   SettingsEnum? decode(dynamic data, {bool allowNull = true}) {
     if (data != null) {
       switch (data.toString()) {
-        case r'redmine_feature':
-          return SettingsEnum.feature;
-        case r'redmine_url':
-          return SettingsEnum.url;
-        case r'redmine_api_key':
-          return SettingsEnum.apiKey;
-        case r'redmine_project_id':
-          return SettingsEnum.projectId;
-        case r'redmine_tracker_id':
-          return SettingsEnum.trackerId;
-        case r'redmine_supervisor_id':
-          return SettingsEnum.supervisorId;
+        case r'redmine_feature': return SettingsEnum.feature;
+        case r'redmine_url': return SettingsEnum.url;
+        case r'redmine_api_key': return SettingsEnum.apiKey;
+        case r'redmine_project_id': return SettingsEnum.projectId;
+        case r'redmine_tracker_id': return SettingsEnum.trackerId;
+        case r'redmine_supervisor_id': return SettingsEnum.supervisorId;
         default:
           if (!allowNull) {
             throw ArgumentError('Unknown enum value to decode: $data');

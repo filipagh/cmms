@@ -5,10 +5,12 @@ from fief_client import FiefUserInfo
 
 from base import main
 from base.auth_def import custom_auth, read_permission, write_permission
+from stationmanager.application.model.schema import StationIdSchema
 from stationmanager.application.service_contract.model import schema
 from stationmanager.application.service_contract.model.schema import ServiceContractSchema
 from stationmanager.application.service_contract.service_contract_projector import ServiceContractProjector
 from stationmanager.application.service_contract.service_contract_service import ServiceContractService
+from stationmanager.application.station_projector import StationProjector
 from stationmanager.infrastructure.persistence.service_contract_repo import ServiceContractModel, \
     StationServiceContractModel
 
@@ -66,4 +68,24 @@ def get_contracts(_user: FiefUserInfo = Depends(custom_auth(read_permission))):
     for i in contracts:
         col.append(_model_to_schema(i))
 
+    return col
+
+
+@service_contract_router.get("/stations_without_contract",
+                             response_model=list[StationIdSchema])
+def get_stations_without_contract(_user: FiefUserInfo = Depends(custom_auth(read_permission))):
+    station_projector = main.runner.get(StationProjector)
+    projector = main.runner.get(ServiceContractProjector)
+    station_ids = []
+    for s in station_projector.get_all():
+        station_ids.append(s.id)
+
+    col = []
+    contracts = projector.get_all_active()
+    for i in contracts:
+        for s in i.station_id_list:
+            station_ids.remove(s.station_id)
+
+    for i in station_ids:
+      col.append(StationIdSchema(id=i))
     return col

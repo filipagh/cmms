@@ -70,58 +70,54 @@ class AssignedComponentSchema {
   DateTime? warrantyPeriodUntil;
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is AssignedComponentSchema &&
-          other.assetId == assetId &&
-          other.stationId == stationId &&
-          other.serialNumber == serialNumber &&
-          other.id == id &&
-          other.status == status &&
-          other.taskId == taskId &&
-          other.installedAt == installedAt &&
-          other.removedAt == removedAt &&
-          other.warrantyPeriodDays == warrantyPeriodDays &&
-          other.warrantyPeriodUntil == warrantyPeriodUntil;
+  bool operator ==(Object other) => identical(this, other) || other is AssignedComponentSchema &&
+     other.assetId == assetId &&
+     other.stationId == stationId &&
+     other.serialNumber == serialNumber &&
+     other.id == id &&
+     other.status == status &&
+     other.taskId == taskId &&
+     other.installedAt == installedAt &&
+     other.removedAt == removedAt &&
+     other.warrantyPeriodDays == warrantyPeriodDays &&
+     other.warrantyPeriodUntil == warrantyPeriodUntil;
 
   @override
   int get hashCode =>
-      // ignore: unnecessary_parenthesis
-      (assetId.hashCode) +
-      (stationId.hashCode) +
-      (serialNumber == null ? 0 : serialNumber!.hashCode) +
-      (id.hashCode) +
-      (status.hashCode) +
-      (taskId == null ? 0 : taskId!.hashCode) +
-      (installedAt.hashCode) +
-      (removedAt == null ? 0 : removedAt!.hashCode) +
-      (warrantyPeriodDays.hashCode) +
-      (warrantyPeriodUntil == null ? 0 : warrantyPeriodUntil!.hashCode);
+    // ignore: unnecessary_parenthesis
+    (assetId.hashCode) +
+    (stationId.hashCode) +
+    (serialNumber == null ? 0 : serialNumber!.hashCode) +
+    (id.hashCode) +
+    (status.hashCode) +
+    (taskId == null ? 0 : taskId!.hashCode) +
+    (installedAt.hashCode) +
+    (removedAt == null ? 0 : removedAt!.hashCode) +
+    (warrantyPeriodDays.hashCode) +
+    (warrantyPeriodUntil == null ? 0 : warrantyPeriodUntil!.hashCode);
 
   @override
-  String toString() =>
-      'AssignedComponentSchema[assetId=$assetId, stationId=$stationId, serialNumber=$serialNumber, id=$id, status=$status, taskId=$taskId, installedAt=$installedAt, removedAt=$removedAt, warrantyPeriodDays=$warrantyPeriodDays, warrantyPeriodUntil=$warrantyPeriodUntil]';
+  String toString() => 'AssignedComponentSchema[assetId=$assetId, stationId=$stationId, serialNumber=$serialNumber, id=$id, status=$status, taskId=$taskId, installedAt=$installedAt, removedAt=$removedAt, warrantyPeriodDays=$warrantyPeriodDays, warrantyPeriodUntil=$warrantyPeriodUntil]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-    _json[r'asset_id'] = assetId;
-    _json[r'station_id'] = stationId;
+      _json[r'asset_id'] = assetId;
+      _json[r'station_id'] = stationId;
     if (serialNumber != null) {
       _json[r'serial_number'] = serialNumber;
     }
-    _json[r'id'] = id;
-    _json[r'status'] = status;
+      _json[r'id'] = id;
+      _json[r'status'] = status;
     if (taskId != null) {
       _json[r'task_id'] = taskId;
     }
-    _json[r'installed_at'] = installedAt.toUtc().toIso8601String();
+      _json[r'installed_at'] = installedAt.toUtc().toIso8601String();
     if (removedAt != null) {
       _json[r'removed_at'] = removedAt!.toUtc().toIso8601String();
     }
-    _json[r'warranty_period_days'] = warrantyPeriodDays;
+      _json[r'warranty_period_days'] = warrantyPeriodDays;
     if (warrantyPeriodUntil != null) {
-      _json[r'warranty_period_until'] =
-          _dateFormatter.format(warrantyPeriodUntil!.toUtc());
+      _json[r'warranty_period_until'] = _dateFormatter.format(warrantyPeriodUntil!.toUtc());
     }
     return _json;
   }
