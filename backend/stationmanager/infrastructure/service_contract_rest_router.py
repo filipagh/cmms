@@ -84,7 +84,10 @@ def get_stations_without_contract(_user: FiefUserInfo = Depends(custom_auth(read
     contracts = projector.get_all_active()
     for i in contracts:
         for s in i.station_id_list:
-            station_ids.remove(s.station_id)
+            try:
+                station_ids.remove(s.station_id)
+            except ValueError:
+                pass
 
     for i in station_ids:
       col.append(StationIdSchema(id=i))

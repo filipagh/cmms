@@ -22,6 +22,17 @@
 
 [//]: # (---)
 
+
+## 18.4.23
+
+### novinky
+
+- pridany zoznam stanic kotre namaju pridelenu servisnu zmluvu
+- v formulari pridania servisnej zmluvy pridana poznamka stanici ktora nemas servisnu zmluvu
+### oprava
+
+---
+
 ## 13.4.23
 
 ### novinky
