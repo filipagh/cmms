@@ -117,6 +117,27 @@ def import_assets():
             station_id=PBEstakáda),
         warranty_period_days=365)
 
+    Sverepec_mur = station_service.create_station_legacy(
+        StationNewSchema(name="Sverepec múr", road_segment_id=rs_id_PB, km_of_road=163, km_of_road_note='',
+                        longitude=49.07726,latitude=18.41599, see_level=None, description=''), legacy_ids='94')
+    Sverepec_most = station_service.create_station_legacy(
+        StationNewSchema(name="Sverepec Most", road_segment_id=rs_id_PB, km_of_road=162, km_of_road_note='',
+                        longitude=49.07199,latitude=18.40343, see_level=None, description=''), legacy_ids='73')
+
+    rs_id_trencin = rs_router.create_road_segment(RoadSegmentNewSchema(name="Trenčín", ssud="4"))
+
+    Prejta = station_service.create_station_legacy(
+        StationNewSchema(name="Prejta", road_segment_id=rs_id_trencin, km_of_road=141, km_of_road_note='',
+                         longitude=48.97838,latitude=18.17723, see_level=None, description=''), legacy_ids='50')
+    trencin = station_service.create_station_legacy(
+        StationNewSchema(name="Trenčín", road_segment_id=rs_id_trencin, km_of_road=125, km_of_road_note='privádzač TN',
+                         longitude=48.89400,latitude=18.00350, see_level=None, description=''), legacy_ids='54')
+    Drietoma = station_service.create_station_legacy(
+        StationNewSchema(name="Drietoma", road_segment_id=rs_id_trencin, km_of_road=111, km_of_road_note='',
+                         longitude=48.87759,latitude=17.96092, see_level=None, description=''), legacy_ids='1')
+
+
+
     rs_id = rs_router.create_road_segment(RoadSegmentNewSchema(name=import_rs_2, ssud=import_rs_2))
     s1 = station_rest_router.create_station(
         StationNewSchema(name="aupark 1", road_segment_id=rs_id, km_of_road=1.2,
@@ -142,7 +163,7 @@ def import_assets():
     s2 = station_rest_router.create_station(
         StationNewSchema(name="pristavny most 2", road_segment_id=rs_id, km_of_road=3.2,
                          km_of_road_note="poznamka most",
-                         longitude=48.1319009, latitude=17.1005623, see_level=200, description="pristavny most 2"))
+                         longitude=48.1357916, latitude=17.139576, see_level=200, description="pristavny most 2"))
     assigned_component_rest_router.create_installed_component(new_components=_get_all_assets_to_install(station_id=s2),
                                                               warranty_period_days=365)
 
