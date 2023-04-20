@@ -24,4 +24,5 @@ async def test_mocking_function(mocker):
     expected_schema_dict["legacy_ids"] = ''
     station_dict = expected_schema_dict
     station_dict['id'] = station_id
+    station_dict['is_active'] = True
     assert api.get_by_id(station_id).dict() == station_dict
