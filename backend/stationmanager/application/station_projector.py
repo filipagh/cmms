@@ -37,8 +37,5 @@ class StationProjector(ProcessApplication):
     def get_by_id(self, id: uuid.UUID) -> Optional[StationModel]:
         return station_repo.get_by_id(id)
 
-    def get_by_road_segment(self, segment_id: uuid.UUID) -> list[StationModel]:
-        return station_repo.get_by_road_segment(segment_id)
-
-    def get_all(self, active_only: bool = False) -> list[StationModel]:
-        return station_repo.get_road_segments(active_only)
+    def get_all(self, active_only: bool = False, segment_id: uuid.UUID = None) -> list[StationModel]:
+        return station_repo.get_stations(active_only, segment_id)

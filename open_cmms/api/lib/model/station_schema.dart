@@ -114,7 +114,7 @@ class StationSchema {
     if (kmOfRoad != null) {
       _json[r'km_of_road'] = kmOfRoad;
     }
-      _json[r'km_of_road_note'] = kmOfRoadNote;
+    _json[r'km_of_road_note'] = kmOfRoadNote;
     if (latitude != null) {
       _json[r'latitude'] = latitude;
     }

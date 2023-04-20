@@ -46,14 +46,12 @@ def get_by_id(segment_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_auth(r
 @station_router.get("/stations",
                     response_model=list[schema.StationSchema])
 def get_all(
-        road_segment_id: Optional[uuid.UUID] = None, _user: FiefUserInfo = Depends(custom_auth(read_permission))
+        road_segment_id: Optional[uuid.UUID] = None, only_active: bool = False,
+        _user: FiefUserInfo = Depends(custom_auth(read_permission))
 ):
     projector = main.runner.get(StationProjector)
     col = []
-    if road_segment_id:
-        stations = projector.get_by_road_segment(road_segment_id)
-    else:
-        stations = projector.get_all()
+    stations = projector.get_all(active_only=only_active, segment_id=road_segment_id)
     for i in stations:
         col.append(schema.StationSchema(**i.__dict__))
     return col

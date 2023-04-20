@@ -28,11 +28,13 @@ def _get_db():
     return base.database.get_sesionmaker()
 
 
-def get_road_segments(active_only: bool = False) -> list[StationModel]:
+def get_stations(active_only: bool = False, segment_id: uuid.UUID = None) -> list[StationModel]:
     with _get_db() as db:
         query = db.query(StationModel)
         if active_only:
             query = query.where(StationModel.is_active == True)
+        if segment_id:
+            query = query.where(StationModel.road_segment_id == segment_id)
         return query.all()
 
 

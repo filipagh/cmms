@@ -11,11 +11,19 @@ class Stations extends StatelessWidget {
   static const ENDPOINT = '/Stations';
 
   final RxList<StationSchema> _stations = <StationSchema>[].obs;
+  RxBool _include_deleted_stations = false.obs;
 
   Stations({
     Key? key,
   }) : super(key: key) {
-    StationService().getAllStationStationsGet().then((value) {
+    loadStations();
+  }
+
+  void loadStations() {
+    StationService()
+        .getAllStationStationsGet(onlyActive: !_include_deleted_stations.value)
+        .then((value) {
+      _stations.clear();
       _stations.addAll(value ?? []);
       _stations.refresh();
     });
@@ -37,14 +45,25 @@ class Stations extends StatelessWidget {
                   textScaleFactor: 5,
                 ),
                 Row(
-                  children: const [
-                    Placeholder(
-                      child: SizedBox(width: 300, child: Text("searchbar")),
+                  children: [
+                    Container(
+                      width: 200,
+                      child: const TextField(
+                        decoration: InputDecoration(
+                          hintText: "Hľadať (WIP)",
+                          enabled: false,
+                        ),
+                      ),
                     ),
-                    Placeholder(
-                      child: Icon(Icons.filter_list_alt),
-                    ),
-                    Spacer(),
+                    const Padding(padding: EdgeInsets.only(left: 10)),
+                    const Text("Zobraziť zmazané"),
+                    Obx(() => Checkbox(
+                        value: _include_deleted_stations.value,
+                        onChanged: (v) {
+                          _include_deleted_stations.value = v!;
+                          loadStations();
+                        })),
+                    const Spacer(),
                     // ElevatedButton(
                     //   onPressed: () {showdialog();},
                     //   child: Text("add station"),
