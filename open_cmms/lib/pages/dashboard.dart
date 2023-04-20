@@ -51,8 +51,8 @@ class Dashboard extends StatelessWidget {
                               .map((e) => Marker(
                                     width: 80.0,
                                     height: 80.0,
-                                    point: LatLng(e.longitude!.toDouble(),
-                                        e.latitude!.toDouble()),
+                                    point: LatLng(e.latitude!.toDouble(),
+                                        e.longitude!.toDouble()),
                                     builder: (ctx) => Container(
                                       child: Column(
                                         children: [

@@ -118,7 +118,7 @@ def import_assets():
     pb_stakada = station_service.create_station_legacy(
         StationNewSchema(name="PB Estakáda", road_segment_id=rs_id_pb, km_of_road=169.5,
                          km_of_road_note="",
-                         longitude=49.12305, latitude=18.44497, see_level=None, description=""), legacy_ids="72,82")
+                         latitude=49.12305, longitude=18.44497, see_level=None, description=""), legacy_ids="72,82")
     assigned_component_rest_router.create_installed_component(
         new_components=_get_selected_assets_to_install(
             asset_ids=[_InstallAsset(rws200, "M4020536"), _InstallAsset(dmu703), _InstallAsset(pmu701),
@@ -130,7 +130,7 @@ def import_assets():
 
     sverepec_mur = station_service.create_station_legacy(
         StationNewSchema(name="Sverepec múr", road_segment_id=rs_id_pb, km_of_road=163, km_of_road_note='',
-                         longitude=49.07726, latitude=18.41599, see_level=None, description=''), legacy_ids='94')
+                         latitude=49.07726, longitude=18.41599, see_level=None, description=''), legacy_ids='94')
     assigned_component_rest_router.create_installed_component(
         new_components=_get_selected_assets_to_install(
             asset_ids=[_InstallAsset(rws200, "P2620186"), _InstallAsset(dmu703), _InstallAsset(pmu701),
@@ -143,7 +143,7 @@ def import_assets():
 
     sverepec_most = station_service.create_station_legacy(
         StationNewSchema(name="Sverepec Most", road_segment_id=rs_id_pb, km_of_road=162, km_of_road_note='',
-                         longitude=49.07199, latitude=18.40343, see_level=None, description=''), legacy_ids='73')
+                         latitude=49.07199, longitude=18.40343, see_level=None, description=''), legacy_ids='73')
     assigned_component_rest_router.create_installed_component(
         new_components=_get_selected_assets_to_install(
             asset_ids=[_InstallAsset(rws200, "M4020532"), _InstallAsset(dmu703), _InstallAsset(pmu701),
@@ -155,7 +155,7 @@ def import_assets():
 
     kockovsky_kanal = station_service.create_station_legacy(
         StationNewSchema(name="Kočkovský kanál", road_segment_id=rs_id_pb, km_of_road=151, km_of_road_note='',
-                         longitude=49.03606, latitude=18.27317, see_level=None, description=''), legacy_ids='95')
+                         latitude=49.03606, longitude=18.27317, see_level=None, description=''), legacy_ids='95')
     assigned_component_rest_router.create_installed_component(
         new_components=_get_selected_assets_to_install(
             asset_ids=[_InstallAsset(rws200, "P3810561"), _InstallAsset(dmu703), _InstallAsset(pmu701),
@@ -171,7 +171,7 @@ def import_assets():
 
     prejta = station_service.create_station_legacy(
         StationNewSchema(name="Prejta", road_segment_id=rs_id_trencin, km_of_road=141, km_of_road_note='',
-                         longitude=48.97838, latitude=18.17723, see_level=None, description=''), legacy_ids='50')
+                         latitude=48.97838, longitude=18.17723, see_level=None, description=''), legacy_ids='50')
     assigned_component_rest_router.create_installed_component(
         new_components=_get_selected_assets_to_install(
             asset_ids=[_InstallAsset(dxs422, "F383004"), _InstallAsset(dsc111),
@@ -183,7 +183,7 @@ def import_assets():
 
     trencin = station_service.create_station_legacy(
         StationNewSchema(name="Trenčín", road_segment_id=rs_id_trencin, km_of_road=124, km_of_road_note='privádzač TN',
-                         longitude=48.89400, latitude=18.00350, see_level=None, description=''), legacy_ids='54')
+                         latitude=48.89400, longitude=18.00350, see_level=None, description=''), legacy_ids='54')
     assigned_component_rest_router.create_installed_component(
         new_components=_get_selected_assets_to_install(
             asset_ids=[_InstallAsset(dxs422, "G022008"), _InstallAsset(dsc111),
@@ -195,7 +195,7 @@ def import_assets():
 
     drietoma = station_service.create_station_legacy(
         StationNewSchema(name="Drietoma", road_segment_id=rs_id_trencin, km_of_road=111, km_of_road_note='',
-                         longitude=48.87759, latitude=17.96092, see_level=None, description=''), legacy_ids='1')
+                         latitude=48.87759, longitude=17.96092, see_level=None, description=''), legacy_ids='1')
     assigned_component_rest_router.create_installed_component(
         new_components=_get_selected_assets_to_install(
             asset_ids=[_InstallAsset(dxs422, "H463008"), _InstallAsset(dsc111, "K284079"),
@@ -210,28 +210,28 @@ def import_assets():
     # s1 = station_rest_router.create_station(
     #     StationNewSchema(name="aupark 1", road_segment_id=rs_id, km_of_road=1.2,
     #                      km_of_road_note="poznamka zaciatok dialnice",
-    #                      longitude=48.1318009, latitude=17.1003623, see_level=200, description="aupark 1"))
+    #                      latitude=48.1318009, longitude=17.1003623, see_level=200, description="aupark 1"))
     # assigned_component_rest_router.create_installed_component(new_components=_get_all_assets_to_install(station_id=s1),
     #                                                           warranty_period_days=365)
     #
     # s2 = station_rest_router.create_station(
     #     StationNewSchema(name="aupark 2", road_segment_id=rs_id, km_of_road=1.2,
     #                      km_of_road_note="poznamka zaciatok dialnice",
-    #                      longitude=48.1319009, latitude=17.1005623, see_level=200, description="aupark 2"))
+    #                      latitude=48.1319009, longitude=17.1005623, see_level=200, description="aupark 2"))
     # assigned_component_rest_router.create_installed_component(new_components=_get_all_assets_to_install(station_id=s2),
     #                                                           warranty_period_days=365)
     #
     # s1 = station_rest_router.create_station(
     #     StationNewSchema(name="pristavny most 1", road_segment_id=rs_id, km_of_road=3.2,
     #                      km_of_road_note="poznamka most",
-    #                      longitude=48.1337916, latitude=17.138576, see_level=200, description="pristavny most 1"))
+    #                      latitude=48.1337916, longitude=17.138576, see_level=200, description="pristavny most 1"))
     # assigned_component_rest_router.create_installed_component(new_components=_get_all_assets_to_install(station_id=s1),
     #                                                           warranty_period_days=365)
     #
     # s2 = station_rest_router.create_station(
     #     StationNewSchema(name="pristavny most 2", road_segment_id=rs_id, km_of_road=3.2,
     #                      km_of_road_note="poznamka most",
-    #                      longitude=48.1357916, latitude=17.139576, see_level=200, description="pristavny most 2"))
+    #                      latitude=48.1357916, longitude=17.139576, see_level=200, description="pristavny most 2"))
     # assigned_component_rest_router.create_installed_component(new_components=_get_all_assets_to_install(station_id=s2),
     #                                                           warranty_period_days=365)
 
