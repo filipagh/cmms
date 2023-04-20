@@ -23,13 +23,17 @@ class StationModel(Base):
     description = Column(String, nullable=False)
     legacy_ids = Column(String, nullable=False)
 
+
 def _get_db():
     return base.database.get_sesionmaker()
 
 
-def get_road_segments() -> list[StationModel]:
+def get_road_segments(active_only: bool = False) -> list[StationModel]:
     with _get_db() as db:
-        return db.query(StationModel).all()
+        query = db.query(StationModel)
+        if active_only:
+            query = query.where(StationModel.is_active == True)
+        return query.all()
 
 
 def save(station: StationModel):

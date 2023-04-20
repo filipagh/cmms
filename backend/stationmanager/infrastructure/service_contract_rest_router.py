@@ -77,7 +77,7 @@ def get_stations_without_contract(_user: FiefUserInfo = Depends(custom_auth(read
     station_projector = main.runner.get(StationProjector)
     projector = main.runner.get(ServiceContractProjector)
     station_ids = []
-    for s in station_projector.get_all():
+    for s in station_projector.get_all(active_only=True):
         station_ids.append(s.id)
 
     col = []
