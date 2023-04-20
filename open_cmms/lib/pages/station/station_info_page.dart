@@ -6,6 +6,9 @@ import 'package:open_cmms/service/backend_api/service_contract_service.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 import 'package:open_cmms/widgets/forms/service_contracts/service_contract_form.dart';
 
+import '../../service/backend_api/station_service.dart';
+import '../../snacbars.dart';
+
 class StationInfoPage extends StatelessWidget
     implements StationBaseContextPage {
   static const String ENDPOINT = '/Info';
@@ -31,6 +34,19 @@ class StationInfoPage extends StatelessWidget
             "nadmorska vyska: " + (station.seeLevel?.toString() ?? '-')),
         SelectableText("poznamka: " + station.description),
         SelectableText("ID: " + station.id),
+        if (station.isActive == true) ...[
+          ElevatedButton(
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.red)),
+              onPressed: () {
+                StationService()
+                    .removeStationStationRemoveStationDelete(
+                        StationIdSchema(id: station.id))
+                    .then((value) => showOk("Stania bola vymazana"),
+                        onError: (e) => showError(e.toString()));
+              },
+              child: Text("Vymazať stanicu")),
+        ],
         Obx(() {
           return ConstrainedBox(
             constraints: BoxConstraints(maxHeight: 400, maxWidth: 400),

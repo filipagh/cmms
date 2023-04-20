@@ -11,16 +11,19 @@ from eventsourcing.utils import EnvType
 from base import main
 from stationmanager.application.station_projector import StationProjector
 from stationmanager.domain.model.assigned_component import AssignedComponent, AssignedComponentState
+from stationmanager.domain.model.station import Station
 from storagemanager.application.storage_item_service import StorageItemService
 from storagemanager.domain.model.sotrageitem import StorageItem
 from taskmanager.application.model.task_change_component.schema import TaskChangeComponentsNewSchema, \
     TaskComponentAddNewSchema, TaskComponentRemoveNewSchema, TaskChangeComponentsSchema, AddComponentRequestSchema, \
     RemoveComponentRequestSchema, TaskChangeComponentRequestCompleted
+from taskmanager.application.tasks_projector import TasksProjector
 from taskmanager.domain.change_components.task_status_service import TaskStatusService
 from taskmanager.domain.model.task_component_state import TaskComponentState
 from taskmanager.domain.model.task_state import TaskState
 from taskmanager.domain.model.tasks.task_change_components import AddComponentRequest, RemoveComponentRequest, \
     TaskChangeComponents
+from taskmanager.infrastructure.persistence.tasks_repo import TaskType
 
 
 class TaskService(ProcessApplication):
@@ -86,6 +89,13 @@ class TaskService(ProcessApplication):
         task.allocate_component(domain_event.asset_id)
         self.save(task)
         self.task_status_service.try_change_state_to_ready(task)
+
+    @policy.register(Station.StationRemoved)
+    def _(self, domain_event: Station.StationRemoved, process_event):
+        task_projector = main.runner.get(TasksProjector)
+        for task in task_projector.get_all(domain_event.originator_id):
+            if task.task_type == TaskType.COMPONENT_CHANGE:
+                self.cancel_task(task.id)
 
     def request_component_allocation(self, task_id):
         task: TaskChangeComponents = self.repository.get(task_id)

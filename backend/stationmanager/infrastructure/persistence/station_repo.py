@@ -3,6 +3,7 @@ import uuid
 from sqlalchemy import Column, String
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import Session
+from sqlalchemy.sql import expression
 
 import base.database
 from base.database import Base
@@ -12,6 +13,7 @@ class StationModel(Base):
     __tablename__ = "station"
     id = Column(postgresql.UUID(as_uuid=True), primary_key=True, index=True, default=uuid.uuid4)
     name = Column(String, nullable=False)
+    is_active = Column(postgresql.BOOLEAN, nullable=False, server_default=expression.true())
     road_segment_id = Column(postgresql.UUID(as_uuid=True), nullable=False)
     km_of_road = Column(postgresql.FLOAT, nullable=True)
     km_of_road_note = Column(String, nullable=False)
@@ -48,8 +50,9 @@ def get_by_road_segment(road_segment_id: uuid.UUID) -> list[StationModel]:
         return db.query(StationModel).where(StationModel.road_segment_id == road_segment_id).all()
 
 
-def remove_by_id(station_id):
+def mark_station_as_inactive(station_id):
     db: Session
     with _get_db() as db:
-        db.query(StationModel).filter(StationModel.id == station_id).delete()
+        station = db.query(StationModel).get(station_id)
+        station.is_active = False
         db.commit()

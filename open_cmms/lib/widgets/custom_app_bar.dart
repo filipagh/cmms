@@ -6,7 +6,7 @@ import 'package:open_cmms/states/auth_state.dart';
 class CustomAppBar extends AppBar {
   CustomAppBar({Key? key, this.pageText}) : super(key: key);
 
-  String? pageText;
+  Widget? pageText;
 
   @override
   State<CustomAppBar> createState() => _MainMenuWidgetState();
@@ -16,7 +16,7 @@ class _MainMenuWidgetState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-        title: Center(child: Text(widget.pageText ?? "openCMMS")),
+        title: Center(child: widget.pageText ?? Text("openCMMS")),
         actions: [
           GetX<AuthState>(
             builder: (_) {

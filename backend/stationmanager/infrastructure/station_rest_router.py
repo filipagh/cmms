@@ -1,8 +1,9 @@
 import uuid
 from typing import Optional
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from fief_client import FiefUserInfo
+from starlette.responses import PlainTextResponse
 
 from base import main
 from base.auth_def import custom_auth, read_permission, write_permission
@@ -24,10 +25,14 @@ def create_station(new_station: schema.StationNewSchema, _user: FiefUserInfo = D
     return segment_service.create_station(new_station)
 
 
-@station_router.delete("/remove_station")
+@station_router.delete("/remove_station", response_class=PlainTextResponse)
 def remove_station(station_id: schema.StationIdSchema, _user: FiefUserInfo = Depends(custom_auth(write_permission))):
     segment_service = main.runner.get(StationService)
-    segment_service.remove_station(station_id)
+    try:
+        segment_service.remove_station(station_id)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    return "OK"
 
 
 @station_router.get("/station",

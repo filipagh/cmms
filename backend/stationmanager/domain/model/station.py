@@ -6,7 +6,6 @@ from eventsourcing.domain import Aggregate, event
 
 
 class Station(Aggregate):
-
     class CreatedEvent(Aggregate.Created):
         name: str
         road_segment_id: uuid
@@ -17,6 +16,7 @@ class Station(Aggregate):
         see_level: Optional[int]
         legacy_ids: str
         description: str
+
     class StationRemoved(Aggregate.Event):
         removed_at: datetime.datetime = datetime.datetime.now()
 
@@ -43,6 +43,9 @@ class Station(Aggregate):
         self.legacy_ids = legacy_ids
 
     @event(StationRemoved)
-    def remove(self):
+    def _remove(self):
         self.is_removed = True
-        pass
+
+    def remove(self):
+        if not self.is_removed:
+            self._remove()

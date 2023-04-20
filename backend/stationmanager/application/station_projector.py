@@ -32,7 +32,7 @@ class StationProjector(ProcessApplication):
 
     @policy.register(Station.StationRemoved)
     def _(self, domain_event: Station.StationRemoved, process_event):
-        station_repo.remove_by_id(domain_event.originator_id)
+        station_repo.mark_station_as_inactive(domain_event.originator_id)
 
     def get_by_id(self, id: uuid.UUID) -> Optional[StationModel]:
         return station_repo.get_by_id(id)
