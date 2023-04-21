@@ -19,8 +19,8 @@ class RoadSegmentProjector(ProcessApplication):
             id=domain_event.originator_id,
             name=domain_event.name,
             ssud=domain_event.ssud)
-        road_segment_repo.save(model) \
- \
+        road_segment_repo.save(model)
+
     @policy.register(RoadSegment.Removed)
     def _(self, domain_event: RoadSegment.Removed, process_event):
         model = road_segment_repo.get_by_id(domain_event.originator_id)
