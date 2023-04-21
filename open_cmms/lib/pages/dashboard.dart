@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:open_cmms/pages/station/station_base_page.dart';
+import 'package:open_cmms/pages/station/station_info_page.dart';
 import 'package:open_cmms/service/backend_api/issues_service.dart';
 import 'package:open_cmms/service/backend_api/station_service.dart';
 
@@ -48,31 +50,48 @@ class Dashboard extends StatelessWidget {
                       Obx(() {
                         return MarkerLayer(markers: [
                           ...(stations
-                              .where((p0) => p0.longitude != null)
+                              .where((p0) =>
+                                  p0.longitude != null &&
+                                  p0.latitude != null &&
+                                  p0.isActive == true)
                               .map((e) => Marker(
                                     width: 80.0,
                                     height: 80.0,
                                     point: LatLng(e.latitude!.toDouble(),
                                         e.longitude!.toDouble()),
                                     builder: (ctx) => Container(
-                                      child: Column(
-                                        children: [
-                                          Text(
-                                            e.name,
-                                            style: TextStyle(
-                                                backgroundColor: Colors.white),
+                                      child: MouseRegion(
+                                        cursor: SystemMouseCursors.click,
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            Get.toNamed(
+                                                StationBasePage.ENDPOINT +
+                                                    "/${e.id}" +
+                                                    StationInfoPage.ENDPOINT);
+                                          },
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                e.name,
+                                                style: TextStyle(
+                                                    backgroundColor:
+                                                        Colors.white),
+                                              ),
+                                              Icon(
+                                                Icons.location_on,
+                                                color: issues.value
+                                                            .firstWhereOrNull(
+                                                                (element) =>
+                                                                    element
+                                                                        .stationId ==
+                                                                    e.id) ==
+                                                        null
+                                                    ? Colors.green
+                                                    : Colors.red,
+                                              ),
+                                            ],
                                           ),
-                                          Icon(
-                                            Icons.location_on,
-                                            color: issues.value.firstWhereOrNull(
-                                                        (element) =>
-                                                            element.stationId ==
-                                                            e.id) ==
-                                                    null
-                                                ? Colors.green
-                                                : Colors.red,
-                                          ),
-                                        ],
+                                        ),
                                       ),
                                     ),
                                   ))

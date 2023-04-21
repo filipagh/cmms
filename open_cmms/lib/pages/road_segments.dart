@@ -1,7 +1,6 @@
 import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:open_cmms/pages/road_segment.dart';
 import 'package:open_cmms/service/backend_api/RoadSegmentManager.dart';
 
 import '../widgets/custom_app_bar.dart';
@@ -16,8 +15,12 @@ class RoadSegments extends StatelessWidget {
 
   final RxList<RoadSegmentSchema> roadSegments = <RoadSegmentSchema>[].obs;
 
+  RxBool _show_deleted = false.obs;
+
   reloadRoadSegments() {
-    RoadSegmentService().getAllRoadSegmentManagerSegmentsGet().then((value) {
+    RoadSegmentService()
+        .getAllRoadSegmentManagerSegmentsGet(onlyActive: !_show_deleted.value)
+        .then((value) {
       roadSegments.clear();
       roadSegments.addAll(value ?? []);
       roadSegments.refresh();
@@ -30,10 +33,10 @@ class RoadSegments extends StatelessWidget {
     for (var i in roadSegments) {
       list.add(DataRow(
         onSelectChanged: (dd) {
-          // Get.toNamed("/RoadSegments/" + i.id);
-          Get.to(RoadSegment(
-            segmentId: i.id,
-          ));
+          Get.toNamed("/RoadSegment/" + i.id);
+          // Get.to(RoadSegment(
+          //   segmentId: i.id,
+          // ));
         },
         cells: [
           DataCell(Text(i.name)),
@@ -73,12 +76,22 @@ class RoadSegments extends StatelessWidget {
                 const Divider(),
                 Row(
                   children: [
-                    const Placeholder(
-                      child: SizedBox(width: 300, child: Text("searchbar")),
+                    Container(
+                      width: 200,
+                      child: TextField(
+                        enabled: false,
+                        decoration: const InputDecoration(
+                          labelText: 'Vyhladávanie (WIP)',
+                        ),
+                      ),
                     ),
-                    const Placeholder(
-                      child: Icon(Icons.filter_list_alt),
-                    ),
+                    Text("zobraziť zmazané"),
+                    Obx(() => Checkbox(
+                        value: _show_deleted.value,
+                        onChanged: (v) {
+                          _show_deleted.value = v!;
+                          reloadRoadSegments();
+                        })),
                     const Spacer(),
                     ElevatedButton(
                       onPressed: () {

@@ -22,6 +22,19 @@
 
 [//]: # (---)
 
+## 21.4.23
+
+### novinky
+
+- moznost zamazat stanicu ak nema ziadne nauinstalovane komponenty
+- moznost zmazat cestny usek ak nema ziadne aktivne stanice
+- filter na aktivne / neaktivne stanice
+- filter na aktivne / neaktivne cestne useky
+- preklik na stanice z dashboardu
+
+### oprava
+
+---
 
 ## 18.4.23
 
@@ -29,6 +42,7 @@
 
 - pridany zoznam stanic kotre namaju pridelenu servisnu zmluvu
 - v formulari pridania servisnej zmluvy pridana poznamka stanici ktora nemas servisnu zmluvu
+
 ### oprava
 
 ---

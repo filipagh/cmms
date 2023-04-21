@@ -34,6 +34,7 @@ doc/RedmineIssueDataSchema.md
 doc/RedmineObjectSchema.md
 doc/RedmineSetupRequestSchema.md
 doc/RemoveComponentRequestSchema.md
+doc/RoadSegmentIdSchema.md
 doc/RoadSegmentManagerApi.md
 doc/RoadSegmentNewSchema.md
 doc/RoadSegmentSchema.md
@@ -117,6 +118,7 @@ lib/model/redmine_issue_data_schema.dart
 lib/model/redmine_object_schema.dart
 lib/model/redmine_setup_request_schema.dart
 lib/model/remove_component_request_schema.dart
+lib/model/road_segment_id_schema.dart
 lib/model/road_segment_new_schema.dart
 lib/model/road_segment_schema.dart
 lib/model/role.dart

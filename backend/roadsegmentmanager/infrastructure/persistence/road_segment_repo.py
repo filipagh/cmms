@@ -1,8 +1,9 @@
 import uuid
 
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, String
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import Session
+from sqlalchemy.sql import expression
 
 import base.database
 from base.database import Base
@@ -13,15 +14,19 @@ class RoadSegmentModel(Base):
     id = Column(postgresql.UUID(as_uuid=True), primary_key=True, index=True, default=uuid.uuid4)
     name = Column(String)
     ssud = Column(String)
+    is_active = Column(postgresql.BOOLEAN, nullable=False, server_default=expression.true())
 
 
 def _get_db():
     return base.database.get_sesionmaker()
 
 
-def get_road_segments() -> list[RoadSegmentModel]:
+def get_road_segments(only_active: bool = False) -> list[RoadSegmentModel]:
     with _get_db() as db:
-        return db.query(RoadSegmentModel).all()
+        query = db.query(RoadSegmentModel)
+        if only_active:
+            query = query.where(RoadSegmentModel.is_active == True)
+        return query.all()
 
 
 def save(road_segment: RoadSegmentModel):

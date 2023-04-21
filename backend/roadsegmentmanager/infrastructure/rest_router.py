@@ -2,6 +2,7 @@ import uuid
 
 from fastapi import APIRouter, Depends
 from fief_client import FiefUserInfo
+from starlette.responses import PlainTextResponse
 
 from base import main
 from base.auth_def import custom_auth, write_permission, read_permission
@@ -34,9 +35,17 @@ def get_by_id(segment_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_auth(r
 
 @road_segment_manager.get("/segments",
                           response_model=list[schema.RoadSegmentSchema])
-def get_all(_user: FiefUserInfo = Depends(custom_auth(read_permission))):
+def get_all(only_active: bool = False, _user: FiefUserInfo = Depends(custom_auth(read_permission))):
     segment_projector: RoadSegmentProjector = main.runner.get(RoadSegmentProjector)
     col = []
-    for i in segment_projector.get_all():
+    for i in segment_projector.get_all(only_active):
         col.append(schema.RoadSegmentSchema(**i.__dict__))
     return col
+
+
+@road_segment_manager.delete("/remove_segment", response_class=PlainTextResponse)
+def remove_segment(segment_id: schema.RoadSegmentIdSchema,
+                   _user: FiefUserInfo = Depends(custom_auth(write_permission))):
+    segment_service = main.runner.get(RoadSegmentService)
+    segment_service.remove_road_segment(segment_id)
+    return "OK"

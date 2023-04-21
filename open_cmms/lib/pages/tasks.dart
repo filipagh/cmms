@@ -19,7 +19,9 @@ class Tasks extends StatelessWidget {
   Widget build(BuildContext context) {
     loadTasks();
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: CustomAppBar(
+        pageText: Text("Úlohy"),
+      ),
       body: Row(
         children: [
           MainMenuWidget(),
@@ -27,20 +29,7 @@ class Tasks extends StatelessWidget {
           Expanded(
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      "Tasks",
-                      textScaleFactor: 5,
-                    ),
-                    IconButton(
-                        onPressed: () {
-                          loadTasks();
-                        },
-                        icon: const Icon(Icons.refresh))
-                  ],
-                ),
+                Padding(padding: const EdgeInsets.only(top: 10)),
                 Row(
                   children: [
                     const Placeholder(
@@ -50,13 +39,20 @@ class Tasks extends StatelessWidget {
                       child: Icon(Icons.filter_list_alt),
                     ),
                     const Spacer(),
+                    ElevatedButton.icon(
+                        label: const Text("načítaj úlohy"),
+                        onPressed: () {
+                          loadTasks();
+                        },
+                        icon: const Icon(Icons.refresh)),
+                    Padding(padding: const EdgeInsets.all(10)),
                     ElevatedButton(
                       onPressed: () async {
                         StationSchema station =
                             await showFormDialog(StationPickerForm());
                         showFormDialog(CreateTaskForm(station: station));
                       },
-                      child: const Text("create task"),
+                      child: const Text("nová úloha"),
                     ),
                   ],
                 ),

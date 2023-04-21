@@ -9,7 +9,9 @@ class StationsMissingServiceContractForm extends StatelessWidget
     implements hasFormTitle {
   StationsMissingServiceContractForm({Key? key, required this.station_list})
       : super(key: key) {
-    RoadSegmentService().getAllRoadSegmentManagerSegmentsGet().then((value) {
+    RoadSegmentService()
+        .getAllRoadSegmentManagerSegmentsGet(onlyActive: true)
+        .then((value) {
       segments.addAll(value ?? []);
       for (var element in segments) {
         loadStationOfSegment(element.id);
