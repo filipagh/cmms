@@ -109,8 +109,8 @@ class StationSchema {
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-      _json[r'name'] = name;
-      _json[r'road_segment_id'] = roadSegmentId;
+    _json[r'name'] = name;
+    _json[r'road_segment_id'] = roadSegmentId;
     if (kmOfRoad != null) {
       _json[r'km_of_road'] = kmOfRoad;
     }
