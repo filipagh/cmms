@@ -42,8 +42,12 @@ class StationInfoPage extends StatelessWidget
                 StationService()
                     .removeStationStationRemoveStationDelete(
                         StationIdSchema(id: station.id))
-                    .then((value) => showOk("Stania bola vymazana"),
-                        onError: (e) => showError(e.toString()));
+                    .then((value) {
+                  Get.toNamed(StationBasePage.ENDPOINT +
+                      "/${station.id}" +
+                      StationInfoPage.ENDPOINT);
+                  showOk("Stania bola vymazana");
+                }, onError: (e) => showError(e.toString()));
               },
               child: Text("Vymazať stanicu")),
         ],

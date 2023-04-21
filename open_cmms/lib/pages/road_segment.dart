@@ -26,13 +26,19 @@ class RoadSegment extends StatelessWidget {
         .then((value) {
       _roadSegment = value;
       loaded.value = true;
+      if (!_roadSegment!.isActive) {
+        _show_deleted.value = true;
+      }
       reloadStations();
     });
   }
 
+  RxBool _show_deleted = false.obs;
+
   reloadStations() {
     StationService()
-        .getAllStationStationsGet(roadSegmentId: segmentId)
+        .getAllStationStationsGet(
+            onlyActive: !_show_deleted.value, roadSegmentId: segmentId)
         .then((stations) {
       _station.clear();
       _station.addAll(stations!);
@@ -51,7 +57,9 @@ class RoadSegment extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: CustomAppBar(
+        pageText: getTitle(),
+      ),
       body: Row(
         children: [
           MainMenuWidget(),
@@ -66,60 +74,89 @@ class RoadSegment extends StatelessWidget {
     );
   }
 
+  Obx getTitle() {
+    return Obx(() {
+      if (loaded.isFalse) {
+        return Text("Cestný úsek: ");
+      }
+      return Text(_roadSegment!.isActive
+          ? ""
+          : "Zrušený " +
+              "Cestný úsek: " +
+              _roadSegment!.name +
+              " (ssud: " +
+              _roadSegment!.ssud +
+              ")");
+    });
+  }
+
   Column buildRoadSegment() {
     return Column(
       children: [
-        Text(
-          "Cestný úsek " + _roadSegment!.name,
-          textScaleFactor: 5,
-        ),
-        Divider(),
+        Padding(padding: EdgeInsets.only(top: 10)),
         Expanded(
-          child: Row(
+          child: Column(
             children: [
-              Expanded(
-                child: Column(
-                  children: [
-                    Stack(
-                      children: [
-                        Align(
-                            alignment: Alignment.centerRight,
-                            child: ElevatedButton(
-                                onPressed: () {
-                                  showFormDialog(StationForm(_roadSegment!));
-                                },
-                                child: Text("Pridat stanicu"))),
-                        Align(
-                            child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+              Stack(
+                children: [
+                  if (_roadSegment!.isActive)
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: Row(
                           children: [
-                            Text("Stations", textScaleFactor: 3),
-                            IconButton(
+                            ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary: Colors.red),
                                 onPressed: () {
-                                  reloadStations();
+                                  RoadSegmentService()
+                                      .removeSegmentRoadSegmentManagerRemoveSegmentDelete(
+                                          RoadSegmentIdSchema(
+                                              id: _roadSegment!.id))
+                                      .then((value) {
+                                    Get.back();
+                                    showOk("Cestný úsek bol zmazaný");
+                                  }, onError: (e) {
+                                    showError(
+                                        "Chyba pri mazaní cestneho useku + $e");
+                                  });
                                 },
-                                icon: Icon(Icons.refresh))
+                                child: Text("Zmazat cestny usek")),
+                            Padding(padding: EdgeInsets.only(left: 10)),
+                            Text("zobraziť zmazané"),
+                            Obx(() => Checkbox(
+                                value: _show_deleted.value,
+                                onChanged: (v) {
+                                  _show_deleted.value = v!;
+                                  reloadStations();
+                                }))
                           ],
                         )),
-                      ],
-                    ),
-                    Divider(),
-                    _station.isEmpty
-                        ? buildEmptyStationList()
-                        : AssetsList(list: _station),
-                  ],
-                ),
+                  if (_roadSegment!.isActive)
+                    Align(
+                        alignment: Alignment.centerRight,
+                        child: ElevatedButton(
+                            onPressed: () {
+                              showFormDialog(StationForm(_roadSegment!));
+                            },
+                            child: Text("Pridat stanicu"))),
+                  Align(
+                      child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Stanice", textScaleFactor: 3),
+                      IconButton(
+                          onPressed: () {
+                            reloadStations();
+                          },
+                          icon: Icon(Icons.refresh))
+                    ],
+                  )),
+                ],
               ),
-              VerticalDivider(),
-              SizedBox(
-                width: 300,
-                child: Column(
-                  children: [
-                    Text("cestný úsek detail"),
-                    Expanded(child: Placeholder()),
-                  ],
-                ),
-              )
+              Divider(),
+              _station.isEmpty
+                  ? buildEmptyStationList()
+                  : AssetsList(list: _station),
             ],
           ),
         )
@@ -131,15 +168,8 @@ class RoadSegment extends StatelessWidget {
     return Expanded(
         child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: [
+          children: const [
         Text("žiadne stanice"),
-        ElevatedButton(
-          onPressed: () {
-            showInfo("not implemented yet");
-            // _roadSegment.remove(segmentId);
-          },
-          child: Text("odstrániť cestný úsek"),
-        ),
       ],
     ));
   }

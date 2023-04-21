@@ -73,7 +73,7 @@ class MyApp extends StatelessWidget {
       defaultTransition: Transition.noTransition,
       getPages: [
         GetPage(
-            name: '/RoadSegments/:id',
+            name: '/RoadSegment/:id',
             page: () {
               return RoadSegment(segmentId: Get.parameters["id"]!);
             },

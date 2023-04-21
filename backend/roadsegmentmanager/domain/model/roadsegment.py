@@ -1,5 +1,3 @@
-import uuid
-
 from eventsourcing.domain import Aggregate, event
 
 
@@ -7,15 +5,33 @@ class RoadSegment(Aggregate):
     class CreatedEvent(Aggregate.Created):
         name: str
         ssud: str
+        is_active: bool
 
-    # class AssetAddedToStorage(Aggregate.Event):
-    #     count_number: int
+        class_version = 2
 
-    # @event(AssetAddedToStorage)
-    # def add_to_storage(self, count_number: int):
-    #     self.in_storage += count_number
+        @staticmethod
+        def upcast_v1_v2(state):
+            state["is_active"] = True
+
+    class Removed(Aggregate.Event):
+        pass
 
     @event(CreatedEvent)
-    def __init__(self, name: str, ssud: str):
+    def __init__(self, name: str, ssud: str, is_active: bool):
         self.name = name
         self.ssud = ssud
+        self.is_active = is_active
+
+    @event(Removed)
+    def _remove(self):
+        self.is_active = False
+
+    def remove(self):
+        if self.is_active:
+            self._remove()
+
+    class_version = 2
+
+    @staticmethod
+    def upcast_v1_v2(state):
+        state["is_active"] = True

@@ -61,9 +61,12 @@ class RoadSegmentManagerApi {
     // When a remote server returns no body with a status of 204, we shall not decode it.
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'String',) as String;
-    
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(
+        await _decodeBodyBytes(response),
+        'String',
+      ) as String;
     }
     return null;
   }
@@ -71,7 +74,13 @@ class RoadSegmentManagerApi {
   /// Get All
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> getAllRoadSegmentManagerSegmentsGetWithHttpInfo() async {
+  ///
+  /// Parameters:
+  ///
+  /// * [bool] onlyActive:
+  Future<Response> getAllRoadSegmentManagerSegmentsGetWithHttpInfo({
+    bool? onlyActive,
+  }) async {
     // ignore: prefer_const_declarations
     final path = r'/road-segment-manager/segments';
 
@@ -82,8 +91,11 @@ class RoadSegmentManagerApi {
     final headerParams = <String, String>{};
     final formParams = <String, String>{};
 
-    const contentTypes = <String>[];
+    if (onlyActive != null) {
+      queryParams.addAll(_queryParams('', 'only_active', onlyActive));
+    }
 
+    const contentTypes = <String>[];
 
     return apiClient.invokeAPI(
       path,
@@ -97,19 +109,29 @@ class RoadSegmentManagerApi {
   }
 
   /// Get All
-  Future<List<RoadSegmentSchema>?> getAllRoadSegmentManagerSegmentsGet() async {
-    final response = await getAllRoadSegmentManagerSegmentsGetWithHttpInfo();
+  ///
+  /// Parameters:
+  ///
+  /// * [bool] onlyActive:
+  Future<List<RoadSegmentSchema>?> getAllRoadSegmentManagerSegmentsGet({
+    bool? onlyActive,
+  }) async {
+    final response = await getAllRoadSegmentManagerSegmentsGetWithHttpInfo(
+      onlyActive: onlyActive,
+    );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
     // When a remote server returns no body with a status of 204, we shall not decode it.
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
       final responseBody = await _decodeBodyBytes(response);
-      return (await apiClient.deserializeAsync(responseBody, 'List<RoadSegmentSchema>') as List)
-        .cast<RoadSegmentSchema>()
-        .toList();
+      return (await apiClient.deserializeAsync(
+              responseBody, 'List<RoadSegmentSchema>') as List)
+          .cast<RoadSegmentSchema>()
+          .toList();
 
     }
     return null;
@@ -155,16 +177,83 @@ class RoadSegmentManagerApi {
   ///
   /// * [String] segmentId (required):
   Future<RoadSegmentSchema?> getByIdRoadSegmentManagerSegmentGet(String segmentId,) async {
-    final response = await getByIdRoadSegmentManagerSegmentGetWithHttpInfo(segmentId,);
+    final response = await getByIdRoadSegmentManagerSegmentGetWithHttpInfo(
+      segmentId,
+    );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
     // When a remote server returns no body with a status of 204, we shall not decode it.
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'RoadSegmentSchema',) as RoadSegmentSchema;
-    
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(
+        await _decodeBodyBytes(response),
+        'RoadSegmentSchema',
+      ) as RoadSegmentSchema;
+    }
+    return null;
+  }
+
+  /// Remove Segment
+  ///
+  /// Note: This method returns the HTTP [Response].
+  ///
+  /// Parameters:
+  ///
+  /// * [RoadSegmentIdSchema] roadSegmentIdSchema (required):
+  Future<Response>
+      removeSegmentRoadSegmentManagerRemoveSegmentDeleteWithHttpInfo(
+    RoadSegmentIdSchema roadSegmentIdSchema,
+  ) async {
+    // ignore: prefer_const_declarations
+    final path = r'/road-segment-manager/remove_segment';
+
+    // ignore: prefer_final_locals
+    Object? postBody = roadSegmentIdSchema;
+
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
+
+    const contentTypes = <String>['application/json'];
+
+    return apiClient.invokeAPI(
+      path,
+      'DELETE',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      contentTypes.isEmpty ? null : contentTypes.first,
+    );
+  }
+
+  /// Remove Segment
+  ///
+  /// Parameters:
+  ///
+  /// * [RoadSegmentIdSchema] roadSegmentIdSchema (required):
+  Future<String?> removeSegmentRoadSegmentManagerRemoveSegmentDelete(
+    RoadSegmentIdSchema roadSegmentIdSchema,
+  ) async {
+    final response =
+        await removeSegmentRoadSegmentManagerRemoveSegmentDeleteWithHttpInfo(
+      roadSegmentIdSchema,
+    );
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(
+        await _decodeBodyBytes(response),
+        'String',
+      ) as String;
     }
     return null;
   }

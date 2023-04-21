@@ -1,37 +1,36 @@
 import uuid
 
+from eventsourcing.application import AggregateNotFound
 from eventsourcing.dispatch import singledispatchmethod
 from eventsourcing.system import ProcessApplication
 
+import base.main
+from roadsegmentmanager.application.exceptions.app_road_segment_exception import AppRoadSegmentException
 from roadsegmentmanager.application.model import schema
 from roadsegmentmanager.domain.model.roadsegment import RoadSegment
+from stationmanager.application.station_projector import StationProjector
 
 
 class RoadSegmentService(ProcessApplication):
 
-    # def add_to_storage(self, assets_list: list[schema.AssetItemToAdd]):
-    #     unresolved = []
-    #     for i in assets_list:
-    #         try:
-    #             if i.count_to_add < 1:
-    #                 continue
-    #             storage_item: StorageItem = self.repository.get(i.storage_item_id)
-    #             storage_item.add_to_storage(i.count_to_add)
-    #             self.save(storage_item)
-    #         except eventsourcing.application.AggregateNotFound:
-    #             unresolved.append(i)
-    #     return unresolved
-
     def create_road_segment(self, segment: schema.RoadSegmentNewSchema) -> uuid.UUID:
-        segment = RoadSegment(name=segment.name, ssud=segment.ssud)
+        segment = RoadSegment(name=segment.name, ssud=segment.ssud, is_active=True)
         self.save(segment)
         return segment.id
+
+    def remove_road_segment(self, segment: schema.RoadSegmentIdSchema):
+        try:
+            segment: RoadSegment = self.repository.get(segment.id)
+        except AggregateNotFound:
+            raise AppRoadSegmentException("Road segment not found")
+        station_projector = base.main.runner.get(StationProjector)
+        stations = station_projector.get_all(active_only=True, segment_id=segment.id)
+        if len(stations) > 0:
+            raise AppRoadSegmentException("Cannot remove road segment with stations")
+
+        segment.remove()
+        self.save(segment)
 
     @singledispatchmethod
     def policy(self, domain_event, process_event):
         """Default policy"""
-
-    # @policy.register(Asset.Created)
-    # def _(self, domain_event: Asset.Created, process_event):
-    #     storage_item = StorageItem(domain_event.originator_id)
-    #     process_event.collect_events(storage_item)

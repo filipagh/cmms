@@ -240,6 +240,8 @@ class ApiClient {
           return RedmineSetupRequestSchema.fromJson(value);
         case 'RemoveComponentRequestSchema':
           return RemoveComponentRequestSchema.fromJson(value);
+        case 'RoadSegmentIdSchema':
+          return RoadSegmentIdSchema.fromJson(value);
         case 'RoadSegmentNewSchema':
           return RoadSegmentNewSchema.fromJson(value);
         case 'RoadSegmentSchema':

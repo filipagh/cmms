@@ -19,10 +19,16 @@ class RoadSegmentProjector(ProcessApplication):
             id=domain_event.originator_id,
             name=domain_event.name,
             ssud=domain_event.ssud)
+        road_segment_repo.save(model) \
+ \
+    @policy.register(RoadSegment.Removed)
+    def _(self, domain_event: RoadSegment.Removed, process_event):
+        model = road_segment_repo.get_by_id(domain_event.originator_id)
+        model.is_active = False
         road_segment_repo.save(model)
 
     def get_by_id(self, segment_id: uuid.UUID) -> RoadSegmentModel:
         return road_segment_repo.get_by_id(segment_id)
 
-    def get_all(self) -> list[RoadSegmentModel]:
-        return road_segment_repo.get_road_segments()
+    def get_all(self, only_active: bool = False) -> list[RoadSegmentModel]:
+        return road_segment_repo.get_road_segments(only_active)

@@ -8,13 +8,14 @@ class RoadSegmentSchemaBASE(BaseModel):
     ssud: str
 
 
+
 class RoadSegmentNewSchema(RoadSegmentSchemaBASE):
     pass
 
 
-class RoadSegmentIdSchema(RoadSegmentSchemaBASE):
+class RoadSegmentIdSchema(BaseModel):
     id: uuid.UUID
 
 
-class RoadSegmentSchema(RoadSegmentIdSchema):
-    pass
+class RoadSegmentSchema(RoadSegmentIdSchema, RoadSegmentSchemaBASE):
+    is_active: bool
