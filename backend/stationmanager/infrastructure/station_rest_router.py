@@ -37,10 +37,10 @@ def remove_station(station_id: schema.StationIdSchema, _user: FiefUserInfo = Dep
 
 @station_router.get("/station",
                     response_model=schema.StationSchema)
-def get_by_id(segment_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_auth(read_permission))):
+def get_by_id(station_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_auth(read_permission))):
     projector = main.runner.get(StationProjector)
 
-    return schema.StationSchema(**projector.get_by_id(segment_id).__dict__)
+    return schema.StationSchema(**projector.get_by_id(station_id).__dict__)
 
 
 @station_router.get("/stations",
