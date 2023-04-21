@@ -32,13 +32,10 @@ class StationProjector(ProcessApplication):
 
     @policy.register(Station.StationRemoved)
     def _(self, domain_event: Station.StationRemoved, process_event):
-        station_repo.remove_by_id(domain_event.originator_id)
+        station_repo.mark_station_as_inactive(domain_event.originator_id)
 
     def get_by_id(self, id: uuid.UUID) -> Optional[StationModel]:
         return station_repo.get_by_id(id)
 
-    def get_by_road_segment(self, segment_id: uuid.UUID) -> list[StationModel]:
-        return station_repo.get_by_road_segment(segment_id)
-
-    def get_all(self) -> list[StationModel]:
-        return station_repo.get_road_segments()
+    def get_all(self, active_only: bool = False, segment_id: uuid.UUID = None) -> list[StationModel]:
+        return station_repo.get_stations(active_only, segment_id)

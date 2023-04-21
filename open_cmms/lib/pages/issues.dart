@@ -23,7 +23,7 @@ class IssuesPage extends StatelessWidget {
 
     return Scaffold(
       appBar: CustomAppBar(
-        pageText: "Nahlásené chyby",
+        pageText: Text("Nahlásené chyby"),
       ),
       body: Row(children: [
         MainMenuWidget(),

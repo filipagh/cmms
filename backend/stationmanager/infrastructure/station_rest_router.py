@@ -1,8 +1,9 @@
 import uuid
 from typing import Optional
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from fief_client import FiefUserInfo
+from starlette.responses import PlainTextResponse
 
 from base import main
 from base.auth_def import custom_auth, read_permission, write_permission
@@ -24,31 +25,33 @@ def create_station(new_station: schema.StationNewSchema, _user: FiefUserInfo = D
     return segment_service.create_station(new_station)
 
 
-@station_router.delete("/remove_station")
+@station_router.delete("/remove_station", response_class=PlainTextResponse)
 def remove_station(station_id: schema.StationIdSchema, _user: FiefUserInfo = Depends(custom_auth(write_permission))):
     segment_service = main.runner.get(StationService)
-    segment_service.remove_station(station_id)
+    try:
+        segment_service.remove_station(station_id)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    return "OK"
 
 
 @station_router.get("/station",
                     response_model=schema.StationSchema)
-def get_by_id(segment_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_auth(read_permission))):
+def get_by_id(station_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_auth(read_permission))):
     projector = main.runner.get(StationProjector)
 
-    return schema.StationSchema(**projector.get_by_id(segment_id).__dict__)
+    return schema.StationSchema(**projector.get_by_id(station_id).__dict__)
 
 
 @station_router.get("/stations",
                     response_model=list[schema.StationSchema])
 def get_all(
-        road_segment_id: Optional[uuid.UUID] = None, _user: FiefUserInfo = Depends(custom_auth(read_permission))
+        road_segment_id: Optional[uuid.UUID] = None, only_active: bool = False,
+        _user: FiefUserInfo = Depends(custom_auth(read_permission))
 ):
     projector = main.runner.get(StationProjector)
     col = []
-    if road_segment_id:
-        stations = projector.get_by_road_segment(road_segment_id)
-    else:
-        stations = projector.get_all()
+    stations = projector.get_all(active_only=only_active, segment_id=road_segment_id)
     for i in stations:
         col.append(schema.StationSchema(**i.__dict__))
     return col

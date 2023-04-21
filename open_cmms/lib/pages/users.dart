@@ -22,7 +22,7 @@ class Users extends StatelessWidget {
     loadUsers();
     return Scaffold(
       appBar: CustomAppBar(
-        pageText: "Manažment používateľov",
+        pageText: Text("Manažment používateľov"),
       ),
       body: Row(
         children: [

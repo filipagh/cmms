@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/pages/station/station_base_page.dart';
 import 'package:open_cmms/pages/tasks/task_page_factory.dart';
+import 'package:open_cmms/service/backend_api/station_service.dart';
 import 'package:open_cmms/states/asset_types_state.dart';
 import 'package:open_cmms/states/station/components_state.dart';
 import 'package:open_cmms/widgets/forms/components/set_components_instation_form.dart';
@@ -31,37 +32,38 @@ class StationComponentsPage extends StatelessWidget
     }
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            ElevatedButton.icon(
-              onPressed: () {
-                components.reload();
-              },
-              icon: Icon(Icons.refresh),
-              label: Text("Načítať komponenty"),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                ElevatedButton(
-                    onPressed: () {
-                      showFormDialog(
-                          SetStationComponentsForm.editComponentsInStation(
-                              station: station));
-                    },
-                    child: Text('Nastaviť komponenty')),
-                VerticalDivider(),
-                ElevatedButton(
-                    onPressed: () {
-                      showFormDialog(
-                          EditStationComponentsForm(station: station));
-                    },
-                    child: Text('Editovať komponenty')),
-              ],
-            ),
-          ],
-        ),
+        if (station.isActive)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ElevatedButton.icon(
+                onPressed: () {
+                  components.reload();
+                },
+                icon: Icon(Icons.refresh),
+                label: Text("Načítať komponenty"),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        showFormDialog(
+                            SetStationComponentsForm.editComponentsInStation(
+                                station: station));
+                      },
+                      child: Text('Nastaviť komponenty')),
+                  VerticalDivider(),
+                  ElevatedButton(
+                      onPressed: () {
+                        showFormDialog(
+                            EditStationComponentsForm(station: station));
+                      },
+                      child: Text('Editovať komponenty')),
+                ],
+              ),
+            ],
+          ),
         Divider(),
         GetBuilder<AssignedComponentsState>(
             tag: station.id, builder: (_) => buildComponentList(_.components)),
@@ -74,12 +76,29 @@ class StationComponentsPage extends StatelessWidget
     components.removeWhere(
         (element) => element.status == AssignedComponentState.removed);
     return components.isEmpty
-        ? const Expanded(
-            child: Center(
-                child: Text(
-            "Ziadne komponenty",
-            textScaleFactor: 3,
-          )))
+        ? Expanded(
+            child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (station.isActive == true) ...[
+                const Text(
+                  "Ziadne komponenty",
+                  textScaleFactor: 3,
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      StationService().removeStationStationRemoveStationDelete(
+                          StationIdSchema(id: station.id));
+                    },
+                    child: Text("Vymazať stanicu")),
+              ] else ...[
+                const Text(
+                  "Stanica je zmazaná",
+                  textScaleFactor: 3,
+                ),
+              ],
+            ],
+          ))
         : Expanded(
             child: ListView.builder(
                 addRepaintBoundaries: true,

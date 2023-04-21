@@ -1,11 +1,13 @@
 import os
 import time
 from enum import Enum
+from urllib.request import Request
 
 from eventsourcing.persistence import Transcoding
 from eventsourcing.system import System, SingleThreadedRunner, Follower
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.responses import JSONResponse
 
 import roadsegmentmanager.infrastructure.rest_router
 import storagemanager.infrastructure.rest_router
@@ -13,6 +15,7 @@ from assetmanager.application.asset_projector import AssetProjector
 from assetmanager.application.asset_service import AssetService
 from assetmanager.infrastructure.rest_router import asset_manager_router
 from authmanager.infrastructure.auth_rest_router import auth_router
+from base.api_exception import AppException
 from base.appsettings.schema import SettingSchema
 from base.appsettings.settings_enum import SettingsEnum
 from base.appsettings.settings_repo import SettingsRepo
@@ -100,7 +103,10 @@ system = System(pipes=[[AssetService, AssetProjector],
                        [TaskService, RedmineProjector],
                        [TaskServiceOnSiteService, RedmineProjector],
                        [TaskServiceRemoteService, RedmineProjector],
-                       [ServiceContractService, ServiceContractProjector]
+                       [ServiceContractService, ServiceContractProjector],
+                       [StationService, TaskService],
+                       [StationService, TaskServiceRemoteService],
+                       [StationService, TaskServiceOnSiteService],
                        ])
 
 runner = SingleThreadedRunner(system)
@@ -116,6 +122,7 @@ register_tansconder([TasksProjector, AssignedComponentsService, StorageItemServi
 add_transconder(DateAsIso())
 add_transconder(AssetTelemetryAsJSON())
 
+# runner.get(TaskService).pull_and_process('StationService')
 # runner.get(TasksProjector).pull_and_process("TaskService")
 # runner.get(TasksProjector).pull_and_process("TaskServiceOnSiteService")
 # runner.get(TasksProjector).pull_and_process("TaskServiceRemoteService")
@@ -153,6 +160,14 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.exception_handler(AppException)
+async def unicorn_exception_handler(request: Request, exc: AppException):
+    return JSONResponse(
+        status_code=400,
+        content={"message": exc.message},
+    )
 
 
 # imports

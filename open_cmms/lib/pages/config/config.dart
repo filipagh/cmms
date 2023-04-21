@@ -22,7 +22,7 @@ class Config extends StatelessWidget {
 
     return Scaffold(
       appBar: CustomAppBar(
-        pageText: "Nastavenia",
+        pageText: Text("Nastavenia"),
       ),
       body: Row(
         children: [

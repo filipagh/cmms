@@ -49,7 +49,7 @@ class StationBasePage extends StatelessWidget {
     }
     print(ts.station?.id ?? "null");
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: CustomAppBar(pageText: Obx(() => Text(getTitle()))),
       body: Row(
         children: [
           MainMenuWidget(),
@@ -88,11 +88,7 @@ class StationBasePage extends StatelessWidget {
     }
     return Column(
       children: [
-        Text(
-          "Stanica: " + station.value!.name,
-          textScaleFactor: 5,
-        ),
-        Divider(),
+        Padding(padding: EdgeInsets.only(top: 10)),
         Expanded(
           child: Row(
             children: [
@@ -115,9 +111,22 @@ class StationBasePage extends StatelessWidget {
   Widget buildMissingRoadSegment() {
     return Center(
         child: Text(
-      "Missing data for Station ID: " + assetId,
+      "Stanica s ID: " + assetId + " neexistuje",
       textScaleFactor: 2,
     ));
+  }
+
+  getTitle() {
+    var station = this.station.value;
+    if (station == null) {
+      return "Stanica: ";
+    }
+    var title = "";
+    if (!station.isActive) {
+      title += "Zrušená ";
+    }
+    title += "Stanica: " + station.name;
+    return title;
   }
 }
 

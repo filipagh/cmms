@@ -73,10 +73,10 @@ class _StationFormState extends State<StationForm> {
             ),
             TextFormField(
               onSaved: (value) {
-                lon = num.tryParse(value!);
+                lat = num.tryParse(value!);
               },
               decoration:
-                  const InputDecoration(labelText: 'gps - dlzka (48-50)'),
+                  const InputDecoration(labelText: 'gps - sirka (47-49)'),
               validator: (value) {
                 return value != '' && num.tryParse(value ?? "") == null
                     ? "zadali ste zly format, zadajte cislo s destinou botkou"
@@ -85,10 +85,10 @@ class _StationFormState extends State<StationForm> {
             ),
             TextFormField(
               onSaved: (value) {
-                lat = num.tryParse(value!);
+                lon = num.tryParse(value!);
               },
               decoration:
-                  const InputDecoration(labelText: 'gps - sirka (17-23)'),
+                  const InputDecoration(labelText: 'gps - dlzka (16-22)'),
               validator: (value) {
                 return value != '' && num.tryParse(value ?? "") == null
                     ? "zadali ste zly format, zadajte cislo s destinou botkou"

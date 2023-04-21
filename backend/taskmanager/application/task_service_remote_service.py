@@ -3,12 +3,16 @@ import uuid
 from eventsourcing.dispatch import singledispatchmethod
 from eventsourcing.system import ProcessApplication
 
+import base
 from base import main
 from stationmanager.application.station_projector import StationProjector
+from stationmanager.domain.model.station import Station
 from taskmanager.application.model.task_service_remote.schema import TaskServiceRemoteNewSchema, TaskServiceRemoteSchema
+from taskmanager.application.tasks_projector import TasksProjector
 from taskmanager.domain.change_components.task_status_service import TaskStatusService
 from taskmanager.domain.model.task_state import TaskState
 from taskmanager.domain.model.tasks.task_remote_service import TaskServiceRemote
+from taskmanager.infrastructure.persistence.tasks_repo import TaskType
 
 
 class TaskServiceRemoteService(ProcessApplication):
@@ -48,6 +52,13 @@ class TaskServiceRemoteService(ProcessApplication):
     @singledispatchmethod
     def policy(self, domain_event, process_event):
         """Default policy"""
+
+    @policy.register(Station.StationRemoved)
+    def _(self, domain_event: Station.StationRemoved, process_event):
+        task_projector = base.main.runner.get(TasksProjector)
+        for task in task_projector.get_all(domain_event.originator_id):
+            if task.task_type == TaskType.REMOTE_SERVICE:
+                self.cancel_task(task.id)
 
     def load_task(self, task_id) -> TaskServiceRemoteSchema:
         task: TaskServiceRemote = self.repository.get(task_id)

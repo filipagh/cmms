@@ -137,11 +137,28 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
                                       widget.stations[segment.id]![index];
                                   return Obx(
                                     () => CheckboxListTile(
-                                      title: Text(station.name),
+                                      title: Row(
+                                        children: [
+                                          Text(station.name),
+                                          if (!station.isActive) ...[
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            const Tooltip(
+                                              message: "stanica je zmazaná",
+                                              child: Icon(
+                                                Icons.remove_circle_outline,
+                                                color: Colors.red,
+                                              ),
+                                            )
+                                          ]
+                                        ],
+                                      ),
                                       subtitle: widget.stationsWithoutContract
                                               .contains(StationIdSchema(
                                                   id: station.id))
-                                          ? Text("stanica nemá servisnú zmluvu")
+                                          ? const Text(
+                                              "stanica nemá servisnú zmluvu")
                                           : null,
                                       value: widget.selectedStations
                                           .contains(station.id),

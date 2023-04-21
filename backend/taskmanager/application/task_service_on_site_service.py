@@ -3,13 +3,17 @@ import uuid
 from eventsourcing.dispatch import singledispatchmethod
 from eventsourcing.system import ProcessApplication
 
+import base
 from base import main
 from stationmanager.application.station_projector import StationProjector
+from stationmanager.domain.model.station import Station
 from taskmanager.application.model.task_service_on_site.schema import TaskServiceOnSiteNewSchema, \
     TaskServiceOnSiteSchema
+from taskmanager.application.tasks_projector import TasksProjector
 from taskmanager.domain.change_components.task_status_service import TaskStatusService
 from taskmanager.domain.model.task_state import TaskState
 from taskmanager.domain.model.tasks.task_on_site_service import TaskServiceOnSite
+from taskmanager.infrastructure.persistence.tasks_repo import TaskType
 
 
 class TaskServiceOnSiteService(ProcessApplication):
@@ -38,6 +42,13 @@ class TaskServiceOnSiteService(ProcessApplication):
     @singledispatchmethod
     def policy(self, domain_event, process_event):
         """Default policy"""
+
+    @policy.register(Station.StationRemoved)
+    def _(self, domain_event: Station.StationRemoved, process_event):
+        task_projector = base.main.runner.get(TasksProjector)
+        for task in task_projector.get_all(domain_event.originator_id):
+            if task.task_type == TaskType.ON_SITE_SERVICE:
+                self.cancel_task(task.id)
 
     def change_component_task_details(self, task_id, name, description):
         task: TaskServiceOnSite = self.repository.get(task_id)

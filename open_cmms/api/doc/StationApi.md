@@ -67,7 +67,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getAllStationStationsGet**
-> List<StationSchema> getAllStationStationsGet(roadSegmentId)
+> List<StationSchema> getAllStationStationsGet(roadSegmentId, onlyActive)
 
 Get All
 
@@ -86,21 +86,28 @@ import 'package:BackendAPI/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKeyPrefix = 'Bearer';
 
 final api_instance = StationApi();
-final roadSegmentId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+final roadSegmentId = 38400000 - 8
+cf0-11
+bd-b23e-10
+b96e4ef00d; // String | 
+final onlyActive = true; // bool | 
 
 try {
-    final result = api_instance.getAllStationStationsGet(roadSegmentId);
-    print(result);
-} catch (e) {
-    print('Exception when calling StationApi->getAllStationStationsGet: $e\n');
+final result = api_instance.getAllStationStationsGet(roadSegmentId, onlyActive);
+print(result);
+} catch
+(
+e) {
+print('Exception when calling StationApi->getAllStationStationsGet: $e\n');
 }
 ```
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **roadSegmentId** | **String**|  | [optional] 
+ Name              | Type       | Description | Notes                         
+-------------------|------------|-------------|-------------------------------
+ **roadSegmentId** | **String** |             | [optional]                    
+ **onlyActive**    | **bool**   |             | [optional] [default to false] 
 
 ### Return type
 
@@ -118,7 +125,8 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getByIdStationStationGet**
-> StationSchema getByIdStationStationGet(segmentId)
+
+> StationSchema getByIdStationStationGet(stationId)
 
 Get By Id
 
@@ -137,21 +145,26 @@ import 'package:BackendAPI/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKeyPrefix = 'Bearer';
 
 final api_instance = StationApi();
-final segmentId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+final stationId = 38400000 - 8
+cf0-11
+bd-b23e-10
+b96e4ef00d; // String | 
 
 try {
-    final result = api_instance.getByIdStationStationGet(segmentId);
-    print(result);
-} catch (e) {
-    print('Exception when calling StationApi->getByIdStationStationGet: $e\n');
+final result = api_instance.getByIdStationStationGet(stationId);
+print(result);
+} catch
+(
+e) {
+print('Exception when calling StationApi->getByIdStationStationGet: $e\n');
 }
 ```
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **segmentId** | **String**|  | 
+ Name          | Type       | Description | Notes 
+---------------|------------|-------------|-------
+ **stationId** | **String** |             |
 
 ### Return type
 
@@ -169,7 +182,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **removeStationStationRemoveStationDelete**
-> Object removeStationStationRemoveStationDelete(stationIdSchema)
+> String removeStationStationRemoveStationDelete(stationIdSchema)
 
 Remove Station
 
@@ -206,7 +219,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Object**](Object.md)
+**String**
 
 ### Authorization
 
@@ -214,8 +227,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: text/plain, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

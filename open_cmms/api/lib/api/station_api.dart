@@ -63,7 +63,6 @@ class StationApi {
     // FormatException when trying to decode an empty string.
     if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
       return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'String',) as String;
-    
     }
     return null;
   }
@@ -75,7 +74,12 @@ class StationApi {
   /// Parameters:
   ///
   /// * [String] roadSegmentId:
-  Future<Response> getAllStationStationsGetWithHttpInfo({ String? roadSegmentId, }) async {
+  ///
+  /// * [bool] onlyActive:
+  Future<Response> getAllStationStationsGetWithHttpInfo({
+    String? roadSegmentId,
+    bool? onlyActive,
+  }) async {
     // ignore: prefer_const_declarations
     final path = r'/station/stations';
 
@@ -89,9 +93,11 @@ class StationApi {
     if (roadSegmentId != null) {
       queryParams.addAll(_queryParams('', 'road_segment_id', roadSegmentId));
     }
+    if (onlyActive != null) {
+      queryParams.addAll(_queryParams('', 'only_active', onlyActive));
+    }
 
     const contentTypes = <String>[];
-
 
     return apiClient.invokeAPI(
       path,
@@ -109,20 +115,29 @@ class StationApi {
   /// Parameters:
   ///
   /// * [String] roadSegmentId:
-  Future<List<StationSchema>?> getAllStationStationsGet({ String? roadSegmentId, }) async {
-    final response = await getAllStationStationsGetWithHttpInfo( roadSegmentId: roadSegmentId, );
+  ///
+  /// * [bool] onlyActive:
+  Future<List<StationSchema>?> getAllStationStationsGet({
+    String? roadSegmentId,
+    bool? onlyActive,
+  }) async {
+    final response = await getAllStationStationsGetWithHttpInfo(
+      roadSegmentId: roadSegmentId,
+      onlyActive: onlyActive,
+    );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
     // When a remote server returns no body with a status of 204, we shall not decode it.
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
       final responseBody = await _decodeBodyBytes(response);
-      return (await apiClient.deserializeAsync(responseBody, 'List<StationSchema>') as List)
-        .cast<StationSchema>()
-        .toList();
-
+      return (await apiClient.deserializeAsync(
+              responseBody, 'List<StationSchema>') as List)
+          .cast<StationSchema>()
+          .toList();
     }
     return null;
   }
@@ -133,8 +148,10 @@ class StationApi {
   ///
   /// Parameters:
   ///
-  /// * [String] segmentId (required):
-  Future<Response> getByIdStationStationGetWithHttpInfo(String segmentId,) async {
+  /// * [String] stationId (required):
+  Future<Response> getByIdStationStationGetWithHttpInfo(
+    String stationId,
+  ) async {
     // ignore: prefer_const_declarations
     final path = r'/station/station';
 
@@ -145,10 +162,9 @@ class StationApi {
     final headerParams = <String, String>{};
     final formParams = <String, String>{};
 
-      queryParams.addAll(_queryParams('', 'segment_id', segmentId));
+    queryParams.addAll(_queryParams('', 'station_id', stationId));
 
     const contentTypes = <String>[];
-
 
     return apiClient.invokeAPI(
       path,
@@ -165,18 +181,25 @@ class StationApi {
   ///
   /// Parameters:
   ///
-  /// * [String] segmentId (required):
-  Future<StationSchema?> getByIdStationStationGet(String segmentId,) async {
-    final response = await getByIdStationStationGetWithHttpInfo(segmentId,);
+  /// * [String] stationId (required):
+  Future<StationSchema?> getByIdStationStationGet(
+    String stationId,
+  ) async {
+    final response = await getByIdStationStationGetWithHttpInfo(
+      stationId,
+    );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
     // When a remote server returns no body with a status of 204, we shall not decode it.
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'StationSchema',) as StationSchema;
-    
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(
+        await _decodeBodyBytes(response),
+        'StationSchema',
+      ) as StationSchema;
     }
     return null;
   }
@@ -218,17 +241,24 @@ class StationApi {
   /// Parameters:
   ///
   /// * [StationIdSchema] stationIdSchema (required):
-  Future<Object?> removeStationStationRemoveStationDelete(StationIdSchema stationIdSchema,) async {
-    final response = await removeStationStationRemoveStationDeleteWithHttpInfo(stationIdSchema,);
+  Future<String?> removeStationStationRemoveStationDelete(
+    StationIdSchema stationIdSchema,
+  ) async {
+    final response = await removeStationStationRemoveStationDeleteWithHttpInfo(
+      stationIdSchema,
+    );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
     // When a remote server returns no body with a status of 204, we shall not decode it.
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'Object',) as Object;
-    
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(
+        await _decodeBodyBytes(response),
+        'String',
+      ) as String;
     }
     return null;
   }
