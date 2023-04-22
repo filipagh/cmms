@@ -90,9 +90,11 @@ class RoadSegmentFormState extends State<RoadSegmentForm> {
                       RoadSegmentService()
                           .createRoadSegmentRoadSegmentManagerCreateRoadSegmentPost(
                               RoadSegmentNewSchema(name: name, ssud: ssud))
-                          .then((value) => showOk("Cestný segment vytvorený"));
+                          .then((value) {
+                        Get.back();
+                        showOk("Cestný segment vytvorený");
+                      });
                     }
-                    Get.back();
                   }
                 },
                 child: const Text("vytvorit")),

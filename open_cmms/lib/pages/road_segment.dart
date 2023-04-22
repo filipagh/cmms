@@ -21,6 +21,11 @@ class RoadSegment extends StatelessWidget {
     Key? key,
     required this.segmentId,
   }) : super(key: key) {
+    loadSegment();
+  }
+
+  void loadSegment() {
+    loaded.value = false;
     RoadSegmentService()
         .getByIdRoadSegmentManagerSegmentGet(segmentId)
         .then((value) {
@@ -113,7 +118,7 @@ class RoadSegment extends StatelessWidget {
                                           RoadSegmentIdSchema(
                                               id: _roadSegment!.id))
                                       .then((value) {
-                                    Get.back();
+                                    loadSegment();
                                     showOk("Cestný úsek bol zmazaný");
                                   }, onError: (e) {
                                     showError(
