@@ -32,6 +32,8 @@ def save(component: AssignedComponentModel):
     with _get_db() as db:
         db.add(component)
         db.commit()
+        db.refresh(component)
+        return component
 
 
 def get_by_id(component_id: uuid.UUID) -> AssignedComponentModel:

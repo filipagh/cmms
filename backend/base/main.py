@@ -172,8 +172,10 @@ async def unicorn_exception_handler(request: Request, exc: AppException):
 
 # imports
 def import_settings():
-    if len(SettingsRepo().get_all()) == 0:
-        for s in SettingsEnum:
+    for s in SettingsEnum:
+        try:
+            SettingsRepo().get_settings(SettingsEnum(s))
+        except AttributeError:
             SettingsRepo().set_setting(SettingsEnum(s), '')
 
 

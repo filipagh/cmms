@@ -68,7 +68,6 @@ class AssignedComponent(Aggregate):
                                asset_id=self.asset_id, task_id=None)
 
     @event(AssignedComponentStateChanged)
-    # todo test this
     def set_component_to_be_removed(self, task_id: uuid, new_status=AssignedComponentState.WILL_BE_REMOVED):
         self.task_id = task_id
         self.status = new_status

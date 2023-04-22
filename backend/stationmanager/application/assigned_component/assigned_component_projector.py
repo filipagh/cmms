@@ -4,9 +4,10 @@ from typing import Optional
 from eventsourcing.dispatch import singledispatchmethod
 from eventsourcing.system import ProcessApplication
 
-from stationmanager.domain.model.assigned_component import AssignedComponent
+from stationmanager.domain.model.assigned_component import AssignedComponent, AssignedComponentState
 from stationmanager.infrastructure.persistence import assigned_component_repo
 from stationmanager.infrastructure.persistence.assigned_component_repo import AssignedComponentModel
+from stationmanager.infrastructure.road_viz_notificator import send_sync_cmms
 
 
 class AssignedComponentProjector(ProcessApplication):
@@ -28,6 +29,9 @@ class AssignedComponentProjector(ProcessApplication):
             serial_number=domain_event.serial_number
         )
         assigned_component_repo.save(model)
+        if (domain_event.status == AssignedComponentState.INSTALLED):
+            send_sync_cmms(domain_event.station_id, domain_event.originator_id,
+                           AssignedComponentState(domain_event.status))
 
     @policy.register(AssignedComponent.AssignedComponentStateChanged)
     def _(self, domain_event: AssignedComponent.AssignedComponentStateChanged, process_event):
@@ -41,7 +45,10 @@ class AssignedComponentProjector(ProcessApplication):
         component = assigned_component_repo.get_by_id(domain_event.originator_id)
         component.removed_at = domain_event.removed_at
         component.status = domain_event.new_status
-        assigned_component_repo.save(component)
+
+        component = assigned_component_repo.save(component)
+        send_sync_cmms(component.station_id, domain_event.originator_id,
+                       AssignedComponentState(domain_event.new_status))
 
     @policy.register(AssignedComponent.AssignedComponentRemoveReverted)
     def _(self, domain_event: AssignedComponent.AssignedComponentRemoveReverted, process_event):
@@ -58,7 +65,9 @@ class AssignedComponentProjector(ProcessApplication):
         component.warranty_period_until = domain_event.warranty_period_until
         component.serial_number = domain_event.serial_number
 
-        assigned_component_repo.save(component)
+        component = assigned_component_repo.save(component)
+        send_sync_cmms(component.station_id, domain_event.originator_id,
+                       AssignedComponentState(domain_event.new_status))
 
     @policy.register(AssignedComponent.AssignedComponentInstallReverted)
     def _(self, domain_event: AssignedComponent.AssignedComponentInstallReverted, process_event):
