@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends
 from fief_client import FiefUserInfo
 from starlette.responses import PlainTextResponse
 
-from base.auth_def import read_permission, custom_auth
+from base.auth_def import read_permission, custom_auth, write_permission
 from taskmanager.application.issue_service import IssueService
 from taskmanager.application.model.issue.schema import IssueSchema
 
@@ -38,6 +38,12 @@ def get_issue(task_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_auth(read
 
 @issue_router.post("/resolve/{task_id}",
                    response_class=PlainTextResponse)
-def resolve_issue(task_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_auth(read_permission))):
+def resolve_issue(task_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_auth(write_permission))):
     IssueService().resolve_issue(task_id)
+    return "OK"
+
+
+@issue_router.get("/resolve_all_ai_issues", response_class=PlainTextResponse)
+def resolve_all_ai_issues(_user: FiefUserInfo = Depends(custom_auth(write_permission))):
+    IssueService().resolve_all_ai_issues()
     return "OK"

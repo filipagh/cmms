@@ -7,6 +7,7 @@ import 'package:open_cmms/widgets/assets_list.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 import 'package:open_cmms/widgets/forms/station/station_form.dart';
 
+import '../service/backend_api/tasks/tasks_on_site_service.dart';
 import '../snacbars.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/main_menu_widget.dart';
@@ -139,11 +140,58 @@ class RoadSegment extends StatelessWidget {
                   if (_roadSegment!.isActive)
                     Align(
                         alignment: Alignment.centerRight,
-                        child: ElevatedButton(
-                            onPressed: () {
-                              showFormDialog(StationForm(_roadSegment!));
-                            },
-                            child: Text("Pridat stanicu"))),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            ElevatedButton(
+                                onPressed: () {
+                                  Get.defaultDialog(
+                                    title: "Profylaxia",
+                                    content: Text(
+                                        "Chcete zadať profylaxiu cestneho useku? (Nová úloha pre každú stanicu)"),
+                                    confirm: ElevatedButton(
+                                      onPressed: () {
+                                        TasksOnSiteService()
+                                            .createTaskServiceOnSiteCreateServiceOnSideTaskPost(_station
+                                                .where((element) =>
+                                                    element.isActive)
+                                                .map((e) =>
+                                                    TaskServiceOnSiteNewSchema(
+                                                        stationId: e.id,
+                                                        name: "Profylaxia " +
+                                                            e.name,
+                                                        description:
+                                                            "Hromadna profylaxia cestného useku: " +
+                                                                _roadSegment!
+                                                                    .name))
+                                                .toList())
+                                            .then((value) {
+                                          Get.back();
+                                          showOk("Profylaxia bola zadaná");
+                                        }, onError: (e) {
+                                          showError(
+                                              "Chyba pri zadávaní profylaxie: $e");
+                                        });
+                                      },
+                                      child: Text("Ano"),
+                                    ),
+                                    cancel: ElevatedButton(
+                                      onPressed: () {
+                                        Get.back();
+                                      },
+                                      child: Text("Nie"),
+                                    ),
+                                  );
+                                },
+                                child: Text("Zadať profylaxiu cestného úseku")),
+                            Padding(padding: EdgeInsets.only(left: 10)),
+                            ElevatedButton(
+                                onPressed: () {
+                                  showFormDialog(StationForm(_roadSegment!));
+                                },
+                                child: Text("Pridat stanicu")),
+                          ],
+                        )),
                   Align(
                       child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

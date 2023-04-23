@@ -67,7 +67,6 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getAllRoadSegmentManagerSegmentsGet**
-
 > List<RoadSegmentSchema> getAllRoadSegmentManagerSegmentsGet(onlyActive)
 
 Get All
@@ -170,16 +169,13 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **removeSegmentRoadSegmentManagerRemoveSegmentDelete**
-
 > String removeSegmentRoadSegmentManagerRemoveSegmentDelete(roadSegmentIdSchema)
 
 Remove Segment
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
-
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
 //defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
 // TODO Configure API key authorization: api_key
@@ -195,12 +191,10 @@ final api_instance = RoadSegmentManagerApi();
 final roadSegmentIdSchema = RoadSegmentIdSchema(); // RoadSegmentIdSchema | 
 
 try {
-final result = api_instance.removeSegmentRoadSegmentManagerRemoveSegmentDelete(roadSegmentIdSchema);
-print(result);
-} catch
-(
-e) {
-print('Exception when calling RoadSegmentManagerApi->removeSegmentRoadSegmentManagerRemoveSegmentDelete: $e\n');
+    final result = api_instance.removeSegmentRoadSegmentManagerRemoveSegmentDelete(roadSegmentIdSchema);
+    print(result);
+} catch (e) {
+    print('Exception when calling RoadSegmentManagerApi->removeSegmentRoadSegmentManagerRemoveSegmentDelete: $e\n');
 }
 ```
 

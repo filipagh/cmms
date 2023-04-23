@@ -83,18 +83,19 @@ class _CreateServiceTaskFormState extends State<CreateServiceTaskForm> {
                   if (_formKey.currentState!.validate()) {
                     if (widget.taskType == TaskType.onSiteService) {
                       TasksOnSiteService()
-                          .createTaskServiceOnSiteCreateServiceOnSideTaskPost(
-                          TaskServiceOnSiteNewSchema(
-                              stationId: widget.station.id,
-                              name: taskName.text,
-                              description: taskDescription.text));
+                          .createTaskServiceOnSiteCreateServiceOnSideTaskPost([
+                        TaskServiceOnSiteNewSchema(
+                            stationId: widget.station.id,
+                            name: taskName.text,
+                            description: taskDescription.text)
+                      ]);
                     } else {
                       TasksRemoteService()
                           .createTaskServiceRemoteCreateServiceRemoteTaskPost(
-                          TaskServiceRemoteNewSchema(
-                              stationId: widget.station.id,
-                              name: taskName.text,
-                              description: taskDescription.text));
+                              TaskServiceRemoteNewSchema(
+                                  stationId: widget.station.id,
+                                  name: taskName.text,
+                                  description: taskDescription.text));
                     }
                     Get.back();
                   }

@@ -54,7 +54,10 @@ class RoadSegmentManagerApi {
   ///
   /// * [RoadSegmentNewSchema] roadSegmentNewSchema (required):
   Future<String?> createRoadSegmentRoadSegmentManagerCreateRoadSegmentPost(RoadSegmentNewSchema roadSegmentNewSchema,) async {
-    final response = await createRoadSegmentRoadSegmentManagerCreateRoadSegmentPostWithHttpInfo(roadSegmentNewSchema,);
+    final response =
+        await createRoadSegmentRoadSegmentManagerCreateRoadSegmentPostWithHttpInfo(
+      roadSegmentNewSchema,
+    );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -132,7 +135,6 @@ class RoadSegmentManagerApi {
               responseBody, 'List<RoadSegmentSchema>') as List)
           .cast<RoadSegmentSchema>()
           .toList();
-
     }
     return null;
   }

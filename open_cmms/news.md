@@ -22,6 +22,15 @@
 
 [//]: # (---)
 
+## 23.4.23
+
+### novinky
+
+- pridana moznost profylaxie stanic pre cestny usek
+- synchronizacia komponentov a stanic s Lubosovim systemom
+
+### oprava
+
 ## 21.4.23
 
 ### novinky

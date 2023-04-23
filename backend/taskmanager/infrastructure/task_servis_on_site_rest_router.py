@@ -1,7 +1,7 @@
 import uuid
 from typing import Optional
 
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, Depends
 from fief_client import FiefUserInfo
 from starlette.responses import PlainTextResponse
 
@@ -17,16 +17,18 @@ task_servis_on_site = APIRouter(
     responses={404: {"description": "Not found"}},
 )
 
-
 @task_servis_on_site.post("/create_service_on_side_task",
-                          response_model=uuid.UUID)
+                          response_model=list[uuid.UUID])
 def create(
-        new_task: TaskServiceOnSiteNewSchema, _user: FiefUserInfo = Depends(custom_auth(write_permission))):
+        new_tasks: list[TaskServiceOnSiteNewSchema], _user: FiefUserInfo = Depends(custom_auth(write_permission))):
     task_service: TaskServiceOnSiteService = main.runner.get(TaskServiceOnSiteService)
-    try:
-        return task_service.create_on_side_task(new_task)
-    except AttributeError as e:
-        raise HTTPException(status_code=400, detail=e.__str__())
+    col = []
+    for new_task in new_tasks:
+        try:
+            col.append(task_service.create_on_side_task(new_task))
+        except AttributeError:
+            pass
+    return col
 
 
 @task_servis_on_site.get("/{task_id}/complete",

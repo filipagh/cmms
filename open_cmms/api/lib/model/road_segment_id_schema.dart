@@ -119,3 +119,4 @@ class RoadSegmentIdSchema {
     'id',
   };
 }
+

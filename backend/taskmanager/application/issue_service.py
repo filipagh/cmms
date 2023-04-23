@@ -19,9 +19,15 @@ class IssueService:
         for i in issue_repo.get_all_active():
             col.append(IssueSchema(**i.__dict__))
         return col
+
     def resolve_issue(self, task_id):
         issue_repo.resolve_issue(task_id)
 
-    def get_issue(self, task_id):
+    def get_issue(self, task_id) -> IssueSchema:
         issue = issue_repo.get_by_id(task_id)
         return IssueSchema(**issue.__dict__)
+
+    def resolve_all_ai_issues(self):
+        for issue in issue_repo.get_all_active():
+            if issue.station_id != None:
+                issue_repo.resolve_issue(issue.id)

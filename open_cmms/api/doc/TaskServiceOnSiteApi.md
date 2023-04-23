@@ -174,7 +174,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **createTaskServiceOnSiteCreateServiceOnSideTaskPost**
-> String createTaskServiceOnSiteCreateServiceOnSideTaskPost(taskServiceOnSiteNewSchema)
+> List<String> createTaskServiceOnSiteCreateServiceOnSideTaskPost(taskServiceOnSiteNewSchema)
 
 Create
 
@@ -193,7 +193,7 @@ import 'package:BackendAPI/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKeyPrefix = 'Bearer';
 
 final api_instance = TaskServiceOnSiteApi();
-final taskServiceOnSiteNewSchema = TaskServiceOnSiteNewSchema(); // TaskServiceOnSiteNewSchema | 
+final taskServiceOnSiteNewSchema = [List<TaskServiceOnSiteNewSchema>()]; // List<TaskServiceOnSiteNewSchema> | 
 
 try {
     final result = api_instance.createTaskServiceOnSiteCreateServiceOnSideTaskPost(taskServiceOnSiteNewSchema);
@@ -205,13 +205,13 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **taskServiceOnSiteNewSchema** | [**TaskServiceOnSiteNewSchema**](TaskServiceOnSiteNewSchema.md)|  | 
+ Name                           | Type                                                                  | Description | Notes 
+--------------------------------|-----------------------------------------------------------------------|-------------|-------
+ **taskServiceOnSiteNewSchema** | [**List<TaskServiceOnSiteNewSchema>**](TaskServiceOnSiteNewSchema.md) |             |
 
 ### Return type
 
-**String**
+**List<String>**
 
 ### Authorization
 
