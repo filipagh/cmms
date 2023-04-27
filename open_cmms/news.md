@@ -22,6 +22,16 @@
 
 [//]: # (---)
 
+## 27.4.23
+
+### novinky
+
+### oprava
+
+- layout v nahlesenej chybe
+
+---
+
 ## 23.4.23
 
 ### novinky
@@ -30,6 +40,8 @@
 - synchronizacia komponentov a stanic s Lubosovim systemom
 
 ### oprava
+
+---
 
 ## 21.4.23
 

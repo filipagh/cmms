@@ -40,45 +40,53 @@ class IssuesPage extends StatelessWidget {
                           subtitle: Text(
                               element.createdOn.toString().substring(0, 19)),
                           children: [
-                            Row(children: [
-                              Column(
+                            Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    "popis : ${element.description}",
-                                    maxLines: 3,
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        SelectableText(
+                                            "popis : ${element.description}"),
+                                        Text("autor : ${element.user}"),
+                                        Text("stanica : ${element.stationId}"),
+                                        Text(
+                                            "komponent : ${element.componentId}"),
+                                      ],
+                                    ),
                                   ),
-                                  Text("autor : ${element.user}"),
-                                  Text("stanica : ${element.stationId}"),
-                                  Text("komponent : ${element.componentId}"),
-                                ],
-                              ),
-                              Spacer(),
-                              ElevatedButton(
-                                onPressed: () {
-                                  IssuesService()
-                                      .resolveIssueIssuesResolveTaskIdPost(
-                                          element.id)
-                                      .then((value) {
-                                    showOk("Chyba bola vyriešená");
-                                    loadIssues();
-                                  });
-                                },
-                                child: Text("zrušiť"),
-                                style: ElevatedButton.styleFrom(
-                                    primary: Colors.red),
-                              ),
-                              Padding(padding: EdgeInsets.all(5)),
-                              ElevatedButton(
-                                  onPressed: () async {
-                                    StationSchema station =
-                                        await showFormDialog(
-                                            StationPickerForm());
-                                    showFormDialog(
-                                        CreateTaskForm(station: station));
-                                  },
-                                  child: Text("vytvoriť ulohu"))
-                            ])
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          IssuesService()
+                                              .resolveIssueIssuesResolveTaskIdPost(
+                                                  element.id)
+                                              .then((value) {
+                                            showOk("Chyba bola vyriešená");
+                                            loadIssues();
+                                          });
+                                        },
+                                        child: Text("zrušiť"),
+                                        style: ElevatedButton.styleFrom(
+                                            primary: Colors.red),
+                                      ),
+                                      Padding(padding: EdgeInsets.all(5)),
+                                      ElevatedButton(
+                                          onPressed: () async {
+                                            StationSchema station =
+                                                await showFormDialog(
+                                                    StationPickerForm());
+                                            showFormDialog(CreateTaskForm(
+                                                station: station));
+                                          },
+                                          child: Text("vytvoriť ulohu"))
+                                    ],
+                                  ),
+                                ])
                           ]);
                     }).toList() ??
                     [])),
