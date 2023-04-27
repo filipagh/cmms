@@ -26,6 +26,7 @@
 
 ### novinky
 
+- preklik z nahlasenej chyby na stanicu
 ### oprava
 
 - layout v nahlesenej chybe

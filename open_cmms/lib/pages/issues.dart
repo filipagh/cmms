@@ -1,7 +1,10 @@
 import 'package:BackendAPI/api.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
+import 'package:open_cmms/pages/station/station_base_page.dart';
+import 'package:open_cmms/pages/station/station_info_page.dart';
 import 'package:open_cmms/service/backend_api/issues_service.dart';
 import 'package:open_cmms/snacbars.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
@@ -51,7 +54,24 @@ class IssuesPage extends StatelessWidget {
                                         SelectableText(
                                             "popis : ${element.description}"),
                                         Text("autor : ${element.user}"),
-                                        Text("stanica : ${element.stationId}"),
+                                        RichText(
+                                            text: TextSpan(
+                                          text: "stanica : ",
+                                          children: [
+                                            TextSpan(
+                                                recognizer: TapGestureRecognizer()
+                                                  ..onTap = () => Get.toNamed(
+                                                      StationBasePage.ENDPOINT +
+                                                          "/${element.stationId}" +
+                                                          StationInfoPage
+                                                              .ENDPOINT),
+                                                text: element.stationId,
+                                                style: const TextStyle(
+                                                    color: Colors.blue,
+                                                    decoration: TextDecoration
+                                                        .underline))
+                                          ],
+                                        )),
                                         Text(
                                             "komponent : ${element.componentId}"),
                                       ],
