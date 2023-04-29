@@ -31,6 +31,7 @@ class AssignedComponent(Aggregate):
         station_id: uuid
         asset_id: uuid
         removed_at: datetime.datetime
+        serial_number: Optional[str]
 
     class AssignedComponentStateChanged(Aggregate.Event):
         new_status: AssignedComponentState
@@ -49,6 +50,8 @@ class AssignedComponent(Aggregate):
         task_id: uuid.UUID
         installed_at: datetime.datetime
         serial_number: Optional[str]
+        station_id: uuid
+        asset_id: uuid
 
     @event(CreatedEvent)
     def __init__(self, asset_id, station_id, status: AssignedComponentState,
@@ -65,7 +68,7 @@ class AssignedComponent(Aggregate):
     def force_remove_component(self):
         self._remove_component(new_status=AssignedComponentState.REMOVED, removed_at=datetime.datetime.now(),
                                station_id=self.station_id,
-                               asset_id=self.asset_id, task_id=None)
+                               asset_id=self.asset_id, task_id=None, serial_number=self.serial_number)
 
     @event(AssignedComponentStateChanged)
     def set_component_to_be_removed(self, task_id: uuid, new_status=AssignedComponentState.WILL_BE_REMOVED):
@@ -90,11 +93,12 @@ class AssignedComponent(Aggregate):
 
         warranty_period_until = warranty_until_date_calc(installed_at.date(), self.warranty_period_days)
         self._install_component(task_id, installed_at, AssignedComponentState.INSTALLED, warranty_period_until,
-                                serial_number)
+                                serial_number, self.station_id, self.asset_id)
 
     @event(AssignedComponentInstalled)
     def _install_component(self, task_id, installed_at: datetime.datetime, new_status,
-                           warranty_period_until: datetime.date, serial_number: Optional[str]):
+                           warranty_period_until: datetime.date, serial_number: Optional[str], station_id: uuid,
+                           asset_id: uuid):
         self.warranty_period_until = warranty_period_until
         self.status = new_status
         self.task_id = None
@@ -105,9 +109,12 @@ class AssignedComponent(Aggregate):
             raise ProgrammingError(f"assigned component {self.id} is in wrong state")
         self._remove_component(new_status=AssignedComponentState.REMOVED, task_id=task_id, removed_at=removed_at,
                                station_id=self.station_id,
-                               asset_id=self.asset_id)
+                               asset_id=self.asset_id,
+                               serial_number=self.serial_number
+                               )
 
     @event(AssignedComponentRemoved)
-    def _remove_component(self, new_status, removed_at, station_id, asset_id, task_id: Optional[uuid.UUID]):
+    def _remove_component(self, new_status, removed_at, station_id, asset_id, task_id: Optional[uuid.UUID],
+                          serial_number: Optional[str]):
         self.status = new_status
         self.task_id = None

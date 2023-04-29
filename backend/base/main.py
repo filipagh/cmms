@@ -92,6 +92,10 @@ system = System(pipes=[[AssetService, AssetProjector],
                        [RoadSegmentService, RoadSegmentProjector],
                        [StationService, StationProjector],
                        [AssignedComponentsService, AssignedComponentProjector],
+                       [StationService, ActionHistoryProjector],
+                       [TaskService, ActionHistoryProjector],
+                       [TaskServiceRemoteService, ActionHistoryProjector],
+                       [TaskServiceOnSiteService, ActionHistoryProjector],
                        [AssignedComponentsService, ActionHistoryProjector],
                        [TaskService, TasksProjector],
                        [TaskService, AssignedComponentsService],
@@ -115,10 +119,12 @@ runner.start()
 runner.get(TaskService).mapper.transcoder.register(AddComponentRequestAsStr())
 runner.get(TaskService).mapper.transcoder.register(RemoveComponentRequestAsStr())
 
-register_tansconder([TasksProjector, AssignedComponentsService, StorageItemService, RedmineProjector],
-                    AddComponentRequestAsStr())
-register_tansconder([TasksProjector, AssignedComponentsService, StorageItemService, RedmineProjector],
-                    RemoveComponentRequestAsStr())
+register_tansconder(
+    [TasksProjector, AssignedComponentsService, StorageItemService, RedmineProjector, ActionHistoryProjector],
+    AddComponentRequestAsStr())
+register_tansconder(
+    [TasksProjector, AssignedComponentsService, StorageItemService, RedmineProjector, ActionHistoryProjector],
+    RemoveComponentRequestAsStr())
 add_transconder(DateAsIso())
 add_transconder(AssetTelemetryAsJSON())
 
