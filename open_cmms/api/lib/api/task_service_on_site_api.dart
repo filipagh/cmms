@@ -64,7 +64,6 @@ class TaskServiceOnSiteApi {
     // FormatException when trying to decode an empty string.
     if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
       return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'String',) as String;
-
     }
     return null;
   }
@@ -132,7 +131,6 @@ class TaskServiceOnSiteApi {
     // FormatException when trying to decode an empty string.
     if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
       return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'String',) as String;
-
     }
     return null;
   }
@@ -301,7 +299,6 @@ class TaskServiceOnSiteApi {
     // FormatException when trying to decode an empty string.
     if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
       return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'TaskServiceOnSiteSchema',) as TaskServiceOnSiteSchema;
-
     }
     return null;
   }

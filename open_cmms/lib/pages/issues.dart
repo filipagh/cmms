@@ -33,83 +33,115 @@ class IssuesPage extends StatelessWidget {
         VerticalDivider(),
         Obx(() {
           return Expanded(
-            child: ListView(
-                children: (issueId.value?.map<ExpansionTile>((element) {
-                      return ExpansionTile(
-                          leading: element.stationId != null
-                              ? Icon(Icons.bug_report)
-                              : Icon(Icons.person),
-                          title: Text(element.subject),
-                          subtitle: Text(
-                              element.createdOn.toString().substring(0, 19)),
-                          children: [
-                            Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+            child: Column(
+              children: [
+                Padding(padding: const EdgeInsets.only(top: 10)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton.icon(
+                        onPressed: () {
+                          IssuesService()
+                              .resolveAutoReportedIssuesResolveAllAutoReportedGet()
+                              .then((value) {
+                            loadIssues();
+                            showOk(
+                                "Všetky automaticky nahlasené chyby boli vyriešené");
+                          });
+                        },
+                        icon: const Icon(Icons.delete),
+                        label: const Text(
+                            "zmazať všetky automaticky nahlasené chyby")),
+                  ],
+                ),
+                Divider(),
+                Expanded(
+                  child: ListView(
+                      children: (issueId.value?.map<ExpansionTile>((element) {
+                            return ExpansionTile(
+                                leading: element.stationId != null
+                                    ? Icon(Icons.bug_report)
+                                    : Icon(Icons.person),
+                                title: Text(element.subject),
+                                subtitle: Text(element.createdOn
+                                    .toString()
+                                    .substring(0, 19)),
                                 children: [
-                                  Expanded(
-                                    child: Column(
+                                  Row(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        SelectableText(
-                                            "popis : ${element.description}"),
-                                        Text("autor : ${element.user}"),
-                                        RichText(
-                                            text: TextSpan(
-                                          text: "stanica : ",
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              SelectableText(
+                                                  "popis : ${element.description}"),
+                                              Text("autor : ${element.user}"),
+                                              RichText(
+                                                  text: TextSpan(
+                                                text: "stanica : ",
+                                                children: [
+                                                  TextSpan(
+                                                      recognizer: TapGestureRecognizer()
+                                                        ..onTap = () => Get.toNamed(
+                                                            StationBasePage
+                                                                    .ENDPOINT +
+                                                                "/${element.stationId}" +
+                                                                StationInfoPage
+                                                                    .ENDPOINT),
+                                                      text: element.stationId,
+                                                      style: const TextStyle(
+                                                          color: Colors.blue,
+                                                          decoration:
+                                                              TextDecoration
+                                                                  .underline))
+                                                ],
+                                              )),
+                                              Text(
+                                                  "komponent : ${element.componentId}"),
+                                            ],
+                                          ),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
                                           children: [
-                                            TextSpan(
-                                                recognizer: TapGestureRecognizer()
-                                                  ..onTap = () => Get.toNamed(
-                                                      StationBasePage.ENDPOINT +
-                                                          "/${element.stationId}" +
-                                                          StationInfoPage
-                                                              .ENDPOINT),
-                                                text: element.stationId,
-                                                style: const TextStyle(
-                                                    color: Colors.blue,
-                                                    decoration: TextDecoration
-                                                        .underline))
+                                            ElevatedButton(
+                                              onPressed: () {
+                                                IssuesService()
+                                                    .resolveIssueIssuesResolveTaskIdPost(
+                                                        element.id)
+                                                    .then((value) {
+                                                  showOk(
+                                                      "Chyba bola vyriešená");
+                                                  loadIssues();
+                                                });
+                                              },
+                                              child: Text("zrušiť"),
+                                              style: ElevatedButton.styleFrom(
+                                                  primary: Colors.red),
+                                            ),
+                                            Padding(padding: EdgeInsets.all(5)),
+                                            ElevatedButton(
+                                                onPressed: () async {
+                                                  StationSchema station =
+                                                      await showFormDialog(
+                                                          StationPickerForm());
+                                                  showFormDialog(CreateTaskForm(
+                                                      station: station));
+                                                },
+                                                child: Text("vytvoriť ulohu"))
                                           ],
-                                        )),
-                                        Text(
-                                            "komponent : ${element.componentId}"),
-                                      ],
-                                    ),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          IssuesService()
-                                              .resolveIssueIssuesResolveTaskIdPost(
-                                                  element.id)
-                                              .then((value) {
-                                            showOk("Chyba bola vyriešená");
-                                            loadIssues();
-                                          });
-                                        },
-                                        child: Text("zrušiť"),
-                                        style: ElevatedButton.styleFrom(
-                                            primary: Colors.red),
-                                      ),
-                                      Padding(padding: EdgeInsets.all(5)),
-                                      ElevatedButton(
-                                          onPressed: () async {
-                                            StationSchema station =
-                                                await showFormDialog(
-                                                    StationPickerForm());
-                                            showFormDialog(CreateTaskForm(
-                                                station: station));
-                                          },
-                                          child: Text("vytvoriť ulohu"))
-                                    ],
-                                  ),
-                                ])
-                          ]);
-                    }).toList() ??
-                    [])),
+                                        ),
+                                      ])
+                                ]);
+                          }).toList() ??
+                          [])),
+                ),
+              ],
+            ),
           );
         }),
       ]),

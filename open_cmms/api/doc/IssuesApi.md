@@ -7,13 +7,13 @@ import 'package:BackendAPI/api.dart';
 
 All URIs are relative to *http://localhost*
 
- Method                                                                                                          | HTTP request                          | Description           
------------------------------------------------------------------------------------------------------------------|---------------------------------------|-----------------------
- [**createIssuesPost**](IssuesApi.md#createissuespost)                                                           | **POST** /issues/                     | Create                
- [**getActiveIssuesIssuesActiveGet**](IssuesApi.md#getactiveissuesissuesactiveget)                               | **GET** /issues/active                | Get Active Issues     
- [**getIssueIssuesTaskIdGet**](IssuesApi.md#getissueissuestaskidget)                                             | **GET** /issues/{task_id}             | Get Issue             
- [**resolveAllAiIssuesIssuesResolveAllAiIssuesGet**](IssuesApi.md#resolveallaiissuesissuesresolveallaiissuesget) | **GET** /issues/resolve_all_ai_issues | Resolve All Ai Issues 
- [**resolveIssueIssuesResolveTaskIdPost**](IssuesApi.md#resolveissueissuesresolvetaskidpost)                     | **POST** /issues/resolve/{task_id}    | Resolve Issue         
+ Method                                                                                                                    | HTTP request                               | Description           
+---------------------------------------------------------------------------------------------------------------------------|--------------------------------------------|-----------------------
+ [**createIssuesPost**](IssuesApi.md#createissuespost)                                                                     | **POST** /issues/                          | Create                
+ [**getActiveIssuesIssuesActiveGet**](IssuesApi.md#getactiveissuesissuesactiveget)                                         | **GET** /issues/active                     | Get Active Issues     
+ [**getIssueIssuesTaskIdGet**](IssuesApi.md#getissueissuestaskidget)                                                       | **GET** /issues/{task_id}                  | Get Issue             
+ [**resolveAutoReportedIssuesResolveAllAutoReportedGet**](IssuesApi.md#resolveautoreportedissuesresolveallautoreportedget) | **GET** /issues/resolve-all-auto-reported/ | Resolve Auto Reported 
+ [**resolveIssueIssuesResolveTaskIdPost**](IssuesApi.md#resolveissueissuesresolvetaskidpost)                               | **POST** /issues/resolve/{task_id}         | Resolve Issue         
 
 
 # **createIssuesPost**
@@ -163,42 +163,30 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **resolveAllAiIssuesIssuesResolveAllAiIssuesGet**
+# **resolveAutoReportedIssuesResolveAllAutoReportedGet**
 
-> String resolveAllAiIssuesIssuesResolveAllAiIssuesGet()
+> String resolveAutoReportedIssuesResolveAllAutoReportedGet()
 
-Resolve All Ai Issues
+Resolve Auto Reported
 
 ### Example
 
 ```dart
 import 'package:BackendAPI/api.dart';
 
-// TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
-//defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
-// TODO Configure API key authorization: api_key
-//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKey = 'YOUR_API_KEY';
-// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKeyPrefix = 'Bearer';
-// TODO Configure API key authorization: user_session
-//defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKey = 'YOUR_API_KEY';
-// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKeyPrefix = 'Bearer';
-
 final api_instance = IssuesApi();
 
 try {
-final result = api_instance.resolveAllAiIssuesIssuesResolveAllAiIssuesGet();
+final result = api_instance.resolveAutoReportedIssuesResolveAllAutoReportedGet();
 print(result);
 } catch
 (
 e) {
-print('Exception when calling IssuesApi->resolveAllAiIssuesIssuesResolveAllAiIssuesGet: $e\n');
+print('Exception when calling IssuesApi->resolveAutoReportedIssuesResolveAllAutoReportedGet: $e\n');
 }
 ```
 
 ### Parameters
-
 This endpoint does not need any parameter.
 
 ### Return type
@@ -207,7 +195,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-[OAuth2AuthorizationCodeBearer](../README.md#OAuth2AuthorizationCodeBearer), [api_key](../README.md#api_key), [user_session](../README.md#user_session)
+No authorization required
 
 ### HTTP request headers
 
@@ -217,13 +205,11 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **resolveIssueIssuesResolveTaskIdPost**
-
 > String resolveIssueIssuesResolveTaskIdPost(taskId)
 
 Resolve Issue
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer

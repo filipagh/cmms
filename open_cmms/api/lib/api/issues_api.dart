@@ -89,7 +89,6 @@ class IssuesApi {
     // FormatException when trying to decode an empty string.
     if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
       return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'String',) as String;
-
     }
     return null;
   }
@@ -201,13 +200,13 @@ class IssuesApi {
     return null;
   }
 
-  /// Resolve All Ai Issues
+  /// Resolve Auto Reported
   ///
   /// Note: This method returns the HTTP [Response].
   Future<Response>
-      resolveAllAiIssuesIssuesResolveAllAiIssuesGetWithHttpInfo() async {
+      resolveAutoReportedIssuesResolveAllAutoReportedGetWithHttpInfo() async {
     // ignore: prefer_const_declarations
-    final path = r'/issues/resolve_all_ai_issues';
+    final path = r'/issues/resolve-all-auto-reported/';
 
     // ignore: prefer_final_locals
     Object? postBody;
@@ -229,10 +228,10 @@ class IssuesApi {
     );
   }
 
-  /// Resolve All Ai Issues
-  Future<String?> resolveAllAiIssuesIssuesResolveAllAiIssuesGet() async {
+  /// Resolve Auto Reported
+  Future<String?> resolveAutoReportedIssuesResolveAllAutoReportedGet() async {
     final response =
-        await resolveAllAiIssuesIssuesResolveAllAiIssuesGetWithHttpInfo();
+        await resolveAutoReportedIssuesResolveAllAutoReportedGetWithHttpInfo();
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
@@ -297,7 +296,6 @@ class IssuesApi {
     // FormatException when trying to decode an empty string.
     if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
       return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'String',) as String;
-
     }
     return null;
   }

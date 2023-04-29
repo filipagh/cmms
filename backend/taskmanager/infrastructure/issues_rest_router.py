@@ -43,7 +43,7 @@ def resolve_issue(task_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_auth(
     return "OK"
 
 
-@issue_router.get("/resolve_all_ai_issues", response_class=PlainTextResponse)
-def resolve_all_ai_issues(_user: FiefUserInfo = Depends(custom_auth(write_permission))):
+@issue_router.get("/resolve-all-auto-reported/", response_class=PlainTextResponse)
+def resolve_auto_reported():
     IssueService().resolve_all_ai_issues()
     return "OK"
