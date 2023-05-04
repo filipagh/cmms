@@ -49,11 +49,13 @@ def get_by_id(id: uuid.UUID)-> TaskModel:
         return db.query(TaskModel).get(id)
 
 
-def get_all(station_id) -> list[TaskModel]:
+def get_all(station_id, filter_state: list[TaskState] = None) -> list[TaskModel]:
     db: Session
     with _get_db() as db:
         select = db.query(TaskModel)
         select = select.order_by(TaskModel.created_on.desc())
         if station_id:
             select = select.where(TaskModel.station_id == station_id)
+        if filter_state:
+            select = select.where(TaskModel.state.in_(filter_state))
         return select.all()

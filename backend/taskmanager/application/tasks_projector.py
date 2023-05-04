@@ -8,6 +8,7 @@ from base import main
 from roadsegmentmanager.application.road_segment_projector import RoadSegmentProjector
 from stationmanager.application.station_projector import StationProjector
 from taskmanager.application.model.task import schema
+from taskmanager.domain.model.task_state import TaskState
 from taskmanager.domain.model.tasks.task_change_components import TaskChangeComponents
 from taskmanager.domain.model.tasks.task_on_site_service import TaskServiceOnSite
 from taskmanager.domain.model.tasks.task_remote_service import TaskServiceRemote
@@ -128,8 +129,8 @@ class TasksProjector(ProcessApplication):
     def get_by_id(self, task_id: uuid.UUID) -> schema.TaskSchema:
         return schema.TaskSchema(**tasks_repo.get_by_id(task_id).__dict__)
 
-    def get_all(self, station_id: Optional[uuid.UUID]) -> list[schema.TaskSchema]:
-        tasks = tasks_repo.get_all(station_id)
+    def get_all(self, station_id: Optional[uuid.UUID], filter_state: list[TaskState] = None) -> list[schema.TaskSchema]:
+        tasks = tasks_repo.get_all(station_id, filter_state)
         col = []
         for t in tasks:
             col.append(schema.TaskSchema(**t.__dict__))

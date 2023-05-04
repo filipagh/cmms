@@ -1,23 +1,30 @@
 import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:multiselect/multiselect.dart';
 import 'package:open_cmms/service/backend_api/tasks_service.dart';
 import 'package:open_cmms/widgets/custom_app_bar.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 import 'package:open_cmms/widgets/forms/station/station_picker.dart';
 
+import '../models/task_state_filter.dart';
 import '../widgets/forms/tasks/create_task.dart';
 import '../widgets/main_menu_widget.dart';
 import '../widgets/task_list_title.dart';
 
 class Tasks extends StatelessWidget {
-  Tasks({Key? key, required}) : super(key: key);
+  Tasks({Key? key, required}) : super(key: key) {
+    setup();
+  }
 
   final RxList<TaskSchema> tasks = <TaskSchema>[].obs;
 
+  List<TaskStateCustom> selectedTaskState = <TaskStateCustom>[];
+  List<TaskStateCustom> options = <TaskStateCustom>[];
+
   @override
   Widget build(BuildContext context) {
-    loadTasks();
+    loadTasks(taskState: selectedTaskState.map((e) => e.state).toList());
     return Scaffold(
       appBar: CustomAppBar(
         pageText: Text("Úlohy"),
@@ -32,12 +39,29 @@ class Tasks extends StatelessWidget {
                 Padding(padding: const EdgeInsets.only(top: 10)),
                 Row(
                   children: [
-                    const Placeholder(
-                      child: SizedBox(width: 300, child: Text("searchbar")),
+                    Container(
+                      width: 200,
+                      child: const TextField(
+                        decoration: InputDecoration(
+                          hintText: "Hľadať (WIP)",
+                          enabled: false,
+                        ),
+                      ),
                     ),
-                    const Placeholder(
-                      child: Icon(Icons.filter_list_alt),
-                    ),
+                    Container(
+                        width: 200,
+                        child: DropDownMultiSelect<TaskStateCustom>(
+                          options: options,
+                          selectedValues: selectedTaskState,
+                          onChanged: (v) {
+                            selectedTaskState = v;
+                            loadTasks(
+                                taskState: selectedTaskState
+                                    .map((e) => e.state)
+                                    .toList());
+                          },
+                          whenEmpty: "filtrovať podla stavu",
+                        )),
                     const Spacer(),
                     ElevatedButton.icon(
                         label: const Text("načítaj úlohy"),
@@ -77,11 +101,24 @@ class Tasks extends StatelessWidget {
     );
   }
 
-  loadTasks() {
-    TasksService().loadAllTaskManagerGetTasksGet().then((value) {
+  loadTasks({List<TaskState> taskState = const []}) {
+    TasksService()
+        .loadAllTaskManagerGetTasksGet(filterState: taskState)
+        .then((value) {
       tasks.clear();
       tasks.addAll(value ?? []);
       tasks.refresh();
     });
+  }
+
+  void setup() {
+    var list = [
+      TaskStateCustom(TaskState.ready),
+      TaskStateCustom(TaskState.open)
+    ];
+    this.selectedTaskState.addAll(list);
+    list.add(TaskStateCustom(TaskState.removed));
+    list.add(TaskStateCustom(TaskState.done));
+    this.options.addAll(list);
   }
 }

@@ -169,7 +169,6 @@ Name | Type | Description  | Notes
 Resolve Auto Reported
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 

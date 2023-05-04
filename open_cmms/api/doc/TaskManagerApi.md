@@ -333,7 +333,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **loadAllTaskManagerGetTasksGet**
-> List<TaskSchema> loadAllTaskManagerGetTasksGet(stationId)
+> List<TaskSchema> loadAllTaskManagerGetTasksGet(stationId, filterState)
 
 Load All
 
@@ -353,9 +353,10 @@ import 'package:BackendAPI/api.dart';
 
 final api_instance = TaskManagerApi();
 final stationId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+final filterState = []; // List<TaskState> | 
 
 try {
-    final result = api_instance.loadAllTaskManagerGetTasksGet(stationId);
+    final result = api_instance.loadAllTaskManagerGetTasksGet(stationId, filterState);
     print(result);
 } catch (e) {
     print('Exception when calling TaskManagerApi->loadAllTaskManagerGetTasksGet: $e\n');
@@ -364,9 +365,10 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **stationId** | **String**|  | [optional] 
+ Name            | Type                                | Description | Notes                            
+-----------------|-------------------------------------|-------------|----------------------------------
+ **stationId**   | **String**                          |             | [optional]                       
+ **filterState** | [**List<TaskState>**](TaskState.md) |             | [optional] [default to const []] 
 
 ### Return type
 

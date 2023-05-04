@@ -2,6 +2,7 @@ import uuid
 from typing import Optional
 
 from fastapi import APIRouter, HTTPException, Depends
+from fastapi.params import Query
 from fief_client import FiefUserInfo
 from starlette.responses import PlainTextResponse
 
@@ -15,6 +16,7 @@ from taskmanager.application.model.task_service_remote.schema import TaskService
 from taskmanager.application.task_service import TaskService
 from taskmanager.application.task_service_remote_service import TaskServiceRemoteService
 from taskmanager.application.tasks_projector import TasksProjector
+from taskmanager.domain.model.task_state import TaskState
 from taskmanager.infrastructure.persistence.tasks_repo import TaskType
 
 task_manager_router = APIRouter(
@@ -56,9 +58,10 @@ def load(task_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_auth(read_perm
 
 @task_manager_router.get("/get_tasks",
                          response_model=list[TaskSchema])
-def load_all(station_id: uuid.UUID = None, _user: FiefUserInfo = Depends(custom_auth(read_permission))):
+def load_all(station_id: uuid.UUID = None, filter_state: list[TaskState] = Query(None),
+             _user: FiefUserInfo = Depends(custom_auth(read_permission))):
     tasks_projector: TasksProjector = main.runner.get(TasksProjector)
-    return tasks_projector.get_all(station_id)
+    return tasks_projector.get_all(station_id, filter_state)
 
 
 @task_manager_router.get("/get_task",
