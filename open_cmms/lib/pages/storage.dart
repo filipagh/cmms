@@ -44,12 +44,21 @@ class _StorageState extends State<Storage> {
                 ),
                 Row(
                   children: [
-                    Placeholder(
-                      child: SizedBox(width: 300, child: Text("Vyhľadávač")),
+                    Container(
+                      width: 200,
+                      child: const TextField(
+                        decoration: InputDecoration(
+                          hintText: "Hľadať (WIP)",
+                          enabled: false,
+                        ),
+                      ),
                     ),
-                    Placeholder(
-                      child: Icon(Icons.filter_list_alt),
-                    ),
+                    // Placeholder(
+                    //   child: SizedBox(width: 300, child: Text("Vyhľadávač")),
+                    // ),
+                    // Placeholder(
+                    //   child: Icon(Icons.filter_list_alt),
+                    // ),
                     Spacer(),
                     ElevatedButton(
                         onPressed: () {

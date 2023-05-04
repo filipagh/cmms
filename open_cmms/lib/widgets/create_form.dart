@@ -7,7 +7,8 @@ void showdialog() {
       content: Container(
         width: 800,
         child: Column(
-          children: [Text("form"), Placeholder()],
+          // children: [Text("form"), Placeholder()],
+          children: [Text("form")],
         ),
       ),
       confirm: TextButton(

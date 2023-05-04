@@ -86,12 +86,21 @@ class ServiceContracts extends StatelessWidget {
         const Divider(),
         Row(
           children: [
-            const Placeholder(
-              child: SizedBox(width: 300, child: Text("searchbar")),
+            Container(
+              width: 200,
+              child: const TextField(
+                decoration: InputDecoration(
+                  hintText: "Hľadať (WIP)",
+                  enabled: false,
+                ),
+              ),
             ),
-            const Placeholder(
-              child: Icon(Icons.filter_list_alt),
-            ),
+            // const Placeholder(
+            //   child: SizedBox(width: 300, child: Text("searchbar")),
+            // ),
+            // const Placeholder(
+            //   child: Icon(Icons.filter_list_alt),
+            // ),
             const Spacer(),
             ElevatedButton(
               onPressed: () {

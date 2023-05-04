@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:open_cmms/models/asset_type.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 
-import '../../../models/asset_type.dart';
 import '../../../states/asset_types_state_dummy.dart';
 
 const EMPTY_CATEGORY = "NEW_CATEGORY";
@@ -117,8 +116,8 @@ class AssetManagementFormState extends State<AssetManagementForm> {
               value: _subCategory,
               onChanged: _isSubCategoryEnabled ? _changeSubCategory : null,
             ),
-            Text("custom fields"),
-            Placeholder(),
+            // Text("custom fields"),
+            // Placeholder(),
             TextButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {

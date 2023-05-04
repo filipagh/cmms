@@ -22,11 +22,22 @@
 
 [//]: # (---)
 
+## 4.5.23
+
+### novinky
+
+- filtrovanie uloh podla stavu
+
+### oprava
+
+---
+
 ## 27.4.23
 
 ### novinky
 
 - preklik z nahlasenej chyby na stanicu
+
 ### oprava
 
 - layout v nahlesenej chybe

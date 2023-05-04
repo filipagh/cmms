@@ -23,8 +23,17 @@ class ComponentPickerForm extends StatelessWidget implements hasFormTitle {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const Text("searchbar"),
-        const SizedBox(height: 50, child: Placeholder()),
+        Container(
+          width: 200,
+          child: const TextField(
+            decoration: InputDecoration(
+              hintText: "Hľadať (WIP)",
+              enabled: false,
+            ),
+          ),
+        ),
+        // const Text("searchbar"),
+        // const SizedBox(height: 50, child: Placeholder()),
         SizedBox(
           width: 500,
           height: Get.height - 300,

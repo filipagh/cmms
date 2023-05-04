@@ -37,20 +37,38 @@ class _AssetsManagementState extends State<AssetsManagement> {
                       "Manažment komponentov",
                       textScaleFactor: 5,
                     ),
-                    IconButton(onPressed: () {widget._assetTypes.reloadData();}, icon: const Icon(Icons.refresh), iconSize: 50,)
+                    IconButton(
+                      onPressed: () {
+                        widget._assetTypes.reloadData();
+                      },
+                      icon: const Icon(Icons.refresh),
+                      iconSize: 50,
+                    )
                   ],
                 ),
+                Divider(),
                 Row(
                   children: [
-                    Placeholder(
-                      child: SizedBox(width: 300, child: Text("Vyhľadávač")),
+                    Container(
+                      width: 200,
+                      child: const TextField(
+                        decoration: InputDecoration(
+                          hintText: "Hľadať (WIP)",
+                          enabled: false,
+                        ),
+                      ),
                     ),
-                    Placeholder(
-                      child: Icon(Icons.filter_list_alt),
-                    ),
+                    // Placeholder(
+                    //   child: SizedBox(width: 300, child: Text("Vyhľadávač")),
+                    // ),
+                    // Placeholder(
+                    //   child: Icon(Icons.filter_list_alt),
+                    // ),
                     Spacer(),
                     ElevatedButton(
-                      onPressed: () {showFormDialog(CategoryForm.createNewMain());},
+                      onPressed: () {
+                        showFormDialog(CategoryForm.createNewMain());
+                      },
                       child: Text("Pridať hlavnú kategóriu"),
                     ),
                   ],

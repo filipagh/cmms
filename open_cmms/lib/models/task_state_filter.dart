@@ -8,7 +8,7 @@ class TaskStateCustom {
   @override
   String toString() {
     {
-      switch (this.state) {
+      switch (state) {
         case TaskState.open:
           return "Vytvorená";
 
@@ -22,7 +22,7 @@ class TaskStateCustom {
           return "Zrušená";
 
         default:
-          return this.state.value;
+          return state.value;
       }
     }
   }
