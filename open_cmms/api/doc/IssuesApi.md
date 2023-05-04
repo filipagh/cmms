@@ -164,7 +164,6 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **resolveAutoReportedIssuesResolveAllAutoReportedGet**
-
 > String resolveAutoReportedIssuesResolveAllAutoReportedGet()
 
 Resolve Auto Reported
@@ -177,12 +176,10 @@ import 'package:BackendAPI/api.dart';
 final api_instance = IssuesApi();
 
 try {
-final result = api_instance.resolveAutoReportedIssuesResolveAllAutoReportedGet();
-print(result);
-} catch
-(
-e) {
-print('Exception when calling IssuesApi->resolveAutoReportedIssuesResolveAllAutoReportedGet: $e\n');
+    final result = api_instance.resolveAutoReportedIssuesResolveAllAutoReportedGet();
+    print(result);
+} catch (e) {
+    print('Exception when calling IssuesApi->resolveAutoReportedIssuesResolveAllAutoReportedGet: $e\n');
 }
 ```
 
