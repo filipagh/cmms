@@ -66,7 +66,10 @@ class Tasks extends StatelessWidget {
                     ElevatedButton.icon(
                         label: const Text("načítaj úlohy"),
                         onPressed: () {
-                          loadTasks();
+                          loadTasks(
+                              taskState: selectedTaskState
+                                  .map((e) => e.state)
+                                  .toList());
                         },
                         icon: const Icon(Icons.refresh)),
                     Padding(padding: const EdgeInsets.all(10)),
