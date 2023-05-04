@@ -29,6 +29,8 @@
 - filtrovanie uloh podla stavu
 
 ### oprava
+- nahradene placeholdery
+- upraveny layout info stanice
 
 ---
 
