@@ -23,42 +23,69 @@ class StationInfoPage extends StatelessWidget
     loadServiceContracts();
     return Column(
       children: [
-        SelectableText("Meno stanice: " + station.name),
-        SelectableText(
-            "Km cestneho useku: " + (station.kmOfRoad?.toString() ?? "")),
-        SelectableText("Km cestneho useku poznamka: " + station.kmOfRoadNote),
-        SelectableText(
-            "Gps - dlzka: " + (station.longitude?.toString() ?? "-")),
-        SelectableText("Gps - sirka: " + (station.latitude?.toString() ?? '-')),
-        SelectableText(
-            "nadmorska vyska: " + (station.seeLevel?.toString() ?? '-')),
-        SelectableText("poznamka: " + station.description),
-        SelectableText("ID: " + station.id),
         if (station.isActive == true) ...[
-          ElevatedButton(
-              style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.red)),
-              onPressed: () {
-                StationService()
-                    .removeStationStationRemoveStationDelete(
-                        StationIdSchema(id: station.id))
-                    .then((value) {
-                  Get.toNamed(StationBasePage.ENDPOINT +
-                      "/${station.id}" +
-                      StationInfoPage.ENDPOINT);
-                  showOk("Stania bola vymazana");
-                }, onError: (e) => showError(e.toString()));
-              },
-              child: Text("Vymazať stanicu")),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.red)),
+                  onPressed: () {
+                    StationService()
+                        .removeStationStationRemoveStationDelete(
+                            StationIdSchema(id: station.id))
+                        .then((value) {
+                      Get.toNamed(StationBasePage.ENDPOINT +
+                          "/${station.id}" +
+                          StationInfoPage.ENDPOINT);
+                      showOk("Stania bola vymazana");
+                    }, onError: (e) => showError(e.toString()));
+                  },
+                  child: Text("Vymazať stanicu")),
+            ],
+          ),
+          Divider(),
         ],
+        SelectionArea(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Meno stanice"),
+                  Text("Km cestneho useku"),
+                  Text("Km cestneho useku poznamka"),
+                  Text("Gps - dlzka"),
+                  Text("Gps - sirka"),
+                  Text("nadmorska vyska"),
+                  Text("poznamka"),
+                  Text("ID"),
+                ],
+              ),
+              Padding(padding: EdgeInsets.all(10)),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(station.name),
+                  Text(station.kmOfRoad?.toString() ?? ""),
+                  Text(station.kmOfRoadNote),
+                  Text(station.longitude?.toString() ?? "-"),
+                  Text(station.latitude?.toString() ?? '-'),
+                  Text(station.seeLevel?.toString() ?? '-'),
+                  Text(station.description),
+                  Text(station.id),
+                ],
+              )
+            ],
+          ),
+        ),
+        Divider(),
         Obx(() {
           return ConstrainedBox(
             constraints: BoxConstraints(maxHeight: 400, maxWidth: 400),
             child: Column(
               children: [
-                Divider(
-                  thickness: 3,
-                ),
                 Text("Servisne zmluvy"),
                 Expanded(
                   child: ListView.builder(
