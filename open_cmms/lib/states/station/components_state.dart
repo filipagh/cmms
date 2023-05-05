@@ -1,6 +1,5 @@
 import 'package:BackendAPI/api.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:open_cmms/service/backend_api/assigned_components_service.dart';
 
 class AssignedComponentsState extends GetxController {
@@ -11,7 +10,6 @@ class AssignedComponentsState extends GetxController {
 
   @override
   void onInit() {
-    reload();
     super.onInit();
   }
 
@@ -20,14 +18,14 @@ class AssignedComponentsState extends GetxController {
         .firstWhereOrNull((element) => element.id == assigned_component_id);
   }
 
-  reload() {
-    AssignedComponentService()
-        .getAllAssignedComponentsComponentsGet(stationId: _stationId)
-        .then((value) {
-      components.clear();
-      components.addAll(value ?? []);
-      refresh();
-      update();
-    });
+  Future<AssignedComponentsState> load() async {
+    var v = await AssignedComponentService()
+        .getAllAssignedComponentsComponentsGet(stationId: _stationId);
+
+    components.clear();
+    components.addAll(v ?? []);
+    refresh();
+    update();
+    return this;
   }
 }

@@ -17,19 +17,20 @@ class StationComponentsPage extends StatelessWidget
   static const String ENDPOINT = '/Components';
   final StationSchema station;
 
-  const StationComponentsPage({Key? key, required this.station})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    AssignedComponentsState components;
+  StationComponentsPage({Key? key, required this.station}) : super(key: key) {
     try {
       components = Get.find(tag: station.id);
     } catch (e) {
-      print("put");
       components =
           Get.put(AssignedComponentsState(station.id), tag: station.id);
+      components.load();
     }
+  }
+
+  late AssignedComponentsState components;
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
         if (station.isActive)
@@ -38,7 +39,7 @@ class StationComponentsPage extends StatelessWidget
             children: [
               ElevatedButton.icon(
                 onPressed: () {
-                  components.reload();
+                  components?.load();
                 },
                 icon: Icon(Icons.refresh),
                 label: Text("Načítať komponenty"),

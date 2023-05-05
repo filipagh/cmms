@@ -17,9 +17,11 @@ class EditStationComponentsForm extends StatelessWidget
       : super(key: key) {
     try {
       _assignedComponentState = Get.find(tag: station.id);
+      setEditItems(_assignedComponentState);
     } catch (e) {
-      _assignedComponentState =
-          Get.put(AssignedComponentsState(station.id), tag: station.id);
+      Get.putAsync(() => AssignedComponentsState(station.id).load(),
+              tag: station.id)
+          .then((value) => setEditItems(value));
     }
   }
 
@@ -39,7 +41,6 @@ class EditStationComponentsForm extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    setEditItems();
     return ConstrainedBox(
       constraints: BoxConstraints(maxWidth: 500),
       child: Column(
@@ -202,8 +203,8 @@ class EditStationComponentsForm extends StatelessWidget
     }
   }
 
-  void setEditItems() {
-    _assignedComponentState.components.forEach((element) {
+  void setEditItems(AssignedComponentsState state) {
+    state.components.forEach((element) {
       var status;
       switch (element.status) {
         case schema.AssignedComponentState.awaiting:

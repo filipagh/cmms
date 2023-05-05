@@ -122,6 +122,10 @@ class AddItemsToStorage extends StatelessWidget implements hasFormTitle {
               const Spacer(),
               Flexible(
                 child: TextField(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Množstvo',
+                  ),
                   keyboardType: TextInputType.number,
                   inputFormatters: <TextInputFormatter>[
                     FilteringTextInputFormatter.digitsOnly

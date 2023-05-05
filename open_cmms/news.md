@@ -22,6 +22,18 @@
 
 [//]: # (---)
 
+## 5.5.23
+
+### novinky
+
+- doplnenie text hintu na mnzostvo do naskladnovacieho formularu
+
+### oprava
+
+- nacitanie komponentov pri vyrtvarani ulohy z stranky uloh
+
+---
+
 ## 4.5.23
 
 ### novinky
@@ -29,6 +41,7 @@
 - filtrovanie uloh podla stavu
 
 ### oprava
+
 - nahradene placeholdery
 - upraveny layout info stanice
 
