@@ -1,11 +1,15 @@
+import os
 import uuid
 
 from fastapi import APIRouter, Depends
 from fief_client import FiefUserInfo
+from starlette.background import BackgroundTask, BackgroundTasks
+from starlette.responses import FileResponse
 
 from base import main
 from base.auth_def import custom_auth, read_permission, write_permission
 from stationmanager.application.model.schema import StationIdSchema
+from stationmanager.application.service_contract import service_contract_xsl_exporter
 from stationmanager.application.service_contract.model import schema
 from stationmanager.application.service_contract.model.schema import ServiceContractSchema
 from stationmanager.application.service_contract.service_contract_projector import ServiceContractProjector
@@ -90,5 +94,18 @@ def get_stations_without_contract(_user: FiefUserInfo = Depends(custom_auth(read
                 pass
 
     for i in station_ids:
-      col.append(StationIdSchema(id=i))
+        col.append(StationIdSchema(id=i))
     return col
+
+
+@service_contract_router.get("/stations_without_contract/export_xsl",
+                             response_class=FileResponse)
+def get_stations_without_contract_export(background_tasks: BackgroundTasks, _user: FiefUserInfo = Depends(custom_auth(read_permission))):
+
+    name = service_contract_xsl_exporter.export_stations_without_service_contract_xslx()
+    background_tasks.add_task(delete_file, name)
+    return FileResponse(name, media_type='application/octet-stream', filename=name)
+
+
+def delete_file(name):
+    os.remove(name)
