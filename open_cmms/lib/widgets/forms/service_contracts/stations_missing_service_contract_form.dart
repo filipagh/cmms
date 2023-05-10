@@ -1,7 +1,9 @@
 import 'package:BackendAPI/api.dart';
+import 'package:file_saver/file_saver.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/service/backend_api/RoadSegmentManager.dart';
+import 'package:open_cmms/service/backend_api/service_contract_service.dart';
 import 'package:open_cmms/service/backend_api/station_service.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 
@@ -66,6 +68,28 @@ class StationsMissingServiceContractForm extends StatelessWidget
                 },
               ),
             )),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            ElevatedButton(
+                onPressed: () {
+                  ServiceContractService()
+                      .getStationsWithoutContractExportServiceContractStationsWithoutContractExportXslGetWithHttpInfo()
+                      .then((value) async => await FileSaver.instance.saveFile(
+                            name: "stanice_bez_servisnej_zmluvy.xlsx",
+                            bytes: value.bodyBytes,
+                          ));
+                },
+                child: Text("Export")),
+            Spacer(),
+            ElevatedButton(
+              onPressed: () {
+                Get.back();
+              },
+              child: const Text("Zatvorit"),
+            ),
+          ],
+        ),
       ],
     );
   }

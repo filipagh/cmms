@@ -7,13 +7,14 @@ import 'package:BackendAPI/api.dart';
 
 All URIs are relative to *http://localhost*
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**createContractServiceContractCreateContractPost**](ServiceContractApi.md#createcontractservicecontractcreatecontractpost) | **POST** /service-contract/create_contract | Create Contract
-[**getContractServiceContractContractGet**](ServiceContractApi.md#getcontractservicecontractcontractget) | **GET** /service-contract/contract | Get Contract
-[**getContractsServiceContractContractsGet**](ServiceContractApi.md#getcontractsservicecontractcontractsget) | **GET** /service-contract/contracts | Get Contracts
-[**getServiceContractContractForStationGet**](ServiceContractApi.md#getservicecontractcontractforstationget) | **GET** /service-contract/contract_for_station | Get
-[**getStationsWithoutContractServiceContractStationsWithoutContractGet**](ServiceContractApi.md#getstationswithoutcontractservicecontractstationswithoutcontractget) | **GET** /service-contract/stations_without_contract | Get Stations Without Contract
+ Method                                                                                                                                                                                             | HTTP request                                                   | Description                          
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|--------------------------------------
+ [**createContractServiceContractCreateContractPost**](ServiceContractApi.md#createcontractservicecontractcreatecontractpost)                                                                       | **POST** /service-contract/create_contract                     | Create Contract                      
+ [**getContractServiceContractContractGet**](ServiceContractApi.md#getcontractservicecontractcontractget)                                                                                           | **GET** /service-contract/contract                             | Get Contract                         
+ [**getContractsServiceContractContractsGet**](ServiceContractApi.md#getcontractsservicecontractcontractsget)                                                                                       | **GET** /service-contract/contracts                            | Get Contracts                        
+ [**getServiceContractContractForStationGet**](ServiceContractApi.md#getservicecontractcontractforstationget)                                                                                       | **GET** /service-contract/contract_for_station                 | Get                                  
+ [**getStationsWithoutContractExportServiceContractStationsWithoutContractExportXslGet**](ServiceContractApi.md#getstationswithoutcontractexportservicecontractstationswithoutcontractexportxslget) | **GET** /service-contract/stations_without_contract/export_xsl | Get Stations Without Contract Export 
+ [**getStationsWithoutContractServiceContractStationsWithoutContractGet**](ServiceContractApi.md#getstationswithoutcontractservicecontractstationswithoutcontractget)                               | **GET** /service-contract/stations_without_contract            | Get Stations Without Contract        
 
 
 # **createContractServiceContractCreateContractPost**
@@ -211,17 +212,71 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getStationsWithoutContractExportServiceContractStationsWithoutContractExportXslGet**
+
+> getStationsWithoutContractExportServiceContractStationsWithoutContractExportXslGet()
+
+Get Stations Without Contract Export
+
+### Example
+
+```dart
+import 'package:BackendAPI/api.dart';
+
+// TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
+//defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
+// TODO Configure API key authorization: api_key
+//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: user_session
+//defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKeyPrefix = 'Bearer';
+
+final api_instance = ServiceContractApi();
+
+try {
+api_instance.getStationsWithoutContractExportServiceContractStationsWithoutContractExportXslGet();
+} catch
+(
+e) {
+print('Exception when calling ServiceContractApi->getStationsWithoutContractExportServiceContractStationsWithoutContractExportXslGet: $e\n');
+}
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[OAuth2AuthorizationCodeBearer](../README.md#OAuth2AuthorizationCodeBearer), [api_key](../README.md#api_key), [user_session](../README.md#user_session)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getStationsWithoutContractServiceContractStationsWithoutContractGet**
+
 > List<StationIdSchema> getStationsWithoutContractServiceContractStationsWithoutContractGet()
 
 Get Stations Without Contract
 
 ### Example
+
 ```dart
 import 'package:BackendAPI/api.dart';
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer

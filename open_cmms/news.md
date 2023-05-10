@@ -22,6 +22,19 @@
 
 [//]: # (---)
 
+## 10.5.23
+
+### novinky
+
+- export stanice do excelu (v info stanice)
+- export stanic do excelu ktore nemaju servisnu zmluvu
+
+### oprava
+
+- podmienky pre nacitanie aktivnych servisnych zmluv
+
+---
+
 ## 5.5.23
 
 ### novinky

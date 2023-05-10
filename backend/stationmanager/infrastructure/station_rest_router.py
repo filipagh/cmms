@@ -3,10 +3,12 @@ from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException
 from fief_client import FiefUserInfo
-from starlette.responses import PlainTextResponse
+from starlette.background import BackgroundTasks
+from starlette.responses import PlainTextResponse, FileResponse
 
 from base import main
 from base.auth_def import custom_auth, read_permission, write_permission
+from stationmanager.application import station_xsl_exporter
 from stationmanager.application.model import schema
 from stationmanager.application.station_projector import StationProjector
 from stationmanager.application.station_service import StationService
@@ -41,6 +43,23 @@ def get_by_id(station_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_auth(r
     projector = main.runner.get(StationProjector)
 
     return schema.StationSchema(**projector.get_by_id(station_id).__dict__)
+
+
+@station_router.get("/station/export_xsl", response_class=FileResponse)
+def export(segment_id: uuid.UUID, background_tasks: BackgroundTasks,
+           _user: FiefUserInfo = Depends(custom_auth(read_permission))):
+    name = station_xsl_exporter.export_xslx(segment_id)
+    background_tasks.add_task(remove_file, name)
+    headers = {
+        "Content-Disposition": f"attachment; filename={name}",
+        "content-type": "application/octet-stream"
+    }
+    return FileResponse(name, media_type='application/octet-stream', filename=name, headers=headers)
+
+
+def remove_file(name: str):
+    import os
+    os.remove(name)
 
 
 @station_router.get("/stations",

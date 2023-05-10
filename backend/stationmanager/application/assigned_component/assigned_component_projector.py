@@ -76,5 +76,5 @@ class AssignedComponentProjector(ProcessApplication):
     def get_by_id(self, id: uuid.UUID) -> AssignedComponentModel:
         return assigned_component_repo.get_by_id(id)
 
-    def get_by_station(self, segment_id: Optional[uuid.UUID]) -> list[AssignedComponentModel]:
-        return assigned_component_repo.get_by_station(segment_id)
+    def get_by_station(self, station_id: Optional[uuid.UUID]) -> list[AssignedComponentModel]:
+        return assigned_component_repo.get_by_station(station_id)

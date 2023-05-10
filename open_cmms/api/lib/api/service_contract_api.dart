@@ -63,7 +63,7 @@ class ServiceContractApi {
     // FormatException when trying to decode an empty string.
     if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
       return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'String',) as String;
-    
+
     }
     return null;
   }
@@ -117,7 +117,7 @@ class ServiceContractApi {
     // FormatException when trying to decode an empty string.
     if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
       return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'ServiceContractSchema',) as ServiceContractSchema;
-    
+
     }
     return null;
   }
@@ -216,20 +216,60 @@ class ServiceContractApi {
     // When a remote server returns no body with a status of 204, we shall not decode it.
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
       final responseBody = await _decodeBodyBytes(response);
-      return (await apiClient.deserializeAsync(responseBody, 'List<ServiceContractSchema>') as List)
-        .cast<ServiceContractSchema>()
-        .toList();
-
+      return (await apiClient.deserializeAsync(
+              responseBody, 'List<ServiceContractSchema>') as List)
+          .cast<ServiceContractSchema>()
+          .toList();
     }
     return null;
+  }
+
+  /// Get Stations Without Contract Export
+  ///
+  /// Note: This method returns the HTTP [Response].
+  Future<Response>
+      getStationsWithoutContractExportServiceContractStationsWithoutContractExportXslGetWithHttpInfo() async {
+    // ignore: prefer_const_declarations
+    final path = r'/service-contract/stations_without_contract/export_xsl';
+
+    // ignore: prefer_final_locals
+    Object? postBody;
+
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
+
+    const contentTypes = <String>[];
+
+    return apiClient.invokeAPI(
+      path,
+      'GET',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      contentTypes.isEmpty ? null : contentTypes.first,
+    );
+  }
+
+  /// Get Stations Without Contract Export
+  Future<void>
+      getStationsWithoutContractExportServiceContractStationsWithoutContractExportXslGet() async {
+    final response =
+        await getStationsWithoutContractExportServiceContractStationsWithoutContractExportXslGetWithHttpInfo();
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
   }
 
   /// Get Stations Without Contract
   ///
   /// Note: This method returns the HTTP [Response].
-  Future<Response> getStationsWithoutContractServiceContractStationsWithoutContractGetWithHttpInfo() async {
+  Future<Response>
+      getStationsWithoutContractServiceContractStationsWithoutContractGetWithHttpInfo() async {
     // ignore: prefer_const_declarations
     final path = r'/service-contract/stations_without_contract';
 
