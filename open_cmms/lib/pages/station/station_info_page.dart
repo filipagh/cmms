@@ -1,4 +1,5 @@
 import 'package:BackendAPI/api.dart';
+import 'package:file_saver/file_saver.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/pages/station/station_base_page.dart';
@@ -23,10 +24,22 @@ class StationInfoPage extends StatelessWidget
     loadServiceContracts();
     return Column(
       children: [
-        if (station.isActive == true) ...[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            ElevatedButton(
+                onPressed: () => StationService()
+                        .exportStationStationExportXslGetWithHttpInfo(
+                            station.id)
+                        .then((value) async {
+                      await FileSaver.instance.saveFile(
+                        name: "stanica_${station.name}.xlsx",
+                        bytes: value.bodyBytes,
+                      );
+                    }),
+                child: Text("Export stanice .xsl")),
+            if (station.isActive == true) ...[
+              Padding(padding: EdgeInsets.all(10)),
               ElevatedButton(
                   style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.red)),
@@ -43,9 +56,9 @@ class StationInfoPage extends StatelessWidget
                   },
                   child: Text("Vymazať stanicu")),
             ],
-          ),
-          Divider(),
-        ],
+          ],
+        ),
+        Divider(),
         SelectionArea(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

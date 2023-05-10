@@ -7,12 +7,13 @@ import 'package:BackendAPI/api.dart';
 
 All URIs are relative to *http://localhost*
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**createStationStationCreateStationPost**](StationApi.md#createstationstationcreatestationpost) | **POST** /station/create_station | Create Station
-[**getAllStationStationsGet**](StationApi.md#getallstationstationsget) | **GET** /station/stations | Get All
-[**getByIdStationStationGet**](StationApi.md#getbyidstationstationget) | **GET** /station/station | Get By Id
-[**removeStationStationRemoveStationDelete**](StationApi.md#removestationstationremovestationdelete) | **DELETE** /station/remove_station | Remove Station
+ Method                                                                                               | HTTP request                        | Description    
+------------------------------------------------------------------------------------------------------|-------------------------------------|----------------
+ [**createStationStationCreateStationPost**](StationApi.md#createstationstationcreatestationpost)     | **POST** /station/create_station    | Create Station 
+ [**exportStationStationExportXslGet**](StationApi.md#exportstationstationexportxslget)               | **GET** /station/station/export_xsl | Export         
+ [**getAllStationStationsGet**](StationApi.md#getallstationstationsget)                               | **GET** /station/stations           | Get All        
+ [**getByIdStationStationGet**](StationApi.md#getbyidstationstationget)                               | **GET** /station/station            | Get By Id      
+ [**removeStationStationRemoveStationDelete**](StationApi.md#removestationstationremovestationdelete) | **DELETE** /station/remove_station  | Remove Station 
 
 
 # **createStationStationCreateStationPost**
@@ -61,17 +62,71 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **exportStationStationExportXslGet**
+
+> exportStationStationExportXslGet(segmentId)
+
+Export
+
+### Example
+
+```dart
+import 'package:BackendAPI/api.dart';
+// TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
+//defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
+// TODO Configure API key authorization: api_key
+//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: user_session
+//defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKeyPrefix = 'Bearer';
+
+final api_instance = StationApi();
+final segmentId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+
+try {
+    api_instance.exportStationStationExportXslGet(segmentId);
+} catch (e) {
+    print('Exception when calling StationApi->exportStationStationExportXslGet: $e\n');
+}
+```
+
+### Parameters
+
+ Name          | Type       | Description | Notes 
+---------------|------------|-------------|-------
+ **segmentId** | **String** |             |
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[OAuth2AuthorizationCodeBearer](../README.md#OAuth2AuthorizationCodeBearer), [api_key](../README.md#api_key), [user_session](../README.md#user_session)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getAllStationStationsGet**
+
 > List<StationSchema> getAllStationStationsGet(roadSegmentId, onlyActive)
 
 Get All
 
 ### Example
+
 ```dart
 import 'package:BackendAPI/api.dart';
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer

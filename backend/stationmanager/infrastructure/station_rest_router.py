@@ -43,16 +43,24 @@ def get_by_id(station_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_auth(r
     projector = main.runner.get(StationProjector)
 
     return schema.StationSchema(**projector.get_by_id(station_id).__dict__)
-@station_router.get("/station/export_xsl", response_class=FileResponse)
-def export(segment_id: uuid.UUID, background_tasks: BackgroundTasks, _user: FiefUserInfo = Depends(custom_auth(read_permission))):
 
+
+@station_router.get("/station/export_xsl", response_class=FileResponse)
+def export(segment_id: uuid.UUID, background_tasks: BackgroundTasks,
+           _user: FiefUserInfo = Depends(custom_auth(read_permission))):
     name = station_xsl_exporter.export_xslx(segment_id)
     background_tasks.add_task(remove_file, name)
-    return FileResponse(name, media_type='application/octet-stream', filename=name)
+    headers = {
+        "Content-Disposition": f"attachment; filename={name}",
+        "content-type": "application/octet-stream"
+    }
+    return FileResponse(name, media_type='application/octet-stream', filename=name, headers=headers)
+
 
 def remove_file(name: str):
     import os
     os.remove(name)
+
 
 @station_router.get("/stations",
                     response_model=list[schema.StationSchema])
