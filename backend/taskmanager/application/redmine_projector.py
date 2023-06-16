@@ -1,3 +1,4 @@
+import logging
 import uuid
 from typing import Optional
 
@@ -83,56 +84,84 @@ class RedmineProjector(ProcessApplication):
 
     @policy.register(TaskChangeComponents.TaskChangeComponentsCreated)
     def _(self, domain_event: TaskChangeComponents.TaskChangeComponentsCreated, process_event):
-        issue = self.load_issue(domain_event.originator_id)
-        if issue is None:
-            redmine_id = self._create_redmine_task(domain_event.originator_id, domain_event.name,
-                                                   domain_event.description,
-                                                   self._get_road_segment_name(domain_event.station_id))
-        else:
-            redmine_id = issue.task_id
-        self._add_change_components_note(redmine_id, domain_event)
+        try:
+            issue = self.load_issue(domain_event.originator_id)
+            if issue is None:
+                redmine_id = self._create_redmine_task(domain_event.originator_id, domain_event.name,
+                                                       domain_event.description,
+                                                       self._get_road_segment_name(domain_event.station_id))
+            else:
+                redmine_id = issue.task_id
+            self._add_change_components_note(redmine_id, domain_event)
+        except Exception as e:
+            logging.error("Error while creating redmine task: " + str(e))
 
     @policy.register(TaskChangeComponents.TaskCanceled)
     def _(self, domain_event: TaskChangeComponents.TaskCanceled, process_event):
-        self._close_redmine_task(domain_event.originator_id)
+        try:
+            self._close_redmine_task(domain_event.originator_id)
+        except Exception as e:
+            logging.error("Error while closing redmine task: " + str(e))
 
     @policy.register(TaskChangeComponents.TaskChangeComponentsStatusChanged)
     def _(self, domain_event: TaskChangeComponents.TaskCanceled, process_event):
-        if domain_event.new_status == TaskState.DONE:
-            self._complete_redmine_task(domain_event.originator_id)
+        try:
+            if domain_event.new_status == TaskState.DONE:
+                self._complete_redmine_task(domain_event.originator_id)
+        except Exception as e:
+            logging.error("Error while closing redmine task: " + str(e))
 
     @policy.register(TaskServiceOnSite.TaskCreated)
     def _(self, domain_event: TaskServiceOnSite.TaskCreated, process_event):
-        issue = self.load_issue(domain_event.originator_id)
-        if issue is None:
-            self._create_redmine_task(domain_event.originator_id, domain_event.name,
-                                      domain_event.description,
-                                      self._get_road_segment_name(domain_event.station_id))
+        try:
+            issue = self.load_issue(domain_event.originator_id)
+            if issue is None:
+                self._create_redmine_task(domain_event.originator_id, domain_event.name,
+                                          domain_event.description,
+                                          self._get_road_segment_name(domain_event.station_id))
+        except Exception as e:
+            logging.error("Error while creating redmine task: " + str(e))
 
     @policy.register(TaskServiceOnSite.TaskComplete)
     def _(self, domain_event: TaskServiceOnSite.TaskComplete, process_event):
-        self._complete_redmine_task(domain_event.originator_id)
+        try:
+            self._complete_redmine_task(domain_event.originator_id)
+        except Exception as e:
+            logging.error("Error while closing redmine task: " + str(e))
 
     @policy.register(TaskServiceOnSite.TaskCanceled)
     def _(self, domain_event: TaskServiceOnSite.TaskCanceled, process_event):
-        self._close_redmine_task(domain_event.originator_id)
+        try:
+            self._close_redmine_task(domain_event.originator_id)
+        except Exception as e:
+            logging.error("Error while closing redmine task: " + str(e))
 
     @policy.register(TaskServiceRemote.TaskCreated)
     def _(self, domain_event: TaskServiceRemote.TaskCreated, process_event):
-        issue = self.load_issue(domain_event.originator_id)
-        if issue is None:
-            self._create_redmine_task(domain_event.originator_id, domain_event.name,
-                                      domain_event.description,
-                                      self._get_road_segment_name(domain_event.station_id))
+        try:
+            issue = self.load_issue(domain_event.originator_id)
+            if issue is None:
+                self._create_redmine_task(domain_event.originator_id, domain_event.name,
+                                          domain_event.description,
+                                          self._get_road_segment_name(domain_event.station_id))
+        except Exception as e:
+            logging.error("Error while creating redmine task: " + str(e))
 
     @policy.register(TaskServiceRemote.TaskCanceled)
     def _(self, domain_event: TaskServiceRemote.TaskCreated, process_event):
-        self._close_redmine_task(domain_event.originator_id)
+        try:
+            self._close_redmine_task(domain_event.originator_id)
+        except Exception as e:
+            logging.error("Error while closing redmine task: " + str(e))
 
     @policy.register(TaskServiceRemote.TaskComplete)
     def _(self, domain_event: TaskServiceRemote.TaskCreated, process_event):
-        self._complete_redmine_task(domain_event.originator_id)
+        try:
+            self._complete_redmine_task(domain_event.originator_id)
+        except Exception as e:
+            logging.error("Error while closing redmine task: " + str(e))
 
     def _get_road_segment_name(self, station_id: uuid.UUID):
+
         road_segment_id = base.main.runner.get(StationProjector).get_by_id(station_id).road_segment_id
         return base.main.runner.get(RoadSegmentProjector).get_by_id(road_segment_id).name
