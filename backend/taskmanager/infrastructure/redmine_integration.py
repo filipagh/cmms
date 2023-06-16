@@ -147,6 +147,7 @@ def create_issue(task_id, subject, description, assigned_to_id, category_name) -
     issue.custom_fields = ({'id': supervisor_id, 'value': supervisor_user_id}, {'id': link_to_cmms_id, 'value': cmms_url})
 
     issue.project_id = project_id
+    issue.assigned_to_id = supervisor_user_id
     issue.subject = subject
     issue.description = description
     issue.priority_id = 1
