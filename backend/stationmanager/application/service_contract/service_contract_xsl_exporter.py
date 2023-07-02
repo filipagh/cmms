@@ -44,7 +44,7 @@ def export_stations_without_service_contract_xslx():
     worksheet.write("A1", "Stanice bez servisnej zmluvy")
     worksheet.write("A2", "Nazov stanice")
     worksheet.write("B2", "Nazov cesnteho useku")
-    worksheet.write("C2", "ssud")
+    worksheet.write("C2", "Stredisko správy a údržby")
 
     index = 2
     for station in stations_without_service:

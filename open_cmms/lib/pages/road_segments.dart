@@ -119,7 +119,8 @@ class RoadSegments extends StatelessWidget {
                           columns: const [
                             DataColumn(label: Text("Cestný úsek názov")),
                             DataColumn(label: Text("text")),
-                            DataColumn(label: Text("ssud")),
+                            DataColumn(
+                                label: Text("Stredisko správy a údržby")),
                           ],
                           rows: getRows(roadSegments));
                     }))
