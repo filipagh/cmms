@@ -1,5 +1,5 @@
 import os
-import subprocess
+import time
 from enum import Enum
 from urllib.request import Request
 
@@ -67,19 +67,20 @@ def add_transconder(t: Transcoding):
 
 
 os.chdir(os.path.dirname(__file__) + '/../')
-proc = subprocess.Popen(["alembic upgrade head"], stdout=subprocess.PIPE, shell=True)
-(out, err) = proc.communicate()
-print("program output:", out)
-print("program error:", err)
-proc.kill()
+
+# proc = subprocess.Popen(["alembic upgrade head"], stdout=subprocess.PIPE, shell=True)
+# (out, err) = proc.communicate()
+# print("program output:", out)
+# print("program error:", err)
+# proc.kill()
 
 
-# if os.system('alembic upgrade head') != 0:
-#     print("ALEMBIC FAIL")
-#     # temporally solution until proper loging is done (sleep -> ability to see logs in docker logs)
-#     while True:
-#         time.sleep(10)
-#         print("ALEMBIC FAIL")
+if os.system('alembic upgrade head') != 0:
+    print("ALEMBIC FAIL")
+    # temporally solution until proper loging is done (sleep -> ability to see logs in docker logs)
+    while True:
+        time.sleep(10)
+        print("ALEMBIC FAIL")
 
 
 class Services(Enum):
