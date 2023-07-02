@@ -22,6 +22,19 @@
 
 [//]: # (---)
 
+## 2.7.23
+
+### novinky
+
+- upava formularov komponentov
+- premenovanie "ssud" ->  Stredisko správy a údržby
+
+### oprava
+
+- oprava chyby pri nezvoleni telemetrie pri vytvarani komponentu
+
+---
+
 ## 10.5.23
 
 ### novinky
