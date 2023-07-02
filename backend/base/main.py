@@ -71,6 +71,7 @@ proc = subprocess.Popen(["alembic upgrade head"], stdout=subprocess.PIPE, shell=
 (out, err) = proc.communicate()
 print("program output:", out)
 print("program error:", err)
+proc.kill()
 
 
 # if os.system('alembic upgrade head') != 0:

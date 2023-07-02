@@ -6,7 +6,7 @@ alembic~=1.8.1
 sqlalchemy_utils
 pydantic~=1.9.2
 starlette~=0.17.1
-fief-client[fastapi]
+fief-client[fastapi]~=0.16.1
 certifi>=14.05.14
 six>=1.10
 python_dateutil>=2.5.3
