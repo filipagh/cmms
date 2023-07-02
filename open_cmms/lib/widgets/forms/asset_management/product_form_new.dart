@@ -8,27 +8,19 @@ import '../../../states/asset_types_state.dart';
 
 const EMPTY_CATEGORY = "NEW_CATEGORY";
 
-class ProductForm extends StatefulWidget implements hasFormTitle {
+class ProductFormNew extends StatefulWidget implements hasFormTitle {
   final AssetTypesState assetTypes = Get.find();
-  late final AssetSchema? editItem;
+
   late final AssetCategorySchema parent;
   final List<AssetTelemetry> telemetry = <AssetTelemetry>[].obs;
 
-  ProductForm.createNew({Key? key, required this.parent}) : super(key: key) {
-    editItem = null;
-  }
-
-  ProductForm.editItem({Key? key, this.editItem}) : super(key: key) {
-    parent = assetTypes.getAssetTypeById(editItem!.categoryId)!;
-  }
+  ProductFormNew({Key? key, required this.parent}) : super(key: key);
 
   @override
-  State<ProductForm> createState() => ProductFormState();
+  State<ProductFormNew> createState() => ProductFormNewState();
 
   String getTitle() {
-    return editItem == null
-        ? "Vytvoriť nový produkt"
-        : "Editovať produkt : ${editItem!.name}";
+    return "Vytvoriť nový produkt";
   }
 
   @override
@@ -37,7 +29,7 @@ class ProductForm extends StatefulWidget implements hasFormTitle {
   }
 }
 
-class ProductFormState extends State<ProductForm> {
+class ProductFormNewState extends State<ProductFormNew> {
   final AssetTypesState assetTypes = Get.find();
   final _formKey = GlobalKey<FormState>();
 
@@ -55,7 +47,6 @@ class ProductFormState extends State<ProductForm> {
     if (_mainCat != widget.parent) {
       _subCat = widget.parent;
     }
-    widget.telemetry.addAll(widget.editItem?.telemetry ?? []);
     super.initState();
   }
 
@@ -73,9 +64,7 @@ class ProductFormState extends State<ProductForm> {
                 onSaved: (value) {
                   name = value!;
                 },
-                initialValue:
-                    widget.editItem == null ? "" : widget.editItem!.name,
-                decoration: InputDecoration(labelText: 'názov'),
+                decoration: const InputDecoration(labelText: 'názov'),
                 validator: (value) {
                   return value == null || value.isEmpty ? "pridať názov" : null;
                 },
@@ -84,26 +73,26 @@ class ProductFormState extends State<ProductForm> {
                 onSaved: (value) {
                   description = value!;
                 },
-                initialValue:
-                    widget.editItem == null ? "" : widget.editItem!.name,
-                decoration: InputDecoration(labelText: 'popis'),
+                decoration: const InputDecoration(labelText: 'popis'),
               ),
-              Divider(),
+              const Divider(),
               Text("Hlavna kategoria: " + _mainCat.name),
               Text("Vedlajsia kategoria: " + (_subCat?.name ?? "---")),
-              Divider(),
+              const Divider(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Telemetria: "),
+                  const Text("Telemetria: "),
                   ElevatedButton.icon(
                     onPressed: () async {
-                      AssetTelemetry telemetryItem =
+                      AssetTelemetry? telemetryItem =
                           await showFormDialog(TelemetryPickerForm());
-                      widget.telemetry.add(telemetryItem);
+                      if (telemetryItem != null) {
+                        widget.telemetry.add(telemetryItem);
+                      }
                     },
-                    label: Text("Pridat"),
-                    icon: Icon(Icons.add),
+                    label: const Text("Pridat"),
+                    icon: const Icon(Icons.add),
                   )
                 ],
               ),
@@ -118,7 +107,7 @@ class ProductFormState extends State<ProductForm> {
                       return Card(
                         child: ListTile(
                           trailing: IconButton(
-                            icon: Icon(Icons.delete),
+                            icon: const Icon(Icons.delete),
                             onPressed: () {
                               widget.telemetry.removeAt(index);
                             },
@@ -142,23 +131,17 @@ class ProductFormState extends State<ProductForm> {
                 onPressed: () {
                   Get.back();
                 },
-                child: Text("zrušiť")),
+                child: const Text("zrušiť")),
             ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState?.save();
-                    if (widget.editItem != null) {
-                      Get.back();
-                      assetTypes.editType(
-                          widget.editItem!.id, name, description);
-                    } else {
-                      Get.back();
-                      assetTypes.createNewType(widget.parent.id, false,
-                          widget.telemetry, name, description);
-                    }
+                    Get.back();
+                    assetTypes.createNewType(widget.parent.id, false,
+                        widget.telemetry, name, description);
                   }
                 },
-                child: Text("uložiť")),
+                child: const Text("uložiť")),
           ],
         )
       ],

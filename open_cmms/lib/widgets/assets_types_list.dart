@@ -1,17 +1,14 @@
-import 'dart:js_util';
-
 import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:open_cmms/widgets/forms/asset_management/product_read_only.dart';
 
 import '../states/asset_types_state.dart';
-import '../states/asset_types_state_dummy.dart';
 import 'dialog_form.dart';
 import 'forms/asset_management/category_form.dart';
-import 'forms/asset_management/product_form.dart';
+import 'forms/asset_management/product_form_new.dart';
 
 class AssetsTypeList extends StatelessWidget {
-
   const AssetsTypeList({
     Key? key,
   }) : super(key: key);
@@ -19,30 +16,29 @@ class AssetsTypeList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AssetTypesState _assetTypes = Get.find();
-    return GetX<AssetTypesState>(
-        builder: (_) { var list =  _assetTypes.getData();
-          return list.isEmpty
-            ? const Expanded(
-                child: Center(
-                    child: Text(
-                "Žiadne komponenty",
-                textScaleFactor: 3,
-              )))
-            : Expanded(
-                child: Container(
-                  constraints: BoxConstraints(maxWidth: 900),
-                  child: ListView.builder(
-                      addRepaintBoundaries: true,
-                      padding: const EdgeInsets.all(8),
-                      itemCount: list.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return toListItem(list[index]);
-                      }),
-                ),
-              );});
+    return GetX<AssetTypesState>(builder: (_) {
+      var list = _assetTypes.getData();
+      return list.isEmpty
+          ? const Expanded(
+              child: Center(
+                  child: Text(
+              "Žiadne komponenty",
+              textScaleFactor: 3,
+            )))
+          : Expanded(
+              child: Container(
+                constraints: BoxConstraints(maxWidth: 900),
+                child: ListView.builder(
+                    addRepaintBoundaries: true,
+                    padding: const EdgeInsets.all(8),
+                    itemCount: list.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return toListItem(list[index]);
+                    }),
+              ),
+            );
+    });
   }
-
-
 
   Widget toListItem(element) {
     if (element is AssetCategorySchema) {
@@ -84,7 +80,7 @@ class AssetsTypeList extends StatelessWidget {
               child: Text("Pridať kategóriu")),
         ElevatedButton(
             onPressed: () {
-              showFormDialog(ProductForm.createNew(
+              showFormDialog(ProductFormNew(
                 parent: element,
               ));
             },
@@ -96,8 +92,8 @@ class AssetsTypeList extends StatelessWidget {
   ListTile buildProductTile(AssetSchema element) {
     return ListTile(
       onTap: () {
-        showFormDialog(ProductForm.editItem(
-          editItem: element,
+        showFormDialog(ProductFormReadOnly(
+          item: element,
         ));
       },
       hoverColor: Colors.blue.shade200,
