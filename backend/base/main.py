@@ -66,13 +66,12 @@ def add_transconder(t: Transcoding):
             for x in service.mappers.values():
                 x.transcoder.register(t)
 
-
+os.chdir(os.path.dirname(__file__) + '/../')
 proc = subprocess.Popen(["alembic upgrade head"], stdout=subprocess.PIPE, shell=True)
 (out, err) = proc.communicate()
 print("program output:", out)
 print("program error:", err)
 
-os.chdir(os.path.dirname(__file__) + '/../')
 if os.system('alembic upgrade head') != 0:
     print("ALEMBIC FAIL")
     # temporally solution until proper loging is done (sleep -> ability to see logs in docker logs)
