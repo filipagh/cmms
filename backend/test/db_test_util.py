@@ -1,4 +1,5 @@
 import os
+from time import sleep
 
 import alembic.config
 from sqlalchemy_utils import drop_database, create_database
@@ -19,7 +20,7 @@ def db_app_setup():
         'upgrade', 'head',
     ]
     alembic.config.main(argv=alembicArgs)
-
+    sleep(4)
     close_sessions()
 
     import_settings()
