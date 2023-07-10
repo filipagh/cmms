@@ -25,6 +25,8 @@ services:
       POSTGRES_DB: "cmms"
     networks:
       - common-net
+    tmpfs:
+      - /pgtmpfs
   postgres-eventstore:
     container_name: postgres-eventstore
     image: postgres:14.1-alpine
