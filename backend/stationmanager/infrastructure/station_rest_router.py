@@ -74,3 +74,16 @@ def get_all(
     for i in stations:
         col.append(schema.StationSchema(**i.__dict__))
     return col
+
+
+@station_router.get("/stations_public",
+                    response_model=list[schema.StationPublicSchema])
+def get_all(
+        road_segment_id: uuid.UUID
+):
+    projector = main.runner.get(StationProjector)
+    col = []
+    stations = projector.get_all(active_only=True, segment_id=road_segment_id)
+    for i in stations:
+        col.append(schema.StationPublicSchema(**i.__dict__))
+    return col

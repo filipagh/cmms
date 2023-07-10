@@ -1,5 +1,4 @@
 import uuid
-from typing import Optional
 
 from fastapi import APIRouter, Depends
 from fief_client import FiefUserInfo
@@ -7,7 +6,7 @@ from starlette.responses import PlainTextResponse
 
 from base.auth_def import read_permission, custom_auth, write_permission
 from taskmanager.application.issue_service import IssueService
-from taskmanager.application.model.issue.schema import IssueSchema
+from taskmanager.application.model.issue.schema import IssueSchema, IssueNewSchema
 
 issue_router = APIRouter(
     prefix="/issues",
@@ -18,11 +17,8 @@ issue_router = APIRouter(
 
 @issue_router.post("/",
                    response_class=PlainTextResponse)
-def create(
-        subject: str, description: str, user: str, station_id: Optional[str] = None,
-        component_id: Optional[str] = None):
-    _id = IssueService().create_issue(subject=subject, description=description, user=user, station_id=station_id,
-                                      component_id=component_id)
+def create(issue: IssueNewSchema):
+    _id = IssueService().create_issue(new_issue=issue)
     return str(_id)
 
 

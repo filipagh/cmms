@@ -14,6 +14,7 @@ class StationSchemaBASE(BaseModel):
     see_level: Optional[int]
     description: str
 
+
 class StationNewSchema(StationSchemaBASE):
     pass
 
@@ -25,3 +26,10 @@ class StationIdSchema(BaseModel):
 class StationSchema(StationIdSchema, StationSchemaBASE):
     legacy_ids: str
     is_active: bool
+
+
+class StationPublicSchema(BaseModel):
+    name: str
+    road_segment_id: uuid.UUID
+    id: uuid.UUID
+    km_of_road: Optional[float]
