@@ -17,7 +17,8 @@ All URIs are relative to *http://localhost*
 
 
 # **createIssuesPost**
-> String createIssuesPost(subject, description, user, stationId, componentId)
+
+> String createIssuesPost(issueNewSchema)
 
 Create
 
@@ -26,14 +27,10 @@ Create
 import 'package:BackendAPI/api.dart';
 
 final api_instance = IssuesApi();
-final subject = subject_example; // String | 
-final description = description_example; // String | 
-final user = user_example; // String | 
-final stationId = stationId_example; // String | 
-final componentId = componentId_example; // String | 
+final issueNewSchema = IssueNewSchema(); // IssueNewSchema | 
 
 try {
-    final result = api_instance.createIssuesPost(subject, description, user, stationId, componentId);
+    final result = api_instance.createIssuesPost(issueNewSchema);
     print(result);
 } catch (e) {
     print('Exception when calling IssuesApi->createIssuesPost: $e\n');
@@ -42,13 +39,9 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **subject** | **String**|  | 
- **description** | **String**|  | 
- **user** | **String**|  | 
- **stationId** | **String**|  | [optional] 
- **componentId** | **String**|  | [optional] 
+ Name               | Type                                    | Description | Notes 
+--------------------|-----------------------------------------|-------------|-------
+ **issueNewSchema** | [**IssueNewSchema**](IssueNewSchema.md) |             |
 
 ### Return type
 
@@ -60,8 +53,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: text/plain, application/json
+- **Content-Type**: application/json
+- **Accept**: text/plain, application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

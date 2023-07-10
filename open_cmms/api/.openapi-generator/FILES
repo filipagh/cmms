@@ -24,6 +24,7 @@ doc/AssignedComponentsApi.md
 doc/AuthApi.md
 doc/DefaultApi.md
 doc/HTTPValidationError.md
+doc/IssueNewSchema.md
 doc/IssueSchema.md
 doc/IssuesApi.md
 doc/RedmineApi.md
@@ -47,6 +48,7 @@ doc/SettingsEnum.md
 doc/StationApi.md
 doc/StationIdSchema.md
 doc/StationNewSchema.md
+doc/StationPublicSchema.md
 doc/StationSchema.md
 doc/StorageItemSchema.md
 doc/StorageManagerApi.md
@@ -110,6 +112,7 @@ lib/model/assigned_component_new_schema.dart
 lib/model/assigned_component_schema.dart
 lib/model/assigned_component_state.dart
 lib/model/http_validation_error.dart
+lib/model/issue_new_schema.dart
 lib/model/issue_schema.dart
 lib/model/redmine_auth_response_schema.dart
 lib/model/redmine_auth_schema.dart
@@ -128,6 +131,7 @@ lib/model/setting_schema.dart
 lib/model/settings_enum.dart
 lib/model/station_id_schema.dart
 lib/model/station_new_schema.dart
+lib/model/station_public_schema.dart
 lib/model/station_schema.dart
 lib/model/storage_item_schema.dart
 lib/model/task_change_component_request_completed.dart
@@ -147,3 +151,5 @@ lib/model/telemetry_options.dart
 lib/model/user_schema.dart
 lib/model/validation_error.dart
 pubspec.yaml
+test/issue_new_schema_test.dart
+test/station_public_schema_test.dart

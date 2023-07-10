@@ -224,6 +224,8 @@ class ApiClient {
           return AssignedComponentStateTypeTransformer().decode(value);
         case 'HTTPValidationError':
           return HTTPValidationError.fromJson(value);
+        case 'IssueNewSchema':
+          return IssueNewSchema.fromJson(value);
         case 'IssueSchema':
           return IssueSchema.fromJson(value);
         case 'RedmineAuthResponseSchema':
@@ -260,6 +262,8 @@ class ApiClient {
           return StationIdSchema.fromJson(value);
         case 'StationNewSchema':
           return StationNewSchema.fromJson(value);
+        case 'StationPublicSchema':
+          return StationPublicSchema.fromJson(value);
         case 'StationSchema':
           return StationSchema.fromJson(value);
         case 'StorageItemSchema':

@@ -95,6 +95,7 @@ All URIs are relative to *http://localhost*
  *RedmineApi*            | [**loadRedmineTaskIdLoadGet**](doc//RedmineApi.md#loadredminetaskidloadget)                                                                                                                             | **GET** /redmine/{task_id}/load                                | Load                                 
  *RedmineApi*            | [**removeIntegrationRedmineSetupDelete**](doc//RedmineApi.md#removeintegrationredminesetupdelete)                                                                                                       | **DELETE** /redmine/setup                                      | Remove Integration                   
  *RoadSegmentManagerApi* | [**createRoadSegmentRoadSegmentManagerCreateRoadSegmentPost**](doc//RoadSegmentManagerApi.md#createroadsegmentroadsegmentmanagercreateroadsegmentpost)                                                  | **POST** /road-segment-manager/create_road_segment             | Create Road Segment                  
+ *RoadSegmentManagerApi* | [**getAllPublicRoadSegmentManagerSegmentsPublicGet**](doc//RoadSegmentManagerApi.md#getallpublicroadsegmentmanagersegmentspublicget)                                                                    | **GET** /road-segment-manager/segments_public                  | Get All Public                       
  *RoadSegmentManagerApi* | [**getAllRoadSegmentManagerSegmentsGet**](doc//RoadSegmentManagerApi.md#getallroadsegmentmanagersegmentsget)                                                                                            | **GET** /road-segment-manager/segments                         | Get All                              
  *RoadSegmentManagerApi* | [**getByIdRoadSegmentManagerSegmentGet**](doc//RoadSegmentManagerApi.md#getbyidroadsegmentmanagersegmentget)                                                                                            | **GET** /road-segment-manager/segment                          | Get By Id                            
  *RoadSegmentManagerApi* | [**removeSegmentRoadSegmentManagerRemoveSegmentDelete**](doc//RoadSegmentManagerApi.md#removesegmentroadsegmentmanagerremovesegmentdelete)                                                              | **DELETE** /road-segment-manager/remove_segment                | Remove Segment                       
@@ -107,6 +108,7 @@ All URIs are relative to *http://localhost*
  *StationApi*            | [**createStationStationCreateStationPost**](doc//StationApi.md#createstationstationcreatestationpost)                                                                                                   | **POST** /station/create_station                               | Create Station                       
  *StationApi*            | [**exportStationStationExportXslGet**](doc//StationApi.md#exportstationstationexportxslget)                                                                                                             | **GET** /station/station/export_xsl                            | Export                               
  *StationApi*            | [**getAllStationStationsGet**](doc//StationApi.md#getallstationstationsget)                                                                                                                             | **GET** /station/stations                                      | Get All                              
+ *StationApi*            | [**getAllStationStationsPublicGet**](doc//StationApi.md#getallstationstationspublicget)                                                                                                                 | **GET** /station/stations_public                               | Get All                              
  *StationApi*            | [**getByIdStationStationGet**](doc//StationApi.md#getbyidstationstationget)                                                                                                                             | **GET** /station/station                                       | Get By Id                            
  *StationApi*            | [**removeStationStationRemoveStationDelete**](doc//StationApi.md#removestationstationremovestationdelete)                                                                                               | **DELETE** /station/remove_station                             | Remove Station                       
  *StorageManagerApi*     | [**getAllStorageItemsStorageManagerAllStorageDataGet**](doc//StorageManagerApi.md#getallstorageitemsstoragemanagerallstoragedataget)                                                                    | **GET** /storage-manager/all-storage-data                      | Get All Storage Items                
@@ -150,8 +152,9 @@ All URIs are relative to *http://localhost*
  - [AssignedComponentNewSchema](doc//AssignedComponentNewSchema.md)
  - [AssignedComponentSchema](doc//AssignedComponentSchema.md)
  - [AssignedComponentState](doc//AssignedComponentState.md)
- - [HTTPValidationError](doc//HTTPValidationError.md)
- - [IssueSchema](doc//IssueSchema.md)
+- [HTTPValidationError](doc//HTTPValidationError.md)
+- [IssueNewSchema](doc//IssueNewSchema.md)
+- [IssueSchema](doc//IssueSchema.md)
  - [RedmineAuthResponseSchema](doc//RedmineAuthResponseSchema.md)
  - [RedmineAuthSchema](doc//RedmineAuthSchema.md)
  - [RedmineCommentDataSchema](doc//RedmineCommentDataSchema.md)
@@ -168,8 +171,9 @@ All URIs are relative to *http://localhost*
  - [SettingSchema](doc//SettingSchema.md)
  - [SettingsEnum](doc//SettingsEnum.md)
  - [StationIdSchema](doc//StationIdSchema.md)
- - [StationNewSchema](doc//StationNewSchema.md)
- - [StationSchema](doc//StationSchema.md)
+- [StationNewSchema](doc//StationNewSchema.md)
+- [StationPublicSchema](doc//StationPublicSchema.md)
+- [StationSchema](doc//StationSchema.md)
  - [StorageItemSchema](doc//StorageItemSchema.md)
  - [TaskChangeComponentRequestCompleted](doc//TaskChangeComponentRequestCompleted.md)
  - [TaskChangeComponentsNewSchema](doc//TaskChangeComponentsNewSchema.md)
