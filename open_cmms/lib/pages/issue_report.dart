@@ -1,7 +1,11 @@
+import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/service/backend_api/issues_service.dart';
+import 'package:open_cmms/service/backend_api/station_service.dart';
+import 'package:open_cmms/snacbars.dart';
+
+import '../service/backend_api/RoadSegmentManager.dart';
 
 class IssueReportPage extends StatelessWidget {
   static const ENDPOINT = "/issue_report";
@@ -10,29 +14,55 @@ class IssueReportPage extends StatelessWidget {
   final Rxn<String> issueId = Rxn<String>();
   var subject = "";
   var description = "";
-  var email = "";
+  var username = "";
+  final Rxn<String> selectedStation = Rxn<String>();
+  final Rxn<String> selectedSegment = Rxn<String>();
   var _key = GlobalKey<FormState>();
+
+  RxList<RoadSegmentSchema> roadSegments = <RoadSegmentSchema>[].obs;
+  RxList<StationPublicSchema> stations = <StationPublicSchema>[].obs;
 
   @override
   Widget build(BuildContext context) {
+    RoadSegmentService()
+        .getAllPublicRoadSegmentManagerSegmentsPublicGet()
+        .then((value) {
+      roadSegments.value = value ?? [];
+      roadSegments.refresh();
+    });
+
     return Scaffold(
-      body: Center(
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.black,
-              width: 2,
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Text("Ohlasovanie porúch meteostaníc",
+                    style: TextStyle(fontSize: 30))
+              ],
             ),
           ),
-          width: 600,
-          padding: const EdgeInsets.all(20),
-          child: Obx(() {
-            if (issueId.value != null) {
-              return buildSuccesSendIssue();
-            }
-            return buildIssueForm();
-          }),
-        ),
+          Center(
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.black,
+                  width: 2,
+                ),
+              ),
+              width: 600,
+              padding: const EdgeInsets.all(20),
+              child: Obx(() {
+                if (issueId.value != null) {
+                  return buildSuccesSendIssue();
+                }
+                return buildIssueForm();
+              }),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -52,11 +82,54 @@ class IssueReportPage extends StatelessWidget {
       key: _key,
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const Text(
               "Formulár na nahlásenie problému meteorologickych staníc Spinet"),
           const Divider(),
+          Obx(
+            () {
+              return DropdownButton<String>(
+                value: selectedSegment.value,
+                hint: const Text("Vyberte cestny usek"),
+                onChanged: (value) {
+                  if (selectedSegment.value == value) {
+                    return;
+                  }
+                  selectedSegment.value = value;
+                  selectedStation.value = null;
+                  StationService()
+                      .getAllPublicStationStationsPublicGet(
+                          selectedSegment.value!)
+                      .then((value) => stations.value = value ?? []);
+                },
+                items: roadSegments.map((element) {
+                  return DropdownMenuItem(
+                      value: element.id, child: Text(element.name));
+                }).toList(),
+              );
+            },
+          ),
+          Obx(
+            () {
+              return DropdownButton<String>(
+                hint: const Text("Vyberte stanicu"),
+                value: selectedStation.value,
+                // hintText: "Vyberte cestny usek",
+                onChanged: (value) {
+                  selectedStation.value = value;
+                },
+                items: stations.map((element) {
+                  return DropdownMenuItem(
+                      value: element.id,
+                      child: Text(element.name +
+                          " -  " +
+                          element.kmOfRoad.toString() +
+                          " km"));
+                }).toList(),
+              );
+            },
+          ),
           TextFormField(
             onSaved: (value) {
               subject = value!;
@@ -68,7 +141,7 @@ class IssueReportPage extends StatelessWidget {
               return null;
             },
             decoration: const InputDecoration(
-              labelText: "Názov",
+              labelText: "Predmet problému",
             ),
           ),
           TextFormField(
@@ -83,27 +156,22 @@ class IssueReportPage extends StatelessWidget {
             },
             maxLines: 5,
             decoration: const InputDecoration(
-              labelText: "Popis",
+              labelText: "Popis problému",
             ),
           ),
           TextFormField(
             onSaved: (value) {
-              email = value!;
+              username = value!;
             },
             validator: (value) {
-              final emailRegex = RegExp(
-                  r'^[\w-]+(\.[\w-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,})$');
-
               if (value == null || value.isEmpty) {
-                return "Prosím vyplňte platný email";
-              } else if (!emailRegex.hasMatch(value)) {
-                return "Prosím vyplňte platný email";
+                return "Prosím vyplňte meno";
               }
 
               return null;
             },
             decoration: const InputDecoration(
-              labelText: "Email",
+              labelText: "Meno a priezvisko",
             ),
           ),
           Padding(
@@ -113,9 +181,19 @@ class IssueReportPage extends StatelessWidget {
                 if (!_key.currentState!.validate()) {
                   return;
                 }
+                if (selectedStation.value == null ||
+                    selectedSegment.value == null) {
+                  showError("Prosím vyberte cestný úsek a stanicu");
+                  return;
+                }
                 _key.currentState!.save();
                 IssuesService()
-                    .createIssuesPost(subject, description, email)
+                    .createIssuesPost(IssueNewSchema(
+                        username: username,
+                        subject: subject,
+                        description: description,
+                        stationId: selectedStation.value!,
+                        roadSegmentId: selectedSegment.value!))
                     .then((value) => issueId.value = value);
               },
               child: const Text("Odoslať"),

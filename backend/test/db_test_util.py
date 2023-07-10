@@ -19,8 +19,10 @@ def db_app_setup():
         'upgrade', 'head',
     ]
     alembic.config.main(argv=alembicArgs)
-
-    close_sessions()
+    try:
+        close_sessions()
+    except:
+        pass
 
     import_settings()
 def db_app_clean():

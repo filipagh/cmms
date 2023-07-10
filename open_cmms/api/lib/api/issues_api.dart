@@ -22,38 +22,21 @@ class IssuesApi {
   ///
   /// Parameters:
   ///
-  /// * [String] subject (required):
-  ///
-  /// * [String] description (required):
-  ///
-  /// * [String] user (required):
-  ///
-  /// * [String] stationId:
-  ///
-  /// * [String] componentId:
-  Future<Response> createIssuesPostWithHttpInfo(String subject, String description, String user, { String? stationId, String? componentId, }) async {
+  /// * [IssueNewSchema] issueNewSchema (required):
+  Future<Response> createIssuesPostWithHttpInfo(
+    IssueNewSchema issueNewSchema,
+  ) async {
     // ignore: prefer_const_declarations
     final path = r'/issues/';
 
     // ignore: prefer_final_locals
-    Object? postBody;
+    Object? postBody = issueNewSchema;
 
     final queryParams = <QueryParam>[];
     final headerParams = <String, String>{};
     final formParams = <String, String>{};
 
-      queryParams.addAll(_queryParams('', 'subject', subject));
-      queryParams.addAll(_queryParams('', 'description', description));
-      queryParams.addAll(_queryParams('', 'user', user));
-    if (stationId != null) {
-      queryParams.addAll(_queryParams('', 'station_id', stationId));
-    }
-    if (componentId != null) {
-      queryParams.addAll(_queryParams('', 'component_id', componentId));
-    }
-
-    const contentTypes = <String>[];
-
+    const contentTypes = <String>['application/json'];
 
     return apiClient.invokeAPI(
       path,
@@ -70,25 +53,25 @@ class IssuesApi {
   ///
   /// Parameters:
   ///
-  /// * [String] subject (required):
-  ///
-  /// * [String] description (required):
-  ///
-  /// * [String] user (required):
-  ///
-  /// * [String] stationId:
-  ///
-  /// * [String] componentId:
-  Future<String?> createIssuesPost(String subject, String description, String user, { String? stationId, String? componentId, }) async {
-    final response = await createIssuesPostWithHttpInfo(subject, description, user,  stationId: stationId, componentId: componentId, );
+  /// * [IssueNewSchema] issueNewSchema (required):
+  Future<String?> createIssuesPost(
+    IssueNewSchema issueNewSchema,
+  ) async {
+    final response = await createIssuesPostWithHttpInfo(
+      issueNewSchema,
+    );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
     // When a remote server returns no body with a status of 204, we shall not decode it.
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'String',) as String;
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(
+        await _decodeBodyBytes(response),
+        'String',
+      ) as String;
     }
     return null;
   }

@@ -1,7 +1,6 @@
 import 'package:BackendAPI/api.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/pages/station/station_base_page.dart';
 import 'package:open_cmms/pages/station/station_info_page.dart';
@@ -26,16 +25,16 @@ class IssuesPage extends StatelessWidget {
 
     return Scaffold(
       appBar: CustomAppBar(
-        pageText: Text("Nahlásené chyby"),
+        pageText: const Text("Nahlásené chyby"),
       ),
       body: Row(children: [
         MainMenuWidget(),
-        VerticalDivider(),
+        const VerticalDivider(),
         Obx(() {
           return Expanded(
             child: Column(
               children: [
-                Padding(padding: const EdgeInsets.only(top: 10)),
+                const Padding(padding: EdgeInsets.only(top: 10)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -54,15 +53,19 @@ class IssuesPage extends StatelessWidget {
                             "zmazať všetky automaticky nahlasené chyby")),
                   ],
                 ),
-                Divider(),
+                const Divider(),
                 Expanded(
                   child: ListView(
                       children: (issueId.value?.map<ExpansionTile>((element) {
                             return ExpansionTile(
-                                leading: element.stationId != null
-                                    ? Icon(Icons.bug_report)
-                                    : Icon(Icons.person),
-                                title: Text(element.subject),
+                                leading: element.isExternal
+                                    ? const Icon(Icons.person)
+                                    : const Icon(Icons.bug_report),
+                                title: Text(element.subject +
+                                    " - " +
+                                    element.stationName +
+                                    " - " +
+                                    element.roadSegmentName),
                                 subtitle: Text(element.createdOn
                                     .toString()
                                     .substring(0, 19)),
@@ -78,7 +81,8 @@ class IssuesPage extends StatelessWidget {
                                             children: [
                                               SelectableText(
                                                   "popis : ${element.description}"),
-                                              Text("autor : ${element.user}"),
+                                              Text(
+                                                  "autor : ${element.username}"),
                                               RichText(
                                                   text: TextSpan(
                                                 text: "stanica : ",
@@ -91,7 +95,11 @@ class IssuesPage extends StatelessWidget {
                                                                 "/${element.stationId}" +
                                                                 StationInfoPage
                                                                     .ENDPOINT),
-                                                      text: element.stationId,
+                                                      text: element
+                                                              .stationName +
+                                                          " - " +
+                                                          element
+                                                              .roadSegmentName,
                                                       style: const TextStyle(
                                                           color: Colors.blue,
                                                           decoration:
@@ -99,8 +107,6 @@ class IssuesPage extends StatelessWidget {
                                                                   .underline))
                                                 ],
                                               )),
-                                              Text(
-                                                  "komponent : ${element.componentId}"),
                                             ],
                                           ),
                                         ),
@@ -119,11 +125,12 @@ class IssuesPage extends StatelessWidget {
                                                   loadIssues();
                                                 });
                                               },
-                                              child: Text("zrušiť"),
+                                              child: const Text("zrušiť"),
                                               style: ElevatedButton.styleFrom(
-                                                  primary: Colors.red),
+                                                  backgroundColor: Colors.red),
                                             ),
-                                            Padding(padding: EdgeInsets.all(5)),
+                                            const Padding(
+                                                padding: EdgeInsets.all(5)),
                                             ElevatedButton(
                                                 onPressed: () async {
                                                   StationSchema station =
@@ -132,7 +139,8 @@ class IssuesPage extends StatelessWidget {
                                                   showFormDialog(CreateTaskForm(
                                                       station: station));
                                                 },
-                                                child: Text("vytvoriť ulohu"))
+                                                child: const Text(
+                                                    "vytvoriť ulohu"))
                                           ],
                                         ),
                                       ])

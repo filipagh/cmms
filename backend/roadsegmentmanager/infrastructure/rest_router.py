@@ -49,3 +49,13 @@ def remove_segment(segment_id: schema.RoadSegmentIdSchema,
     segment_service = main.runner.get(RoadSegmentService)
     segment_service.remove_road_segment(segment_id)
     return "OK"
+
+
+@road_segment_manager.get("/segments_public",
+                          response_model=list[schema.RoadSegmentSchema])
+def get_all_public():
+    segment_projector: RoadSegmentProjector = main.runner.get(RoadSegmentProjector)
+    col = []
+    for i in segment_projector.get_all(True):
+        col.append(schema.RoadSegmentSchema(**i.__dict__))
+    return col

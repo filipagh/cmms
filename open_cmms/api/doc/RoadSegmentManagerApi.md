@@ -10,6 +10,7 @@ All URIs are relative to *http://localhost*
  Method                                                                                                                                            | HTTP request                                       | Description         
 ---------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------|---------------------
  [**createRoadSegmentRoadSegmentManagerCreateRoadSegmentPost**](RoadSegmentManagerApi.md#createroadsegmentroadsegmentmanagercreateroadsegmentpost) | **POST** /road-segment-manager/create_road_segment | Create Road Segment 
+ [**getAllPublicRoadSegmentManagerSegmentsPublicGet**](RoadSegmentManagerApi.md#getallpublicroadsegmentmanagersegmentspublicget)                   | **GET** /road-segment-manager/segments_public      | Get All Public      
  [**getAllRoadSegmentManagerSegmentsGet**](RoadSegmentManagerApi.md#getallroadsegmentmanagersegmentsget)                                           | **GET** /road-segment-manager/segments             | Get All             
  [**getByIdRoadSegmentManagerSegmentGet**](RoadSegmentManagerApi.md#getbyidroadsegmentmanagersegmentget)                                           | **GET** /road-segment-manager/segment              | Get By Id           
  [**removeSegmentRoadSegmentManagerRemoveSegmentDelete**](RoadSegmentManagerApi.md#removesegmentroadsegmentmanagerremovesegmentdelete)             | **DELETE** /road-segment-manager/remove_segment    | Remove Segment      
@@ -61,8 +62,48 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: application/json
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getAllPublicRoadSegmentManagerSegmentsPublicGet**
+> List<RoadSegmentSchema> getAllPublicRoadSegmentManagerSegmentsPublicGet()
+
+Get All Public
+
+### Example
+
+```dart
+import 'package:BackendAPI/api.dart';
+
+final api_instance = RoadSegmentManagerApi();
+
+try {
+final result = api_instance.getAllPublicRoadSegmentManagerSegmentsPublicGet();
+print(result);
+} catch
+(
+e) {
+print('Exception when calling RoadSegmentManagerApi->getAllPublicRoadSegmentManagerSegmentsPublicGet: $e\n');
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**List<RoadSegmentSchema>**](RoadSegmentSchema.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -191,10 +232,12 @@ final api_instance = RoadSegmentManagerApi();
 final roadSegmentIdSchema = RoadSegmentIdSchema(); // RoadSegmentIdSchema | 
 
 try {
-    final result = api_instance.removeSegmentRoadSegmentManagerRemoveSegmentDelete(roadSegmentIdSchema);
-    print(result);
-} catch (e) {
-    print('Exception when calling RoadSegmentManagerApi->removeSegmentRoadSegmentManagerRemoveSegmentDelete: $e\n');
+final result = api_instance.removeSegmentRoadSegmentManagerRemoveSegmentDelete(roadSegmentIdSchema);
+print(result);
+} catch
+(
+e) {
+print('Exception when calling RoadSegmentManagerApi->removeSegmentRoadSegmentManagerRemoveSegmentDelete: $e\n');
 }
 ```
 

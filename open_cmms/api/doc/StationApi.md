@@ -11,6 +11,7 @@ All URIs are relative to *http://localhost*
 ------------------------------------------------------------------------------------------------------|-------------------------------------|----------------
  [**createStationStationCreateStationPost**](StationApi.md#createstationstationcreatestationpost)     | **POST** /station/create_station    | Create Station 
  [**exportStationStationExportXslGet**](StationApi.md#exportstationstationexportxslget)               | **GET** /station/station/export_xsl | Export         
+ [**getAllPublicStationStationsPublicGet**](StationApi.md#getallpublicstationstationspublicget)       | **GET** /station/stations_public    | Get All Public 
  [**getAllStationStationsGet**](StationApi.md#getallstationstationsget)                               | **GET** /station/stations           | Get All        
  [**getByIdStationStationGet**](StationApi.md#getbyidstationstationget)                               | **GET** /station/station            | Get By Id      
  [**removeStationStationRemoveStationDelete**](StationApi.md#removestationstationremovestationdelete) | **DELETE** /station/remove_station  | Remove Station 
@@ -68,13 +69,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **exportStationStationExportXslGet**
-
 > exportStationStationExportXslGet(segmentId)
 
 Export
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
@@ -92,9 +91,11 @@ final api_instance = StationApi();
 final segmentId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-    api_instance.exportStationStationExportXslGet(segmentId);
-} catch (e) {
-    print('Exception when calling StationApi->exportStationStationExportXslGet: $e\n');
+api_instance.exportStationStationExportXslGet(segmentId);
+} catch
+(
+e) {
+print('Exception when calling StationApi->exportStationStationExportXslGet: $e\n');
 }
 ```
 
@@ -119,6 +120,54 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **getAllPublicStationStationsPublicGet**
+
+> List<StationPublicSchema> getAllPublicStationStationsPublicGet(roadSegmentId)
+
+Get All Public
+
+### Example
+
+```dart
+import 'package:BackendAPI/api.dart';
+
+final api_instance = StationApi();
+final roadSegmentId = 38400000 - 8
+cf0-11
+bd-b23e-10
+b96e4ef00d; // String | 
+
+try {
+final result = api_instance.getAllPublicStationStationsPublicGet(roadSegmentId);
+print(result);
+} catch
+(
+e) {
+print('Exception when calling StationApi->getAllPublicStationStationsPublicGet: $e\n');
+}
+```
+
+### Parameters
+
+ Name              | Type       | Description | Notes 
+-------------------|------------|-------------|-------
+ **roadSegmentId** | **String** |             |
+
+### Return type
+
+[**List<StationPublicSchema>**](StationPublicSchema.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **getAllStationStationsGet**
 
 > List<StationSchema> getAllStationStationsGet(roadSegmentId, onlyActive)
@@ -126,7 +175,6 @@ void (empty response body)
 Get All
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
@@ -169,8 +217,8 @@ try {
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -194,13 +242,18 @@ import 'package:BackendAPI/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKeyPrefix = 'Bearer';
 
 final api_instance = StationApi();
-final stationId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
+final stationId = 38400000 - 8
+cf0-11
+bd-b23e-10
+b96e4ef00d; // String | 
 
 try {
-    final result = api_instance.getByIdStationStationGet(stationId);
-    print(result);
-} catch (e) {
-    print('Exception when calling StationApi->getByIdStationStationGet: $e\n');
+final result = api_instance.getByIdStationStationGet(stationId);
+print(result);
+} catch
+(
+e) {
+print('Exception when calling StationApi->getByIdStationStationGet: $e\n');
 }
 ```
 

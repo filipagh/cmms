@@ -218,16 +218,13 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getStationsWithoutContractExportServiceContractStationsWithoutContractExportXslGet**
-
 > getStationsWithoutContractExportServiceContractStationsWithoutContractExportXslGet()
 
 Get Stations Without Contract Export
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
-
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
 //defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
 // TODO Configure API key authorization: api_key
@@ -242,16 +239,13 @@ import 'package:BackendAPI/api.dart';
 final api_instance = ServiceContractApi();
 
 try {
-api_instance.getStationsWithoutContractExportServiceContractStationsWithoutContractExportXslGet();
-} catch
-(
-e) {
-print('Exception when calling ServiceContractApi->getStationsWithoutContractExportServiceContractStationsWithoutContractExportXslGet: $e\n');
+    api_instance.getStationsWithoutContractExportServiceContractStationsWithoutContractExportXslGet();
+} catch (e) {
+    print('Exception when calling ServiceContractApi->getStationsWithoutContractExportServiceContractStationsWithoutContractExportXslGet: $e\n');
 }
 ```
 
 ### Parameters
-
 This endpoint does not need any parameter.
 
 ### Return type
@@ -270,13 +264,11 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getStationsWithoutContractServiceContractStationsWithoutContractGet**
-
 > List<StationIdSchema> getStationsWithoutContractServiceContractStationsWithoutContractGet()
 
 Get Stations Without Contract
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer

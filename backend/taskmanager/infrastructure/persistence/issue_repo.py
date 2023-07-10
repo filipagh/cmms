@@ -16,10 +16,14 @@ class IssueModel(Base):
     subject = Column(String, nullable=False)
     description = Column(String, nullable=False)
     user = Column(String, nullable=False)
-    station_id = Column(String, nullable=True)
+    station_id = Column(postgresql.UUID(as_uuid=True), nullable=False)
+    station_name = Column(String, nullable=False)
+    road_segment_id = Column(postgresql.UUID(as_uuid=True), nullable=False)
+    road_segment_name = Column(String, nullable=False)
     component_id = Column(String, nullable=True)
     active = Column(postgresql.BOOLEAN, nullable=False, default=True)
     created_on = Column(postgresql.TIMESTAMP, nullable=False, default=datetime.utcnow)
+    is_external = Column(postgresql.BOOLEAN, nullable=False)
 
 
 def _get_db():
