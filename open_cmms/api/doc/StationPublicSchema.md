@@ -1,13 +1,11 @@
 # BackendAPI.model.StationPublicSchema
 
 ## Load the model package
-
 ```dart
 import 'package:BackendAPI/api.dart';
 ```
 
 ## Properties
-
  Name              | Type       | Description | Notes      
 -------------------|------------|-------------|------------
  **name**          | **String** |             |

@@ -78,7 +78,7 @@ def get_all(
 
 @station_router.get("/stations_public",
                     response_model=list[schema.StationPublicSchema])
-def get_all(
+def get_all_public(
         road_segment_id: uuid.UUID
 ):
     projector = main.runner.get(StationProjector)

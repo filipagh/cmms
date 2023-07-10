@@ -107,8 +107,8 @@ All URIs are relative to *http://localhost*
  *ServiceContractApi*    | [**getStationsWithoutContractServiceContractStationsWithoutContractGet**](doc//ServiceContractApi.md#getstationswithoutcontractservicecontractstationswithoutcontractget)                               | **GET** /service-contract/stations_without_contract            | Get Stations Without Contract        
  *StationApi*            | [**createStationStationCreateStationPost**](doc//StationApi.md#createstationstationcreatestationpost)                                                                                                   | **POST** /station/create_station                               | Create Station                       
  *StationApi*            | [**exportStationStationExportXslGet**](doc//StationApi.md#exportstationstationexportxslget)                                                                                                             | **GET** /station/station/export_xsl                            | Export                               
+ *StationApi*            | [**getAllPublicStationStationsPublicGet**](doc//StationApi.md#getallpublicstationstationspublicget)                                                                                                     | **GET** /station/stations_public                               | Get All Public                       
  *StationApi*            | [**getAllStationStationsGet**](doc//StationApi.md#getallstationstationsget)                                                                                                                             | **GET** /station/stations                                      | Get All                              
- *StationApi*            | [**getAllStationStationsPublicGet**](doc//StationApi.md#getallstationstationspublicget)                                                                                                                 | **GET** /station/stations_public                               | Get All                              
  *StationApi*            | [**getByIdStationStationGet**](doc//StationApi.md#getbyidstationstationget)                                                                                                                             | **GET** /station/station                                       | Get By Id                            
  *StationApi*            | [**removeStationStationRemoveStationDelete**](doc//StationApi.md#removestationstationremovestationdelete)                                                                                               | **DELETE** /station/remove_station                             | Remove Station                       
  *StorageManagerApi*     | [**getAllStorageItemsStorageManagerAllStorageDataGet**](doc//StorageManagerApi.md#getallstorageitemsstoragemanagerallstoragedataget)                                                                    | **GET** /storage-manager/all-storage-data                      | Get All Storage Items                
@@ -152,9 +152,9 @@ All URIs are relative to *http://localhost*
  - [AssignedComponentNewSchema](doc//AssignedComponentNewSchema.md)
  - [AssignedComponentSchema](doc//AssignedComponentSchema.md)
  - [AssignedComponentState](doc//AssignedComponentState.md)
-- [HTTPValidationError](doc//HTTPValidationError.md)
-- [IssueNewSchema](doc//IssueNewSchema.md)
-- [IssueSchema](doc//IssueSchema.md)
+ - [HTTPValidationError](doc//HTTPValidationError.md)
+ - [IssueNewSchema](doc//IssueNewSchema.md)
+ - [IssueSchema](doc//IssueSchema.md)
  - [RedmineAuthResponseSchema](doc//RedmineAuthResponseSchema.md)
  - [RedmineAuthSchema](doc//RedmineAuthSchema.md)
  - [RedmineCommentDataSchema](doc//RedmineCommentDataSchema.md)
@@ -171,9 +171,9 @@ All URIs are relative to *http://localhost*
  - [SettingSchema](doc//SettingSchema.md)
  - [SettingsEnum](doc//SettingsEnum.md)
  - [StationIdSchema](doc//StationIdSchema.md)
-- [StationNewSchema](doc//StationNewSchema.md)
-- [StationPublicSchema](doc//StationPublicSchema.md)
-- [StationSchema](doc//StationSchema.md)
+ - [StationNewSchema](doc//StationNewSchema.md)
+ - [StationPublicSchema](doc//StationPublicSchema.md)
+ - [StationSchema](doc//StationSchema.md)
  - [StorageItemSchema](doc//StorageItemSchema.md)
  - [TaskChangeComponentRequestCompleted](doc//TaskChangeComponentRequestCompleted.md)
  - [TaskChangeComponentsNewSchema](doc//TaskChangeComponentsNewSchema.md)

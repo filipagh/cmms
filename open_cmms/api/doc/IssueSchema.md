@@ -1,11 +1,13 @@
 # BackendAPI.model.IssueSchema
 
 ## Load the model package
+
 ```dart
 import 'package:BackendAPI/api.dart';
 ```
 
 ## Properties
+
  Name                | Type                        | Description | Notes 
 ---------------------|-----------------------------|-------------|-------
  **username**        | **String**                  |             |

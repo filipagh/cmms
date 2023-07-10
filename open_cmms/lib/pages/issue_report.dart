@@ -99,7 +99,8 @@ class IssueReportPage extends StatelessWidget {
                   selectedSegment.value = value;
                   selectedStation.value = null;
                   StationService()
-                      .getAllStationStationsPublicGet(selectedSegment.value!)
+                      .getAllPublicStationStationsPublicGet(
+                          selectedSegment.value!)
                       .then((value) => stations.value = value ?? []);
                 },
                 items: roadSegments.map((element) {

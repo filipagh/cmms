@@ -151,5 +151,3 @@ lib/model/telemetry_options.dart
 lib/model/user_schema.dart
 lib/model/validation_error.dart
 pubspec.yaml
-test/issue_new_schema_test.dart
-test/station_public_schema_test.dart

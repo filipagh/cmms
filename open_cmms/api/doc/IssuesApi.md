@@ -17,7 +17,6 @@ All URIs are relative to *http://localhost*
 
 
 # **createIssuesPost**
-
 > String createIssuesPost(issueNewSchema)
 
 Create
@@ -30,10 +29,12 @@ final api_instance = IssuesApi();
 final issueNewSchema = IssueNewSchema(); // IssueNewSchema | 
 
 try {
-    final result = api_instance.createIssuesPost(issueNewSchema);
-    print(result);
-} catch (e) {
-    print('Exception when calling IssuesApi->createIssuesPost: $e\n');
+final result = api_instance.createIssuesPost(issueNewSchema);
+print(result);
+} catch
+(
+e) {
+print('Exception when calling IssuesApi->createIssuesPost: $e\n');
 }
 ```
 

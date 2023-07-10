@@ -154,3 +154,4 @@ class IssueNewSchema {
     'road_segment_id',
   };
 }
+
