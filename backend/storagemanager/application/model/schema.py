@@ -20,3 +20,9 @@ class StorageItemSchema(StorageItemIdSchema):
 class AssetItemToAdd(BaseModel):
     storage_item_id: uuid.UUID
     count_to_add: int
+
+
+class StorageItemOverrideSchema(BaseModel):
+    reason: str
+    id: uuid.UUID
+    new_count: int
