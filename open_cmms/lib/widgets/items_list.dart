@@ -12,43 +12,43 @@ class ItemsList extends StatelessWidget {
   final AssetTypesState assets = Get.find();
 
   ItemsList({
+    required this.itemsList,
     Key? key,
   }) : super(key: key);
 
+  final List<StorageItemSchema> itemsList;
   final authService = Get.find<AuthState>();
   final items = Get.find<ItemsStorageState>();
 
   @override
   Widget build(BuildContext context) {
-    return GetX<ItemsStorageState>(builder: (_) {
-      List<_StorageItemList> list = [];
-      _.getItems().forEach((element) {
-        var asset = assets.getAssetById(element.assetId);
-        if (asset != null) {
-          list.add(_StorageItemList(asset, element));
-        }
-      });
+    List<_StorageItemList> list = [];
+    for (var element in itemsList) {
+      var asset = assets.getAssetById(element.assetId);
+      if (asset != null) {
+        list.add(_StorageItemList(asset, element));
+      }
+    }
 
-      list.sort((a, b) =>
-          a.asset.name.toLowerCase().compareTo(b.asset.name.toLowerCase()));
+    list.sort((a, b) =>
+        a.asset.name.toLowerCase().compareTo(b.asset.name.toLowerCase()));
 
-      return list.isEmpty
-          ? const Expanded(
-              child: Center(
-                  child: Text(
-              "Žiadne komponenty",
-              textScaleFactor: 3,
-            )))
-          : Expanded(
-              child: ListView.builder(
-                  addRepaintBoundaries: true,
-                  padding: const EdgeInsets.all(8),
-                  itemCount: list.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return buildStorageRow(list[index]);
-                  }),
-            );
-    });
+    return list.isEmpty
+        ? const Expanded(
+            child: Center(
+                child: Text(
+            "Žiadne komponenty",
+            textScaleFactor: 3,
+          )))
+        : Expanded(
+            child: ListView.builder(
+                addRepaintBoundaries: true,
+                padding: const EdgeInsets.all(8),
+                itemCount: list.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return buildStorageRow(list[index]);
+                }),
+          );
   }
 
   Widget buildStorageRow(_StorageItemList item) {
@@ -64,22 +64,21 @@ class ItemsList extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(assetSchema!.name),
-                    Spacer(),
+                    const Spacer(),
                     if (authService.isAdmin.isTrue) ...[
                       ElevatedButton(
                           onPressed: () {
                             showFormDialog(
                                     OverrideStorageItem(item.item, assetSchema))
                                 .then((value) {
-                              print("reload");
                               items.reloadData();
                             });
                           },
-                          child: Text("prepisať stav skladu")),
-                      VerticalDivider()
+                          child: const Text("prepísať stav skladu")),
+                      const VerticalDivider()
                     ],
                     Text("Na sklade: " + itemActual!.inStorage.toString()),
-                    VerticalDivider(),
+                    const VerticalDivider(),
                     Text("Rezervované: " + itemActual.allocated.toString()),
                     // VerticalDivider(),
                     // ElevatedButton(onPressed: (){_.addToStorage(productId);}, child: Text("add 1 to storage"))
