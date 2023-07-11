@@ -80,12 +80,10 @@ import 'package:BackendAPI/api.dart';
 final api_instance = RoadSegmentManagerApi();
 
 try {
-final result = api_instance.getAllPublicRoadSegmentManagerSegmentsPublicGet();
-print(result);
-} catch
-(
-e) {
-print('Exception when calling RoadSegmentManagerApi->getAllPublicRoadSegmentManagerSegmentsPublicGet: $e\n');
+    final result = api_instance.getAllPublicRoadSegmentManagerSegmentsPublicGet();
+    print(result);
+} catch (e) {
+    print('Exception when calling RoadSegmentManagerApi->getAllPublicRoadSegmentManagerSegmentsPublicGet: $e\n');
 }
 ```
 
@@ -232,12 +230,10 @@ final api_instance = RoadSegmentManagerApi();
 final roadSegmentIdSchema = RoadSegmentIdSchema(); // RoadSegmentIdSchema | 
 
 try {
-final result = api_instance.removeSegmentRoadSegmentManagerRemoveSegmentDelete(roadSegmentIdSchema);
-print(result);
-} catch
-(
-e) {
-print('Exception when calling RoadSegmentManagerApi->removeSegmentRoadSegmentManagerRemoveSegmentDelete: $e\n');
+    final result = api_instance.removeSegmentRoadSegmentManagerRemoveSegmentDelete(roadSegmentIdSchema);
+    print(result);
+} catch (e) {
+    print('Exception when calling RoadSegmentManagerApi->removeSegmentRoadSegmentManagerRemoveSegmentDelete: $e\n');
 }
 ```
 

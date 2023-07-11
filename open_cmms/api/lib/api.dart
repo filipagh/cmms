@@ -78,6 +78,7 @@ part 'model/station_id_schema.dart';
 part 'model/station_new_schema.dart';
 part 'model/station_public_schema.dart';
 part 'model/station_schema.dart';
+part 'model/storage_item_override_schema.dart';
 part 'model/storage_item_schema.dart';
 part 'model/task_change_component_request_completed.dart';
 part 'model/task_change_components_new_schema.dart';

@@ -50,6 +50,7 @@ doc/StationIdSchema.md
 doc/StationNewSchema.md
 doc/StationPublicSchema.md
 doc/StationSchema.md
+doc/StorageItemOverrideSchema.md
 doc/StorageItemSchema.md
 doc/StorageManagerApi.md
 doc/TaskChangeComponentRequestCompleted.md
@@ -133,6 +134,7 @@ lib/model/station_id_schema.dart
 lib/model/station_new_schema.dart
 lib/model/station_public_schema.dart
 lib/model/station_schema.dart
+lib/model/storage_item_override_schema.dart
 lib/model/storage_item_schema.dart
 lib/model/task_change_component_request_completed.dart
 lib/model/task_change_components_new_schema.dart
@@ -151,3 +153,4 @@ lib/model/telemetry_options.dart
 lib/model/user_schema.dart
 lib/model/validation_error.dart
 pubspec.yaml
+test/storage_item_override_schema_test.dart
