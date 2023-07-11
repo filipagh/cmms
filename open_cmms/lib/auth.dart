@@ -58,6 +58,7 @@ logout() {
         if (!hasToken()) {
           authState.isAuthenticated.value = false;
           authState.isVerified.value = false;
+          authState.isAdmin.value = false;
           Get.toNamed("/login");
         }
       }
