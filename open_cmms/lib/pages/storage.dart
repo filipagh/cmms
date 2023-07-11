@@ -19,6 +19,7 @@ class Storage extends StatefulWidget {
 
 class _StorageState extends State<Storage> {
   final ItemsStorageState items = Get.find();
+  final RxBool inStorageOnly = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -28,47 +29,74 @@ class _StorageState extends State<Storage> {
       body: Row(
         children: [
           MainMenuWidget(),
-          VerticalDivider(),
+          const VerticalDivider(),
           Expanded(
             child: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       "Sklad",
                       textScaleFactor: 5,
                     ),
-                    IconButton(onPressed: () {items.reloadData();}, icon: const Icon(Icons.refresh), iconSize: 50,)
+                    IconButton(
+                      onPressed: () {
+                        items.reloadData();
+                      },
+                      icon: const Icon(Icons.refresh),
+                      iconSize: 50,
+                    )
                   ],
                 ),
                 Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Container(
+                    const SizedBox(
                       width: 200,
-                      child: const TextField(
+                      child: TextField(
                         decoration: InputDecoration(
                           hintText: "Hľadať (WIP)",
                           enabled: false,
                         ),
                       ),
                     ),
-                    // Placeholder(
-                    //   child: SizedBox(width: 300, child: Text("Vyhľadávač")),
-                    // ),
-                    // Placeholder(
-                    //   child: Icon(Icons.filter_list_alt),
-                    // ),
-                    Spacer(),
+                    Obx(
+                      () => SizedBox(
+                        width: 200,
+                        child: CheckboxListTile(
+                            title: const Text("filtrovať naskladnené"),
+                            value: inStorageOnly.value,
+                            onChanged: (v) {
+                              inStorageOnly.value = v!;
+                            }),
+                      ),
+                    ),
+                    const Spacer(),
                     ElevatedButton(
                         onPressed: () {
                           showFormDialog(AddItemsToStorage());
                         },
-                        child: Text("Pridať do skladu"))
+                        child: const Text("Pridať do skladu"))
                   ],
                 ),
-                Divider(),
-                ItemsList(),
+                const Divider(),
+                GetX<ItemsStorageState>(
+                  builder: (_) {
+                    var list = _.getItems();
+                    return Obx(() {
+                      var filteredList = list;
+                      if (inStorageOnly.isTrue) {
+                        filteredList = list
+                            .where((element) => element.inStorage > 0)
+                            .toList();
+                      }
+                      return ItemsList(
+                        itemsList: filteredList,
+                      );
+                    });
+                  },
+                ),
               ],
             ),
           )
@@ -77,4 +105,3 @@ class _StorageState extends State<Storage> {
     );
   }
 }
-

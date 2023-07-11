@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends
 from fief_client import FiefUserInfo
+from starlette.responses import PlainTextResponse
 
 from base import main
-from base.auth_def import custom_auth, write_permission, read_permission
+from base.auth_def import custom_auth, write_permission, read_permission, admin_permission
 from storagemanager.application import storage_manager_loader
 from storagemanager.application.model import schema
 from storagemanager.application.storage_item_service import StorageItemService
@@ -30,3 +31,12 @@ def store_new_assets(assets_to_add: list[schema.AssetItemToAdd],
                      _user: FiefUserInfo = Depends(custom_auth(write_permission))):
     storage_service = main.runner.get(StorageItemService)
     return storage_service.add_to_storage(assets_to_add)
+
+
+@storage_manager.post("/store-item_override",
+                      response_class=PlainTextResponse)
+def store_item_override(override_item: schema.StorageItemOverrideSchema,
+                        _user: FiefUserInfo = Depends(custom_auth(admin_permission))):
+    storage_service = main.runner.get(StorageItemService)
+    storage_service.override_storage_item_count(override_item=override_item)
+    return "OK"

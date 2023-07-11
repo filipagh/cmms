@@ -6,7 +6,9 @@ from eventsourcing.dispatch import singledispatchmethod
 from eventsourcing.system import ProcessApplication
 
 from assetmanager.domain.model.asset import Asset
+from storagemanager.application.exceptions import AppStorageException
 from storagemanager.application.model import schema
+from storagemanager.application.model.schema import StorageItemOverrideSchema
 from storagemanager.domain.model.sotrageitem import StorageItem
 from storagemanager.infrastructure.persistance import storage_item_repo
 from taskmanager.domain.model.tasks.task_change_components import TaskChangeComponents
@@ -39,6 +41,16 @@ class StorageItemService(ProcessApplication):
             except eventsourcing.application.AggregateNotFound:
                 unresolved.append(i)
         return unresolved
+
+    def override_storage_item_count(self, override_item: StorageItemOverrideSchema):
+        try:
+            storage_item: StorageItem = self.repository.get(override_item.id)
+            storage_item.asset_count_override(override_item.new_count, override_item.reason)
+        except eventsourcing.application.AggregateNotFound:
+            raise AppStorageException("Storage item not found " + override_item.id.__str__())
+        except ValueError as e:
+            raise AppStorageException(e)
+        self.save(storage_item)
 
     @singledispatchmethod
     def policy(self, domain_event, process_event):

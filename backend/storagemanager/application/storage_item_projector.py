@@ -46,3 +46,10 @@ class StorageItemProjector(ProcessApplication):
         model.allocated -= domain_event.count
 
         storage_item_repo.save(model)
+
+    @policy.register(StorageItem.AssetCountOverriden)
+    def _(self, domain_event: StorageItem.AssetCountOverriden, process_event):
+        model: storage_item_repo.StorageItemModel = storage_item_repo.get_by_id(domain_event.originator_id)
+        model.in_storage = domain_event.new_count
+
+        storage_item_repo.save(model)

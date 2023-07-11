@@ -22,6 +22,23 @@
 
 [//]: # (---)
 
+## 10.7.23
+
+### novinky
+
+- pridana moznost prepisat stav skladu adminom
+- abecedne zoradeny sklad
+- moznost filtrovat sklad podla toho ci je komponent na sklade
+
+
+- upraveny fromular na nahlaseniechyb
+
+### oprava
+
+- oprava auth state sa nepremazal cely pri odhlaseni
+
+---
+
 ## 2.7.23
 
 ### novinky

@@ -196,12 +196,10 @@ final api_instance = TaskServiceOnSiteApi();
 final taskServiceOnSiteNewSchema = [List<TaskServiceOnSiteNewSchema>()]; // List<TaskServiceOnSiteNewSchema> | 
 
 try {
-final result = api_instance.createTaskServiceOnSiteCreateServiceOnSideTaskPost(taskServiceOnSiteNewSchema);
-print(result);
-} catch
-(
-e) {
-print('Exception when calling TaskServiceOnSiteApi->createTaskServiceOnSiteCreateServiceOnSideTaskPost: $e\n');
+    final result = api_instance.createTaskServiceOnSiteCreateServiceOnSideTaskPost(taskServiceOnSiteNewSchema);
+    print(result);
+} catch (e) {
+    print('Exception when calling TaskServiceOnSiteApi->createTaskServiceOnSiteCreateServiceOnSideTaskPost: $e\n');
 }
 ```
 

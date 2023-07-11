@@ -91,11 +91,9 @@ final api_instance = StationApi();
 final segmentId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-api_instance.exportStationStationExportXslGet(segmentId);
-} catch
-(
-e) {
-print('Exception when calling StationApi->exportStationStationExportXslGet: $e\n');
+    api_instance.exportStationStationExportXslGet(segmentId);
+} catch (e) {
+    print('Exception when calling StationApi->exportStationStationExportXslGet: $e\n');
 }
 ```
 
@@ -121,7 +119,6 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getAllPublicStationStationsPublicGet**
-
 > List<StationPublicSchema> getAllPublicStationStationsPublicGet(roadSegmentId)
 
 Get All Public
@@ -132,18 +129,13 @@ Get All Public
 import 'package:BackendAPI/api.dart';
 
 final api_instance = StationApi();
-final roadSegmentId = 38400000 - 8
-cf0-11
-bd-b23e-10
-b96e4ef00d; // String | 
+final roadSegmentId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-final result = api_instance.getAllPublicStationStationsPublicGet(roadSegmentId);
-print(result);
-} catch
-(
-e) {
-print('Exception when calling StationApi->getAllPublicStationStationsPublicGet: $e\n');
+    final result = api_instance.getAllPublicStationStationsPublicGet(roadSegmentId);
+    print(result);
+} catch (e) {
+    print('Exception when calling StationApi->getAllPublicStationStationsPublicGet: $e\n');
 }
 ```
 
@@ -169,7 +161,6 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getAllStationStationsGet**
-
 > List<StationSchema> getAllStationStationsGet(roadSegmentId, onlyActive)
 
 Get All
@@ -242,18 +233,13 @@ import 'package:BackendAPI/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKeyPrefix = 'Bearer';
 
 final api_instance = StationApi();
-final stationId = 38400000 - 8
-cf0-11
-bd-b23e-10
-b96e4ef00d; // String | 
+final stationId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-final result = api_instance.getByIdStationStationGet(stationId);
-print(result);
-} catch
-(
-e) {
-print('Exception when calling StationApi->getByIdStationStationGet: $e\n');
+    final result = api_instance.getByIdStationStationGet(stationId);
+    print(result);
+} catch (e) {
+    print('Exception when calling StationApi->getByIdStationStationGet: $e\n');
 }
 ```
 

@@ -112,6 +112,7 @@ All URIs are relative to *http://localhost*
  *StationApi*            | [**getByIdStationStationGet**](doc//StationApi.md#getbyidstationstationget)                                                                                                                             | **GET** /station/station                                       | Get By Id                            
  *StationApi*            | [**removeStationStationRemoveStationDelete**](doc//StationApi.md#removestationstationremovestationdelete)                                                                                               | **DELETE** /station/remove_station                             | Remove Station                       
  *StorageManagerApi*     | [**getAllStorageItemsStorageManagerAllStorageDataGet**](doc//StorageManagerApi.md#getallstorageitemsstoragemanagerallstoragedataget)                                                                    | **GET** /storage-manager/all-storage-data                      | Get All Storage Items                
+ *StorageManagerApi*     | [**storeItemOverrideStorageManagerStoreItemOverridePost**](doc//StorageManagerApi.md#storeitemoverridestoragemanagerstoreitemoverridepost)                                                              | **POST** /storage-manager/store-item_override                  | Store Item Override                  
  *StorageManagerApi*     | [**storeNewAssetsStorageManagerStoreNewAssetsPost**](doc//StorageManagerApi.md#storenewassetsstoragemanagerstorenewassetspost)                                                                          | **POST** /storage-manager/store-new-assets                     | Store New Assets                     
  *TaskManagerApi*        | [**allocateComponentsTaskManagerTaskIdAllocateComponentsGet**](doc//TaskManagerApi.md#allocatecomponentstaskmanagertaskidallocatecomponentsget)                                                         | **GET** /task-manager/{task_id}/allocate_components            | Allocate Components                  
  *TaskManagerApi*        | [**cancelTaskTaskManagerTaskIdDelete**](doc//TaskManagerApi.md#canceltasktaskmanagertaskiddelete)                                                                                                       | **DELETE** /task-manager/{task_id}                             | Cancel Task                          
@@ -173,8 +174,9 @@ All URIs are relative to *http://localhost*
  - [StationIdSchema](doc//StationIdSchema.md)
  - [StationNewSchema](doc//StationNewSchema.md)
  - [StationPublicSchema](doc//StationPublicSchema.md)
- - [StationSchema](doc//StationSchema.md)
- - [StorageItemSchema](doc//StorageItemSchema.md)
+- [StationSchema](doc//StationSchema.md)
+- [StorageItemOverrideSchema](doc//StorageItemOverrideSchema.md)
+- [StorageItemSchema](doc//StorageItemSchema.md)
  - [TaskChangeComponentRequestCompleted](doc//TaskChangeComponentRequestCompleted.md)
  - [TaskChangeComponentsNewSchema](doc//TaskChangeComponentsNewSchema.md)
  - [TaskChangeComponentsSchema](doc//TaskChangeComponentsSchema.md)
