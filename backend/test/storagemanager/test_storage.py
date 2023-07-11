@@ -1,4 +1,5 @@
 # example test
+import pytest
 
 import base.main
 from assetmanager.application import asset_category_service
@@ -10,10 +11,12 @@ from storagemanager.infrastructure import rest_router
 from test.db_test_util import db_app_setup, db_app_clean
 
 
+@pytest.fixture(scope="function", autouse=True)
 def setup():
     db_app_setup()
 
 
+@pytest.fixture(scope="function", autouse=True)
 def teardown():
     db_app_clean()
 
