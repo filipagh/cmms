@@ -85,13 +85,13 @@ class IssueReportPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           const Text(
-              "Formulár na nahlásenie problému meteorologickych staníc Spinet"),
+              "Formulár na nahlásenie problému meteorologických staníc Spinet"),
           const Divider(),
           Obx(
             () {
-              return DropdownButton<String>(
+              return DropdownButtonFormField<String>(
                 value: selectedSegment.value,
-                hint: const Text("Vyberte cestny usek"),
+                decoration: InputDecoration(labelText: 'Vyberte cestný úsek'),
                 onChanged: (value) {
                   if (selectedSegment.value == value) {
                     return;
@@ -105,15 +105,16 @@ class IssueReportPage extends StatelessWidget {
                 },
                 items: roadSegments.map((element) {
                   return DropdownMenuItem(
-                      value: element.id, child: Text(element.name));
+                      value: element.id,
+                      child: Text(element.name + " - ssud: " + element.ssud));
                 }).toList(),
               );
             },
           ),
           Obx(
             () {
-              return DropdownButton<String>(
-                hint: const Text("Vyberte stanicu"),
+              return DropdownButtonFormField<String>(
+                decoration: InputDecoration(labelText: 'Vyberte stanicu'),
                 value: selectedStation.value,
                 // hintText: "Vyberte cestny usek",
                 onChanged: (value) {
@@ -123,7 +124,7 @@ class IssueReportPage extends StatelessWidget {
                   return DropdownMenuItem(
                       value: element.id,
                       child: Text(element.name +
-                          " -  " +
+                          " - " +
                           element.kmOfRoad.toString() +
                           " km"));
                 }).toList(),
@@ -171,7 +172,7 @@ class IssueReportPage extends StatelessWidget {
               return null;
             },
             decoration: const InputDecoration(
-              labelText: "Meno a priezvisko",
+              labelText: "Meno a priezvisko nahlasovateľa",
             ),
           ),
           Padding(
