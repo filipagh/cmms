@@ -5,7 +5,10 @@ import 'package:open_cmms/widgets/dialog_form.dart';
 import '../../../states/asset_types_state.dart';
 
 class ComponentPickerForm extends StatelessWidget implements hasFormTitle {
-  const ComponentPickerForm({Key? key}) : super(key: key);
+  final bool hideArchivedAssets;
+
+  const ComponentPickerForm({Key? key, this.hideArchivedAssets = true})
+      : super(key: key);
 
   String getTitle() {
     return "Vybrat komponent";
@@ -20,6 +23,9 @@ class ComponentPickerForm extends StatelessWidget implements hasFormTitle {
   Widget build(BuildContext context) {
     AssetTypesState _assetTypes = Get.find();
     var items = _assetTypes.getAllProducts();
+    if (hideArchivedAssets) {
+      items = items.where((element) => element.isArchived == false).toList();
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -42,9 +48,12 @@ class ComponentPickerForm extends StatelessWidget implements hasFormTitle {
             itemBuilder: (BuildContext context, int index) {
               var i = items[index];
               return Card(
+                color: i.isArchived ? Colors.red.shade50 : null,
                 child: ListTile(
                   onTap: () => Get.back(result: i),
-                  title: Center(child: Text(i.name)),
+                  title: Center(
+                      child: Text(i.name +
+                          (i.isArchived == true ? " (archivované)" : ""))),
                   subtitle: Center(child: Text(i.description ?? "bez popisu")),
                 ),
               );

@@ -1,12 +1,14 @@
 from fastapi import APIRouter, Depends
 from fief_client import FiefUserInfo
+from starlette.responses import PlainTextResponse
 
 from assetmanager.application import asset_category_service, asset_manager_loader
+from assetmanager.application.asset_service import AssetService
 from assetmanager.application.model import schema
 from assetmanager.application.model.schema import TelemetryOptions
 from assetmanager.domain.model.asset_telemetry import AssetTelemetryType, AssetTelemetryValue
 from base import main
-from base.auth_def import write_permission, custom_auth, read_permission
+from base.auth_def import write_permission, custom_auth, read_permission, admin_permission
 
 asset_manager_router = APIRouter(
     prefix="/assetManager",
@@ -61,3 +63,10 @@ def get_telemetry_options(_user: FiefUserInfo = Depends(custom_auth(read_permiss
         types=[e for e in AssetTelemetryType],
         values=[e for e in AssetTelemetryValue]
     )
+
+
+@asset_manager_router.delete("/asset/{asset_id}", response_class=PlainTextResponse)
+def archive_asset(asset_id: str, _user: FiefUserInfo = Depends(custom_auth(admin_permission))):
+    asset_service = main.runner.get(AssetService)
+    asset_service.archive_asset(asset_id)
+    return "OK"

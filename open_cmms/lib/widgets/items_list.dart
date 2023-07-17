@@ -1,9 +1,9 @@
-import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 import 'package:open_cmms/widgets/forms/storage/override_storage_item.dart';
 
+import '../pages/storage.dart';
 import '../states/asset_types_state.dart';
 import '../states/auth_state.dart';
 import '../states/items_state.dart';
@@ -12,24 +12,16 @@ class ItemsList extends StatelessWidget {
   final AssetTypesState assets = Get.find();
 
   ItemsList({
-    required this.itemsList,
+    required this.list,
     Key? key,
   }) : super(key: key);
 
-  final List<StorageItemSchema> itemsList;
+  final List<StorageItemList> list;
   final authService = Get.find<AuthState>();
   final items = Get.find<ItemsStorageState>();
 
   @override
   Widget build(BuildContext context) {
-    List<_StorageItemList> list = [];
-    for (var element in itemsList) {
-      var asset = assets.getAssetById(element.assetId);
-      if (asset != null) {
-        list.add(_StorageItemList(asset, element));
-      }
-    }
-
     list.sort((a, b) =>
         a.asset.name.toLowerCase().compareTo(b.asset.name.toLowerCase()));
 
@@ -51,8 +43,9 @@ class ItemsList extends StatelessWidget {
           );
   }
 
-  Widget buildStorageRow(_StorageItemList item) {
+  Widget buildStorageRow(StorageItemList item) {
     return Card(
+      color: item.asset.isArchived ? Colors.red.shade100 : Colors.white,
       child: ListTile(
           hoverColor: Colors.blue.shade200,
           title: GetBuilder<ItemsStorageState>(
@@ -63,7 +56,8 @@ class ItemsList extends StatelessWidget {
               return IntrinsicHeight(
                 child: Row(
                   children: [
-                    Text(assetSchema!.name),
+                    Text(assetSchema!.name +
+                        (item.asset.isArchived ? " (archivované)" : "")),
                     const Spacer(),
                     if (authService.isAdmin.isTrue) ...[
                       ElevatedButton(
@@ -89,11 +83,4 @@ class ItemsList extends StatelessWidget {
           )),
     );
   }
-}
-
-class _StorageItemList {
-  final AssetSchema asset;
-  final StorageItemSchema item;
-
-  _StorageItemList(this.asset, this.item);
 }

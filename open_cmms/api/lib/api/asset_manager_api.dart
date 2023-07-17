@@ -12,9 +12,72 @@ part of openapi.api;
 
 
 class AssetManagerApi {
-  AssetManagerApi([ApiClient? apiClient]) : apiClient = apiClient ?? defaultApiClient;
+  AssetManagerApi([ApiClient? apiClient])
+      : apiClient = apiClient ?? defaultApiClient;
 
   final ApiClient apiClient;
+
+  /// Archive Asset
+  ///
+  /// Note: This method returns the HTTP [Response].
+  ///
+  /// Parameters:
+  ///
+  /// * [String] assetId (required):
+  Future<Response> archiveAssetAssetManagerAssetAssetIdDeleteWithHttpInfo(
+    String assetId,
+  ) async {
+    // ignore: prefer_const_declarations
+    final path =
+        r'/assetManager/asset/{asset_id}'.replaceAll('{asset_id}', assetId);
+
+    // ignore: prefer_final_locals
+    Object? postBody;
+
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
+
+    const contentTypes = <String>[];
+
+    return apiClient.invokeAPI(
+      path,
+      'DELETE',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      contentTypes.isEmpty ? null : contentTypes.first,
+    );
+  }
+
+  /// Archive Asset
+  ///
+  /// Parameters:
+  ///
+  /// * [String] assetId (required):
+  Future<String?> archiveAssetAssetManagerAssetAssetIdDelete(
+    String assetId,
+  ) async {
+    final response =
+        await archiveAssetAssetManagerAssetAssetIdDeleteWithHttpInfo(
+      assetId,
+    );
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(
+        await _decodeBodyBytes(response),
+        'String',
+      ) as String;
+    }
+    return null;
+  }
 
   /// Create New Asset
   ///
@@ -23,7 +86,9 @@ class AssetManagerApi {
   /// Parameters:
   ///
   /// * [AssetNewSchema] assetNewSchema (required):
-  Future<Response> createNewAssetAssetManagerNewAssetPostWithHttpInfo(AssetNewSchema assetNewSchema,) async {
+  Future<Response> createNewAssetAssetManagerNewAssetPostWithHttpInfo(
+    AssetNewSchema assetNewSchema,
+  ) async {
     // ignore: prefer_const_declarations
     final path = r'/assetManager/newAsset';
 
@@ -63,7 +128,7 @@ class AssetManagerApi {
     // FormatException when trying to decode an empty string.
     if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
       return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'AssetIdSchema',) as AssetIdSchema;
-    
+
     }
     return null;
   }
@@ -115,7 +180,7 @@ class AssetManagerApi {
     // FormatException when trying to decode an empty string.
     if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
       return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'AssetCategotyIdSchema',) as AssetCategotyIdSchema;
-    
+
     }
     return null;
   }
@@ -253,7 +318,7 @@ class AssetManagerApi {
     // FormatException when trying to decode an empty string.
     if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
       return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'TelemetryOptions',) as TelemetryOptions;
-    
+
     }
     return null;
   }

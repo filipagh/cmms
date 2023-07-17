@@ -99,7 +99,7 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/Storage',
           page: () {
-            return const Storage();
+            return Storage();
           },
           middlewares: [AuthGuard()],
         ),

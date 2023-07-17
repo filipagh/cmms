@@ -41,7 +41,7 @@ class AssetNewSchema(AssetBaseSchema):
 
 class AssetSchema(AssetBaseSchema):
     id: uuid.UUID
-    pass
+    is_archived: bool
 
 
 class TelemetryOptions(BaseModel):

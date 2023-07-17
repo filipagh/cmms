@@ -13,6 +13,9 @@ class Asset(Aggregate):
         description: str
         telemetry: list[AssetTelemetry]
 
+    class Archived(Aggregate.Event):
+        pass
+
     @event(Created)
     def __init__(self, asset_category_id: uuid.UUID, name: str, description: Optional[str],
                  telemetry: list[AssetTelemetry]):
@@ -20,7 +23,13 @@ class Asset(Aggregate):
         self.name: str = name
         self.description: str = description
         self.telemetry = telemetry
+        self.is_archived = False
 
-    # name: str
-    # description: str
-    # todo archive
+    def archive(self):
+        if self.is_archived:
+            return
+        self._archive()
+
+    @event(Archived)
+    def _archive(self):
+        self.is_archived = True

@@ -7,23 +7,79 @@ import 'package:BackendAPI/api.dart';
 
 All URIs are relative to *http://localhost*
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**createNewAssetAssetManagerNewAssetPost**](AssetManagerApi.md#createnewassetassetmanagernewassetpost) | **POST** /assetManager/newAsset | Create New Asset
-[**createNewCategoryAssetManagerNewCategoryPost**](AssetManagerApi.md#createnewcategoryassetmanagernewcategorypost) | **POST** /assetManager/newCategory | Create New Category
-[**getAssetCategoriesAssetManagerAssetCategoriesGet**](AssetManagerApi.md#getassetcategoriesassetmanagerassetcategoriesget) | **GET** /assetManager/asset-categories | Get Asset Categories
-[**getAssetsAssetManagerAssetsGet**](AssetManagerApi.md#getassetsassetmanagerassetsget) | **GET** /assetManager/assets | Get Assets
-[**getTelemetryOptionsAssetManagerTelemetryOptionsGet**](AssetManagerApi.md#gettelemetryoptionsassetmanagertelemetryoptionsget) | **GET** /assetManager/telemetry_options | Get Telemetry Options
+ Method                                                                                                                          | HTTP request                              | Description           
+---------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------|-----------------------
+ [**archiveAssetAssetManagerAssetAssetIdDelete**](AssetManagerApi.md#archiveassetassetmanagerassetassetiddelete)                 | **DELETE** /assetManager/asset/{asset_id} | Archive Asset         
+ [**createNewAssetAssetManagerNewAssetPost**](AssetManagerApi.md#createnewassetassetmanagernewassetpost)                         | **POST** /assetManager/newAsset           | Create New Asset      
+ [**createNewCategoryAssetManagerNewCategoryPost**](AssetManagerApi.md#createnewcategoryassetmanagernewcategorypost)             | **POST** /assetManager/newCategory        | Create New Category   
+ [**getAssetCategoriesAssetManagerAssetCategoriesGet**](AssetManagerApi.md#getassetcategoriesassetmanagerassetcategoriesget)     | **GET** /assetManager/asset-categories    | Get Asset Categories  
+ [**getAssetsAssetManagerAssetsGet**](AssetManagerApi.md#getassetsassetmanagerassetsget)                                         | **GET** /assetManager/assets              | Get Assets            
+ [**getTelemetryOptionsAssetManagerTelemetryOptionsGet**](AssetManagerApi.md#gettelemetryoptionsassetmanagertelemetryoptionsget) | **GET** /assetManager/telemetry_options   | Get Telemetry Options 
 
+# **archiveAssetAssetManagerAssetAssetIdDelete**
+
+> String archiveAssetAssetManagerAssetAssetIdDelete(assetId)
+
+Archive Asset
+
+### Example
+
+```dart
+import 'package:BackendAPI/api.dart';
+// TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
+//defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
+// TODO Configure API key authorization: api_key
+//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: user_session
+//defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKeyPrefix = 'Bearer';
+
+final api_instance = AssetManagerApi();
+final assetId = assetId_example; // String | 
+
+try {
+    final result = api_instance.archiveAssetAssetManagerAssetAssetIdDelete(assetId);
+    print(result);
+} catch (e) {
+    print('Exception when calling AssetManagerApi->archiveAssetAssetManagerAssetAssetIdDelete: $e\n');
+}
+```
+
+### Parameters
+
+ Name        | Type       | Description | Notes 
+-------------|------------|-------------|-------
+ **assetId** | **String** |             |
+
+### Return type
+
+**String**
+
+### Authorization
+
+[OAuth2AuthorizationCodeBearer](../README.md#OAuth2AuthorizationCodeBearer), [api_key](../README.md#api_key), [user_session](../README.md#user_session)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: text/plain, application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **createNewAssetAssetManagerNewAssetPost**
+
 > AssetIdSchema createNewAssetAssetManagerNewAssetPost(assetNewSchema)
 
 Create New Asset
 
 ### Example
+
 ```dart
 import 'package:BackendAPI/api.dart';
+
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
 //defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
 // TODO Configure API key authorization: api_key

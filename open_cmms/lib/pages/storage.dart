@@ -1,3 +1,4 @@
+import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/states/items_state.dart';
@@ -5,13 +6,16 @@ import 'package:open_cmms/widgets/dialog_form.dart';
 import 'package:open_cmms/widgets/forms/storage/add_items_to_storage.dart';
 import 'package:open_cmms/widgets/items_list.dart';
 
+import '../states/asset_types_state.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/main_menu_widget.dart';
 
 class Storage extends StatefulWidget {
-  const Storage({
+  Storage({
     Key? key,
   }) : super(key: key);
+
+  final AssetTypesState assets = Get.find();
 
   @override
   State<Storage> createState() => _StorageState();
@@ -20,6 +24,7 @@ class Storage extends StatefulWidget {
 class _StorageState extends State<Storage> {
   final ItemsStorageState items = Get.find();
   final RxBool inStorageOnly = false.obs;
+  final RxBool showArchived = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +77,17 @@ class _StorageState extends State<Storage> {
                             }),
                       ),
                     ),
+                    Obx(
+                      () => SizedBox(
+                        width: 200,
+                        child: CheckboxListTile(
+                            title: const Text("zobraziť archivované"),
+                            value: showArchived.value,
+                            onChanged: (v) {
+                              showArchived.value = v!;
+                            }),
+                      ),
+                    ),
                     const Spacer(),
                     ElevatedButton(
                         onPressed: () {
@@ -85,14 +101,26 @@ class _StorageState extends State<Storage> {
                   builder: (_) {
                     var list = _.getItems();
                     return Obx(() {
-                      var filteredList = list;
+                      List<StorageItemList> filteredList = [];
+                      for (var element in list) {
+                        var asset = widget.assets.getAssetById(element.assetId);
+                        if (asset != null) {
+                          filteredList.add(StorageItemList(asset, element));
+                        }
+                      }
                       if (inStorageOnly.isTrue) {
-                        filteredList = list
-                            .where((element) => element.inStorage > 0)
+                        filteredList = filteredList
+                            .where((element) => element.item.inStorage > 0)
+                            .toList();
+                      }
+                      if (showArchived.isFalse) {
+                        filteredList = filteredList
+                            .where(
+                                (element) => element.asset.isArchived == false)
                             .toList();
                       }
                       return ItemsList(
-                        itemsList: filteredList,
+                        list: filteredList,
                       );
                     });
                   },
@@ -104,4 +132,11 @@ class _StorageState extends State<Storage> {
       ),
     );
   }
+}
+
+class StorageItemList {
+  final AssetSchema asset;
+  final StorageItemSchema item;
+
+  StorageItemList(this.asset, this.item);
 }
