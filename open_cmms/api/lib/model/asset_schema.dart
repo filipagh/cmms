@@ -18,6 +18,7 @@ class AssetSchema {
     this.description,
     this.telemetry = const [],
     required this.id,
+    required this.isArchived,
   });
 
   String categoryId;
@@ -36,35 +37,43 @@ class AssetSchema {
 
   String id;
 
+  bool isArchived;
+
   @override
-  bool operator ==(Object other) => identical(this, other) || other is AssetSchema &&
-     other.categoryId == categoryId &&
-     other.name == name &&
-     other.description == description &&
-     other.telemetry == telemetry &&
-     other.id == id;
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is AssetSchema &&
+          other.categoryId == categoryId &&
+          other.name == name &&
+          other.description == description &&
+          other.telemetry == telemetry &&
+          other.id == id &&
+          other.isArchived == isArchived;
 
   @override
   int get hashCode =>
-    // ignore: unnecessary_parenthesis
-    (categoryId.hashCode) +
-    (name.hashCode) +
-    (description == null ? 0 : description!.hashCode) +
-    (telemetry.hashCode) +
-    (id.hashCode);
+      // ignore: unnecessary_parenthesis
+      (categoryId.hashCode) +
+      (name.hashCode) +
+      (description == null ? 0 : description!.hashCode) +
+      (telemetry.hashCode) +
+      (id.hashCode) +
+      (isArchived.hashCode);
 
   @override
-  String toString() => 'AssetSchema[categoryId=$categoryId, name=$name, description=$description, telemetry=$telemetry, id=$id]';
+  String toString() =>
+      'AssetSchema[categoryId=$categoryId, name=$name, description=$description, telemetry=$telemetry, id=$id, isArchived=$isArchived]';
 
   Map<String, dynamic> toJson() {
     final _json = <String, dynamic>{};
-      _json[r'category_id'] = categoryId;
-      _json[r'name'] = name;
+    _json[r'category_id'] = categoryId;
+    _json[r'name'] = name;
     if (description != null) {
       _json[r'description'] = description;
     }
-      _json[r'telemetry'] = telemetry;
-      _json[r'id'] = id;
+    _json[r'telemetry'] = telemetry;
+    _json[r'id'] = id;
+    _json[r'is_archived'] = isArchived;
     return _json;
   }
 
@@ -92,6 +101,7 @@ class AssetSchema {
         description: mapValueOfType<String>(json, r'description'),
         telemetry: AssetTelemetry.listFromJson(json[r'telemetry'])!,
         id: mapValueOfType<String>(json, r'id')!,
+        isArchived: mapValueOfType<bool>(json, r'is_archived')!,
       );
     }
     return null;
@@ -145,6 +155,7 @@ class AssetSchema {
     'name',
     'telemetry',
     'id',
+    'is_archived',
   };
 }
 

@@ -13,3 +13,8 @@ class AssetService(Application):
         asset = Asset(asset_category_id, name, description, telemetry)
         self.save(asset)
         return asset.id
+
+    def archive_asset(self, asset_id: uuid.UUID):
+        asset = self.repository.get(asset_id)
+        asset.archive()
+        self.save(asset)

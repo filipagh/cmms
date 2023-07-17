@@ -24,6 +24,7 @@ class AssetModel(Base):
     name = Column(String)
     description = Column(String)
     telemetry = relationship("AssetTelemetryModel", lazy="joined")
+    is_archived = Column(sqlalchemy.Boolean, nullable=False)
 
 
 def _get_db():
@@ -46,3 +47,9 @@ def get_asset_by_id(asset_id) -> AssetModel:
     db: Session
     with _get_db() as db:
         return db.query(AssetModel).get(asset_id)
+
+
+def save(model):
+    with _get_db() as db:
+        db.add(model)
+        db.commit()

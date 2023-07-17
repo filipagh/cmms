@@ -1,6 +1,7 @@
 import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:open_cmms/service/backend_api/assetManager.dart';
 import 'package:open_cmms/widgets/forms/asset_management/product_read_only.dart';
 
 import '../states/asset_types_state.dart';
@@ -9,13 +10,14 @@ import 'forms/asset_management/category_form.dart';
 import 'forms/asset_management/product_form_new.dart';
 
 class AssetsTypeList extends StatelessWidget {
-  const AssetsTypeList({
+  AssetsTypeList({
     Key? key,
   }) : super(key: key);
 
+  final AssetTypesState _assetTypes = Get.find();
+
   @override
   Widget build(BuildContext context) {
-    final AssetTypesState _assetTypes = Get.find();
     return GetX<AssetTypesState>(builder: (_) {
       var list = _assetTypes.getData();
       return list.isEmpty
@@ -91,20 +93,30 @@ class AssetsTypeList extends StatelessWidget {
 
   ListTile buildProductTile(AssetSchema element) {
     return ListTile(
-      onTap: () {
-        showFormDialog(ProductFormReadOnly(
-          item: element,
-        ));
-      },
-      hoverColor: Colors.blue.shade200,
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(element.name),
-        ],
-      ),
-      // subtitle:
-      // Center(child: Text('station Id: ${list[index].id}')),
-    );
+        onTap: () {
+          showFormDialog(ProductFormReadOnly(
+            item: element,
+          ));
+        },
+        hoverColor: Colors.blue.shade200,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(element.name +
+                (element.isArchived == true ? " (archivovaný)" : "")),
+          ],
+        ),
+        subtitle: Center(child: Text(element.description ?? "")),
+        trailing: element.isArchived == false
+            ? ElevatedButton.icon(
+                icon: Icon(Icons.archive_outlined),
+                label: Text("archivovat"),
+                onPressed: () {
+                  AssetManagerService()
+                      .archiveAssetAssetManagerAssetAssetIdDelete(element.id)
+                      .then((value) => _assetTypes.reloadData());
+                },
+              )
+            : null);
   }
 }

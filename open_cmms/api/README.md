@@ -69,6 +69,7 @@ All URIs are relative to *http://localhost*
  Class                   | Method                                                                                                                                                                                                  | HTTP request                                                   | Description                          
 -------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|--------------------------------------
  *ActionHistoryApi*      | [**getByStationActionHistoryByStationGet**](doc//ActionHistoryApi.md#getbystationactionhistorybystationget)                                                                                             | **GET** /action_history/by_station                             | Get By Station                       
+ *AssetManagerApi*       | [**archiveAssetAssetManagerAssetAssetIdDelete**](doc//AssetManagerApi.md#archiveassetassetmanagerassetassetiddelete)                                                                                    | **DELETE** /assetManager/asset/{asset_id}                      | Archive Asset                        
  *AssetManagerApi*       | [**createNewAssetAssetManagerNewAssetPost**](doc//AssetManagerApi.md#createnewassetassetmanagernewassetpost)                                                                                            | **POST** /assetManager/newAsset                                | Create New Asset                     
  *AssetManagerApi*       | [**createNewCategoryAssetManagerNewCategoryPost**](doc//AssetManagerApi.md#createnewcategoryassetmanagernewcategorypost)                                                                                | **POST** /assetManager/newCategory                             | Create New Category                  
  *AssetManagerApi*       | [**getAssetCategoriesAssetManagerAssetCategoriesGet**](doc//AssetManagerApi.md#getassetcategoriesassetmanagerassetcategoriesget)                                                                        | **GET** /assetManager/asset-categories                         | Get Asset Categories                 
@@ -154,16 +155,16 @@ All URIs are relative to *http://localhost*
  - [AssignedComponentSchema](doc//AssignedComponentSchema.md)
  - [AssignedComponentState](doc//AssignedComponentState.md)
  - [HTTPValidationError](doc//HTTPValidationError.md)
- - [IssueNewSchema](doc//IssueNewSchema.md)
- - [IssueSchema](doc//IssueSchema.md)
- - [RedmineAuthResponseSchema](doc//RedmineAuthResponseSchema.md)
- - [RedmineAuthSchema](doc//RedmineAuthSchema.md)
- - [RedmineCommentDataSchema](doc//RedmineCommentDataSchema.md)
- - [RedmineIssueDataSchema](doc//RedmineIssueDataSchema.md)
- - [RedmineObjectSchema](doc//RedmineObjectSchema.md)
- - [RedmineSetupRequestSchema](doc//RedmineSetupRequestSchema.md)
- - [RemoveComponentRequestSchema](doc//RemoveComponentRequestSchema.md)
- - [RoadSegmentIdSchema](doc//RoadSegmentIdSchema.md)
+- [IssueNewSchema](doc//IssueNewSchema.md)
+- [IssueSchema](doc//IssueSchema.md)
+- [RedmineAuthResponseSchema](doc//RedmineAuthResponseSchema.md)
+- [RedmineAuthSchema](doc//RedmineAuthSchema.md)
+- [RedmineCommentDataSchema](doc//RedmineCommentDataSchema.md)
+- [RedmineIssueDataSchema](doc//RedmineIssueDataSchema.md)
+- [RedmineObjectSchema](doc//RedmineObjectSchema.md)
+- [RedmineSetupRequestSchema](doc//RedmineSetupRequestSchema.md)
+- [RemoveComponentRequestSchema](doc//RemoveComponentRequestSchema.md)
+- [RoadSegmentIdSchema](doc//RoadSegmentIdSchema.md)
 - [RoadSegmentNewSchema](doc//RoadSegmentNewSchema.md)
 - [RoadSegmentSchema](doc//RoadSegmentSchema.md)
 - [Role](doc//Role.md)
@@ -187,12 +188,12 @@ All URIs are relative to *http://localhost*
 - [TaskServiceOnSiteNewSchema](doc//TaskServiceOnSiteNewSchema.md)
 - [TaskServiceOnSiteSchema](doc//TaskServiceOnSiteSchema.md)
 - [TaskServiceRemoteNewSchema](doc//TaskServiceRemoteNewSchema.md)
- - [TaskServiceRemoteSchema](doc//TaskServiceRemoteSchema.md)
- - [TaskState](doc//TaskState.md)
- - [TaskType](doc//TaskType.md)
- - [TelemetryOptions](doc//TelemetryOptions.md)
- - [UserSchema](doc//UserSchema.md)
- - [ValidationError](doc//ValidationError.md)
+- [TaskServiceRemoteSchema](doc//TaskServiceRemoteSchema.md)
+- [TaskState](doc//TaskState.md)
+- [TaskType](doc//TaskType.md)
+- [TelemetryOptions](doc//TelemetryOptions.md)
+- [UserSchema](doc//UserSchema.md)
+- [ValidationError](doc//ValidationError.md)
 
 
 ## Documentation For Authorization

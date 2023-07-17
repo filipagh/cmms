@@ -53,7 +53,7 @@ try {
 --------------------------------|-----------------------------------------------------------------------|-------------|-------
  **warrantyPeriodDays**         | **int**                                                               |             |
  **installationDate**           | **DateTime**                                                          |             |
- **assignedComponentNewSchema** | [**List<AssignedComponentNewSchema>**](AssignedComponentNewSchema.md) |             | 
+ **assignedComponentNewSchema** | [**List<AssignedComponentNewSchema>**](AssignedComponentNewSchema.md) |             |
 
 ### Return type
 
@@ -159,7 +159,7 @@ try {
  Name                          | Type                                                                | Description | Notes 
 -------------------------------|---------------------------------------------------------------------|-------------|-------
  **uninstallDate**             | **DateTime**                                                        |             |
- **assignedComponentIdSchema** | [**List<AssignedComponentIdSchema>**](AssignedComponentIdSchema.md) |             | 
+ **assignedComponentIdSchema** | [**List<AssignedComponentIdSchema>**](AssignedComponentIdSchema.md) |             |
 
 ### Return type
 

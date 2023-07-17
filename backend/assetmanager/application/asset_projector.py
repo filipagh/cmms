@@ -26,4 +26,11 @@ class AssetProjector(ProcessApplication):
                        category_id=domain_event.asset_category_id,
                        name=domain_event.name,
                        description=domain_event.description,
-                       telemetry=telemetry_col))
+                       telemetry=telemetry_col,
+                       is_archived=False))
+
+    @policy.register(Asset.Archived)
+    def _(self, domain_event: Asset.Archived, process_event):
+        model = asset_repo.get_asset_by_id(domain_event.originator_id)
+        model.is_archived = True
+        asset_repo.save(model)

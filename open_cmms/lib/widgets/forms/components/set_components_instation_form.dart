@@ -76,8 +76,9 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
               children: [
                 ElevatedButton(
                     onPressed: () {
-                      showFormDialog<AssetSchema>(const ComponentPickerForm())
-                          .then((asset) {
+                      showFormDialog<AssetSchema>(const ComponentPickerForm(
+                        hideArchivedAssets: false,
+                      )).then((asset) {
                         if (asset != null) {
                           showFormDialog(SerialNumberForm(asset: asset)).then(
                               (serialNumber) => items.insert(
