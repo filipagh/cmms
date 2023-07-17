@@ -16,7 +16,7 @@ SUPER_VYSOR = 'Supervízor'
 def _redmine_connect():
     redmine_url = SettingsRepo().get_settings(key=SettingsEnum.redmine_url)
     redmine_api_key = SettingsRepo().get_settings(key=SettingsEnum.redmine_api_key)
-    return Redmine(redmine_url, key=redmine_api_key, requests={'verify': False})
+    return Redmine(redmine_url, key=redmine_api_key, requests={'verify': False, 'timeout': 5})
 
 
 def redmine_auth(auth: RedmineAuthSchema) -> RedmineAuthResponseSchema:

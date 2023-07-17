@@ -58,7 +58,7 @@ class ActionHistoryProjector(ProcessApplication):
         model = action_history_repo.ActionHistoryModel(
             station_id=domain_event.station_id,
             text=text,
-            datetime=domain_event.timestamp
+            datetime=domain_event.removed_at
         )
         action_history_repo.save(model)
 

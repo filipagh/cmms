@@ -153,4 +153,3 @@ lib/model/telemetry_options.dart
 lib/model/user_schema.dart
 lib/model/validation_error.dart
 pubspec.yaml
-test/storage_item_override_schema_test.dart

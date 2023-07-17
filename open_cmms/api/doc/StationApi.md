@@ -124,7 +124,6 @@ void (empty response body)
 Get All Public
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 

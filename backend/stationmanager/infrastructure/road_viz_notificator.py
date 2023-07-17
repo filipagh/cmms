@@ -9,6 +9,9 @@ from stationmanager.domain.model.assigned_component import AssignedComponentStat
 
 
 def send_sync_cmms(station_id: uuid.UUID, component_id: uuid.UUID, status: AssignedComponentState):
+    return
+    # not used anymore todo remove env configs and setting
+
     if os.environ["ROAD_VIZ_API_KEY"] != "" and os.environ["ROAD_VIZ_API_KEY"] is not None:
         try:
             url = os.environ["ROAD_VIZ_URL_SYNC"]

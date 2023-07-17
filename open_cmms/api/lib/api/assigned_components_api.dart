@@ -24,8 +24,15 @@ class AssignedComponentsApi {
   ///
   /// * [int] warrantyPeriodDays (required):
   ///
+  /// * [DateTime] installationDate (required):
+  ///
   /// * [List<AssignedComponentNewSchema>] assignedComponentNewSchema (required):
-  Future<Response> createInstalledComponentAssignedComponentsCreateInstalledComponentPostWithHttpInfo(int warrantyPeriodDays, List<AssignedComponentNewSchema> assignedComponentNewSchema,) async {
+  Future<Response>
+      createInstalledComponentAssignedComponentsCreateInstalledComponentPostWithHttpInfo(
+    int warrantyPeriodDays,
+    DateTime installationDate,
+    List<AssignedComponentNewSchema> assignedComponentNewSchema,
+  ) async {
     // ignore: prefer_const_declarations
     final path = r'/assigned_components/create_installed_component';
 
@@ -36,10 +43,11 @@ class AssignedComponentsApi {
     final headerParams = <String, String>{};
     final formParams = <String, String>{};
 
-      queryParams.addAll(_queryParams('', 'warranty_period_days', warrantyPeriodDays));
+    queryParams
+        .addAll(_queryParams('', 'warranty_period_days', warrantyPeriodDays));
+    queryParams.addAll(_queryParams('', 'installation_date', installationDate));
 
     const contentTypes = <String>['application/json'];
-
 
     return apiClient.invokeAPI(
       path,
@@ -58,20 +66,34 @@ class AssignedComponentsApi {
   ///
   /// * [int] warrantyPeriodDays (required):
   ///
+  /// * [DateTime] installationDate (required):
+  ///
   /// * [List<AssignedComponentNewSchema>] assignedComponentNewSchema (required):
-  Future<List<String>?> createInstalledComponentAssignedComponentsCreateInstalledComponentPost(int warrantyPeriodDays, List<AssignedComponentNewSchema> assignedComponentNewSchema,) async {
-    final response = await createInstalledComponentAssignedComponentsCreateInstalledComponentPostWithHttpInfo(warrantyPeriodDays, assignedComponentNewSchema,);
+  Future<List<String>?>
+      createInstalledComponentAssignedComponentsCreateInstalledComponentPost(
+    int warrantyPeriodDays,
+    DateTime installationDate,
+    List<AssignedComponentNewSchema> assignedComponentNewSchema,
+  ) async {
+    final response =
+        await createInstalledComponentAssignedComponentsCreateInstalledComponentPostWithHttpInfo(
+      warrantyPeriodDays,
+      installationDate,
+      assignedComponentNewSchema,
+    );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
     // When a remote server returns no body with a status of 204, we shall not decode it.
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
       final responseBody = await _decodeBodyBytes(response);
-      return (await apiClient.deserializeAsync(responseBody, 'List<String>') as List)
-        .cast<String>()
-        .toList();
+      return (await apiClient.deserializeAsync(responseBody, 'List<String>')
+              as List)
+          .cast<String>()
+          .toList();
 
     }
     return null;
@@ -131,7 +153,6 @@ class AssignedComponentsApi {
       return (await apiClient.deserializeAsync(responseBody, 'List<AssignedComponentSchema>') as List)
         .cast<AssignedComponentSchema>()
         .toList();
-
     }
     return null;
   }
@@ -142,8 +163,14 @@ class AssignedComponentsApi {
   ///
   /// Parameters:
   ///
+  /// * [DateTime] uninstallDate (required):
+  ///
   /// * [List<AssignedComponentIdSchema>] assignedComponentIdSchema (required):
-  Future<Response> removeInstalledComponentAssignedComponentsRemoveInstalledComponentPostWithHttpInfo(List<AssignedComponentIdSchema> assignedComponentIdSchema,) async {
+  Future<Response>
+      removeInstalledComponentAssignedComponentsRemoveInstalledComponentPostWithHttpInfo(
+    DateTime uninstallDate,
+    List<AssignedComponentIdSchema> assignedComponentIdSchema,
+  ) async {
     // ignore: prefer_const_declarations
     final path = r'/assigned_components/remove_installed_component';
 
@@ -154,8 +181,9 @@ class AssignedComponentsApi {
     final headerParams = <String, String>{};
     final formParams = <String, String>{};
 
-    const contentTypes = <String>['application/json'];
+    queryParams.addAll(_queryParams('', 'uninstall_date', uninstallDate));
 
+    const contentTypes = <String>['application/json'];
 
     return apiClient.invokeAPI(
       path,
@@ -172,20 +200,32 @@ class AssignedComponentsApi {
   ///
   /// Parameters:
   ///
+  /// * [DateTime] uninstallDate (required):
+  ///
   /// * [List<AssignedComponentIdSchema>] assignedComponentIdSchema (required):
-  Future<List<String>?> removeInstalledComponentAssignedComponentsRemoveInstalledComponentPost(List<AssignedComponentIdSchema> assignedComponentIdSchema,) async {
-    final response = await removeInstalledComponentAssignedComponentsRemoveInstalledComponentPostWithHttpInfo(assignedComponentIdSchema,);
+  Future<List<String>?>
+      removeInstalledComponentAssignedComponentsRemoveInstalledComponentPost(
+    DateTime uninstallDate,
+    List<AssignedComponentIdSchema> assignedComponentIdSchema,
+  ) async {
+    final response =
+        await removeInstalledComponentAssignedComponentsRemoveInstalledComponentPostWithHttpInfo(
+      uninstallDate,
+      assignedComponentIdSchema,
+    );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
     // When a remote server returns no body with a status of 204, we shall not decode it.
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
       final responseBody = await _decodeBodyBytes(response);
-      return (await apiClient.deserializeAsync(responseBody, 'List<String>') as List)
-        .cast<String>()
-        .toList();
+      return (await apiClient.deserializeAsync(responseBody, 'List<String>')
+              as List)
+          .cast<String>()
+          .toList();
 
     }
     return null;

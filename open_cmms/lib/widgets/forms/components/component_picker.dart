@@ -45,6 +45,7 @@ class ComponentPickerForm extends StatelessWidget implements hasFormTitle {
                 child: ListTile(
                   onTap: () => Get.back(result: i),
                   title: Center(child: Text(i.name)),
+                  subtitle: Center(child: Text(i.description ?? "bez popisu")),
                 ),
               );
             },

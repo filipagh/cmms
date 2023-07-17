@@ -2,6 +2,7 @@ import uuid
 from datetime import datetime
 from typing import Optional
 
+from DateTime import DateTime
 from eventsourcing.dispatch import singledispatchmethod
 from eventsourcing.system import ProcessApplication
 
@@ -21,12 +22,14 @@ class AssignedComponentsService(ProcessApplication):
         return component.id
 
     def create_installed_component(self, asset_id: uuid, station_id: uuid, warranty_period_days: int,
+                                   installation_date: DateTime,
                                    serial_number: Optional[str]):
         component: AssignedComponent = AssignedComponent(asset_id=asset_id, station_id=station_id,
-                                                         status=AssignedComponentState.INSTALLED,
+                                                         status=AssignedComponentState.AWAITING,
                                                          task_id=None, warranty_period_until=warranty_until_date_calc(
                 datetime.now().date(), warranty_period_days), warranty_period_days=warranty_period_days,
                                                          serial_number=serial_number)
+        component.install_component(task_id=None, installed_at=installation_date, serial_number=serial_number)
         self.save(component)
         return component.id
 
@@ -43,13 +46,13 @@ class AssignedComponentsService(ProcessApplication):
                 component.set_component_to_be_removed(task_id=task_id)
                 self.save(component)
 
-    def force_remove_installed_component(self, assigned_component_id: uuid):
+    def force_remove_installed_component(self, assigned_component_id: uuid, uninstall_date: datetime = datetime.now()):
         component: AssignedComponent = self.repository.get(assigned_component_id)
         match component.status:
             case AssignedComponentState.REMOVED:
                 pass
             case AssignedComponentState.INSTALLED:
-                component.force_remove_component()
+                component.force_remove_component(uninstall_date=uninstall_date)
                 self.save(component)
             case _:
                 raise Exception("NOW CANT REMOVE COMONENT WHICH ARE NOT IN STATE INSTALLED")

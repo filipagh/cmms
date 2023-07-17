@@ -65,8 +65,8 @@ class AssignedComponent(Aggregate):
         self.warranty_period_days = warranty_period_days
         self.serial_number = serial_number
 
-    def force_remove_component(self):
-        self._remove_component(new_status=AssignedComponentState.REMOVED, removed_at=datetime.datetime.now(),
+    def force_remove_component(self, uninstall_date: datetime.datetime):
+        self._remove_component(new_status=AssignedComponentState.REMOVED, removed_at=uninstall_date,
                                station_id=self.station_id,
                                asset_id=self.asset_id, task_id=None, serial_number=self.serial_number)
 
