@@ -22,7 +22,6 @@ All URIs are relative to *http://localhost*
 Create
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 

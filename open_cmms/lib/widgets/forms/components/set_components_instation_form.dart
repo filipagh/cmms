@@ -3,10 +3,12 @@ import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/service/backend_api/assigned_components_service.dart';
+import 'package:open_cmms/snacbars.dart';
 import 'package:open_cmms/states/asset_types_state.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 import 'package:open_cmms/widgets/forms/components/component_picker.dart';
 import 'package:open_cmms/widgets/forms/components/serial_number_form.dart';
+import 'package:open_cmms/widgets/forms/util/date_utils.dart';
 
 import '../../../states/station/components_state.dart';
 
@@ -32,13 +34,15 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
   late AssignedComponentsState _assignedComponentState;
   final AssetTypesState _assets = Get.find();
   final TextEditingController warrantyDate = TextEditingController();
+  final TextEditingController removeDate = TextEditingController();
+  final TextEditingController installDate = TextEditingController();
   final TextEditingController warrantyDays = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   int? warrantyPeriodDays;
 
   updateWarranty(DateTime newDate, {bool updateDays = true}) {
     warrantyDate.text = newDate.toIso8601String().split("T").first;
-    var now = DateTime.now();
+    var now = DateTime.parse(installDate.text);
     var delta =
         newDate.difference(DateTime(now.year, now.month, now.day)).inDays;
     if (updateDays) {
@@ -49,7 +53,8 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
   }
 
   updateWarrantyDays(int days) {
-    updateWarranty(DateTime.now().add(Duration(days: days)), updateDays: false);
+    updateWarranty(DateTime.parse(installDate.text).add(Duration(days: days)),
+        updateDays: false);
   }
 
   @override
@@ -83,7 +88,7 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
                     child: const Text('Pridat komponent')),
                 SizedBox(
                   width: 500,
-                  height: Get.height - 300,
+                  height: Get.height - 500,
                   child: Obx(() {
                     return ListView.builder(
                         // shrinkWrap: true,
@@ -93,6 +98,27 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
                         });
                   }),
                 ),
+                Expanded(
+                    child: TextFormField(
+                  decoration: const InputDecoration(
+                      labelText: "Čas instalacie komponentov"),
+                  controller: installDate,
+                  validator: (v) {
+                    return v == null || v.isEmpty ? "zvolte datum" : null;
+                  },
+                  onTap: () {
+                    var now = DateTime.now();
+                    showDatePicker(
+                            context: context,
+                            firstDate: now.subtract(Duration(days: 365 * 10)),
+                            lastDate: now,
+                            initialDate: now)
+                        .then((value) {
+                      installDate.text =
+                          value!.toIso8601String().split("T").first;
+                    });
+                  },
+                )),
                 Flexible(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -114,8 +140,9 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
                               onTap: () {
                                 var now = DateTime.now();
                                 showDatePicker(
-                                        context: context,
-                                        firstDate: now,
+                                    context: context,
+                                        firstDate:
+                                            DateTime.parse(installDate.text),
                                         lastDate: now.add(
                                             const Duration(days: 365 * 20)),
                                         initialDate: DateTime(
@@ -146,6 +173,24 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
                     ],
                   ),
                 ),
+                Expanded(
+                    child: TextFormField(
+                  decoration: const InputDecoration(
+                      labelText: "Čas odstranenia komponentov"),
+                  controller: removeDate,
+                  onTap: () {
+                    var now = DateTime.now();
+                    showDatePicker(
+                            context: context,
+                            firstDate: now.subtract(Duration(days: 365 * 10)),
+                            lastDate: now,
+                            initialDate: now)
+                        .then((value) {
+                      removeDate.text =
+                          value!.toIso8601String().split("T").first;
+                    });
+                  },
+                )),
               ],
               // ),
             ),
@@ -186,13 +231,14 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
                                 stationId: station.id,
                                 serialNumber: element.serialNumber));
                           });
+                          var add = false;
+                          var remove = false;
                           if (col.isNotEmpty) {
                             if (!_formKey.currentState!.validate()) {
                               return;
                             }
-                            AssignedComponentService()
-                                .createInstalledComponentAssignedComponentsCreateInstalledComponentPost(
-                                    warrantyPeriodDays!, col);
+
+                            add = true;
                           }
                           List<schema.AssignedComponentIdSchema> colr = [];
                           getToRemoveItems().forEach((element) {
@@ -200,8 +246,28 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
                                 id: element.assignedComponentId!));
                           });
                           if (colr.isNotEmpty) {
+                            if (removeDate.value.text == null ||
+                                removeDate.value.text.isEmpty) {
+                              showError(
+                                  "vyplnte datum odstranenia komponentov");
+                              return;
+                            }
+                            remove = true;
+                          }
+
+                          if (add) {
+                            AssignedComponentService()
+                                .createInstalledComponentAssignedComponentsCreateInstalledComponentPost(
+                                    warrantyPeriodDays!,
+                                    convertDatetimeToUtc(
+                                        DateTime.parse(installDate.value.text)),
+                                    col);
+                          }
+                          if (remove) {
                             AssignedComponentService()
                                 .removeInstalledComponentAssignedComponentsRemoveInstalledComponentPost(
+                                    convertDatetimeToUtc(
+                                        DateTime.parse(removeDate.value.text)),
                                     colr);
                           }
 

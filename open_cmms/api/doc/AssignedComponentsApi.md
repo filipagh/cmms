@@ -15,7 +15,8 @@ Method | HTTP request | Description
 
 
 # **createInstalledComponentAssignedComponentsCreateInstalledComponentPost**
-> List<String> createInstalledComponentAssignedComponentsCreateInstalledComponentPost(warrantyPeriodDays, assignedComponentNewSchema)
+> List<String> createInstalledComponentAssignedComponentsCreateInstalledComponentPost(warrantyPeriodDays,
+> installationDate, assignedComponentNewSchema)
 
 Create Installed Component
 
@@ -35,10 +36,11 @@ import 'package:BackendAPI/api.dart';
 
 final api_instance = AssignedComponentsApi();
 final warrantyPeriodDays = 56; // int | 
+final installationDate = 2013-10-20T19:20:30+01:00; // DateTime | 
 final assignedComponentNewSchema = [List<AssignedComponentNewSchema>()]; // List<AssignedComponentNewSchema> | 
 
 try {
-    final result = api_instance.createInstalledComponentAssignedComponentsCreateInstalledComponentPost(warrantyPeriodDays, assignedComponentNewSchema);
+    final result = api_instance.createInstalledComponentAssignedComponentsCreateInstalledComponentPost(warrantyPeriodDays, installationDate, assignedComponentNewSchema);
     print(result);
 } catch (e) {
     print('Exception when calling AssignedComponentsApi->createInstalledComponentAssignedComponentsCreateInstalledComponentPost: $e\n');
@@ -47,10 +49,11 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **warrantyPeriodDays** | **int**|  | 
- **assignedComponentNewSchema** | [**List<AssignedComponentNewSchema>**](AssignedComponentNewSchema.md)|  | 
+ Name                           | Type                                                                  | Description | Notes 
+--------------------------------|-----------------------------------------------------------------------|-------------|-------
+ **warrantyPeriodDays**         | **int**                                                               |             |
+ **installationDate**           | **DateTime**                                                          |             |
+ **assignedComponentNewSchema** | [**List<AssignedComponentNewSchema>**](AssignedComponentNewSchema.md) |             | 
 
 ### Return type
 
@@ -119,7 +122,9 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **removeInstalledComponentAssignedComponentsRemoveInstalledComponentPost**
-> List<String> removeInstalledComponentAssignedComponentsRemoveInstalledComponentPost(assignedComponentIdSchema)
+
+> List<String> removeInstalledComponentAssignedComponentsRemoveInstalledComponentPost(uninstallDate,
+> assignedComponentIdSchema)
 
 Remove Installed Component
 
@@ -138,10 +143,11 @@ import 'package:BackendAPI/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKeyPrefix = 'Bearer';
 
 final api_instance = AssignedComponentsApi();
+final uninstallDate = 2013-10-20T19:20:30+01:00; // DateTime | 
 final assignedComponentIdSchema = [List<AssignedComponentIdSchema>()]; // List<AssignedComponentIdSchema> | 
 
 try {
-    final result = api_instance.removeInstalledComponentAssignedComponentsRemoveInstalledComponentPost(assignedComponentIdSchema);
+    final result = api_instance.removeInstalledComponentAssignedComponentsRemoveInstalledComponentPost(uninstallDate, assignedComponentIdSchema);
     print(result);
 } catch (e) {
     print('Exception when calling AssignedComponentsApi->removeInstalledComponentAssignedComponentsRemoveInstalledComponentPost: $e\n');
@@ -150,9 +156,10 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **assignedComponentIdSchema** | [**List<AssignedComponentIdSchema>**](AssignedComponentIdSchema.md)|  | 
+ Name                          | Type                                                                | Description | Notes 
+-------------------------------|---------------------------------------------------------------------|-------------|-------
+ **uninstallDate**             | **DateTime**                                                        |             |
+ **assignedComponentIdSchema** | [**List<AssignedComponentIdSchema>**](AssignedComponentIdSchema.md) |             | 
 
 ### Return type
 

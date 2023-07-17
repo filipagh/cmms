@@ -10,7 +10,7 @@ from eventsourcing.utils import EnvType
 
 from base import main
 from stationmanager.application.station_projector import StationProjector
-from stationmanager.domain.model.assigned_component import AssignedComponent, AssignedComponentState
+from stationmanager.domain.model.assigned_component import AssignedComponent
 from stationmanager.domain.model.station import Station
 from storagemanager.application.storage_item_service import StorageItemService
 from storagemanager.domain.model.sotrageitem import StorageItem
@@ -77,7 +77,7 @@ class TaskService(ProcessApplication):
 
     @policy.register(AssignedComponent.CreatedEvent)
     def _(self, domain_event: AssignedComponent.CreatedEvent, process_event):
-        if domain_event.status == AssignedComponentState.AWAITING:
+        if domain_event.task_id is not None:
             task: TaskChangeComponents = self.repository.get(domain_event.task_id)
             task.assign_component(domain_event.asset_id, domain_event.originator_id)
             self.save(task)

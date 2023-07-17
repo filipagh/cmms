@@ -29,4 +29,5 @@ def save(station: ActionHistoryModel):
 def get_by_station(station: uuid.UUID) -> list[ActionHistoryModel]:
     db: Session
     with _get_db() as db:
-        return db.query(ActionHistoryModel).where(ActionHistoryModel.station_id == station).all()
+        return db.query(ActionHistoryModel).order_by(ActionHistoryModel.datetime).where(
+            ActionHistoryModel.station_id == station).all()

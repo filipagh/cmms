@@ -62,16 +62,13 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **storeItemOverrideStorageManagerStoreItemOverridePost**
-
 > String storeItemOverrideStorageManagerStoreItemOverridePost(storageItemOverrideSchema)
 
 Store Item Override
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
-
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
 //defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
 // TODO Configure API key authorization: api_key
@@ -87,12 +84,10 @@ final api_instance = StorageManagerApi();
 final storageItemOverrideSchema = StorageItemOverrideSchema(); // StorageItemOverrideSchema | 
 
 try {
-final result = api_instance.storeItemOverrideStorageManagerStoreItemOverridePost(storageItemOverrideSchema);
-print(result);
-} catch
-(
-e) {
-print('Exception when calling StorageManagerApi->storeItemOverrideStorageManagerStoreItemOverridePost: $e\n');
+    final result = api_instance.storeItemOverrideStorageManagerStoreItemOverridePost(storageItemOverrideSchema);
+    print(result);
+} catch (e) {
+    print('Exception when calling StorageManagerApi->storeItemOverrideStorageManagerStoreItemOverridePost: $e\n');
 }
 ```
 
@@ -118,13 +113,11 @@ print('Exception when calling StorageManagerApi->storeItemOverrideStorageManager
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **storeNewAssetsStorageManagerStoreNewAssetsPost**
-
 > List<AssetItemToAdd> storeNewAssetsStorageManagerStoreNewAssetsPost(assetItemToAdd)
 
 Store New Assets
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer

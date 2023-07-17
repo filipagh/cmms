@@ -6,6 +6,7 @@ import 'package:open_cmms/pages/station/station_base_page.dart';
 import 'package:open_cmms/pages/tasks/task_page_factory.dart';
 import 'package:open_cmms/service/backend_api/station_service.dart';
 import 'package:open_cmms/states/asset_types_state.dart';
+import 'package:open_cmms/states/auth_state.dart';
 import 'package:open_cmms/states/station/components_state.dart';
 import 'package:open_cmms/widgets/forms/components/set_components_instation_form.dart';
 
@@ -18,6 +19,7 @@ class StationComponentsPage extends StatelessWidget
   final StationSchema station;
 
   StationComponentsPage({Key? key, required this.station}) : super(key: key) {
+    authState = Get.find();
     try {
       components = Get.find(tag: station.id);
     } catch (e) {
@@ -28,6 +30,7 @@ class StationComponentsPage extends StatelessWidget
   }
 
   late AssignedComponentsState components;
+  late AuthState authState;
 
   @override
   Widget build(BuildContext context) {
@@ -47,13 +50,15 @@ class StationComponentsPage extends StatelessWidget
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  ElevatedButton(
-                      onPressed: () {
-                        showFormDialog(
-                            SetStationComponentsForm.editComponentsInStation(
-                                station: station));
-                      },
-                      child: Text('Nastaviť komponenty')),
+                  if (authState.isAdmin.isTrue) ...[
+                    ElevatedButton(
+                        onPressed: () {
+                          showFormDialog(
+                              SetStationComponentsForm.editComponentsInStation(
+                                  station: station));
+                        },
+                        child: Text('Nastaviť komponenty'))
+                  ],
                   VerticalDivider(),
                   ElevatedButton(
                       onPressed: () {

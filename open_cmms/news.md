@@ -22,6 +22,21 @@
 
 [//]: # (---)
 
+[//]: # ()
+
+## 14.7.23
+
+### novinky
+
+- prerobeny formular na pridanie komponentu na stanicu, da sa zadat cas instalacie cas odinstalacie a zaruka licuje cas
+  instalacie
+- pri vybere komponentov sa zobrazuje popis komponentov
+- jazykove a vyzualne upravy formularu na reportovanie chyb
+
+### oprava
+
+---
+
 ## 10.7.23
 
 ### novinky

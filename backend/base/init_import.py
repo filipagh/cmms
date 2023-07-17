@@ -1,3 +1,4 @@
+from datetime import datetime
 from time import sleep
 
 from assetmanager.application.model.schema import AssetCategoryNewSchema, AssetNewSchema, AssetIdSchema
@@ -126,7 +127,7 @@ def import_assets():
                        _InstallAsset(dst111, "L533024"),
                        _InstallAsset(dsc211, "N392004"), _InstallAsset(dst111, "N271020")],
             station_id=pb_stakada),
-        warranty_period_days=365)
+        warranty_period_days=365, installation_date=datetime.now())
 
     sverepec_mur = station_service.create_station_legacy(
         StationNewSchema(name="Sverepec múr", road_segment_id=rs_id_pb, km_of_road=163, km_of_road_note='',
@@ -139,7 +140,7 @@ def import_assets():
                 , _InstallAsset(hmp155), _InstallAsset(dts12g, "N43406"),
                        _InstallAsset(dsc211), _InstallAsset(dst111)],
             station_id=sverepec_mur),
-        warranty_period_days=365)
+        warranty_period_days=365, installation_date=datetime.now())
 
     sverepec_most = station_service.create_station_legacy(
         StationNewSchema(name="Sverepec Most", road_segment_id=rs_id_pb, km_of_road=162, km_of_road_note='',
@@ -151,7 +152,7 @@ def import_assets():
                        _InstallAsset(dst111, "M151049"), _InstallAsset(wxt520, "M2740541")
                        ],
             station_id=sverepec_most),
-        warranty_period_days=365)
+        warranty_period_days=365, installation_date=datetime.now())
 
     kockovsky_kanal = station_service.create_station_legacy(
         StationNewSchema(name="Kočkovský kanál", road_segment_id=rs_id_pb, km_of_road=151, km_of_road_note='',
@@ -165,7 +166,7 @@ def import_assets():
                        _InstallAsset(dts12g, "N47407"),
                        ],
             station_id=kockovsky_kanal),
-        warranty_period_days=365)
+        warranty_period_days=365, installation_date=datetime.now())
 
     rs_id_trencin = rs_router.create_road_segment(RoadSegmentNewSchema(name="Trenčín", ssud="4"))
 
@@ -179,7 +180,7 @@ def import_assets():
                        _InstallAsset(wxt520, "P3710890")
                        ],
             station_id=prejta),
-        warranty_period_days=365)
+        warranty_period_days=365, installation_date=datetime.now())
 
     trencin = station_service.create_station_legacy(
         StationNewSchema(name="Trenčín", road_segment_id=rs_id_trencin, km_of_road=124, km_of_road_note='privádzač TN',
@@ -191,7 +192,7 @@ def import_assets():
                        _InstallAsset(wxt520), _InstallAsset(dts12g)
                        ],
             station_id=trencin),
-        warranty_period_days=365)
+        warranty_period_days=365, installation_date=datetime.now())
 
     drietoma = station_service.create_station_legacy(
         StationNewSchema(name="Drietoma", road_segment_id=rs_id_trencin, km_of_road=111, km_of_road_note='',
@@ -203,7 +204,7 @@ def import_assets():
                        _InstallAsset(wxt520, "K4940009")
                        ],
             station_id=drietoma),
-        warranty_period_days=365)
+        warranty_period_days=365, installation_date=datetime.now())
 
     #
     # rs_id = rs_router.create_road_segment(RoadSegmentNewSchema(name=import_rs_2, ssud=import_rs_2))

@@ -62,6 +62,7 @@ class AssignedComponentProjector(ProcessApplication):
         component = assigned_component_repo.get_by_id(domain_event.originator_id)
         component.status = domain_event.new_status
         component.task_id = None
+        component.installed_at = domain_event.installed_at
         component.warranty_period_until = domain_event.warranty_period_until
         component.serial_number = domain_event.serial_number
 

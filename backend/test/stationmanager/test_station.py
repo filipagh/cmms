@@ -1,4 +1,7 @@
 # example test
+from datetime import datetime
+
+import pytest
 
 import assetmanager.infrastructure.rest_router as a_api
 import roadsegmentmanager.infrastructure.rest_router as rs_api
@@ -11,10 +14,12 @@ from stationmanager.application.model.schema import StationNewSchema, StationIdS
 from test.db_test_util import db_app_setup, db_app_clean
 
 
+@pytest.fixture(scope="function", autouse=True)
 def setup():
     db_app_setup()
 
 
+@pytest.fixture(scope="function", autouse=True)
 def teardown():
     db_app_clean()
 
@@ -70,7 +75,7 @@ def test_try_delete_station_with_components(mocker):
     asset = a_api.create_new_asset(new_asset=AssetNewSchema(name="asset", category_id=cat, telemetry=[])).id
     as_api.create_installed_component(new_components=[
         AssignedComponentNewSchema(asset_id=asset, station_id=station_id, serial_number="asset")],
-        warranty_period_days=10)
+        warranty_period_days=10, installation_date=datetime.now())
     try:
         api.remove_station(StationIdSchema(id=station_id))
     except Exception as e:

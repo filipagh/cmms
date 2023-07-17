@@ -73,7 +73,6 @@ Name | Type | Description  | Notes
 Get All Public
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 
