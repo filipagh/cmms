@@ -1,4 +1,3 @@
-
 # Novinky
 
 ---
@@ -8,6 +7,7 @@
 [//]: # (### novinky)
 
 [//]: # ()
+
 [//]: # (- pridana sekcia noviniek)
 
 [//]: # ()
@@ -23,6 +23,17 @@
 [//]: # (---)
 
 [//]: # ()
+
+## 17.7.23
+
+### novinky
+
+- je mozne archovovat komponenty, ktore sa nasledne neponukaju pri pridavanie komponentov alebo naskladnenie, admin ma
+  moznost upravit stav skladu a nastavit aj archivovany komponent priamo
+
+### oprava
+
+---
 
 ## 14.7.23
 
@@ -212,12 +223,11 @@
 
 ---
 
-
-
 ## 21.03.2023
+
 ### novinky
 
-- pridana sekcia noviniek 
+- pridana sekcia noviniek
 - zobrazenie servisnych zmluv pre stanicu (v info casti)
 
 ### oprava
