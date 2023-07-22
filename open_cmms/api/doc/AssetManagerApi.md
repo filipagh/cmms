@@ -17,13 +17,11 @@ All URIs are relative to *http://localhost*
  [**getTelemetryOptionsAssetManagerTelemetryOptionsGet**](AssetManagerApi.md#gettelemetryoptionsassetmanagertelemetryoptionsget) | **GET** /assetManager/telemetry_options   | Get Telemetry Options 
 
 # **archiveAssetAssetManagerAssetAssetIdDelete**
-
 > String archiveAssetAssetManagerAssetAssetIdDelete(assetId)
 
 Archive Asset
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
@@ -70,16 +68,13 @@ try {
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **createNewAssetAssetManagerNewAssetPost**
-
 > AssetIdSchema createNewAssetAssetManagerNewAssetPost(assetNewSchema)
 
 Create New Asset
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
-
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
 //defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
 // TODO Configure API key authorization: api_key

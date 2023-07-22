@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/pages/station/station_base_page.dart';
 import 'package:open_cmms/service/backend_api/service_contract_service.dart';
+import 'package:open_cmms/states/auth_state.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
+import 'package:open_cmms/widgets/forms/road_segments/road_segment_picker.dart';
 import 'package:open_cmms/widgets/forms/service_contracts/service_contract_form.dart';
 
 import '../../service/backend_api/station_service.dart';
@@ -15,6 +17,7 @@ class StationInfoPage extends StatelessWidget
   static const String ENDPOINT = '/Info';
   final StationSchema station;
 
+  final AuthState _authState = Get.find();
   RxList<ServiceContractSchema> contracts = <ServiceContractSchema>[].obs;
 
   StationInfoPage({Key? key, required this.station}) : super(key: key);
@@ -37,9 +40,30 @@ class StationInfoPage extends StatelessWidget
                         bytes: value.bodyBytes,
                       );
                     }),
-                child: Text("Export stanice .xsl")),
-            if (station.isActive == true) ...[
-              Padding(padding: EdgeInsets.all(10)),
+                child: const Text("Export stanice .xsl")),
+            if (station.isActive == true && _authState.isAdmin.isTrue) ...[
+              const Padding(padding: EdgeInsets.all(10)),
+              ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.red)),
+                  onPressed: () async {
+                    var roadSegment = await showFormDialog<RoadSegmentSchema>(
+                        RoadSegmentPickerForm());
+                    if (roadSegment == null) return;
+                    StationService()
+                        .relocateStationStationRelocateStationPost(
+                            StationRelocateSchema(
+                                stationId: station.id,
+                                newRoadSegmentId: roadSegment.id))
+                        .then((value) {
+                      Get.toNamed(StationBasePage.ENDPOINT +
+                          "/${station.id}" +
+                          StationInfoPage.ENDPOINT);
+                      showOk("Stanica bola presunutá");
+                    }, onError: (e) => showError(e.toString()));
+                  },
+                  child: const Text("Presunúť stanicu")),
+              const Padding(padding: EdgeInsets.all(10)),
               ElevatedButton(
                   style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.red)),
@@ -51,21 +75,21 @@ class StationInfoPage extends StatelessWidget
                       Get.toNamed(StationBasePage.ENDPOINT +
                           "/${station.id}" +
                           StationInfoPage.ENDPOINT);
-                      showOk("Stania bola vymazana");
+                      showOk("Stanica bola vymazaná");
                     }, onError: (e) => showError(e.toString()));
                   },
-                  child: Text("Vymazať stanicu")),
+                  child: const Text("Vymazať stanicu")),
             ],
           ],
         ),
-        Divider(),
+        const Divider(),
         SelectionArea(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                children: const [
                   Text("Meno stanice"),
                   Text("Km cestneho useku"),
                   Text("Km cestneho useku poznamka"),
@@ -76,7 +100,7 @@ class StationInfoPage extends StatelessWidget
                   Text("ID"),
                 ],
               ),
-              Padding(padding: EdgeInsets.all(10)),
+              const Padding(padding: EdgeInsets.all(10)),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -93,13 +117,13 @@ class StationInfoPage extends StatelessWidget
             ],
           ),
         ),
-        Divider(),
+        const Divider(),
         Obx(() {
           return ConstrainedBox(
-            constraints: BoxConstraints(maxHeight: 400, maxWidth: 400),
+            constraints: const BoxConstraints(maxHeight: 400, maxWidth: 400),
             child: Column(
               children: [
-                Text("Servisne zmluvy"),
+                const Text("Servisne zmluvy"),
                 Expanded(
                   child: ListView.builder(
                       itemCount: contracts.length,

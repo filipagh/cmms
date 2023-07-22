@@ -1,6 +1,7 @@
 # BackendAPI.model.AssetSchema
 
 ## Load the model package
+
 ```dart
 import 'package:BackendAPI/api.dart';
 ```

@@ -30,12 +30,18 @@ class StationProjector(ProcessApplication):
         )
         station_repo.save(model)
 
+    @policy.register(Station.StationRelocated)
+    def _(self, domain_event: Station.StationRelocated, process_event):
+        station = station_repo.get_by_id(domain_event.originator_id)
+        station.road_segment_id = domain_event.new_road_segment_id
+        station_repo.save(station)
+
     @policy.register(Station.StationRemoved)
     def _(self, domain_event: Station.StationRemoved, process_event):
         station_repo.mark_station_as_inactive(domain_event.originator_id)
 
-    def get_by_id(self, id: uuid.UUID) -> Optional[StationModel]:
-        return station_repo.get_by_id(id)
+    def get_by_id(self, station_id: uuid.UUID) -> Optional[StationModel]:
+        return station_repo.get_by_id(station_id)
 
     def get_all(self, active_only: bool = False, segment_id: uuid.UUID = None) -> list[StationModel]:
         return station_repo.get_stations(active_only, segment_id)

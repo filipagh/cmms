@@ -78,6 +78,6 @@ def test_try_delete_station_with_components(mocker):
         warranty_period_days=10, installation_date=datetime.now())
     try:
         api.remove_station(StationIdSchema(id=station_id))
-    except Exception as e:
+    except Exception:
         pass
     assert api.get_by_id(station_id).is_active == True

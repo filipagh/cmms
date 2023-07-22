@@ -20,12 +20,8 @@ class Station(Aggregate):
     class StationRemoved(Aggregate.Event):
         removed_at: datetime.datetime = datetime.datetime.now()
 
-    # class AssetAddedToStorage(Aggregate.Event):
-    #     count_number: int
-
-    # @event(AssetAddedToStorage)
-    # def add_to_storage(self, count_number: int):
-    #     self.in_storage += count_number
+    class StationRelocated(Aggregate.Event):
+        new_road_segment_id: uuid
 
     @event(CreatedEvent)
     def __init__(self, name: str, road_segment_id: uuid, km_of_road: Optional[float], km_of_road_note: str,
@@ -49,3 +45,11 @@ class Station(Aggregate):
     def remove(self):
         if not self.is_removed:
             self._remove()
+
+    def relocate_station(self, new_road_segment_id: uuid):
+        if self.road_segment_id != new_road_segment_id:
+            self._relocate_station(new_road_segment_id=new_road_segment_id)
+
+    @event(StationRelocated)
+    def _relocate_station(self, new_road_segment_id: uuid):
+        self.road_segment_id = new_road_segment_id

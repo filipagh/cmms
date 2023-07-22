@@ -36,6 +36,7 @@ from stationmanager.infrastructure.service_contract_rest_router import service_c
 from stationmanager.infrastructure.station_rest_router import station_router
 from storagemanager.application.storage_item_projector import StorageItemProjector
 from storagemanager.application.storage_item_service import StorageItemService
+from taskmanager.application.issue_projector import IssueProjector
 from taskmanager.application.redmine_projector import RedmineProjector
 from taskmanager.application.task_service import TaskService
 from taskmanager.application.task_service_on_site_service import TaskServiceOnSiteService
@@ -49,14 +50,14 @@ from taskmanager.infrastructure.task_servis_on_site_rest_router import task_serv
 from taskmanager.infrastructure.task_servis_remote_rest_router import task_servis_remote
 
 
-def register_tansconder(services, t: Transcoding):
-    for s in services:
+def register_transcoder(services_list, t: Transcoding):
+    for s in services_list:
         runner.get(s).mapper.transcoder.register(t)
         for x in runner.get(s).mappers.values():
             x.transcoder.register(t)
 
 
-def add_transconder(t: Transcoding):
+def add_transcoder(t: Transcoding):
     for s in services:
         service = runner.get(s)
         service.mapper.transcoder.register(t)
@@ -67,13 +68,6 @@ def add_transconder(t: Transcoding):
 
 
 os.chdir(os.path.dirname(__file__) + '/../')
-
-# proc = subprocess.Popen(["alembic upgrade head"], stdout=subprocess.PIPE, shell=True)
-# (out, err) = proc.communicate()
-# print("program output:", out)
-# print("program error:", err)
-# proc.kill()
-
 
 if os.system('alembic upgrade head') != 0:
     print("ALEMBIC FAIL")
@@ -120,6 +114,9 @@ system = System(pipes=[[AssetService, AssetProjector],
                        [StationService, TaskService],
                        [StationService, TaskServiceRemoteService],
                        [StationService, TaskServiceOnSiteService],
+                       [StationService, IssueProjector],
+                       [StationService, TasksProjector],
+                       [StationService, RedmineProjector],
                        ])
 
 runner = SingleThreadedRunner(system)
@@ -128,14 +125,14 @@ runner.start()
 runner.get(TaskService).mapper.transcoder.register(AddComponentRequestAsStr())
 runner.get(TaskService).mapper.transcoder.register(RemoveComponentRequestAsStr())
 
-register_tansconder(
+register_transcoder(
     [TasksProjector, AssignedComponentsService, StorageItemService, RedmineProjector, ActionHistoryProjector],
     AddComponentRequestAsStr())
-register_tansconder(
+register_transcoder(
     [TasksProjector, AssignedComponentsService, StorageItemService, RedmineProjector, ActionHistoryProjector],
     RemoveComponentRequestAsStr())
-add_transconder(DateAsIso())
-add_transconder(AssetTelemetryAsJSON())
+add_transcoder(DateAsIso())
+add_transcoder(AssetTelemetryAsJSON())
 
 # runner.get(TaskService).pull_and_process('StationService')
 # runner.get(TasksProjector).pull_and_process("TaskService")
@@ -210,8 +207,8 @@ async def settings():
     for s in SettingsRepo().get_all():
         if s.value == '':
             continue
-        _list.append(SettingSchema(key=SettingsEnum(s.key)
-                                   , value=s.value, enabled=True if s.value is not None or s.value != "" else False))
+        _list.append(SettingSchema(key=SettingsEnum(s.key), value=s.value,
+                                   enabled=True if s.value is not None or s.value != "" else False))
 
     for s in SettingsEnum:
         if s not in [x.key for x in _list]:

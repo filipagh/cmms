@@ -77,6 +77,7 @@ part 'model/settings_enum.dart';
 part 'model/station_id_schema.dart';
 part 'model/station_new_schema.dart';
 part 'model/station_public_schema.dart';
+part 'model/station_relocate_schema.dart';
 part 'model/station_schema.dart';
 part 'model/storage_item_override_schema.dart';
 part 'model/storage_item_schema.dart';

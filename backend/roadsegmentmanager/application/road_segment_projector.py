@@ -1,4 +1,5 @@
 import uuid
+from typing import Optional
 
 from eventsourcing.dispatch import singledispatchmethod
 from eventsourcing.system import ProcessApplication
@@ -27,7 +28,7 @@ class RoadSegmentProjector(ProcessApplication):
         model.is_active = False
         road_segment_repo.save(model)
 
-    def get_by_id(self, segment_id: uuid.UUID) -> RoadSegmentModel:
+    def get_by_id(self, segment_id: uuid.UUID) -> Optional[RoadSegmentModel]:
         return road_segment_repo.get_by_id(segment_id)
 
     def get_all(self, only_active: bool = False) -> list[RoadSegmentModel]:

@@ -5,6 +5,7 @@ from eventsourcing.system import ProcessApplication
 
 from assetmanager.application.asset_manager_loader import load_asset_by_id
 from base import main
+from roadsegmentmanager.application.road_segment_projector import RoadSegmentProjector
 from stationmanager.application.action_history.model import schema
 from stationmanager.application.station_projector import StationProjector
 from stationmanager.domain.model.assigned_component import AssignedComponent, AssignedComponentState
@@ -191,3 +192,15 @@ class ActionHistoryProjector(ProcessApplication):
             col.append(schema.ActionHistorySchema(**i.__dict__))
 
         return col
+
+    @policy.register(Station.StationRelocated)
+    def _(self, domain_event: Station.StationRelocated, process_event):
+        station = main.runner.get(StationProjector).get_by_id(domain_event.originator_id)
+        road_segment_name = main.runner.get(RoadSegmentProjector).get_by_id(domain_event.new_road_segment_id).name
+        text = f"Stanica {station.name} bola presunuta na cestny usek {road_segment_name}"
+        model = action_history_repo.ActionHistoryModel(
+            station_id=domain_event.originator_id,
+            text=text,
+            datetime=domain_event.timestamp
+        )
+        action_history_repo.save(model)

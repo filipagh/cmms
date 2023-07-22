@@ -7,9 +7,10 @@ from starlette.background import BackgroundTasks
 from starlette.responses import PlainTextResponse, FileResponse
 
 from base import main
-from base.auth_def import custom_auth, read_permission, write_permission
+from base.auth_def import custom_auth, read_permission, write_permission, admin_permission
 from stationmanager.application import station_xsl_exporter
 from stationmanager.application.model import schema
+from stationmanager.application.model.schema import StationRelocateSchema
 from stationmanager.application.station_projector import StationProjector
 from stationmanager.application.station_service import StationService
 
@@ -87,3 +88,11 @@ def get_all_public(
     for i in stations:
         col.append(schema.StationPublicSchema(**i.__dict__))
     return col
+
+
+@station_router.post("/relocate_station", response_class=PlainTextResponse)
+def relocate_station(station_relocation: StationRelocateSchema,
+                     _user: FiefUserInfo = Depends(custom_auth(admin_permission))):
+    segment_service = main.runner.get(StationService)
+    segment_service.relocate_station(station_relocation)
+    return "OK"
