@@ -52,7 +52,7 @@ def redmine_setup(auth: RedmineSetupRequestSchema):
 
         if not is_tracker_in_project:
             raise Exception("Tracker is not allowed in selected project")
-    except:
+    except:  # //NOSONAR
         raise Exception("Tracker is not allowed in selected project")
 
     is_supervisor_in_project = False
@@ -61,7 +61,7 @@ def redmine_setup(auth: RedmineSetupRequestSchema):
             is_supervisor_in_project = True
             break
     if not is_supervisor_in_project:
-        raise Exception("Selected supervisor is not in selected project")
+        raise Exception("Selected supervisor user is not in selected project")
 
     # validate redmine custom field if exists for project and tracker
     custom_fields = _load_custom_fields(redmine)
@@ -91,12 +91,6 @@ def validate_custom_field(auth, project, custom_fields, custom_field_name):
 def redmine_disable():
     SettingsRepo().set_setting(SettingsEnum.redmine_feature, False)
     SettingsRepo().set_setting(SettingsEnum.redmine_url, "")
-
-
-def setup_redmine():
-    redmine = _redmine_connect()
-    _load_custom_fields(redmine)
-    _load_or_create_redmine_category(redmine, 'test')
 
 
 def _load_custom_fields(redmine):
@@ -144,7 +138,8 @@ def create_issue(task_id, subject, description, assigned_to_id, category_name) -
     cmms_url = os.environ.get('FE_URL') + '/task/' + str(task_id)
 
     issue = redmine.issue.new()
-    issue.custom_fields = ({'id': supervisor_id, 'value': supervisor_user_id}, {'id': link_to_cmms_id, 'value': cmms_url})
+    issue.custom_fields = (
+        {'id': supervisor_id, 'value': supervisor_user_id}, {'id': link_to_cmms_id, 'value': cmms_url})
 
     issue.project_id = project_id
     issue.assigned_to_id = supervisor_user_id
@@ -213,3 +208,13 @@ def close_issue(issue_id):
         return
     issue.status_id = 5
     issue.save()
+
+
+def change_category(issues, new_category):
+    redmine = _redmine_connect()
+    project_id = SettingsRepo().get_settings(key=SettingsEnum.redmine_project_id)
+    category_id = _load_or_create_redmine_category(redmine, project_id, new_category).id
+    for issue in issues:
+        redmine_issue = _get_issue_from_redmine(int(issue.redmine_id))
+        redmine_issue.category_id = category_id
+        redmine_issue.save()

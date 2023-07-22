@@ -49,6 +49,7 @@ doc/StationApi.md
 doc/StationIdSchema.md
 doc/StationNewSchema.md
 doc/StationPublicSchema.md
+doc/StationRelocateSchema.md
 doc/StationSchema.md
 doc/StorageItemOverrideSchema.md
 doc/StorageItemSchema.md
@@ -133,6 +134,7 @@ lib/model/settings_enum.dart
 lib/model/station_id_schema.dart
 lib/model/station_new_schema.dart
 lib/model/station_public_schema.dart
+lib/model/station_relocate_schema.dart
 lib/model/station_schema.dart
 lib/model/storage_item_override_schema.dart
 lib/model/storage_item_schema.dart

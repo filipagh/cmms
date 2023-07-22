@@ -1,12 +1,15 @@
+import logging
 import uuid
 from typing import Optional
 
 from eventsourcing.dispatch import singledispatchmethod
 from eventsourcing.system import ProcessApplication
 
+import base.main
 from base import main
 from roadsegmentmanager.application.road_segment_projector import RoadSegmentProjector
 from stationmanager.application.station_projector import StationProjector
+from stationmanager.domain.model.station import Station
 from taskmanager.application.model.task import schema
 from taskmanager.domain.model.task_state import TaskState
 from taskmanager.domain.model.tasks.task_change_components import TaskChangeComponents
@@ -17,7 +20,7 @@ from taskmanager.infrastructure.persistence.tasks_repo import TaskType
 
 
 class TasksProjector(ProcessApplication):
-    def _get_station_name_and_RS_name(self, station_id: uuid):
+    def _get_station_name_and_road_segment_name(self, station_id: uuid):
         station_loader: StationProjector = main.runner.get(StationProjector)
         road_segment_loader: RoadSegmentProjector = main.runner.get(RoadSegmentProjector)
         station = station_loader.get_by_id(station_id)
@@ -32,7 +35,7 @@ class TasksProjector(ProcessApplication):
 
     @policy.register(TaskChangeComponents.TaskChangeComponentsCreated)
     def _(self, domain_event: TaskChangeComponents.TaskChangeComponentsCreated, process_event):
-        names = self._get_station_name_and_RS_name(domain_event.station_id)
+        names = self._get_station_name_and_road_segment_name(domain_event.station_id)
         task = tasks_repo.TaskModel(
             id=domain_event.originator_id,
             name=domain_event.name,
@@ -67,7 +70,7 @@ class TasksProjector(ProcessApplication):
 
     @policy.register(TaskServiceOnSite.TaskCreated)
     def _(self, domain_event: TaskServiceOnSite.TaskCreated, process_event):
-        names = self._get_station_name_and_RS_name(domain_event.station_id)
+        names = self._get_station_name_and_road_segment_name(domain_event.station_id)
         task = tasks_repo.TaskModel(
             id=domain_event.originator_id,
             name=domain_event.name,
@@ -98,7 +101,7 @@ class TasksProjector(ProcessApplication):
 
     @policy.register(TaskServiceRemote.TaskCreated)
     def _(self, domain_event: TaskServiceRemote.TaskCreated, process_event):
-        names = self._get_station_name_and_RS_name(domain_event.station_id)
+        names = self._get_station_name_and_road_segment_name(domain_event.station_id)
         task = tasks_repo.TaskModel(
             id=domain_event.originator_id,
             name=domain_event.name,
@@ -125,6 +128,21 @@ class TasksProjector(ProcessApplication):
         task.state = domain_event.new_status
         task.finished_at = domain_event.finished_at
         tasks_repo.save(task)
+
+    @policy.register(Station.StationRelocated)
+    def _(self, domain_event: Station.StationRelocated, process_event):
+        try:
+            road_segment = base.main.runner.get(RoadSegmentProjector).get_by_id(domain_event.new_road_segment_id)
+            if road_segment is None:
+                logging.error(
+                    f'Road segment does not exist {str(domain_event.new_road_segment_id)}, station relocation failed for issue')
+                return
+            tasks = tasks_repo.get_all(station_id=domain_event.originator_id)
+            for task in tasks:
+                task.road_segment_name = road_segment.name
+                tasks_repo.save(task)
+        except Exception as e:
+            logging.error(f'Error task_projector while relocating station {str(domain_event.originator_id)}: {str(e)}')
 
     def get_by_id(self, task_id: uuid.UUID) -> schema.TaskSchema:
         return schema.TaskSchema(**tasks_repo.get_by_id(task_id).__dict__)

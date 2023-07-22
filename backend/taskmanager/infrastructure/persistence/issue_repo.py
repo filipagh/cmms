@@ -55,3 +55,12 @@ def resolve_issue(task_id):
         issue = db.query(IssueModel).get(task_id)
         issue.active = False
         db.commit()
+
+
+def get_by_station(station_id: uuid.UUID) -> list[IssueModel]:
+    _list = []
+    db: Session
+    with _get_db() as db:
+        for issue in db.query(IssueModel).filter(IssueModel.station_id == station_id.__str__()).all():
+            _list.append(issue)
+        return _list

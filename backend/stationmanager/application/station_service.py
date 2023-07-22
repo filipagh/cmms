@@ -5,6 +5,7 @@ from eventsourcing.dispatch import singledispatchmethod
 from eventsourcing.system import ProcessApplication
 
 import base.main
+from roadsegmentmanager.application.road_segment_projector import RoadSegmentProjector
 from stationmanager.application.assigned_component.assigned_component_projector import AssignedComponentProjector
 from stationmanager.application.exceptions.AppStationException import AppStationException
 from stationmanager.application.model import schema
@@ -43,6 +44,17 @@ class StationService(ProcessApplication):
             raise AppStationException("Station not found")
         station.remove()
         self.save(station)
+
+    def relocate_station(self, station: schema.StationRelocateSchema):
+        road_segment = base.main.runner.get(RoadSegmentProjector).get_by_id(station.new_road_segment_id)
+        if road_segment is None:
+            raise AppStationException("Road segment not found")
+        try:
+            station_agg: Station = self.repository.get(station.station_id)
+        except AggregateNotFound:
+            raise AppStationException("Station not found")
+        station_agg.relocate_station(station.new_road_segment_id)
+        self.save(station_agg)
 
     @singledispatchmethod
     def policy(self, domain_event, process_event):

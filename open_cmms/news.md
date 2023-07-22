@@ -24,6 +24,16 @@
 
 [//]: # ()
 
+## 22.7.23
+
+### novinky
+
+- je mozne presunut stanicu do ineho cestneho useku \- upravia sa aj ulohy, nahlasene chyby, redmine ulohy
+
+### oprava
+
+---
+
 ## 17.7.23
 
 ### novinky

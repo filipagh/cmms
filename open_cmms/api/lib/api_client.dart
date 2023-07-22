@@ -264,6 +264,8 @@ class ApiClient {
           return StationNewSchema.fromJson(value);
         case 'StationPublicSchema':
           return StationPublicSchema.fromJson(value);
+        case 'StationRelocateSchema':
+          return StationRelocateSchema.fromJson(value);
         case 'StationSchema':
           return StationSchema.fromJson(value);
         case 'StorageItemOverrideSchema':

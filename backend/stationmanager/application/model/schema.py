@@ -33,3 +33,8 @@ class StationPublicSchema(BaseModel):
     road_segment_id: uuid.UUID
     id: uuid.UUID
     km_of_road: Optional[float]
+
+
+class StationRelocateSchema(BaseModel):
+    station_id: uuid.UUID
+    new_road_segment_id: uuid.UUID

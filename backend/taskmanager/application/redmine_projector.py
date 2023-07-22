@@ -10,7 +10,9 @@ from assetmanager.application import asset_manager_loader
 from roadsegmentmanager.application.road_segment_projector import RoadSegmentProjector
 from stationmanager.application.assigned_component.assigned_component_projector import AssignedComponentProjector
 from stationmanager.application.station_projector import StationProjector
+from stationmanager.domain.model.station import Station
 from taskmanager.application.model.redmine_integration.schema import RedmineIssueDataSchema
+from taskmanager.application.tasks_projector import TasksProjector
 from taskmanager.domain.model.task_state import TaskState
 from taskmanager.domain.model.tasks.task_change_components import TaskChangeComponents
 from taskmanager.domain.model.tasks.task_on_site_service import TaskServiceOnSite
@@ -18,7 +20,7 @@ from taskmanager.domain.model.tasks.task_remote_service import TaskServiceRemote
 from taskmanager.infrastructure.persistence import redmine_tasks_repo
 from taskmanager.infrastructure.persistence.redmine_tasks_repo import RedmineTaskModel
 from taskmanager.infrastructure.redmine_integration import is_redmine_active, create_issue, close_issue, complete_issue, \
-    get_issue, add_note_to_issue
+    get_issue, add_note_to_issue, change_category
 
 
 class RedmineProjector(ProcessApplication):
@@ -89,19 +91,23 @@ class RedmineProjector(ProcessApplication):
             if issue is None:
                 redmine_id = self._create_redmine_task(domain_event.originator_id, domain_event.name,
                                                        domain_event.description,
-                                                       self._get_road_segment_name(domain_event.station_id))
+                                                       self._get_road_segment_name_from_station(
+                                                           domain_event.station_id))
             else:
                 redmine_id = issue.task_id
             self._add_change_components_note(redmine_id, domain_event)
         except Exception as e:
-            logging.error("Error while creating redmine task: " + str(e))
+            self.log_error_redmine_projection(e)
+
+    def log_error_redmine_projection(self, e):
+        logging.error("Error while creating redmine task: " + str(e))
 
     @policy.register(TaskChangeComponents.TaskCanceled)
     def _(self, domain_event: TaskChangeComponents.TaskCanceled, process_event):
         try:
             self._close_redmine_task(domain_event.originator_id)
         except Exception as e:
-            logging.error("Error while closing redmine task: " + str(e))
+            self.log_error_redmine_projection(e)
 
     @policy.register(TaskChangeComponents.TaskChangeComponentsStatusChanged)
     def _(self, domain_event: TaskChangeComponents.TaskCanceled, process_event):
@@ -109,7 +115,7 @@ class RedmineProjector(ProcessApplication):
             if domain_event.new_status == TaskState.DONE:
                 self._complete_redmine_task(domain_event.originator_id)
         except Exception as e:
-            logging.error("Error while closing redmine task: " + str(e))
+            self.log_error_redmine_projection(e)
 
     @policy.register(TaskServiceOnSite.TaskCreated)
     def _(self, domain_event: TaskServiceOnSite.TaskCreated, process_event):
@@ -118,23 +124,23 @@ class RedmineProjector(ProcessApplication):
             if issue is None:
                 self._create_redmine_task(domain_event.originator_id, domain_event.name,
                                           domain_event.description,
-                                          self._get_road_segment_name(domain_event.station_id))
+                                          self._get_road_segment_name_from_station(domain_event.station_id))
         except Exception as e:
-            logging.error("Error while creating redmine task: " + str(e))
+            self.log_error_redmine_projection(e)
 
     @policy.register(TaskServiceOnSite.TaskComplete)
     def _(self, domain_event: TaskServiceOnSite.TaskComplete, process_event):
         try:
             self._complete_redmine_task(domain_event.originator_id)
         except Exception as e:
-            logging.error("Error while closing redmine task: " + str(e))
+            self.log_error_redmine_projection(e)
 
     @policy.register(TaskServiceOnSite.TaskCanceled)
     def _(self, domain_event: TaskServiceOnSite.TaskCanceled, process_event):
         try:
             self._close_redmine_task(domain_event.originator_id)
         except Exception as e:
-            logging.error("Error while closing redmine task: " + str(e))
+            self.log_error_redmine_projection(e)
 
     @policy.register(TaskServiceRemote.TaskCreated)
     def _(self, domain_event: TaskServiceRemote.TaskCreated, process_event):
@@ -143,9 +149,9 @@ class RedmineProjector(ProcessApplication):
             if issue is None:
                 self._create_redmine_task(domain_event.originator_id, domain_event.name,
                                           domain_event.description,
-                                          self._get_road_segment_name(domain_event.station_id))
+                                          self._get_road_segment_name_from_station(domain_event.station_id))
         except Exception as e:
-            logging.error("Error while creating redmine task: " + str(e))
+            self.log_error_redmine_projection(e)
 
     @policy.register(TaskServiceRemote.TaskCanceled)
     def _(self, domain_event: TaskServiceRemote.TaskCreated, process_event):
@@ -161,7 +167,32 @@ class RedmineProjector(ProcessApplication):
         except Exception as e:
             logging.error("Error while closing redmine task: " + str(e))
 
-    def _get_road_segment_name(self, station_id: uuid.UUID):
+    @policy.register(Station.StationRelocated)
+    def _(self, domain_event: Station.StationRelocated, process_event):
+        if not is_redmine_active():
+            return
+        try:
+            tasks = base.main.runner.get(TasksProjector).get_all(station_id=domain_event.originator_id)
+            new_category = self._get_road_segment_name(domain_event.new_road_segment_id)
+            issues_to_update = []
+            for task in tasks:
+                issue = redmine_tasks_repo.get_by_id(task_id=task.id)
+                if issue is None:
+                    continue
+                issues_to_update.append(issue)
+
+            if len(issues_to_update) == 0:
+                return
+
+            change_category(issues_to_update, new_category)
+
+        except Exception as e:
+            self.log_error_redmine_projection(e)
+
+    def _get_road_segment_name(self, road_segment_id: uuid.UUID) -> str:
+        return base.main.runner.get(RoadSegmentProjector).get_by_id(road_segment_id).name
+
+    def _get_road_segment_name_from_station(self, station_id: uuid.UUID) -> str:
 
         road_segment_id = base.main.runner.get(StationProjector).get_by_id(station_id).road_segment_id
-        return base.main.runner.get(RoadSegmentProjector).get_by_id(road_segment_id).name
+        return self._get_road_segment_name(road_segment_id)
