@@ -1,5 +1,6 @@
 import uuid
 from typing import Optional
+from urllib.parse import quote
 
 from fastapi import APIRouter, Depends, HTTPException
 from fief_client import FiefUserInfo
@@ -52,7 +53,7 @@ def export(segment_id: uuid.UUID, background_tasks: BackgroundTasks,
     name = station_xsl_exporter.export_xslx(segment_id)
     background_tasks.add_task(remove_file, name)
     headers = {
-        "Content-Disposition": f"attachment; filename={name}",
+        "Content-Disposition": f"attachment; filename={quote(name)}",
         "content-type": "application/octet-stream"
     }
     return FileResponse(name, media_type='application/octet-stream', filename=name, headers=headers)

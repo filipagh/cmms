@@ -7,6 +7,25 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy_utils import database_exists
 
 
+def get_eventstore_db_link():
+    return f'postgresql://' \
+           f'{os.environ["POSTGRES_USER"]}:' \
+           f'{os.environ["POSTGRES_PASSWORD"]}@' \
+           f'{os.environ["POSTGRES_HOST"]}:' \
+           f'{os.environ["POSTGRES_PORT"]}/' \
+           f'{os.environ["POSTGRES_DBNAME"]}'
+
+
+def execute_sql_eventstore_db(sql):
+    is_test = os.environ.get('TEST')
+    if is_test is not None:
+        return
+    engine = create_engine(get_eventstore_db_link())
+    with engine.connect() as connection:
+        connection.execute(sql)
+    engine.dispose()
+
+
 def get_db_link():
     return f'postgresql://' \
            f'{os.environ["POSTGRES_USER"]}:' \

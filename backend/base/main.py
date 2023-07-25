@@ -134,6 +134,16 @@ register_transcoder(
 add_transcoder(DateAsIso())
 add_transcoder(AssetTelemetryAsJSON())
 
+# ActionHistoryProjector
+# f27568460fb0
+runner.get(ActionHistoryProjector).pull_and_process('StationService')
+runner.get(ActionHistoryProjector).pull_and_process('AssignedComponentsService')
+runner.get(ActionHistoryProjector).pull_and_process('TaskService')
+runner.get(ActionHistoryProjector).pull_and_process('TaskServiceOnSiteService')
+runner.get(ActionHistoryProjector).pull_and_process('TaskServiceRemoteService')
+############
+
+
 # runner.get(TaskService).pull_and_process('StationService')
 # runner.get(TasksProjector).pull_and_process("TaskService")
 # runner.get(TasksProjector).pull_and_process("TaskServiceOnSiteService")

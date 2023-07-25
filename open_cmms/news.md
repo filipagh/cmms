@@ -24,6 +24,18 @@
 
 [//]: # ()
 
+## 24.7.23
+
+### novinky
+
+- export stanice do excelu obsahuje len verejnu historiu
+
+### oprava
+
+- oprava encodingu mena suboru pri exporte stanice do excelu
+
+---
+
 ## 22.7.23
 
 ### novinky
