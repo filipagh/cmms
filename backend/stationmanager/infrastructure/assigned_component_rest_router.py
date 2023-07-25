@@ -51,7 +51,7 @@ def remove_installed_component(components_to_remove: list[schema.AssignedCompone
 def get_all(
         station_id: Optional[uuid.UUID] = None, _user: FiefUserInfo = Depends(custom_auth(read_permission))
 ):
-    projector = main.runner.get(AssignedComponentProjector)
+    projector: AssignedComponentProjector = main.runner.get(AssignedComponentProjector)
     col = []
     components = projector.get_by_station(station_id)
 

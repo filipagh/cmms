@@ -14,6 +14,7 @@ class ActionHistoryModel(Base):
     station_id = Column(postgresql.UUID(as_uuid=True), nullable=False, index=True)
     text = Column(String, nullable=False)
     datetime = Column(DateTime, nullable=False)
+    is_internal = Column(postgresql.BOOLEAN, nullable=False, default=True)
 
 
 def _get_db():
@@ -26,8 +27,11 @@ def save(station: ActionHistoryModel):
         db.commit()
 
 
-def get_by_station(station: uuid.UUID) -> list[ActionHistoryModel]:
+def get_by_station(station: uuid.UUID, include_internal=False) -> list[ActionHistoryModel]:
     db: Session
     with _get_db() as db:
-        return db.query(ActionHistoryModel).order_by(ActionHistoryModel.datetime).where(
-            ActionHistoryModel.station_id == station).all()
+        actions = db.query(ActionHistoryModel).order_by(ActionHistoryModel.datetime).where(
+            ActionHistoryModel.station_id == station)
+        if not include_internal:
+            actions = actions.where(ActionHistoryModel.is_internal == False)
+        return actions.all()

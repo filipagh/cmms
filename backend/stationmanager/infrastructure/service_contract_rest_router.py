@@ -3,7 +3,7 @@ import uuid
 
 from fastapi import APIRouter, Depends
 from fief_client import FiefUserInfo
-from starlette.background import BackgroundTask, BackgroundTasks
+from starlette.background import BackgroundTasks
 from starlette.responses import FileResponse
 
 from base import main
@@ -47,7 +47,7 @@ def _model_to_schema(model: ServiceContractModel):
 @service_contract_router.get("/contract_for_station",
                              response_model=list[schema.ServiceContractSchema])
 def get(station_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_auth(read_permission))):
-    projector = main.runner.get(ServiceContractProjector)
+    projector: ServiceContractProjector = main.runner.get(ServiceContractProjector)
     col = []
     contracts = projector.get_by_station(station_id)
     for i in contracts:

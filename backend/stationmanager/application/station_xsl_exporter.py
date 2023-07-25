@@ -1,9 +1,9 @@
 import datetime
 
-from base import main
 import xlsxwriter
 
 from assetmanager.application import asset_manager_loader
+from base import main
 from stationmanager.application.action_history.action_history_projector import ActionHistoryProjector
 from stationmanager.application.assigned_component.assigned_component_projector import AssignedComponentProjector
 from stationmanager.domain.model.assigned_component import AssignedComponentState
@@ -13,8 +13,10 @@ from stationmanager.infrastructure.persistence import station_repo
 def export_xslx(station_id):
     station = station_repo.get_by_id(station_id)
     assets = asset_manager_loader.load_assets()
-    components = main.runner.get(AssignedComponentProjector).get_by_station(station_id)
-    history = main.runner.get(ActionHistoryProjector).get_by_station(station_id)
+    assigned_component_projector: AssignedComponentProjector = main.runner.get(AssignedComponentProjector)
+    components = assigned_component_projector.get_by_station(station_id)
+    action_history_projector: ActionHistoryProjector = main.runner.get(ActionHistoryProjector)
+    history = action_history_projector.get_by_station(station_id, False)
 
     name = station.name + " " + datetime.datetime.now().__str__() + ".xlsx"
     workbook = xlsxwriter.Workbook(name)

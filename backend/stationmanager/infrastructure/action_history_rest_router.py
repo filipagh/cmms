@@ -20,5 +20,5 @@ action_history_router = APIRouter(
 def get_by_station(
         station_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_auth(read_permission))
 ):
-    projector = main.runner.get(ActionHistoryProjector)
-    return projector.get_by_station(station_id)
+    projector: ActionHistoryProjector = main.runner.get(ActionHistoryProjector)
+    return projector.get_by_station(station_id, True)

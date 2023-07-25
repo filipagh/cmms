@@ -32,7 +32,7 @@ class StationService(ProcessApplication):
         return station.id
 
     def remove_station(self, station: schema.StationIdSchema):
-        assigned_component_projector = base.main.runner.get(AssignedComponentProjector)
+        assigned_component_projector: AssignedComponentProjector = base.main.runner.get(AssignedComponentProjector)
         assigned_components = assigned_component_projector.get_by_station(station.id)
         for assigned_component in assigned_components:
             if (assigned_component.status in (

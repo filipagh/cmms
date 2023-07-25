@@ -37,7 +37,8 @@ class ActionHistoryProjector(ProcessApplication):
             model = action_history_repo.ActionHistoryModel(
                 station_id=domain_event.station_id,
                 text=text,
-                datetime=domain_event.timestamp
+                datetime=domain_event.timestamp,
+                is_internal=False
             )
             action_history_repo.save(model)
 
@@ -48,7 +49,8 @@ class ActionHistoryProjector(ProcessApplication):
         model = action_history_repo.ActionHistoryModel(
             station_id=domain_event.station_id,
             text=text,
-            datetime=domain_event.installed_at
+            datetime=domain_event.installed_at,
+            is_internal=False
         )
         action_history_repo.save(model)
 
@@ -59,7 +61,8 @@ class ActionHistoryProjector(ProcessApplication):
         model = action_history_repo.ActionHistoryModel(
             station_id=domain_event.station_id,
             text=text,
-            datetime=domain_event.removed_at
+            datetime=domain_event.removed_at,
+            is_internal=False
         )
         action_history_repo.save(model)
 
@@ -70,7 +73,8 @@ class ActionHistoryProjector(ProcessApplication):
         model = action_history_repo.ActionHistoryModel(
             station_id=domain_event.station_id,
             text=text,
-            datetime=domain_event.timestamp
+            datetime=domain_event.timestamp,
+            is_internal=True
         )
         action_history_repo.save(model)
 
@@ -81,7 +85,8 @@ class ActionHistoryProjector(ProcessApplication):
         model = action_history_repo.ActionHistoryModel(
             station_id=task.station_id,
             text=text,
-            datetime=domain_event.timestamp
+            datetime=domain_event.timestamp,
+            is_internal=True
         )
         action_history_repo.save(model)
 
@@ -92,7 +97,8 @@ class ActionHistoryProjector(ProcessApplication):
         model = action_history_repo.ActionHistoryModel(
             station_id=task.station_id,
             text=text,
-            datetime=domain_event.timestamp
+            datetime=domain_event.timestamp,
+            is_internal=True
         )
         action_history_repo.save(model)
 
@@ -104,7 +110,8 @@ class ActionHistoryProjector(ProcessApplication):
         model = action_history_repo.ActionHistoryModel(
             station_id=domain_event.station_id,
             text=text,
-            datetime=domain_event.timestamp
+            datetime=domain_event.timestamp,
+            is_internal=True
         )
         action_history_repo.save(model)
 
@@ -115,7 +122,8 @@ class ActionHistoryProjector(ProcessApplication):
         model = action_history_repo.ActionHistoryModel(
             station_id=task.station_id,
             text=text,
-            datetime=domain_event.timestamp
+            datetime=domain_event.timestamp,
+            is_internal=True
         )
         action_history_repo.save(model)
 
@@ -126,7 +134,8 @@ class ActionHistoryProjector(ProcessApplication):
         model = action_history_repo.ActionHistoryModel(
             station_id=task.station_id,
             text=text,
-            datetime=domain_event.timestamp
+            datetime=domain_event.timestamp,
+            is_internal=True
         )
         action_history_repo.save(model)
 
@@ -138,7 +147,8 @@ class ActionHistoryProjector(ProcessApplication):
         model = action_history_repo.ActionHistoryModel(
             station_id=domain_event.station_id,
             text=text,
-            datetime=domain_event.timestamp
+            datetime=domain_event.timestamp,
+            is_internal=True
         )
         action_history_repo.save(model)
 
@@ -150,7 +160,8 @@ class ActionHistoryProjector(ProcessApplication):
             model = action_history_repo.ActionHistoryModel(
                 station_id=task.station_id,
                 text=text,
-                datetime=domain_event.timestamp
+                datetime=domain_event.timestamp,
+                is_internal=True
             )
             action_history_repo.save(model)
 
@@ -161,7 +172,8 @@ class ActionHistoryProjector(ProcessApplication):
         model = action_history_repo.ActionHistoryModel(
             station_id=task.station_id,
             text=text,
-            datetime=domain_event.timestamp
+            datetime=domain_event.timestamp,
+            is_internal=True
         )
         action_history_repo.save(model)
 
@@ -171,7 +183,8 @@ class ActionHistoryProjector(ProcessApplication):
         model = action_history_repo.ActionHistoryModel(
             station_id=domain_event.originator_id,
             text=text,
-            datetime=domain_event.timestamp
+            datetime=domain_event.timestamp,
+            is_internal=False
         )
         action_history_repo.save(model)
 
@@ -182,16 +195,10 @@ class ActionHistoryProjector(ProcessApplication):
         model = action_history_repo.ActionHistoryModel(
             station_id=domain_event.originator_id,
             text=text,
-            datetime=domain_event.timestamp
+            datetime=domain_event.timestamp,
+            is_internal=False
         )
         action_history_repo.save(model)
-
-    def get_by_station(self, station_id: uuid.UUID) -> list[schema.ActionHistorySchema]:
-        col = []
-        for i in action_history_repo.get_by_station(station_id):
-            col.append(schema.ActionHistorySchema(**i.__dict__))
-
-        return col
 
     @policy.register(Station.StationRelocated)
     def _(self, domain_event: Station.StationRelocated, process_event):
@@ -201,6 +208,14 @@ class ActionHistoryProjector(ProcessApplication):
         model = action_history_repo.ActionHistoryModel(
             station_id=domain_event.originator_id,
             text=text,
-            datetime=domain_event.timestamp
+            datetime=domain_event.timestamp,
+            is_internal=False
         )
         action_history_repo.save(model)
+
+    def get_by_station(self, station_id: uuid.UUID, include_internal=False) -> list[schema.ActionHistorySchema]:
+        col = []
+        for i in action_history_repo.get_by_station(station_id, include_internal):
+            col.append(schema.ActionHistorySchema(**i.__dict__))
+
+        return col
