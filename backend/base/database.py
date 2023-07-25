@@ -17,6 +17,9 @@ def get_eventstore_db_link():
 
 
 def execute_sql_eventstore_db(sql):
+    is_test = os.environ.get('TEST')
+    if is_test is not None:
+        return
     engine = create_engine(get_eventstore_db_link())
     with engine.connect() as connection:
         connection.execute(sql)
