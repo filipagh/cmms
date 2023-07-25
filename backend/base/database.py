@@ -16,13 +16,24 @@ def get_eventstore_db_link():
            f'{os.environ["POSTGRES_DBNAME"]}'
 
 
-def execute_sql_eventstore_db(sql):
+def dump_notifications_eventstore_db_service(service_name):
     is_test = os.environ.get('TEST')
     if is_test is not None:
         return
     engine = create_engine(get_eventstore_db_link())
     with engine.connect() as connection:
-        connection.execute(sql)
+
+        result = connection.execute(f"""
+        SELECT EXISTS (
+        SELECT 1
+        FROM information_schema.tables
+        WHERE table_name = '{service_name}'
+        );""")
+        result = result.first()[0]
+        if result:
+            connection.execute(f"""
+            delete from {service_name}
+            """)
     engine.dispose()
 
 
