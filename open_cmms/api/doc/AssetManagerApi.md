@@ -14,7 +14,9 @@ All URIs are relative to *http://localhost*
  [**createNewCategoryAssetManagerNewCategoryPost**](AssetManagerApi.md#createnewcategoryassetmanagernewcategorypost)             | **POST** /assetManager/newCategory        | Create New Category   
  [**getAssetCategoriesAssetManagerAssetCategoriesGet**](AssetManagerApi.md#getassetcategoriesassetmanagerassetcategoriesget)     | **GET** /assetManager/asset-categories    | Get Asset Categories  
  [**getAssetsAssetManagerAssetsGet**](AssetManagerApi.md#getassetsassetmanagerassetsget)                                         | **GET** /assetManager/assets              | Get Assets            
+ [**getAssetsSearchAssetManagerAssetsSearchGet**](AssetManagerApi.md#getassetssearchassetmanagerassetssearchget)                 | **GET** /assetManager/assets_search       | Get Assets Search     
  [**getTelemetryOptionsAssetManagerTelemetryOptionsGet**](AssetManagerApi.md#gettelemetryoptionsassetmanagertelemetryoptionsget) | **GET** /assetManager/telemetry_options   | Get Telemetry Options 
+
 
 # **archiveAssetAssetManagerAssetAssetIdDelete**
 > String archiveAssetAssetManagerAssetAssetIdDelete(assetId)
@@ -39,10 +41,12 @@ final api_instance = AssetManagerApi();
 final assetId = assetId_example; // String | 
 
 try {
-    final result = api_instance.archiveAssetAssetManagerAssetAssetIdDelete(assetId);
-    print(result);
-} catch (e) {
-    print('Exception when calling AssetManagerApi->archiveAssetAssetManagerAssetAssetIdDelete: $e\n');
+final result = api_instance.archiveAssetAssetManagerAssetAssetIdDelete(assetId);
+print(result);
+} catch
+(
+e) {
+print('Exception when calling AssetManagerApi->archiveAssetAssetManagerAssetAssetIdDelete: $e\n');
 }
 ```
 
@@ -258,17 +262,64 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getAssetsSearchAssetManagerAssetsSearchGet**
+
+> List<AssetSchema> getAssetsSearchAssetManagerAssetsSearchGet(query)
+
+Get Assets Search
+
+### Example
+
+```dart
+import 'package:BackendAPI/api.dart';
+
+final api_instance = AssetManagerApi();
+final query = query_example; // String | 
+
+try {
+final result = api_instance.getAssetsSearchAssetManagerAssetsSearchGet(query);
+print(result);
+} catch
+(
+e) {
+print('Exception when calling AssetManagerApi->getAssetsSearchAssetManagerAssetsSearchGet: $e\n');
+}
+```
+
+### Parameters
+
+ Name      | Type       | Description | Notes 
+-----------|------------|-------------|-------
+ **query** | **String** |             |
+
+### Return type
+
+[**List<AssetSchema>**](AssetSchema.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getTelemetryOptionsAssetManagerTelemetryOptionsGet**
+
 > TelemetryOptions getTelemetryOptionsAssetManagerTelemetryOptionsGet()
 
 Get Telemetry Options
 
 ### Example
+
 ```dart
 import 'package:BackendAPI/api.dart';
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer

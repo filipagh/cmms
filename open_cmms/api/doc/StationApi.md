@@ -265,16 +265,13 @@ try {
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **relocateStationStationRelocateStationPost**
-
 > String relocateStationStationRelocateStationPost(stationRelocateSchema)
 
 Relocate Station
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
-
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
 //defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
 // TODO Configure API key authorization: api_key
@@ -290,12 +287,10 @@ final api_instance = StationApi();
 final stationRelocateSchema = StationRelocateSchema(); // StationRelocateSchema | 
 
 try {
-final result = api_instance.relocateStationStationRelocateStationPost(stationRelocateSchema);
-print(result);
-} catch
-(
-e) {
-print('Exception when calling StationApi->relocateStationStationRelocateStationPost: $e\n');
+    final result = api_instance.relocateStationStationRelocateStationPost(stationRelocateSchema);
+    print(result);
+} catch (e) {
+    print('Exception when calling StationApi->relocateStationStationRelocateStationPost: $e\n');
 }
 ```
 
@@ -321,13 +316,11 @@ print('Exception when calling StationApi->relocateStationStationRelocateStationP
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **removeStationStationRemoveStationDelete**
-
 > String removeStationStationRemoveStationDelete(stationIdSchema)
 
 Remove Station
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer

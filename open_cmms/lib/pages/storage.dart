@@ -6,6 +6,7 @@ import 'package:open_cmms/widgets/dialog_form.dart';
 import 'package:open_cmms/widgets/forms/storage/add_items_to_storage.dart';
 import 'package:open_cmms/widgets/items_list.dart';
 
+import '../service/backend_api/assetManager.dart';
 import '../states/asset_types_state.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/main_menu_widget.dart';
@@ -20,6 +21,8 @@ class Storage extends StatefulWidget {
   @override
   State<Storage> createState() => _StorageState();
 }
+
+final Rxn<String> searchText = Rxn<String>();
 
 class _StorageState extends State<Storage> {
   final ItemsStorageState items = Get.find();
@@ -57,12 +60,14 @@ class _StorageState extends State<Storage> {
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const SizedBox(
+                    SizedBox(
                       width: 200,
                       child: TextField(
-                        decoration: InputDecoration(
-                          hintText: "Hľadať (WIP)",
-                          enabled: false,
+                        onChanged: (value) {
+                          searchText.value = value;
+                        },
+                        decoration: const InputDecoration(
+                          hintText: "Hľadať komponent",
                         ),
                       ),
                     ),
@@ -101,26 +106,49 @@ class _StorageState extends State<Storage> {
                   builder: (_) {
                     var list = _.getItems();
                     return Obx(() {
-                      List<StorageItemList> filteredList = [];
-                      for (var element in list) {
-                        var asset = widget.assets.getAssetById(element.assetId);
-                        if (asset != null) {
-                          filteredList.add(StorageItemList(asset, element));
-                        }
-                      }
-                      if (inStorageOnly.isTrue) {
-                        filteredList = filteredList
-                            .where((element) => element.item.inStorage > 0)
-                            .toList();
-                      }
-                      if (showArchived.isFalse) {
-                        filteredList = filteredList
-                            .where(
-                                (element) => element.asset.isArchived == false)
-                            .toList();
-                      }
-                      return ItemsList(
-                        list: filteredList,
+                      bool filterInStorage = inStorageOnly.value;
+                      bool filterArchived = showArchived.value;
+
+                      return FutureBuilder<List<AssetSchema>?>(
+                        future: _loadFilteredAssets(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.done) {
+                            List<StorageItemList> filteredList = [];
+                            for (var element in list) {
+                              var asset =
+                                  widget.assets.getAssetById(element.assetId);
+                              if (asset != null) {
+                                if (snapshot.data != null &&
+                                    snapshot.data!.firstWhereOrNull((element) =>
+                                            element.id == asset.id) ==
+                                        null) {
+                                  continue;
+                                }
+                                filteredList
+                                    .add(StorageItemList(asset, element));
+                              }
+                            }
+                            if (filterInStorage) {
+                              filteredList = filteredList
+                                  .where(
+                                      (element) => element.item.inStorage > 0)
+                                  .toList();
+                            }
+                            if (!filterArchived) {
+                              filteredList = filteredList
+                                  .where((element) =>
+                                      element.asset.isArchived == false)
+                                  .toList();
+                            }
+                            return ItemsList(
+                              list: filteredList,
+                            );
+                          } else if (snapshot.hasError) {
+                            return Text("${snapshot.error}");
+                          }
+                          return const CircularProgressIndicator();
+                        },
                       );
                     });
                   },
@@ -131,6 +159,17 @@ class _StorageState extends State<Storage> {
         ],
       ),
     );
+  }
+
+  Future<List<AssetSchema>?> _loadFilteredAssets() async {
+    List<AssetSchema>? items;
+
+    if (searchText.value != null && searchText.value!.length > 2) {
+      items = await AssetManagerService()
+              .getAssetsSearchAssetManagerAssetsSearchGet(searchText.value!) ??
+          [];
+    }
+    return items;
   }
 }
 

@@ -1,13 +1,12 @@
 import 'package:BackendAPI/api.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:open_cmms/service/backend_api/assetManager.dart';
 import 'package:open_cmms/snacbars.dart';
 
 class AssetTypesState extends GetxController {
-  Map<String, AssetCategorySchema> _categoriesTypes =
+  final Map<String, AssetCategorySchema> _categoriesTypes =
       <String, AssetCategorySchema>{}.obs;
-  Map<String, AssetSchema> _products = <String, AssetSchema>{}.obs;
+  final Map<String, AssetSchema> _products = <String, AssetSchema>{}.obs;
 
   @override
   void onInit() {
@@ -23,11 +22,13 @@ class AssetTypesState extends GetxController {
         .then((value) {
       value?.forEach((element) {
         _categoriesTypes[element.id] = element;
+        refresh();
       });
     });
     AssetManagerService().getAssetsAssetManagerAssetsGet().then((value) {
       value?.forEach((element) {
         _products[element.id] = element;
+        refresh();
       });
     });
   }
@@ -44,7 +45,7 @@ class AssetTypesState extends GetxController {
       String? parentId, bool isCategory, List<AssetTelemetry> telemetry,
       [String name = "name", String text = "text"]) {
     if (isCategory) {
-      var model;
+      AssetCategoryNewSchema model;
       if (parentId == null) {
         model = AssetCategoryNewSchema(name: name, description: text);
       } else {
@@ -83,13 +84,14 @@ class AssetTypesState extends GetxController {
   AssetCategorySchema? getAssetTypeById(String id) {
     return _categoriesTypes[id];
   }
+
   AssetSchema? getAssetById(String id) {
     return _products[id];
   }
 
   List<AssetCategorySchema> getSubCategoriesOfType(String typeId) {
-    Iterable<AssetCategorySchema> i = _categoriesTypes.values.where(
-        (element) => element.parentId == typeId);
+    Iterable<AssetCategorySchema> i =
+        _categoriesTypes.values.where((element) => element.parentId == typeId);
     if (i.isEmpty) {
       return [];
     }
@@ -97,33 +99,49 @@ class AssetTypesState extends GetxController {
   }
 
   List<AssetSchema> getProductOfType(String categoryId) {
-    Iterable<AssetSchema> i = _products.values.where(
-        (element) => element.categoryId == categoryId);
+    Iterable<AssetSchema> i =
+        _products.values.where((element) => element.categoryId == categoryId);
     if (i.isEmpty) {
       return [];
     }
     return i.toList();
   }
-//
-  List getData() {
 
+//
+  List getData(List<AssetSchema>? filterAssets) {
     List listItems = [];
 
     getMainCategories().forEach((element) {
       listItems.add(element);
       getProductOfType(element.id).forEach((element) {
+        if (filterAssets != null) {
+          if (filterAssets.firstWhereOrNull((e) {
+                return e.id == element.id;
+              }) ==
+              null) {
+            return;
+          }
+        }
         listItems.add(element);
       });
       getSubCategoriesOfType(element.id).forEach((element) {
         listItems.add(element);
         getProductOfType(element.id).forEach((element) {
+          if (filterAssets != null) {
+            if (filterAssets.firstWhereOrNull((e) {
+                  return e.id == element.id;
+                }) ==
+                null) {
+              return;
+            }
+          }
           listItems.add(element);
         });
       });
     });
     return listItems;
   }
-//
+
   AssetCategorySchema? getMainCategoryOfType(AssetCategorySchema assetType) {
     var i = assetType;
     while (i.parentId != null) {

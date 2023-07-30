@@ -10,36 +10,33 @@ import 'forms/asset_management/category_form.dart';
 import 'forms/asset_management/product_form_new.dart';
 
 class AssetsTypeList extends StatelessWidget {
-  AssetsTypeList({
-    Key? key,
-  }) : super(key: key);
+  AssetsTypeList(this.filterAssets, {Key? key}) : super(key: key);
 
+  final List<AssetSchema>? filterAssets;
   final AssetTypesState _assetTypes = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    return GetX<AssetTypesState>(builder: (_) {
-      var list = _assetTypes.getData();
-      return list.isEmpty
-          ? const Expanded(
-              child: Center(
-                  child: Text(
-              "Žiadne komponenty",
-              textScaleFactor: 3,
-            )))
-          : Expanded(
-              child: Container(
-                constraints: BoxConstraints(maxWidth: 900),
-                child: ListView.builder(
-                    addRepaintBoundaries: true,
-                    padding: const EdgeInsets.all(8),
-                    itemCount: list.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return toListItem(list[index]);
-                    }),
-              ),
+    var list = _assetTypes.getData(filterAssets);
+    return list.isEmpty
+        ? const Expanded(
+            child: Center(
+                child: Text(
+            "Žiadne komponenty",
+            textScaleFactor: 3,
+          )))
+        : Expanded(
+            child: Container(
+              constraints: const BoxConstraints(maxWidth: 900),
+              child: ListView.builder(
+                  addRepaintBoundaries: true,
+                  padding: const EdgeInsets.all(8),
+                  itemCount: list.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return toListItem(list[index]);
+                  }),
+            ),
             );
-    });
   }
 
   Widget toListItem(element) {
@@ -73,20 +70,20 @@ class AssetsTypeList extends StatelessWidget {
           element.name,
           textScaleFactor: element.parentId == null ? 2 : 1,
         ),
-        Spacer(),
+        const Spacer(),
         if (element.parentId == null)
           ElevatedButton(
               onPressed: () {
                 showFormDialog(CategoryForm.createNewSub(parent: element));
               },
-              child: Text("Pridať kategóriu")),
+              child: const Text("Pridať kategóriu")),
         ElevatedButton(
             onPressed: () {
               showFormDialog(ProductFormNew(
                 parent: element,
               ));
             },
-            child: Text("Pridať produkt"))
+            child: const Text("Pridať produkt"))
       ],
     );
   }
@@ -109,8 +106,8 @@ class AssetsTypeList extends StatelessWidget {
         subtitle: Center(child: Text(element.description ?? "")),
         trailing: element.isArchived == false
             ? ElevatedButton.icon(
-                icon: Icon(Icons.archive_outlined),
-                label: Text("archivovat"),
+                icon: const Icon(Icons.archive_outlined),
+                label: const Text("archivovat"),
                 onPressed: () {
                   AssetManagerService()
                       .archiveAssetAssetManagerAssetAssetIdDelete(element.id)
