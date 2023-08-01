@@ -24,6 +24,20 @@
 
 [//]: # ()
 
+## 7.8.23
+
+### novinky
+
+- podpora vyhladavanie textom v zozname stanic, zozname cestnych usekov, kompoennty (manazment, skald, vyber
+  komponentu), servisne zmluvy
+- stranovanie pre ulohy, stanice, historiu stnaice
+- zvyrazneny stav ulohy
+- upozornenie na potvrdenie presunu stanice
+
+### oprava
+
+---
+
 ## 24.7.23
 
 ### novinky
