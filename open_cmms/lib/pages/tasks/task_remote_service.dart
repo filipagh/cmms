@@ -154,8 +154,9 @@ class TaskRemoteServicePage extends StatelessWidget {
   buildTaskHeader() {
     return Column(
       children: [
-        Text("Datum vytovrenia: " + task.value!.createdAt.toString()),
         Text("Stav: " + buildTaskStatusString()),
+        Divider(),
+        Text("Datum vytovrenia: " + task.value!.createdAt.toString()),
         Obx(() =>
             Text("Priradeny k: " + (redmineData.value?.assignedTo ?? ""))),
         Obx(() => RichText(
