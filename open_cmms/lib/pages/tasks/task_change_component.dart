@@ -187,10 +187,17 @@ class TaskChangeComponentsPage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Row(
+          children: [
+            Icon(buildTaskStatusIcon()),
+            Text("Stav: " + buildTaskStatusString()),
+          ],
+        ),
+        Divider(),
+        Padding(padding: EdgeInsets.all(5)),
         Text("Stanica: " + taskProjection!.stationName),
         Text("Cestny usek: " + taskProjection!.roadSegmentName),
         Text("Datum vytovrenia: " + task.value!.createdAt.toString()),
-        Text("Stav: " + buildTaskStatusString()),
         Obx(() =>
             Text("Priradeny k: " + (redmineData.value?.assignedTo ?? ""))),
         Obx(() => RichText(
@@ -264,6 +271,20 @@ class TaskChangeComponentsPage extends StatelessWidget {
         return "Uloha je zrusena";
     }
     return "Neznamy stav";
+  }
+
+  IconData buildTaskStatusIcon() {
+    switch (task.value!.state) {
+      case TaskState.done:
+        return Icons.done_all;
+      case TaskState.open:
+        return Icons.warning;
+      case TaskState.ready:
+        return Icons.watch_later_outlined;
+      case TaskState.removed:
+        return Icons.remove_circle_outline;
+    }
+    return Icons.error;
   }
 
   buildTaskComponents() {
