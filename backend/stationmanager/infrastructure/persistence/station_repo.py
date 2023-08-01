@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import Column, String
+from sqlalchemy import Column, String, text, func
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import Session
 from sqlalchemy.sql import expression
@@ -28,13 +28,17 @@ def _get_db():
     return base.database.get_sesionmaker()
 
 
-def get_stations(active_only: bool = False, segment_id: uuid.UUID = None) -> list[StationModel]:
+def get_stations(active_only: bool = False, segment_id: uuid.UUID = None, page=None, page_size=None) -> list[
+    StationModel]:
     with _get_db() as db:
         query = db.query(StationModel)
         if active_only:
             query = query.where(StationModel.is_active == True)
         if segment_id:
             query = query.where(StationModel.road_segment_id == segment_id)
+        query = query.order_by(func.lower(StationModel.name))
+        if page and page_size:
+            query = query.limit(page_size).offset((page - 1) * page_size)
         return query.all()
 
 
@@ -50,10 +54,13 @@ def get_by_id(id: uuid.UUID) -> StationModel:
         return db.query(StationModel).get(id)
 
 
-def get_by_road_segment(road_segment_id: uuid.UUID) -> list[StationModel]:
+def get_by_road_segment(road_segment_id: uuid.UUID, active_only: bool = False) -> list[StationModel]:
     db: Session
     with _get_db() as db:
-        return db.query(StationModel).where(StationModel.road_segment_id == road_segment_id).all()
+        query = db.query(StationModel)
+        if active_only:
+            query = query.where(StationModel.is_active == True)
+        return query.where(StationModel.road_segment_id == road_segment_id).all()
 
 
 def mark_station_as_inactive(station_id):
@@ -62,3 +69,15 @@ def mark_station_as_inactive(station_id):
         station = db.query(StationModel).get(station_id)
         station.is_active = False
         db.commit()
+
+
+def search(query, page, page_size, active_only: bool = False) -> list[StationModel]:
+    query = query + ":*"
+    db: Session
+    with _get_db() as db:
+        sql = db.query(StationModel)
+        if active_only:
+            sql = sql.where(StationModel.is_active == True)
+        sql = sql.filter(text("unaccent(station.name) @@ to_tsquery(unaccent(:query))")).params(
+            query=query)
+        return sql.order_by(func.lower(StationModel.name)).limit(page_size).offset((page - 1) * page_size).all()

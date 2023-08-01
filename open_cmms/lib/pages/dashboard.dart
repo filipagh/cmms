@@ -21,7 +21,8 @@ class Dashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    loadStation();
+    loadStation(1, 20);
+
     loadIssues();
     return Scaffold(
       appBar: CustomAppBar(),
@@ -109,9 +110,14 @@ class Dashboard extends StatelessWidget {
     );
   }
 
-  void loadStation() {
-    StationService().getAllStationStationsGet().then((value) {
-      stations.assignAll(value!);
+  void loadStation(page, pageSize) {
+    StationService()
+        .getAllStationStationsGet(page, pageSize, onlyActive: true)
+        .then((value) {
+      stations.addAll(value!);
+      if (value.length == pageSize) {
+        loadStation(page + 1, pageSize);
+      }
     });
   }
 

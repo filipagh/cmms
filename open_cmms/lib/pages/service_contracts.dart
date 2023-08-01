@@ -16,6 +16,7 @@ class ServiceContracts extends StatelessWidget {
   final List<StationIdSchema> _stationsIdsWithoutContracts =
       <StationIdSchema>[].obs;
   final RxBool loaded = false.obs;
+  final RxnString _query = RxnString();
 
   ServiceContracts({
     Key? key,
@@ -25,14 +26,25 @@ class ServiceContracts extends StatelessWidget {
 
   reloadContracts() {
     var serviceContractService = ServiceContractService();
-    serviceContractService
-        .getContractsServiceContractContractsGet()
-        .then((contracts) {
-      contracts?.sort((a, b) => a.validFrom.isBefore(b.validFrom) ? 1 : 0);
-      loaded.value = true;
-      _contracts.clear();
-      _contracts.addAll(contracts!);
-    });
+    if (_query.value != null) {
+      serviceContractService
+          .searchServiceContractContractsSearchGet(_query.value!)
+          .then((contracts) {
+        contracts?.sort((a, b) => a.validFrom.isBefore(b.validFrom) ? 1 : 0);
+        loaded.value = true;
+        _contracts.clear();
+        _contracts.addAll(contracts!);
+      });
+    } else {
+      serviceContractService
+          .getContractsServiceContractContractsGet()
+          .then((contracts) {
+        contracts?.sort((a, b) => a.validFrom.isBefore(b.validFrom) ? 1 : 0);
+        loaded.value = true;
+        _contracts.clear();
+        _contracts.addAll(contracts!);
+      });
+    }
     serviceContractService
         .getStationsWithoutContractServiceContractStationsWithoutContractGet()
         .then((value) {
@@ -88,10 +100,19 @@ class ServiceContracts extends StatelessWidget {
           children: [
             Container(
               width: 200,
-              child: const TextField(
+              child: TextField(
+                onChanged: (v) {
+                  if (v.length >= 3) {
+                    _query.value = v;
+                    reloadContracts();
+                  }
+                  if (v.length < 3 && _query.value != null) {
+                    _query.value = null;
+                    reloadContracts();
+                  }
+                },
                 decoration: InputDecoration(
-                  hintText: "Hľadať (WIP)",
-                  enabled: false,
+                  hintText: "Hľadať",
                 ),
               ),
             ),

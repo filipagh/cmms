@@ -35,21 +35,19 @@ def _get_db():
     return base.database.get_sesionmaker()
 
 
-
-
 def save(road_segment: TaskModel):
     with _get_db() as db:
         db.add(road_segment)
         db.commit()
 
 
-def get_by_id(id: uuid.UUID)-> TaskModel:
+def get_by_id(id: uuid.UUID) -> TaskModel:
     db: Session
     with _get_db() as db:
         return db.query(TaskModel).get(id)
 
 
-def get_all(station_id, filter_state: list[TaskState] = None) -> list[TaskModel]:
+def get_all(station_id, filter_state: list[TaskState] = None, page=None, page_size=None) -> list[TaskModel]:
     db: Session
     with _get_db() as db:
         select = db.query(TaskModel)
@@ -58,4 +56,6 @@ def get_all(station_id, filter_state: list[TaskState] = None) -> list[TaskModel]
             select = select.where(TaskModel.station_id == station_id)
         if filter_state:
             select = select.where(TaskModel.state.in_(filter_state))
+        if page and page_size:
+            select = select.offset((page - 1) * page_size).limit(page_size)
         return select.all()

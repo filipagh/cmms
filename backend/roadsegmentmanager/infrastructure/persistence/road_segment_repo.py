@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import Column, String
+from sqlalchemy import Column, String, text
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import Session
 from sqlalchemy.sql import expression
@@ -39,3 +39,15 @@ def get_by_id(id: uuid.UUID):
     db: Session
     with _get_db() as db:
         return db.query(RoadSegmentModel).get(id)
+
+
+def search(query: str, only_active: bool = False) -> list[RoadSegmentModel]:
+    query = query + ":*"
+    db: Session
+    with _get_db() as db:
+        sql = db.query(RoadSegmentModel)
+        if only_active:
+            sql = sql.where(RoadSegmentModel.is_active == True)
+        sql = sql.filter(text("unaccent(road_segment.name) @@ to_tsquery(unaccent(:query))")).params(query=query)
+
+        return sql.all()

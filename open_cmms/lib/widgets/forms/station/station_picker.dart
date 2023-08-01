@@ -1,39 +1,54 @@
 import 'package:BackendAPI/api.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:open_cmms/service/backend_api/station_service.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 
+import '../../../states/stations_list_state.dart';
+
 class StationPickerForm extends StatelessWidget implements hasFormTitle {
-  final RxList<StationSchema> stations = <StationSchema>[].obs;
+  final StationsListState stationListState = Get.put(StationsListState());
 
   StationPickerForm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    loadStations();
     return Container(
-      width: 800,
+      width: 100,
       height: Get.height - 400,
-      child: Obx(
-        () => ListView.builder(
-            itemCount: stations.length,
-            itemBuilder: (BuildContext context, index) {
-              return ListTile(
-                  title: Text(stations[index].name),
-                  onTap: () => pickStation(stations[index]));
-            }),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            width: 200,
+            child: TextField(
+              onChanged: (value) {
+                if (value.isEmpty || value.length < 3)
+                  stationListState.search(null);
+                else
+                  stationListState.search(value);
+              },
+              decoration: InputDecoration(
+                hintText: "Hľadať",
+              ),
+            ),
+          ),
+          GetX<StationsListState>(
+            builder: (state) {
+              var list = state.getStations();
+              return Expanded(
+                child: ListView.builder(
+                    itemCount: list.length,
+                    itemBuilder: (BuildContext context, index) {
+                      return ListTile(
+                          title: Center(child: Text(list[index].name)),
+                          onTap: () => pickStation(list[index]));
+                    }),
+              );
+            },
+          ),
+        ],
       ),
     );
-  }
-
-  loadStations() {
-    StationService().getAllStationStationsGet().then((value) {
-      stations.clear();
-      stations.addAll(value ?? []);
-      stations.refresh();
-    });
   }
 
   pickStation(StationSchema station) {

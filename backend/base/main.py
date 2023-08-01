@@ -7,6 +7,7 @@ from eventsourcing.persistence import Transcoding
 from eventsourcing.system import System, SingleThreadedRunner, Follower
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi_pagination import add_pagination
 from starlette.responses import JSONResponse
 
 import roadsegmentmanager.infrastructure.rest_router
@@ -165,7 +166,7 @@ app.include_router(service_contract_router)
 app.include_router(auth_router)
 app.include_router(redmine_router)
 app.include_router(issue_router)
-
+add_pagination(app)
 origins = [
     "http://localhost:5000",
     "http://localhost:22222",

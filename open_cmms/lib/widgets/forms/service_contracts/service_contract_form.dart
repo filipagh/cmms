@@ -33,7 +33,8 @@ class ServiceContractForm extends StatefulWidget implements hasFormTitle {
   loadStationOfSegment(String id) async {
     if (!stations.containsKey(id)) {
       await StationService()
-          .getAllStationStationsGet(roadSegmentId: id)
+          .getRoadSegmentStationsStationStationsOfRoadSegmentGet(id,
+              onlyActive: false)
           .then((value) {
         stations[id] = (value ?? []);
         segments.refresh();

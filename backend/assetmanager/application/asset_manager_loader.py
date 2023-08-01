@@ -26,3 +26,17 @@ def load_asset_by_id(asset_id: uuid.UUID) -> schema.AssetSchema:
 
 def load_asset_category() -> list[AssetCategoryModel]:
     return asset_category_repo.get_asset_category()
+
+
+def search(query: str) -> list[schema.AssetSchema]:
+    assets = asset_repo.search(query)
+    list = []
+    for i in assets:
+        dic = i.__dict__
+        tele = dic.pop("telemetry")
+        tele_list = []
+        for t in tele:
+            tele_list.append(t.__dict__)
+        list.append(schema.AssetSchema(**dic, telemetry=tele_list))
+
+    return list

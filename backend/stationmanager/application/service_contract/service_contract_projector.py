@@ -3,9 +3,9 @@ import uuid
 from eventsourcing.dispatch import singledispatchmethod
 from eventsourcing.system import ProcessApplication
 
-from stationmanager.domain.model.assigned_component import AssignedComponent
+from stationmanager.application.service_contract.model.schema import ServiceContractSchema
 from stationmanager.domain.model.service_contract import ServiceContract
-from stationmanager.infrastructure.persistence import assigned_component_repo, service_contract_repo
+from stationmanager.infrastructure.persistence import service_contract_repo
 from stationmanager.infrastructure.persistence.assigned_component_repo import AssignedComponentModel
 from stationmanager.infrastructure.persistence.service_contract_repo import StationServiceContractModel, \
     ServiceContractModel
@@ -39,7 +39,26 @@ class ServiceContractProjector(ProcessApplication):
 
     def get_by_station(self, station_id: uuid.UUID) -> list[ServiceContractModel]:
         return service_contract_repo.get_contract_by_station_id(station_id)
+
     def get_all(self) -> list[ServiceContractModel]:
         return service_contract_repo.get_all_contracts()
+
     def get_all_active(self) -> list[ServiceContractModel]:
         return service_contract_repo.get_all_contracts(only_active=True)
+
+    def search(self, query):
+        col = []
+        contracts = service_contract_repo.search(query)
+        for i in contracts:
+            col.append(_model_to_schema(i))
+        return col
+
+
+def _model_to_schema(model: ServiceContractModel):
+    dic = model.__dict__
+    stations = dic.pop("station_id_list")
+    station_id_list = []
+    s: StationServiceContractModel
+    for s in stations:
+        station_id_list.append(s.station_id)
+    return ServiceContractSchema(**dic, station_id_list=station_id_list)

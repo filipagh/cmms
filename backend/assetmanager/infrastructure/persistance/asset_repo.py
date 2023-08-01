@@ -1,7 +1,7 @@
 import uuid
 
 import sqlalchemy
-from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy import Column, String, ForeignKey, text
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import Session, relationship
 
@@ -53,3 +53,11 @@ def save(model):
     with _get_db() as db:
         db.add(model)
         db.commit()
+
+
+def search(query):
+    query = query + ":*"
+    db: Session
+    with _get_db() as db:
+        return db.query(AssetModel).filter(
+            text("unaccent(assets.name) @@    to_tsquery('custom_config', unaccent(:query))")).params(query=query).all()

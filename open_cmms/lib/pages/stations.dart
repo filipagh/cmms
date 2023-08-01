@@ -1,33 +1,19 @@
-import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:open_cmms/service/backend_api/station_service.dart';
-import 'package:open_cmms/widgets/assets_list.dart';
 
+import '../states/stations_list_state.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/main_menu_widget.dart';
+import '../widgets/stations_list.dart';
 
 class Stations extends StatelessWidget {
   static const ENDPOINT = '/Stations';
 
-  final RxList<StationSchema> _stations = <StationSchema>[].obs;
-  RxBool _include_deleted_stations = false.obs;
+  final StationsListState stationListState = Get.put(StationsListState());
 
   Stations({
     Key? key,
-  }) : super(key: key) {
-    loadStations();
-  }
-
-  void loadStations() {
-    StationService()
-        .getAllStationStationsGet(onlyActive: !_include_deleted_stations.value)
-        .then((value) {
-      _stations.clear();
-      _stations.addAll(value ?? []);
-      _stations.refresh();
-    });
-  }
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,37 +34,32 @@ class Stations extends StatelessWidget {
                   children: [
                     Container(
                       width: 200,
-                      child: const TextField(
+                      child: TextField(
+                        onChanged: (value) {
+                          if (value.isEmpty || value.length < 3)
+                            stationListState.search(null);
+                          else
+                            stationListState.search(value);
+                        },
                         decoration: InputDecoration(
-                          hintText: "Hľadať (WIP)",
-                          enabled: false,
+                          hintText: "Hľadať",
                         ),
                       ),
                     ),
                     const Padding(padding: EdgeInsets.only(left: 10)),
                     const Text("Zobraziť zmazané"),
-                    Obx(() => Checkbox(
-                        value: _include_deleted_stations.value,
-                        onChanged: (v) {
-                          _include_deleted_stations.value = v!;
-                          loadStations();
-                        })),
+                    GetX<StationsListState>(
+                        builder: (_) => Checkbox(
+                            value: _.getIncludeDeleted(),
+                            onChanged: (v) {
+                              if (v == null) return;
+                              _.setIncludeDeleted(v);
+                            })),
                     const Spacer(),
-                    // ElevatedButton(
-                    //   onPressed: () {showdialog();},
-                    //   child: Text("add station"),
-                    // ),
                   ],
                 ),
                 const Divider(),
-                // AssetsList(list: stationsState.getAllStations(),),
-                Obx(
-                  () {
-                    return AssetsList(
-                      list: _stations.value,
-                    );
-                  },
-                ),
+                StationsList(),
               ],
             ),
           )

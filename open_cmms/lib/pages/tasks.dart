@@ -2,7 +2,7 @@ import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:multiselect/multiselect.dart';
-import 'package:open_cmms/service/backend_api/tasks_service.dart';
+import 'package:open_cmms/states/tasks_list_state.dart';
 import 'package:open_cmms/widgets/custom_app_bar.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 import 'package:open_cmms/widgets/forms/station/station_picker.dart';
@@ -14,17 +14,31 @@ import '../widgets/task_list_title.dart';
 
 class Tasks extends StatelessWidget {
   Tasks({Key? key, required}) : super(key: key) {
-    setup();
+    List<TaskStateCustom> list = [
+      TaskStateCustom(TaskState.ready),
+      TaskStateCustom(TaskState.open)
+    ];
+    _tasksListState = Get.put(TasksListState(null, list.toList()));
+    list.add(TaskStateCustom(TaskState.removed));
+    list.add(TaskStateCustom(TaskState.done));
+    options.addAll(list);
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        _tasksListState.loadMore();
+      }
+    });
   }
 
-  final RxList<TaskSchema> tasks = <TaskSchema>[].obs;
+  late TasksListState _tasksListState;
 
-  List<TaskStateCustom> selectedTaskState = <TaskStateCustom>[];
   List<TaskStateCustom> options = <TaskStateCustom>[];
+
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
-    loadTasks(taskState: selectedTaskState.map((e) => e.state).toList());
     return Scaffold(
       appBar: CustomAppBar(
         pageText: Text("Úlohy"),
@@ -39,89 +53,65 @@ class Tasks extends StatelessWidget {
                 Padding(padding: const EdgeInsets.only(top: 10)),
                 Row(
                   children: [
+// Container(
+//   width: 200,
+//   child: const TextField(
+//     decoration: InputDecoration(
+//       hintText: "Hľadať (WIP)",
+//       enabled: false,
+//     ),
+//   ),
+// ),
                     Container(
-                      width: 200,
-                      child: const TextField(
-                        decoration: InputDecoration(
-                          hintText: "Hľadať (WIP)",
-                          enabled: false,
-                        ),
-                      ),
-                    ),
-                    Container(
-                        width: 200,
-                        child: DropDownMultiSelect<TaskStateCustom>(
-                          options: options,
-                          selectedValues: selectedTaskState,
-                          onChanged: (v) {
-                            selectedTaskState = v;
-                            loadTasks(
-                                taskState: selectedTaskState
-                                    .map((e) => e.state)
-                                    .toList());
-                          },
-                          whenEmpty: "filtrovať podla stavu",
+                        width: 400,
+                        child: GetX<TasksListState>(
+                          builder: (state) =>
+                              DropDownMultiSelect<TaskStateCustom>(
+                            options: options,
+                            selectedValues: state.getFilterTasksStates(),
+                            onChanged: (v) {
+                              state.setFilterTasksStates(v);
+                            },
+                            whenEmpty: "filtrovať podla stavu",
+                          ),
                         )),
                     const Spacer(),
                     ElevatedButton.icon(
                         label: const Text("načítaj úlohy"),
                         onPressed: () {
-                          loadTasks(
-                              taskState: selectedTaskState
-                                  .map((e) => e.state)
-                                  .toList());
+                          _tasksListState.reload();
                         },
                         icon: const Icon(Icons.refresh)),
                     Padding(padding: const EdgeInsets.all(10)),
                     ElevatedButton(
                       onPressed: () async {
-                        StationSchema station =
-                            await showFormDialog(StationPickerForm());
-                        showFormDialog(CreateTaskForm(station: station));
-                      },
-                      child: const Text("nová úloha"),
-                    ),
-                  ],
-                ),
-                const Divider(),
-                Expanded(child: Obx(
-                  () {
-                    var list = tasks;
-                    return ListView.builder(
-                        addRepaintBoundaries: true,
-                        padding: const EdgeInsets.all(8),
-                        itemCount: list.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return buildTaskListTitle(list[index]);
-                        });
-                  },
-                )),
+StationSchema station =
+await showFormDialog(StationPickerForm());
+showFormDialog(CreateTaskForm(station: station));
+},
+child: const Text("nová úloha"),
+),
+],
+),
+const Divider(),
+Expanded(child: GetX<TasksListState>(
+builder: (state) {
+var list = state.getTasks();
+return ListView.builder(
+controller: _scrollController,
+addRepaintBoundaries: true,
+padding: const EdgeInsets.all(8),
+itemCount: list.length,
+itemBuilder: (BuildContext context, int index) {
+return buildTaskListTitle(list[index]);
+});
+},
+)),
               ],
             ),
           )
         ],
       ),
     );
-  }
-
-  loadTasks({List<TaskState> taskState = const []}) {
-    TasksService()
-        .loadAllTaskManagerGetTasksGet(filterState: taskState)
-        .then((value) {
-      tasks.clear();
-      tasks.addAll(value ?? []);
-      tasks.refresh();
-    });
-  }
-
-  void setup() {
-    var list = [
-      TaskStateCustom(TaskState.ready),
-      TaskStateCustom(TaskState.open)
-    ];
-    this.selectedTaskState.addAll(list);
-    list.add(TaskStateCustom(TaskState.removed));
-    list.add(TaskStateCustom(TaskState.done));
-    this.options.addAll(list);
   }
 }

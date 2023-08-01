@@ -3,7 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/pages/station/station_base_page.dart';
-import 'package:open_cmms/service/backend_api/action_hisotry_service.dart';
+import 'package:open_cmms/states/stations_actions_list_state.dart';
 
 import '../tasks/task_page_factory.dart';
 
@@ -11,24 +11,35 @@ class StationHistoryPage extends StatelessWidget
     implements StationBaseContextPage {
   static const String ENDPOINT = '/History';
   final StationSchema station;
+  final ScrollController scrollController = ScrollController();
 
-  StationHistoryPage({Key? key, required this.station}) : super(key: key);
+  StationHistoryPage({Key? key, required this.station}) : super(key: key) {
+    actionState = Get.put(StationsActionListState(station));
+    scrollController.addListener(() {
+      if (scrollController.position.atEdge) {
+        if (scrollController.position.pixels ==
+            scrollController.position.maxScrollExtent) {
+          actionState.loadMore();
+        }
+      }
+    });
+  }
 
-  final RxList<ActionHistorySchema> items = <ActionHistorySchema>[].obs;
+  late StationsActionListState actionState;
 
   @override
   Widget build(BuildContext context) {
-    ActionHistoryService()
-        .getByStationActionHistoryByStationGet(station.id)
-        .then((value) => items.addAll(value ?? []));
     return Column(
       children: [
         Expanded(
-          child: Obx(() {  var i = items.reversed.toList(); return ListView.builder(
-            itemCount: items.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Card(
-                child: ListTile(
+          child: GetX<StationsActionListState>(builder: (state) {
+            var i = state.getStationsHistory().reversed.toList();
+            return ListView.builder(
+              controller: scrollController,
+              itemCount: i.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Card(
+                  child: ListTile(
                     title: processReferences(i[index].text),
                     subtitle: Text("datum: " + i[index].datetime.toString()),
                   ),

@@ -55,7 +55,7 @@ class TaskServiceRemoteService(ProcessApplication):
 
     @policy.register(Station.StationRemoved)
     def _(self, domain_event: Station.StationRemoved, process_event):
-        task_projector = base.main.runner.get(TasksProjector)
+        task_projector: TasksProjector = base.main.runner.get(TasksProjector)
         for task in task_projector.get_all(domain_event.originator_id):
             if task.task_type == TaskType.REMOTE_SERVICE:
                 self.cancel_task(task.id)

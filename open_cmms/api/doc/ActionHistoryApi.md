@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 
 # **getByStationActionHistoryByStationGet**
-> List<ActionHistorySchema> getByStationActionHistoryByStationGet(stationId)
+> List<ActionHistorySchema> getByStationActionHistoryByStationGet(page, pageSize, stationId)
 
 Get By Station
 
@@ -32,10 +32,12 @@ import 'package:BackendAPI/api.dart';
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKeyPrefix = 'Bearer';
 
 final api_instance = ActionHistoryApi();
+final page = 56; // int | 
+final pageSize = 56; // int | 
 final stationId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-    final result = api_instance.getByStationActionHistoryByStationGet(stationId);
+    final result = api_instance.getByStationActionHistoryByStationGet(page, pageSize, stationId);
     print(result);
 } catch (e) {
     print('Exception when calling ActionHistoryApi->getByStationActionHistoryByStationGet: $e\n');
@@ -44,9 +46,11 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **stationId** | **String**|  | 
+ Name          | Type       | Description | Notes 
+---------------|------------|-------------|-------
+ **page**      | **int**    |             |
+ **pageSize**  | **int**    |             |
+ **stationId** | **String** |             | 
 
 ### Return type
 

@@ -58,10 +58,10 @@ def load(task_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_auth(read_perm
 
 @task_manager_router.get("/get_tasks",
                          response_model=list[TaskSchema])
-def load_all(station_id: uuid.UUID = None, filter_state: list[TaskState] = Query(None),
+def load_all(page: int, page_size: int, station_id: uuid.UUID = None, filter_state: list[TaskState] = Query(None),
              _user: FiefUserInfo = Depends(custom_auth(read_permission))):
     tasks_projector: TasksProjector = main.runner.get(TasksProjector)
-    return tasks_projector.get_all(station_id, filter_state)
+    return tasks_projector.get_all(station_id, filter_state, page, page_size)
 
 
 @task_manager_router.get("/get_task",

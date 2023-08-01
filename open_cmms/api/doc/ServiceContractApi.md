@@ -15,6 +15,7 @@ All URIs are relative to *http://localhost*
  [**getServiceContractContractForStationGet**](ServiceContractApi.md#getservicecontractcontractforstationget)                                                                                       | **GET** /service-contract/contract_for_station                 | Get                                  
  [**getStationsWithoutContractExportServiceContractStationsWithoutContractExportXslGet**](ServiceContractApi.md#getstationswithoutcontractexportservicecontractstationswithoutcontractexportxslget) | **GET** /service-contract/stations_without_contract/export_xsl | Get Stations Without Contract Export 
  [**getStationsWithoutContractServiceContractStationsWithoutContractGet**](ServiceContractApi.md#getstationswithoutcontractservicecontractstationswithoutcontractget)                               | **GET** /service-contract/stations_without_contract            | Get Stations Without Contract        
+ [**searchServiceContractContractsSearchGet**](ServiceContractApi.md#searchservicecontractcontractssearchget)                                                                                       | **GET** /service-contract/contracts_search                     | Search                               
 
 
 # **createContractServiceContractCreateContractPost**
@@ -293,6 +294,7 @@ try {
 ```
 
 ### Parameters
+
 This endpoint does not need any parameter.
 
 ### Return type
@@ -305,8 +307,61 @@ This endpoint does not need any parameter.
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **searchServiceContractContractsSearchGet**
+
+> List<ServiceContractSchema> searchServiceContractContractsSearchGet(query)
+
+Search
+
+### Example
+
+```dart
+import 'package:BackendAPI/api.dart';
+// TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
+//defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
+// TODO Configure API key authorization: api_key
+//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: user_session
+//defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKeyPrefix = 'Bearer';
+
+final api_instance = ServiceContractApi();
+final query = query_example; // String | 
+
+try {
+    final result = api_instance.searchServiceContractContractsSearchGet(query);
+    print(result);
+} catch (e) {
+    print('Exception when calling ServiceContractApi->searchServiceContractContractsSearchGet: $e\n');
+}
+```
+
+### Parameters
+
+ Name      | Type       | Description | Notes 
+-----------|------------|-------------|-------
+ **query** | **String** |             |
+
+### Return type
+
+[**List<ServiceContractSchema>**](ServiceContractSchema.md)
+
+### Authorization
+
+[OAuth2AuthorizationCodeBearer](../README.md#OAuth2AuthorizationCodeBearer), [api_key](../README.md#api_key), [user_session](../README.md#user_session)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

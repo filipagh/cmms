@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime
 
-from sqlalchemy import Column, String, ForeignKey, Date
+from sqlalchemy import Column, String, ForeignKey, Date, text
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import Session, relationship
 
@@ -57,3 +57,11 @@ def get_all_contracts(only_active=False):
             query = query.filter(ServiceContractModel.valid_until >= datetime.now().date(),
                                  ServiceContractModel.valid_from <= datetime.now().date())
         return query.all()
+
+
+def search(query) -> list[ServiceContractModel]:
+    query = f"{query}:*"
+    with _get_db() as db:
+        sql = db.query(ServiceContractModel).filter(
+            text("unaccent(service_contracts.name) @@ to_tsquery(unaccent(:query))")).params(query=query)
+        return sql.all()

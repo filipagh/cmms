@@ -67,15 +67,43 @@ def remove_file(name: str):
 @station_router.get("/stations",
                     response_model=list[schema.StationSchema])
 def get_all(
+        page: int, page_size: int,
         road_segment_id: Optional[uuid.UUID] = None, only_active: bool = False,
+        _user: FiefUserInfo = Depends(custom_auth(read_permission))
+):
+    projector: StationProjector = main.runner.get(StationProjector)
+    col = []
+    stations = projector.get_all(active_only=only_active, segment_id=road_segment_id, page=page, page_size=page_size)
+    for i in stations:
+        col.append(schema.StationSchema(**i.__dict__))
+    return col
+
+
+@station_router.get("/stations_of_road_segment",
+                    response_model=list[schema.StationSchema])
+def get_road_segment_stations(
+        road_segment_id: uuid.UUID, only_active: bool = False,
         _user: FiefUserInfo = Depends(custom_auth(read_permission))
 ):
     projector = main.runner.get(StationProjector)
     col = []
-    stations = projector.get_all(active_only=only_active, segment_id=road_segment_id)
+    stations = projector.get_by_road_segment(active_only=only_active, road_segment_id=road_segment_id)
     for i in stations:
         col.append(schema.StationSchema(**i.__dict__))
     return col
+
+
+@station_router.get("/stations_search",
+                    response_model=list[schema.StationSchema])
+def search_stations(
+        query: str,
+        page: int,
+        page_size: int,
+        only_active: bool = False,
+        # _user: FiefUserInfo = Depends(custom_auth(read_permission))
+):
+    projector: StationProjector = main.runner.get(StationProjector)
+    return projector.search(active_only=only_active, query=query, page=page, page_size=page_size)
 
 
 @station_router.get("/stations_public",
@@ -85,7 +113,7 @@ def get_all_public(
 ):
     projector = main.runner.get(StationProjector)
     col = []
-    stations = projector.get_all(active_only=True, segment_id=road_segment_id)
+    stations = projector.get_by_road_segment(active_only=True, road_segment_id=road_segment_id)
     for i in stations:
         col.append(schema.StationPublicSchema(**i.__dict__))
     return col

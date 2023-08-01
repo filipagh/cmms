@@ -41,12 +41,10 @@ final api_instance = AssetManagerApi();
 final assetId = assetId_example; // String | 
 
 try {
-final result = api_instance.archiveAssetAssetManagerAssetAssetIdDelete(assetId);
-print(result);
-} catch
-(
-e) {
-print('Exception when calling AssetManagerApi->archiveAssetAssetManagerAssetAssetIdDelete: $e\n');
+    final result = api_instance.archiveAssetAssetManagerAssetAssetIdDelete(assetId);
+    print(result);
+} catch (e) {
+    print('Exception when calling AssetManagerApi->archiveAssetAssetManagerAssetAssetIdDelete: $e\n');
 }
 ```
 
@@ -268,7 +266,6 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getAssetsSearchAssetManagerAssetsSearchGet**
-
 > List<AssetSchema> getAssetsSearchAssetManagerAssetsSearchGet(query)
 
 Get Assets Search
@@ -282,12 +279,10 @@ final api_instance = AssetManagerApi();
 final query = query_example; // String | 
 
 try {
-final result = api_instance.getAssetsSearchAssetManagerAssetsSearchGet(query);
-print(result);
-} catch
-(
-e) {
-print('Exception when calling AssetManagerApi->getAssetsSearchAssetManagerAssetsSearchGet: $e\n');
+    final result = api_instance.getAssetsSearchAssetManagerAssetsSearchGet(query);
+    print(result);
+} catch (e) {
+    print('Exception when calling AssetManagerApi->getAssetsSearchAssetManagerAssetsSearchGet: $e\n');
 }
 ```
 
@@ -313,13 +308,11 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getTelemetryOptionsAssetManagerTelemetryOptionsGet**
-
 > TelemetryOptions getTelemetryOptionsAssetManagerTelemetryOptionsGet()
 
 Get Telemetry Options
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 // TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer

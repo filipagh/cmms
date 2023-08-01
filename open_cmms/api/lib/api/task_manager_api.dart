@@ -351,10 +351,16 @@ class TaskManagerApi {
   ///
   /// Parameters:
   ///
+  /// * [int] page (required):
+  ///
+  /// * [int] pageSize (required):
+  ///
   /// * [String] stationId:
   ///
   /// * [List<TaskState>] filterState:
-  Future<Response> loadAllTaskManagerGetTasksGetWithHttpInfo({
+  Future<Response> loadAllTaskManagerGetTasksGetWithHttpInfo(
+    int page,
+    int pageSize, {
     String? stationId,
     List<TaskState>? filterState,
   }) async {
@@ -368,6 +374,8 @@ class TaskManagerApi {
     final headerParams = <String, String>{};
     final formParams = <String, String>{};
 
+    queryParams.addAll(_queryParams('', 'page', page));
+    queryParams.addAll(_queryParams('', 'page_size', pageSize));
     if (stationId != null) {
       queryParams.addAll(_queryParams('', 'station_id', stationId));
     }
@@ -392,14 +400,22 @@ class TaskManagerApi {
   ///
   /// Parameters:
   ///
+  /// * [int] page (required):
+  ///
+  /// * [int] pageSize (required):
+  ///
   /// * [String] stationId:
   ///
   /// * [List<TaskState>] filterState:
-  Future<List<TaskSchema>?> loadAllTaskManagerGetTasksGet({
+  Future<List<TaskSchema>?> loadAllTaskManagerGetTasksGet(
+    int page,
+    int pageSize, {
     String? stationId,
     List<TaskState>? filterState,
   }) async {
     final response = await loadAllTaskManagerGetTasksGetWithHttpInfo(
+      page,
+      pageSize,
       stationId: stationId,
       filterState: filterState,
     );

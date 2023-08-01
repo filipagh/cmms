@@ -14,17 +14,21 @@ class RoadSegments extends StatelessWidget {
   }) : super(key: key);
 
   final RxList<RoadSegmentSchema> roadSegments = <RoadSegmentSchema>[].obs;
+  final RxnString _query = RxnString();
 
   RxBool _show_deleted = false.obs;
 
-  reloadRoadSegments() {
-    RoadSegmentService()
-        .getAllRoadSegmentManagerSegmentsGet(onlyActive: !_show_deleted.value)
-        .then((value) {
-      roadSegments.clear();
-      roadSegments.addAll(value ?? []);
-      roadSegments.refresh();
-    });
+  load() {
+    if (_query.value != null) {
+      RoadSegmentService()
+          .searchRoadSegmentManagerSegmentsSearchGet(_query.value!,
+              onlyActive: !_show_deleted.value)
+          .then((value) => roadSegments.value = (value ?? []));
+    } else {
+      RoadSegmentService()
+          .getAllRoadSegmentManagerSegmentsGet(onlyActive: !_show_deleted.value)
+          .then((value) => roadSegments.value = (value ?? []));
+    }
   }
 
   List<DataRow> getRows(List<RoadSegmentSchema> roadSegments) {
@@ -50,6 +54,7 @@ class RoadSegments extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    load();
     var widget = Scaffold(
       appBar: CustomAppBar(),
       body: Row(
@@ -68,7 +73,7 @@ class RoadSegments extends StatelessWidget {
                     ),
                     IconButton(
                         onPressed: () {
-                          reloadRoadSegments();
+                          load();
                         },
                         icon: const Icon(Icons.refresh))
                   ],
@@ -79,9 +84,18 @@ class RoadSegments extends StatelessWidget {
                     Container(
                       width: 200,
                       child: TextField(
-                        enabled: false,
-                        decoration: const InputDecoration(
-                          labelText: 'Vyhladávanie (WIP)',
+                        onChanged: (v) {
+                          if (v.length >= 3) {
+                            _query.value = v;
+                            load();
+                          }
+                          if (v.length < 3 && _query.value != null) {
+                            _query.value = null;
+                            load();
+                          }
+                        },
+                        decoration: InputDecoration(
+                          hintText: "Hľadať",
                         ),
                       ),
                     ),
@@ -90,13 +104,13 @@ class RoadSegments extends StatelessWidget {
                         value: _show_deleted.value,
                         onChanged: (v) {
                           _show_deleted.value = v!;
-                          reloadRoadSegments();
+                          load();
                         })),
                     const Spacer(),
                     ElevatedButton(
                       onPressed: () {
                         showFormDialog(RoadSegmentForm.createNew())
-                            .then((value) => reloadRoadSegments());
+                            .then((value) => load());
                       },
                       child: const Text("vytvoriť cestný úsek"),
                     ),
@@ -109,13 +123,13 @@ class RoadSegments extends StatelessWidget {
                       return DataTable(
                           showCheckboxColumn: false,
                           dataRowColor:
-                              MaterialStateProperty.resolveWith<Color?>(
+                          MaterialStateProperty.resolveWith<Color?>(
                                   (Set<MaterialState> states) {
-                            if (states.contains(MaterialState.hovered)) {
-                              return Colors.blue.shade200;
-                            }
-                            return Colors.transparent; // Use the default value.
-                          }),
+                                if (states.contains(MaterialState.hovered)) {
+                                  return Colors.blue.shade200;
+                                }
+                                return Colors.transparent; // Use the default value.
+                              }),
                           columns: const [
                             DataColumn(label: Text("Cestný úsek názov")),
                             DataColumn(label: Text("text")),
@@ -149,7 +163,6 @@ class RoadSegments extends StatelessWidget {
         ],
       ),
     );
-    reloadRoadSegments();
     return widget;
   }
 }

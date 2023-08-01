@@ -47,6 +47,11 @@ def get_assets(_user: FiefUserInfo = Depends(custom_auth(read_permission))):
     return list
 
 
+@asset_manager_router.get("/assets_search", response_model=list[schema.AssetSchema])
+def get_assets_search(query: str):
+    return asset_manager_loader.search(query)
+
+
 @asset_manager_router.get("/asset-categories", response_model=list[schema.AssetCategorySchema])
 def get_asset_categories(_user: FiefUserInfo = Depends(custom_auth(read_permission))):
     assets = asset_manager_loader.load_asset_category()

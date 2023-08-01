@@ -23,8 +23,8 @@ class RoadSegmentService(ProcessApplication):
             segment: RoadSegment = self.repository.get(segment.id)
         except AggregateNotFound:
             raise AppRoadSegmentException("Road segment not found")
-        station_projector = base.main.runner.get(StationProjector)
-        stations = station_projector.get_all(active_only=True, segment_id=segment.id)
+        station_projector: StationProjector = base.main.runner.get(StationProjector)
+        stations = station_projector.get_by_road_segment(road_segment_id=segment.id, active_only=True)
         if len(stations) > 0:
             raise AppRoadSegmentException("Cannot remove road segment with stations")
 

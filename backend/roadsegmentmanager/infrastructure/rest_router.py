@@ -43,6 +43,13 @@ def get_all(only_active: bool = False, _user: FiefUserInfo = Depends(custom_auth
     return col
 
 
+@road_segment_manager.get("/segments_search",
+                          response_model=list[schema.RoadSegmentSchema])
+def search(query: str, only_active: bool = False, _user: FiefUserInfo = Depends(custom_auth(read_permission))):
+    segment_projector: RoadSegmentProjector = main.runner.get(RoadSegmentProjector)
+    return segment_projector.search(query, only_active)
+
+
 @road_segment_manager.delete("/remove_segment", response_class=PlainTextResponse)
 def remove_segment(segment_id: schema.RoadSegmentIdSchema,
                    _user: FiefUserInfo = Depends(custom_auth(write_permission))):
