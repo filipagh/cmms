@@ -12,7 +12,8 @@ part of openapi.api;
 
 
 class ActionHistoryApi {
-  ActionHistoryApi([ApiClient? apiClient]) : apiClient = apiClient ?? defaultApiClient;
+  ActionHistoryApi([ApiClient? apiClient])
+      : apiClient = apiClient ?? defaultApiClient;
 
   final ApiClient apiClient;
 
@@ -22,8 +23,16 @@ class ActionHistoryApi {
   ///
   /// Parameters:
   ///
+  /// * [int] page (required):
+  ///
+  /// * [int] pageSize (required):
+  ///
   /// * [String] stationId (required):
-  Future<Response> getByStationActionHistoryByStationGetWithHttpInfo(String stationId,) async {
+  Future<Response> getByStationActionHistoryByStationGetWithHttpInfo(
+    int page,
+    int pageSize,
+    String stationId,
+  ) async {
     // ignore: prefer_const_declarations
     final path = r'/action_history/by_station';
 
@@ -34,10 +43,11 @@ class ActionHistoryApi {
     final headerParams = <String, String>{};
     final formParams = <String, String>{};
 
-      queryParams.addAll(_queryParams('', 'station_id', stationId));
+    queryParams.addAll(_queryParams('', 'page', page));
+    queryParams.addAll(_queryParams('', 'page_size', pageSize));
+    queryParams.addAll(_queryParams('', 'station_id', stationId));
 
     const contentTypes = <String>[];
-
 
     return apiClient.invokeAPI(
       path,
@@ -54,20 +64,34 @@ class ActionHistoryApi {
   ///
   /// Parameters:
   ///
+  /// * [int] page (required):
+  ///
+  /// * [int] pageSize (required):
+  ///
   /// * [String] stationId (required):
-  Future<List<ActionHistorySchema>?> getByStationActionHistoryByStationGet(String stationId,) async {
-    final response = await getByStationActionHistoryByStationGetWithHttpInfo(stationId,);
+  Future<List<ActionHistorySchema>?> getByStationActionHistoryByStationGet(
+    int page,
+    int pageSize,
+    String stationId,
+  ) async {
+    final response = await getByStationActionHistoryByStationGetWithHttpInfo(
+      page,
+      pageSize,
+      stationId,
+    );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
     // When a remote server returns no body with a status of 204, we shall not decode it.
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
       final responseBody = await _decodeBodyBytes(response);
-      return (await apiClient.deserializeAsync(responseBody, 'List<ActionHistorySchema>') as List)
-        .cast<ActionHistorySchema>()
-        .toList();
+      return (await apiClient.deserializeAsync(
+              responseBody, 'List<ActionHistorySchema>') as List)
+          .cast<ActionHistorySchema>()
+          .toList();
 
     }
     return null;

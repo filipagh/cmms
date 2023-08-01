@@ -27,7 +27,8 @@ class StationsMissingServiceContractForm extends StatelessWidget
   loadStationOfSegment(String id) async {
     if (!stations.containsKey(id)) {
       await StationService()
-          .getAllStationStationsGet(roadSegmentId: id)
+          .getRoadSegmentStationsStationStationsOfRoadSegmentGet(id,
+              onlyActive: true)
           .then((value) {
         stations[id] = (value ?? []);
         segments.refresh();

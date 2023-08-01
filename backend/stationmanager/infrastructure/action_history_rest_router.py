@@ -17,8 +17,8 @@ action_history_router = APIRouter(
 
 @action_history_router.get("/by_station",
                            response_model=list[schema.ActionHistorySchema])
-def get_by_station(
-        station_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_auth(read_permission))
-):
+def get_by_station(page: int, page_size: int,
+                   station_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_auth(read_permission))
+                   ):
     projector: ActionHistoryProjector = main.runner.get(ActionHistoryProjector)
-    return projector.get_by_station(station_id, True)
+    return projector.get_by_station(station_id, True, page, page_size)

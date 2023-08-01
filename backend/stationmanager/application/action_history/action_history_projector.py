@@ -204,7 +204,7 @@ class ActionHistoryProjector(ProcessApplication):
     def _(self, domain_event: Station.StationRelocated, process_event):
         station = main.runner.get(StationProjector).get_by_id(domain_event.originator_id)
         road_segment_name = main.runner.get(RoadSegmentProjector).get_by_id(domain_event.new_road_segment_id).name
-        text = f"Stanica {station.name} bola presunuta na cestny usek {road_segment_name}"
+        text = f"Stanica {station.name} bola priradená na cestný úsek {road_segment_name}"
         model = action_history_repo.ActionHistoryModel(
             station_id=domain_event.originator_id,
             text=text,
@@ -213,9 +213,10 @@ class ActionHistoryProjector(ProcessApplication):
         )
         action_history_repo.save(model)
 
-    def get_by_station(self, station_id: uuid.UUID, include_internal=False) -> list[schema.ActionHistorySchema]:
+    def get_by_station(self, station_id: uuid.UUID, include_internal=False, page=None, page_size=None) -> list[
+        schema.ActionHistorySchema]:
         col = []
-        for i in action_history_repo.get_by_station(station_id, include_internal):
+        for i in action_history_repo.get_by_station(station_id, include_internal, page, page_size):
             col.append(schema.ActionHistorySchema(**i.__dict__))
 
         return col

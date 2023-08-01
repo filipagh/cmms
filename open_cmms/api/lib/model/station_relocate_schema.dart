@@ -129,3 +129,4 @@ class StationRelocateSchema {
     'new_road_segment_id',
   };
 }
+

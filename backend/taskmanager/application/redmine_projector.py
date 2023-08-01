@@ -172,7 +172,8 @@ class RedmineProjector(ProcessApplication):
         if not is_redmine_active():
             return
         try:
-            tasks = base.main.runner.get(TasksProjector).get_all(station_id=domain_event.originator_id)
+            tasks_projector: TasksProjector = base.main.runner.get(TasksProjector)
+            tasks = tasks_projector.get_all(station_id=domain_event.originator_id)
             new_category = self._get_road_segment_name(domain_event.new_road_segment_id)
             issues_to_update = []
             for task in tasks:

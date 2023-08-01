@@ -147,8 +147,10 @@ class TasksProjector(ProcessApplication):
     def get_by_id(self, task_id: uuid.UUID) -> schema.TaskSchema:
         return schema.TaskSchema(**tasks_repo.get_by_id(task_id).__dict__)
 
-    def get_all(self, station_id: Optional[uuid.UUID], filter_state: list[TaskState] = None) -> list[schema.TaskSchema]:
-        tasks = tasks_repo.get_all(station_id, filter_state)
+    def get_all(self, station_id: Optional[uuid.UUID], filter_state: list[TaskState] = None, page=None,
+                page_size=None, ) -> list[
+        schema.TaskSchema]:
+        tasks = tasks_repo.get_all(station_id, filter_state, page, page_size, )
         col = []
         for t in tasks:
             col.append(schema.TaskSchema(**t.__dict__))

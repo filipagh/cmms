@@ -165,7 +165,6 @@ app.include_router(service_contract_router)
 app.include_router(auth_router)
 app.include_router(redmine_router)
 app.include_router(issue_router)
-
 origins = [
     "http://localhost:5000",
     "http://localhost:22222",

@@ -92,7 +92,7 @@ class TaskService(ProcessApplication):
 
     @policy.register(Station.StationRemoved)
     def _(self, domain_event: Station.StationRemoved, process_event):
-        task_projector = main.runner.get(TasksProjector)
+        task_projector: TasksProjector = main.runner.get(TasksProjector)
         for task in task_projector.get_all(domain_event.originator_id):
             if task.task_type == TaskType.COMPONENT_CHANGE:
                 self.cancel_task(task.id)

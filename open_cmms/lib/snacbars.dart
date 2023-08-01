@@ -15,6 +15,24 @@ void showError(String message) {
   );
 }
 
+Future<bool> showAlert(String message) async {
+  return await Get.dialog(
+    AlertDialog(
+      content: Text(message),
+      actions: [
+        TextButton(
+          child: const Text("Nie"),
+          onPressed: () => Get.back(result: false),
+        ),
+        TextButton(
+          child: const Text("Áno"),
+          onPressed: () => Get.back(result: true),
+        ),
+      ],
+    ),
+  );
+}
+
 void showInfo(String message) {
   Get.showSnackbar(GetSnackBar(
     messageText: Text(

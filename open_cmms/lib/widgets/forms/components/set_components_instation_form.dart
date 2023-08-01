@@ -76,7 +76,7 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
               children: [
                 ElevatedButton(
                     onPressed: () {
-                      showFormDialog<AssetSchema>(const ComponentPickerForm(
+                      showFormDialog<AssetSchema>(ComponentPickerForm(
                         hideArchivedAssets: false,
                       )).then((asset) {
                         if (asset != null) {
@@ -110,8 +110,9 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
                   onTap: () {
                     var now = DateTime.now();
                     showDatePicker(
-                            context: context,
-                            firstDate: now.subtract(Duration(days: 365 * 10)),
+                        context: context,
+                            firstDate:
+                                now.subtract(const Duration(days: 365 * 10)),
                             lastDate: now,
                             initialDate: now)
                         .then((value) {
@@ -182,8 +183,9 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
                   onTap: () {
                     var now = DateTime.now();
                     showDatePicker(
-                            context: context,
-                            firstDate: now.subtract(Duration(days: 365 * 10)),
+                        context: context,
+                            firstDate:
+                                now.subtract(const Duration(days: 365 * 10)),
                             lastDate: now,
                             initialDate: now)
                         .then((value) {
@@ -247,8 +249,7 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
                                 id: element.assignedComponentId!));
                           });
                           if (colr.isNotEmpty) {
-                            if (removeDate.value.text == null ||
-                                removeDate.value.text.isEmpty) {
+                            if (removeDate.value.text.isEmpty) {
                               showError(
                                   "vyplnte datum odstranenia komponentov");
                               return;

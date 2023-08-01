@@ -1,5 +1,7 @@
+import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:open_cmms/service/backend_api/assetManager.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 
 import '../../../states/asset_types_state.dart';
@@ -7,11 +9,12 @@ import '../../../states/asset_types_state.dart';
 class ComponentPickerForm extends StatelessWidget implements hasFormTitle {
   final bool hideArchivedAssets;
 
-  const ComponentPickerForm({Key? key, this.hideArchivedAssets = true})
+  ComponentPickerForm({Key? key, this.hideArchivedAssets = true})
       : super(key: key);
 
+  @override
   String getTitle() {
-    return "Vybrat komponent";
+    return "Vybrať komponent";
   }
 
   @override
@@ -19,22 +22,26 @@ class ComponentPickerForm extends StatelessWidget implements hasFormTitle {
     return this;
   }
 
+  final AssetTypesState _assetTypes = Get.find();
+  final Rxn<String> searchText = Rxn<String>();
+  final RxList<AssetSchema> searchResults = <AssetSchema>[].obs;
+
   @override
   Widget build(BuildContext context) {
-    AssetTypesState _assetTypes = Get.find();
-    var items = _assetTypes.getAllProducts();
-    if (hideArchivedAssets) {
-      items = items.where((element) => element.isArchived == false).toList();
-    }
+    _loadFilteredAssets();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(
+        SizedBox(
           width: 200,
-          child: const TextField(
-            decoration: InputDecoration(
-              hintText: "Hľadať (WIP)",
-              enabled: false,
+          child: TextField(
+            onChanged: (value) {
+              searchText.value = value;
+              _loadFilteredAssets();
+            },
+            decoration: const InputDecoration(
+              hintText: "Hľadať komponent",
             ),
           ),
         ),
@@ -43,89 +50,43 @@ class ComponentPickerForm extends StatelessWidget implements hasFormTitle {
         SizedBox(
           width: 500,
           height: Get.height - 300,
-          child: ListView.builder(
-            itemCount: items.length,
-            itemBuilder: (BuildContext context, int index) {
-              var i = items[index];
-              return Card(
-                color: i.isArchived ? Colors.red.shade50 : null,
-                child: ListTile(
-                  onTap: () => Get.back(result: i),
-                  title: Center(
-                      child: Text(i.name +
-                          (i.isArchived == true ? " (archivované)" : ""))),
-                  subtitle: Center(child: Text(i.description ?? "bez popisu")),
-                ),
-              );
-            },
+          child: Obx(
+            () => ListView.builder(
+              itemCount: searchResults.length,
+              itemBuilder: (BuildContext context, int index) {
+                var i = searchResults[index];
+                return Card(
+                  color: i.isArchived ? Colors.red.shade50 : null,
+                  child: ListTile(
+                    onTap: () => Get.back(result: i),
+                    title: Center(
+                        child: Text(i.name +
+                            (i.isArchived == true ? " (archivované)" : ""))),
+                    subtitle:
+                        Center(child: Text(i.description ?? "bez popisu")),
+                  ),
+                );
+              },
+            ),
           ),
         )
       ],
     );
+  }
 
-    //
-    //   ConstrainedBox(
-    //   constraints: BoxConstraints(maxWidth: 500),
-    //   child: Form(
-    //     key: _formKey,
-    //     child: Column(
-    //       children: [
-    //         ElevatedButton(onPressed: () {}, child: Text('add component')),
-    //         Container(
-    //           width: 500,
-    //           height: 600,
-    //           child: Obx(() {
-    //             return ListView.builder(
-    //                 itemCount: editItems.length,
-    //                 itemBuilder: (BuildContext context, int index) {
-    //                   return buildCardFromFormItem(editItems[index]);
-    //                 });
-    //           }),
-    //         ),
-    //         // TextFormField(
-    //         //   onSaved: (value) {
-    //         //     name = value!;
-    //         //   },
-    //         //   initialValue:
-    //         //       widget.editItem == null ? "" : widget.editItem!.name,
-    //         //   decoration: InputDecoration(labelText: 'name'),
-    //         //   validator: (value) {
-    //         //     return value == null || value.isEmpty ? "add name" : null;
-    //         //   },
-    //         // ),
-    //         // TextFormField(
-    //         //   onSaved: (value) {
-    //         //     description = value!;
-    //         //   },
-    //         //   initialValue:
-    //         //       widget.editItem == null ? "" : widget.editItem!.text,
-    //         //   decoration: InputDecoration(labelText: 'description'),
-    //         // ),
-    //         // TextFormField(
-    //         //   onSaved: (value) {
-    //         //     ssud = value!;
-    //         //   },
-    //         //   initialValue:
-    //         //       widget.editItem == null ? "" : widget.editItem!.ssud,
-    //         //   decoration: InputDecoration(labelText: 'ssud'),
-    //         // ),
-    //
-    //         TextButton(
-    //             onPressed: () {
-    //               // if (_formKey.currentState!.validate()) {
-    //               //   _formKey.currentState?.save();
-    //               //   if (widget.editItem != null) {
-    //               //     widget._roadSegmentState.editRoadSegment(widget.editItem!.id, name, description,ssud);
-    //               //   } else {
-    //               //     widget._roadSegmentState.createNewRoadSegment( name, description,ssud);
-    //               //   }
-    //               //   Get.back();
-    //               // }
-    //             },
-    //             child: Text("submit")),
-    //       ],
-    //     ),
-    //   ),
-    // );
+  Future<void> _loadFilteredAssets() async {
+    List<AssetSchema> items = [];
+
+    if (searchText.value != null && searchText.value!.length > 2) {
+      items = await AssetManagerService()
+              .getAssetsSearchAssetManagerAssetsSearchGet(searchText.value!) ??
+          [];
+    } else {
+      items = _assetTypes.getAllProducts();
+    }
+    if (hideArchivedAssets) {
+      items = items.where((element) => element.isArchived == false).toList();
+    }
+    searchResults.value = items;
   }
 }

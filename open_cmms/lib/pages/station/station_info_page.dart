@@ -50,6 +50,9 @@ class StationInfoPage extends StatelessWidget
                     var roadSegment = await showFormDialog<RoadSegmentSchema>(
                         RoadSegmentPickerForm());
                     if (roadSegment == null) return;
+                    if (await showAlert(
+                            "Naozaj chcete stanicu presunúť do ${roadSegment.name}?") ==
+                        false) return;
                     StationService()
                         .relocateStationStationRelocateStationPost(
                             StationRelocateSchema(
@@ -59,7 +62,7 @@ class StationInfoPage extends StatelessWidget
                       Get.toNamed(StationBasePage.ENDPOINT +
                           "/${station.id}" +
                           StationInfoPage.ENDPOINT);
-                      showOk("Stanica bola presunutá");
+                      showOk("Stanica bola priradená");
                     }, onError: (e) => showError(e.toString()));
                   },
                   child: const Text("Presunúť stanicu")),

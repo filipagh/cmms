@@ -50,7 +50,7 @@ def test_create_station(mocker):
     station_dict['id'] = station_id
     station_dict['is_active'] = True
     assert api.get_by_id(station_id).dict() == station_dict
-    assert api.get_all(road_segment_id=segment_id)[0].dict() == station_dict
+    assert api.get_all(1, 5, road_segment_id=segment_id)[0].dict() == station_dict
 
 
 def test_delete_station_without_components(mocker):

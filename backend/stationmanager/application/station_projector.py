@@ -4,6 +4,7 @@ from typing import Optional
 from eventsourcing.dispatch import singledispatchmethod
 from eventsourcing.system import ProcessApplication
 
+from stationmanager.application.model.schema import StationSchema
 from stationmanager.domain.model.station import Station
 from stationmanager.infrastructure.persistence import station_repo
 from stationmanager.infrastructure.persistence.station_repo import StationModel
@@ -43,5 +44,19 @@ class StationProjector(ProcessApplication):
     def get_by_id(self, station_id: uuid.UUID) -> Optional[StationModel]:
         return station_repo.get_by_id(station_id)
 
-    def get_all(self, active_only: bool = False, segment_id: uuid.UUID = None) -> list[StationModel]:
-        return station_repo.get_stations(active_only, segment_id)
+    def get_by_road_segment(self, road_segment_id: uuid.UUID, active_only: bool = False, ) -> list[StationModel]:
+        return station_repo.get_by_road_segment(road_segment_id, active_only=active_only)
+
+    def get_all(self, page, page_size, active_only: bool = False, segment_id: uuid.UUID = None) -> \
+            list[StationModel]:
+        return station_repo.get_stations(active_only, segment_id, page, page_size)
+
+    def get_all_active(self) -> list[StationModel]:
+        return station_repo.get_stations(active_only=True)
+
+    def search(self, query: str, page, page_size, active_only: bool = False) -> list[StationSchema]:
+        col = []
+        search = station_repo.search(query, active_only=active_only, page=page, page_size=page_size)
+        for i in search:
+            col.append(StationSchema(**i.__dict__))
+        return col

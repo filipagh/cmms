@@ -193,10 +193,16 @@ class StationApi {
   ///
   /// Parameters:
   ///
+  /// * [int] page (required):
+  ///
+  /// * [int] pageSize (required):
+  ///
   /// * [String] roadSegmentId:
   ///
   /// * [bool] onlyActive:
-  Future<Response> getAllStationStationsGetWithHttpInfo({
+  Future<Response> getAllStationStationsGetWithHttpInfo(
+    int page,
+    int pageSize, {
     String? roadSegmentId,
     bool? onlyActive,
   }) async {
@@ -210,6 +216,8 @@ class StationApi {
     final headerParams = <String, String>{};
     final formParams = <String, String>{};
 
+    queryParams.addAll(_queryParams('', 'page', page));
+    queryParams.addAll(_queryParams('', 'page_size', pageSize));
     if (roadSegmentId != null) {
       queryParams.addAll(_queryParams('', 'road_segment_id', roadSegmentId));
     }
@@ -234,14 +242,22 @@ class StationApi {
   ///
   /// Parameters:
   ///
+  /// * [int] page (required):
+  ///
+  /// * [int] pageSize (required):
+  ///
   /// * [String] roadSegmentId:
   ///
   /// * [bool] onlyActive:
-  Future<List<StationSchema>?> getAllStationStationsGet({
+  Future<List<StationSchema>?> getAllStationStationsGet(
+    int page,
+    int pageSize, {
     String? roadSegmentId,
     bool? onlyActive,
   }) async {
     final response = await getAllStationStationsGetWithHttpInfo(
+      page,
+      pageSize,
       roadSegmentId: roadSegmentId,
       onlyActive: onlyActive,
     );
@@ -320,6 +336,82 @@ class StationApi {
         await _decodeBodyBytes(response),
         'StationSchema',
       ) as StationSchema;
+    }
+    return null;
+  }
+
+  /// Get Road Segment Stations
+  ///
+  /// Note: This method returns the HTTP [Response].
+  ///
+  /// Parameters:
+  ///
+  /// * [String] roadSegmentId (required):
+  ///
+  /// * [bool] onlyActive:
+  Future<Response>
+      getRoadSegmentStationsStationStationsOfRoadSegmentGetWithHttpInfo(
+    String roadSegmentId, {
+    bool? onlyActive,
+  }) async {
+    // ignore: prefer_const_declarations
+    final path = r'/station/stations_of_road_segment';
+
+    // ignore: prefer_final_locals
+    Object? postBody;
+
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
+
+    queryParams.addAll(_queryParams('', 'road_segment_id', roadSegmentId));
+    if (onlyActive != null) {
+      queryParams.addAll(_queryParams('', 'only_active', onlyActive));
+    }
+
+    const contentTypes = <String>[];
+
+    return apiClient.invokeAPI(
+      path,
+      'GET',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      contentTypes.isEmpty ? null : contentTypes.first,
+    );
+  }
+
+  /// Get Road Segment Stations
+  ///
+  /// Parameters:
+  ///
+  /// * [String] roadSegmentId (required):
+  ///
+  /// * [bool] onlyActive:
+  Future<List<StationSchema>?>
+      getRoadSegmentStationsStationStationsOfRoadSegmentGet(
+    String roadSegmentId, {
+    bool? onlyActive,
+  }) async {
+    final response =
+        await getRoadSegmentStationsStationStationsOfRoadSegmentGetWithHttpInfo(
+      roadSegmentId,
+      onlyActive: onlyActive,
+    );
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
+      final responseBody = await _decodeBodyBytes(response);
+      return (await apiClient.deserializeAsync(
+              responseBody, 'List<StationSchema>') as List)
+          .cast<StationSchema>()
+          .toList();
     }
     return null;
   }
@@ -442,6 +534,95 @@ class StationApi {
         await _decodeBodyBytes(response),
         'String',
       ) as String;
+    }
+    return null;
+  }
+
+  /// Search Stations
+  ///
+  /// Note: This method returns the HTTP [Response].
+  ///
+  /// Parameters:
+  ///
+  /// * [String] query (required):
+  ///
+  /// * [int] page (required):
+  ///
+  /// * [int] pageSize (required):
+  ///
+  /// * [bool] onlyActive:
+  Future<Response> searchStationsStationStationsSearchGetWithHttpInfo(
+    String query,
+    int page,
+    int pageSize, {
+    bool? onlyActive,
+  }) async {
+    // ignore: prefer_const_declarations
+    final path = r'/station/stations_search';
+
+    // ignore: prefer_final_locals
+    Object? postBody;
+
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
+
+    queryParams.addAll(_queryParams('', 'query', query));
+    queryParams.addAll(_queryParams('', 'page', page));
+    queryParams.addAll(_queryParams('', 'page_size', pageSize));
+    if (onlyActive != null) {
+      queryParams.addAll(_queryParams('', 'only_active', onlyActive));
+    }
+
+    const contentTypes = <String>[];
+
+    return apiClient.invokeAPI(
+      path,
+      'GET',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      contentTypes.isEmpty ? null : contentTypes.first,
+    );
+  }
+
+  /// Search Stations
+  ///
+  /// Parameters:
+  ///
+  /// * [String] query (required):
+  ///
+  /// * [int] page (required):
+  ///
+  /// * [int] pageSize (required):
+  ///
+  /// * [bool] onlyActive:
+  Future<List<StationSchema>?> searchStationsStationStationsSearchGet(
+    String query,
+    int page,
+    int pageSize, {
+    bool? onlyActive,
+  }) async {
+    final response = await searchStationsStationStationsSearchGetWithHttpInfo(
+      query,
+      page,
+      pageSize,
+      onlyActive: onlyActive,
+    );
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
+      final responseBody = await _decodeBodyBytes(response);
+      return (await apiClient.deserializeAsync(
+              responseBody, 'List<StationSchema>') as List)
+          .cast<StationSchema>()
+          .toList();
     }
     return null;
   }

@@ -17,22 +17,30 @@ class RoadSegmentPickerForm extends StatelessWidget implements hasFormTitle {
   }
 
   final RxList<RoadSegmentSchema> _road_segments = <RoadSegmentSchema>[].obs;
+  final RxnString _query = RxnString();
 
   @override
   Widget build(BuildContext context) {
-    RoadSegmentService()
-        .getAllRoadSegmentManagerSegmentsGet(onlyActive: true)
-        .then((value) => _road_segments.addAll(value ?? []));
+    load();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
           width: 200,
-          child: const TextField(
+          child: TextField(
+            onChanged: (v) {
+              if (v.length >= 3) {
+                _query.value = v;
+                load();
+              }
+              if (v.length < 3 && _query.value != null) {
+                _query.value = null;
+                load();
+              }
+            },
             decoration: InputDecoration(
-              hintText: "Hľadať (WIP)",
-              enabled: false,
+              hintText: "Hľadať",
             ),
           ),
         ),
@@ -59,5 +67,18 @@ class RoadSegmentPickerForm extends StatelessWidget implements hasFormTitle {
         })
       ],
     );
+  }
+
+  load() {
+    if (_query.value != null) {
+      RoadSegmentService()
+          .searchRoadSegmentManagerSegmentsSearchGet(_query.value!,
+              onlyActive: true)
+          .then((value) => _road_segments.value = (value ?? []));
+    } else {
+      RoadSegmentService()
+          .getAllRoadSegmentManagerSegmentsGet(onlyActive: true)
+          .then((value) => _road_segments.value = (value ?? []));
+    }
   }
 }

@@ -4,6 +4,7 @@ from typing import Optional
 from eventsourcing.dispatch import singledispatchmethod
 from eventsourcing.system import ProcessApplication
 
+from roadsegmentmanager.application.model.schema import RoadSegmentSchema
 from roadsegmentmanager.domain.model.roadsegment import RoadSegment
 from roadsegmentmanager.infrastructure.persistence import road_segment_repo
 from roadsegmentmanager.infrastructure.persistence.road_segment_repo import RoadSegmentModel
@@ -33,3 +34,9 @@ class RoadSegmentProjector(ProcessApplication):
 
     def get_all(self, only_active: bool = False) -> list[RoadSegmentModel]:
         return road_segment_repo.get_road_segments(only_active)
+
+    def search(self, query: str, only_active: bool = False) -> list[RoadSegmentSchema]:
+        col = []
+        for i in road_segment_repo.search(query, only_active):
+            col.append(RoadSegmentSchema(**i.__dict__))
+        return col

@@ -27,11 +27,13 @@ def save(station: ActionHistoryModel):
         db.commit()
 
 
-def get_by_station(station: uuid.UUID, include_internal=False) -> list[ActionHistoryModel]:
+def get_by_station(station: uuid.UUID, include_internal=False, page=None, page_size=None) -> list[ActionHistoryModel]:
     db: Session
     with _get_db() as db:
         actions = db.query(ActionHistoryModel).order_by(ActionHistoryModel.datetime).where(
             ActionHistoryModel.station_id == station)
         if not include_internal:
             actions = actions.where(ActionHistoryModel.is_internal == False)
+        if page and page_size:
+            actions = actions.offset((page - 1) * page_size).limit(page_size)
         return actions.all()

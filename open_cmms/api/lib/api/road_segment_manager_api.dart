@@ -311,4 +311,78 @@ class RoadSegmentManagerApi {
     }
     return null;
   }
+
+  /// Search
+  ///
+  /// Note: This method returns the HTTP [Response].
+  ///
+  /// Parameters:
+  ///
+  /// * [String] query (required):
+  ///
+  /// * [bool] onlyActive:
+  Future<Response> searchRoadSegmentManagerSegmentsSearchGetWithHttpInfo(
+    String query, {
+    bool? onlyActive,
+  }) async {
+    // ignore: prefer_const_declarations
+    final path = r'/road-segment-manager/segments_search';
+
+    // ignore: prefer_final_locals
+    Object? postBody;
+
+    final queryParams = <QueryParam>[];
+    final headerParams = <String, String>{};
+    final formParams = <String, String>{};
+
+    queryParams.addAll(_queryParams('', 'query', query));
+    if (onlyActive != null) {
+      queryParams.addAll(_queryParams('', 'only_active', onlyActive));
+    }
+
+    const contentTypes = <String>[];
+
+    return apiClient.invokeAPI(
+      path,
+      'GET',
+      queryParams,
+      postBody,
+      headerParams,
+      formParams,
+      contentTypes.isEmpty ? null : contentTypes.first,
+    );
+  }
+
+  /// Search
+  ///
+  /// Parameters:
+  ///
+  /// * [String] query (required):
+  ///
+  /// * [bool] onlyActive:
+  Future<List<RoadSegmentSchema>?> searchRoadSegmentManagerSegmentsSearchGet(
+    String query, {
+    bool? onlyActive,
+  }) async {
+    final response =
+        await searchRoadSegmentManagerSegmentsSearchGetWithHttpInfo(
+      query,
+      onlyActive: onlyActive,
+    );
+    if (response.statusCode >= HttpStatus.badRequest) {
+      throw ApiException(response.statusCode, await _decodeBodyBytes(response));
+    }
+    // When a remote server returns no body with a status of 204, we shall not decode it.
+    // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
+    // FormatException when trying to decode an empty string.
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
+      final responseBody = await _decodeBodyBytes(response);
+      return (await apiClient.deserializeAsync(
+              responseBody, 'List<RoadSegmentSchema>') as List)
+          .cast<RoadSegmentSchema>()
+          .toList();
+    }
+    return null;
+  }
 }

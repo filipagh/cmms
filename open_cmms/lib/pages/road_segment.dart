@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/service/backend_api/RoadSegmentManager.dart';
 import 'package:open_cmms/service/backend_api/station_service.dart';
-import 'package:open_cmms/widgets/assets_list.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 import 'package:open_cmms/widgets/forms/station/station_form.dart';
 
@@ -11,6 +10,7 @@ import '../service/backend_api/tasks/tasks_on_site_service.dart';
 import '../snacbars.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/main_menu_widget.dart';
+import '../widgets/stations_list.dart';
 
 class RoadSegment extends StatelessWidget {
   final String segmentId;
@@ -43,8 +43,10 @@ class RoadSegment extends StatelessWidget {
 
   reloadStations() {
     StationService()
-        .getAllStationStationsGet(
-            onlyActive: !_show_deleted.value, roadSegmentId: segmentId)
+        .getRoadSegmentStationsStationStationsOfRoadSegmentGet(
+      segmentId,
+      onlyActive: !_show_deleted.value,
+    )
         .then((stations) {
       _station.clear();
       _station.addAll(stations!);
@@ -209,7 +211,15 @@ class RoadSegment extends StatelessWidget {
               Divider(),
               _station.isEmpty
                   ? buildEmptyStationList()
-                  : AssetsList(list: _station),
+                  : Expanded(
+                      child: ListView.builder(
+                          addRepaintBoundaries: true,
+                          padding: const EdgeInsets.all(8),
+                          itemCount: _station.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return getStationCard(_station[index]);
+                          }),
+                    ),
             ],
           ),
         )

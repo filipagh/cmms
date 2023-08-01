@@ -11,11 +11,12 @@ from stationmanager.infrastructure.persistence.service_contract_repo import Stat
 
 def export_stations_without_service_contract_xslx():
     active_contracts = main.runner.get(ServiceContractProjector).get_all_active()
-    stations = main.runner.get(StationProjector).get_all(active_only=True)
+    stations = main.runner.get(StationProjector).get_all_active()
     station_ids = []
     for station in stations:
         station_ids.append(station.id)
-    road_segments = main.runner.get(RoadSegmentProjector).get_all(only_active=True)
+    road_segment_projector: RoadSegmentProjector = main.runner.get(RoadSegmentProjector)
+    road_segments = road_segment_projector.get_all(only_active=True)
 
     for contract in active_contracts:
         station_in_contract: StationServiceContractModel

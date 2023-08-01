@@ -66,7 +66,7 @@ def get_contract(contract_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_au
 @service_contract_router.get("/contracts",
                              response_model=list[schema.ServiceContractSchema])
 def get_contracts(_user: FiefUserInfo = Depends(custom_auth(read_permission))):
-    projector = main.runner.get(ServiceContractProjector)
+    projector: ServiceContractProjector = main.runner.get(ServiceContractProjector)
     col = []
     contracts = projector.get_all()
     for i in contracts:
@@ -75,13 +75,20 @@ def get_contracts(_user: FiefUserInfo = Depends(custom_auth(read_permission))):
     return col
 
 
+@service_contract_router.get("/contracts_search",
+                             response_model=list[schema.ServiceContractSchema])
+def search(query: str, _user: FiefUserInfo = Depends(custom_auth(read_permission))):
+    projector: ServiceContractProjector = main.runner.get(ServiceContractProjector)
+    return projector.search(query)
+
+
 @service_contract_router.get("/stations_without_contract",
                              response_model=list[StationIdSchema])
 def get_stations_without_contract(_user: FiefUserInfo = Depends(custom_auth(read_permission))):
-    station_projector = main.runner.get(StationProjector)
+    station_projector: StationProjector = main.runner.get(StationProjector)
     projector = main.runner.get(ServiceContractProjector)
     station_ids = []
-    for s in station_projector.get_all(active_only=True):
+    for s in station_projector.get_all_active():
         station_ids.append(s.id)
 
     col = []
@@ -100,8 +107,8 @@ def get_stations_without_contract(_user: FiefUserInfo = Depends(custom_auth(read
 
 @service_contract_router.get("/stations_without_contract/export_xsl",
                              response_class=FileResponse)
-def get_stations_without_contract_export(background_tasks: BackgroundTasks, _user: FiefUserInfo = Depends(custom_auth(read_permission))):
-
+def get_stations_without_contract_export(background_tasks: BackgroundTasks,
+                                         _user: FiefUserInfo = Depends(custom_auth(read_permission))):
     name = service_contract_xsl_exporter.export_stations_without_service_contract_xslx()
     background_tasks.add_task(delete_file, name)
     return FileResponse(name, media_type='application/octet-stream', filename=name)
