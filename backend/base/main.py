@@ -7,7 +7,6 @@ from eventsourcing.persistence import Transcoding
 from eventsourcing.system import System, SingleThreadedRunner, Follower
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi_pagination import add_pagination
 from starlette.responses import JSONResponse
 
 import roadsegmentmanager.infrastructure.rest_router
