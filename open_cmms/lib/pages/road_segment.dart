@@ -189,7 +189,8 @@ class RoadSegment extends StatelessWidget {
                             Padding(padding: EdgeInsets.only(left: 10)),
                             ElevatedButton(
                                 onPressed: () {
-                                  showFormDialog(StationForm(_roadSegment!));
+                                  showFormDialog(StationForm(_roadSegment!))
+                                      .then((value) => reloadStations());
                                 },
                                 child: Text("Pridat stanicu")),
                           ],
