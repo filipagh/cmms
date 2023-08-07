@@ -135,7 +135,7 @@ class ServiceContracts extends StatelessWidget {
                 showFormDialog(ServiceContractForm(
                   isNew: true,
                   stationsWithoutContract: _stationsIdsWithoutContracts,
-                ));
+                )).then((value) => reloadContracts());
               },
               child: const Text("vytvorit novu zmluvu"),
             ),
@@ -170,7 +170,7 @@ class ServiceContracts extends StatelessWidget {
                                         isNew: true,
                                         stationsWithoutContract:
                                             _stationsIdsWithoutContracts,
-                                      ));
+                                      )).then((value) => reloadContracts());
                                     },
                                     icon: Icon(Icons.copy),
                                     label: Text("kópia")),

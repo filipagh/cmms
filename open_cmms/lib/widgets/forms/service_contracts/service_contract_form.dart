@@ -248,11 +248,9 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
                                       validUntil: dateDueDT!,
                                       stationIdList: widget.selectedStations))
                               .then((value) {
+                            Get.back();
                             showOk("Servisna zmluva bola pridana");
                           });
-
-                          Get.closeAllSnackbars();
-                          Get.back();
                         }
                       },
                       child: const Text("Vytvorit zmluvu"))
