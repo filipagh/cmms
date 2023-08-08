@@ -2,6 +2,7 @@ import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:multiselect/multiselect.dart';
+import 'package:open_cmms/snacbars.dart';
 import 'package:open_cmms/states/tasks_list_state.dart';
 import 'package:open_cmms/widgets/custom_app_bar.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
@@ -85,28 +86,34 @@ class Tasks extends StatelessWidget {
                     Padding(padding: const EdgeInsets.all(10)),
                     ElevatedButton(
                       onPressed: () async {
-StationSchema station =
-await showFormDialog(StationPickerForm());
-showFormDialog(CreateTaskForm(station: station));
-},
-child: const Text("nová úloha"),
-),
-],
-),
-const Divider(),
-Expanded(child: GetX<TasksListState>(
-builder: (state) {
-var list = state.getTasks();
-return ListView.builder(
-controller: _scrollController,
-addRepaintBoundaries: true,
-padding: const EdgeInsets.all(8),
-itemCount: list.length,
-itemBuilder: (BuildContext context, int index) {
-return buildTaskListTitle(list[index]);
-});
-},
-)),
+                        StationSchema station =
+                            await showFormDialog(StationPickerForm());
+                        showFormDialog(CreateTaskForm(station: station))
+                            .then((value) {
+                          if (value) {
+                            _tasksListState.reload();
+                            showOk("úloha bola vytvorená");
+                          }
+                        });
+                      },
+                      child: const Text("nová úloha"),
+                    ),
+                  ],
+                ),
+                const Divider(),
+                Expanded(child: GetX<TasksListState>(
+                  builder: (state) {
+                    var list = state.getTasks();
+                    return ListView.builder(
+                        controller: _scrollController,
+                        addRepaintBoundaries: true,
+                        padding: const EdgeInsets.all(8),
+                        itemCount: list.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return buildTaskListTitle(list[index]);
+                        });
+                  },
+                )),
               ],
             ),
           )

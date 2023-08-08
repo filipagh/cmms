@@ -24,13 +24,13 @@ class CreateServiceTaskForm extends StatefulWidget implements hasFormTitle {
   String getTitleString() {
     switch (taskType) {
       case TaskType.componentChange:
-        throw UnimplementedError("wrong task form for {$taskType}");
+        throw UnimplementedError("zlý formular pre úlohu: {$taskType}");
       case TaskType.onSiteService:
         return "Kontrola stanice na mieste";
       case TaskType.remoteService:
         return "Vzdialena kontrola stanice";
     }
-    throw UnimplementedError("wrong task form for {$taskType}");
+    throw UnimplementedError("zlý formular pre úlohu: {$taskType}");
   }
 
   @override
@@ -88,16 +88,16 @@ class _CreateServiceTaskFormState extends State<CreateServiceTaskForm> {
                             stationId: widget.station.id,
                             name: taskName.text,
                             description: taskDescription.text)
-                      ]);
+                      ]).then((value) => Get.back(result: true));
                     } else {
                       TasksRemoteService()
                           .createTaskServiceRemoteCreateServiceRemoteTaskPost(
                               TaskServiceRemoteNewSchema(
                                   stationId: widget.station.id,
                                   name: taskName.text,
-                                  description: taskDescription.text));
+                                  description: taskDescription.text))
+                          .then((value) => Get.back(result: true));
                     }
-                    Get.back();
                   }
                 },
                 child: const Text("Vytvorit ulohu")),
@@ -110,12 +110,12 @@ class _CreateServiceTaskFormState extends State<CreateServiceTaskForm> {
   String _getTaskName() {
     switch (widget.taskType) {
       case TaskType.componentChange:
-        throw UnimplementedError("wrong task form for {$widget.taskType}");
+        throw UnimplementedError("zlý formular pre úlohu: {$widget.taskType}");
       case TaskType.onSiteService:
         return "Profylaktika: ${widget.station.name}";
       case TaskType.remoteService:
         return "Vzdialená kontrola stanice: ${widget.station.name}";
     }
-    throw UnimplementedError("wrong task form for {$widget.taskType}");
+    throw UnimplementedError("zlý formular pre úlohu: {$widget.taskType}");
   }
 }

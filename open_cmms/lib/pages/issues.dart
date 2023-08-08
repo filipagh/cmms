@@ -137,7 +137,14 @@ class IssuesPage extends StatelessWidget {
                                                       await showFormDialog(
                                                           StationPickerForm());
                                                   showFormDialog(CreateTaskForm(
-                                                      station: station));
+                                                          station: station))
+                                                      .then((value) {
+                                                    if (value) {
+                                                      showOk(
+                                                          "Úloha bola vytvorená");
+                                                    }
+                                                    ;
+                                                  });
                                                 },
                                                 child: const Text(
                                                     "vytvoriť ulohu"))

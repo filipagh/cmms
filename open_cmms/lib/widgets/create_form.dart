@@ -3,17 +3,17 @@ import 'package:get/get.dart';
 
 void showdialog() {
   Get.defaultDialog(
-    title: "add ...",
+      title: "pridať ...",
       content: Container(
         width: 800,
         child: Column(
           // children: [Text("form"), Placeholder()],
-          children: [Text("form")],
+          children: [Text("formulár")],
         ),
       ),
       confirm: TextButton(
           onPressed: () {
             Get.back();
           },
-          child: Text("submit")));
+          child: Text("uložiť")));
 }

@@ -17,8 +17,8 @@ class AssetManagementForm extends StatefulWidget implements hasFormTitle {
 
   String getTitle() {
     return item == null
-        ? "Create new Asset Type"
-        : "Edit Asset type : ${item!.name}";
+        ? "Zaevidovať novy komponent"
+        : "Upraviť komponent : ${item!.name}";
   }
 
   @override
@@ -77,9 +77,9 @@ class AssetManagementFormState extends State<AssetManagementForm> {
                 name = value!;
               },
               initialValue: widget.item == null ? "" : widget.item!.name,
-              decoration: InputDecoration(labelText: 'name'),
+              decoration: InputDecoration(labelText: 'meno'),
               validator: (value) {
-                return value == null || value.isEmpty ? "add name" : null;
+                return value == null || value.isEmpty ? "zadaj meno" : null;
               },
             ),
             TextFormField(
@@ -87,10 +87,10 @@ class AssetManagementFormState extends State<AssetManagementForm> {
                 description = value!;
               },
               initialValue: widget.item == null ? "" : widget.item!.text,
-              decoration: InputDecoration(labelText: 'description'),
+              decoration: InputDecoration(labelText: 'popis'),
             ),
             DropdownButtonFormField<String>(
-              hint: Text('Main category'),
+              hint: Text('Hlavná kategória'),
               items: getMainCat(),
               value: _mainCategoryAssetType != null
                   ? _mainCategoryAssetType?.id
@@ -110,8 +110,8 @@ class AssetManagementFormState extends State<AssetManagementForm> {
               },
             ),
             DropdownButtonFormField<String>(
-              disabledHint: Text("please select main categoty"),
-              hint: Text('Sub category'),
+              disabledHint: Text("Prosím zvolte hlavnú kategóriu"),
+              hint: Text('Pod kategória'),
               items: getSubCat(),
               value: _subCategory,
               onChanged: _isSubCategoryEnabled ? _changeSubCategory : null,
@@ -140,7 +140,7 @@ class AssetManagementFormState extends State<AssetManagementForm> {
                     Get.back();
                   }
                 },
-                child: Text("submit")),
+                child: Text("uložiť"))
           ],
         ),
       ),
@@ -152,7 +152,7 @@ class AssetManagementFormState extends State<AssetManagementForm> {
     List<DropdownMenuItem<String>> list = [];
 
     list.add(DropdownMenuItem(
-      child: Text("New main category"),
+      child: Text("Nová hlavná kategória"),
       value: EMPTY_CATEGORY,
     ));
     assetTypes.getMainCategories().forEach((element) {
@@ -168,7 +168,7 @@ class AssetManagementFormState extends State<AssetManagementForm> {
     List<DropdownMenuItem<String>> list = [];
 
     list.add(DropdownMenuItem(
-      child: Text("New sub category"),
+      child: Text("Nová podkategória"),
       value: EMPTY_CATEGORY,
     ));
     _subCategoryList.forEach((element) {

@@ -136,9 +136,10 @@ class _StationFormState extends State<StationForm> {
                                     longitude: lon,
                                     seeLevel: seeLevel,
                                     description: note))
-                            .then((value) =>
-                                showOk("stanica: $name bola vytvorena"));
-                        Get.back();
+                            .then((value) {
+                          Get.back();
+                          showOk("stanica: $name bola vytvorena");
+                        });
                       }
                     },
                     child: const Text("vytvorit")),

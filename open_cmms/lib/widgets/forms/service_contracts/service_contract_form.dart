@@ -53,7 +53,7 @@ class ServiceContractForm extends StatefulWidget implements hasFormTitle {
 
   @override
   String getTitle() {
-    return "Nova servisna zmluva";
+    return "Nova servisná zmluva";
   }
 
   @override
@@ -73,8 +73,10 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
   @override
   Widget build(BuildContext context) {
     if (widget.contract != null) {
-      setDates(DateTimeRange(
-          start: widget.contract!.validFrom, end: widget.contract!.validUntil));
+      dateFrom.text = widget.contract!.validFrom.toString().substring(0, 10);
+      dateDue.text = widget.contract!.validUntil.toString().substring(0, 10);
+      dateFromDT = widget.contract!.validFrom;
+      dateDueDT = widget.contract!.validUntil;
       widget.selectedStations.value = widget.contract!.stationIdList.toList();
       name.text = widget.contract!.name;
       widget.contract = null;
@@ -88,7 +90,7 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
           TextFormField(
             readOnly: widget.isNew ? false : true,
             controller: name,
-            decoration: const InputDecoration(label: Text("nazov zmluvy")),
+            decoration: const InputDecoration(label: Text("názov zmluvy")),
             validator: (v) {
               return (v == null || v.isEmpty) ? "zvolte nazov" : null;
             },
@@ -102,7 +104,17 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
               decoration:
                   const InputDecoration(labelText: "Datum platnosti od"),
               onTap: () {
-                widget.isNew ? pickDateRange(context) : null;
+                widget.isNew
+                    ? showDatePicker(
+                            context: context,
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime(2101),
+                            initialDate: DateTime.now())
+                        .then((value) {
+                        dateFrom.text = value.toString().substring(0, 10) ?? '';
+                        dateFromDT = value;
+                      })
+                    : null;
               }),
           TextFormField(
               readOnly: widget.isNew ? false : true,
@@ -113,7 +125,17 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
               decoration:
                   const InputDecoration(labelText: "Datum platnosti do"),
               onTap: () {
-                widget.isNew ? pickDateRange(context) : null;
+                widget.isNew
+                    ? showDatePicker(
+                            context: context,
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime(2101),
+                            initialDate: DateTime.now())
+                        .then((value) {
+                        dateDue.text = value.toString().substring(0, 10) ?? '';
+                        dateDueDT = value;
+                      })
+                    : null;
               }),
           SizedBox(
               width: 600,
@@ -226,11 +248,9 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
                                       validUntil: dateDueDT!,
                                       stationIdList: widget.selectedStations))
                               .then((value) {
+                            Get.back();
                             showOk("Servisna zmluva bola pridana");
                           });
-
-                          Get.closeAllSnackbars();
-                          Get.back();
                         }
                       },
                       child: const Text("Vytvorit zmluvu"))
@@ -240,27 +260,6 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
         ],
       ),
     );
-  }
-
-  void pickDateRange(BuildContext context) {
-    showDateRangePicker(
-            context: context,
-            initialDateRange: (dateDueDT != null && dateFromDT != null)
-                ? DateTimeRange(start: dateFromDT!, end: dateDueDT!)
-                : null,
-            // initialDate: DateTime.now(),
-            firstDate: DateTime(2000),
-            lastDate: DateTime(2101))
-        .then((value) {
-      setDates(value);
-    });
-  }
-
-  void setDates(DateTimeRange? value) {
-    dateDue.text = value?.end.toString().substring(0, 10) ?? '';
-    dateFrom.text = value?.start.toString().substring(0, 10) ?? '';
-    dateDueDT = value?.end;
-    dateFromDT = value?.start;
   }
 
   bool? getSectionCheckBoxValue(String id) {

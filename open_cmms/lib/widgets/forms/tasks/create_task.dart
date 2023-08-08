@@ -1,5 +1,4 @@
 import 'package:BackendAPI/api.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/models/aggregates/task.dart';
@@ -26,27 +25,28 @@ class CreateTaskForm extends StatelessWidget implements hasFormTitle {
         Row(
           children: [
             ElevatedButton(
-                onPressed: () {
-                  Get.back();
-                  showFormDialog(EditStationComponentsForm(station: station));
+                onPressed: () async {
+                  Get.back(
+                      result: await showFormDialog(
+                          EditStationComponentsForm(station: station)));
                 },
                 child: Text("Zmena komponentov")),
             ElevatedButton(
-                onPressed: () {
-                  Get.back();
-                  showFormDialog(CreateServiceTaskForm(
+                onPressed: () async {
+                  Get.back(
+                      result: await showFormDialog(CreateServiceTaskForm(
                     station: station,
                     taskType: TaskType.onSiteService,
-                  ));
+                  )));
                 },
                 child: Text("Osobny servis")),
             ElevatedButton(
-                onPressed: () {
-                  Get.back();
-                  showFormDialog(CreateServiceTaskForm(
+                onPressed: () async {
+                  Get.back(
+                      result: await showFormDialog(CreateServiceTaskForm(
                     station: station,
                     taskType: TaskType.remoteService,
-                  ));
+                  )));
                 },
                 child: Text("Vzdialeny servis")),
           ],
@@ -63,7 +63,7 @@ class CreateTaskForm extends StatelessWidget implements hasFormTitle {
 
   @override
   String getTitle() {
-    return "Create new task for station: ${station.name}";
+    return "Vytvoriť novu úlohu pre ${station.name}";
   }
 
   // Widget buildTaskActionList() {

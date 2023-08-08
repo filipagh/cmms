@@ -73,7 +73,7 @@ class _OverrideStorageItemState extends State<OverrideStorageItem> {
                     onPressed: () {
                       Get.back();
                     },
-                    child: const Text("spat")),
+                    child: const Text("späť")),
                 ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {

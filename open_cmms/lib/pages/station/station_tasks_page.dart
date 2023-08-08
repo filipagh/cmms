@@ -18,6 +18,9 @@ class StationTasksPage extends StatelessWidget
       TaskStateCustom(TaskState.ready),
       TaskStateCustom(TaskState.open)
     ];
+    try {
+      Get.delete<TasksListState>();
+    } catch (e) {}
     _tasksListState = Get.put(TasksListState(station, list.toList()));
     list.add(TaskStateCustom(TaskState.removed));
     list.add(TaskStateCustom(TaskState.done));

@@ -350,9 +350,9 @@ class TaskChangeComponentsPage extends StatelessWidget {
           tag: taskProjection!.stationId,
           builder: (_components) {
             final comp = _components.getById(removeCom.assignedComponentId);
-            if (comp == null) return const Text("loading...");
+            if (comp == null) return const Text("naciavam...");
             final asset = _assets.getAssetById(comp.assetId);
-            if (asset == null) return const Text("loading...");
+            if (asset == null) return const Text("nacitavam...");
             return ListTile(
               leading: Icon(getComponentStatusIcon(
                   removeCom.state, TaskComponentState.removed)),

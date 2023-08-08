@@ -189,7 +189,8 @@ class RoadSegment extends StatelessWidget {
                             Padding(padding: EdgeInsets.only(left: 10)),
                             ElevatedButton(
                                 onPressed: () {
-                                  showFormDialog(StationForm(_roadSegment!));
+                                  showFormDialog(StationForm(_roadSegment!))
+                                      .then((value) => reloadStations());
                                 },
                                 child: Text("Pridat stanicu")),
                           ],
@@ -240,7 +241,7 @@ class RoadSegment extends StatelessWidget {
   Widget buildMissingRoadSegment() {
     return Center(
         child: Text(
-      "Missing data for Road Segment ID: " + segmentId,
+      "Zadné údaje pre cestný úsek ID: " + segmentId,
       textScaleFactor: 2,
     ));
   }

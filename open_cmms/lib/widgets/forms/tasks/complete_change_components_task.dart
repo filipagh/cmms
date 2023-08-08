@@ -1,5 +1,4 @@
 import 'package:BackendAPI/api.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/service/backend_api/tasks_service.dart';
@@ -127,11 +126,11 @@ class CompleteChangeComponentsTaskForm extends StatelessWidget
           var title = "";
           final comp = _components.getById(element.assignedComponentId);
           if (comp == null)
-            title = "loading...";
+            title = "načítavam...";
           else {
             final asset = _assets.getAssetById(comp.assetId);
             if (asset == null)
-              title = "loading...";
+              title = "načítavam...";
             else
               title = asset.name;
           }

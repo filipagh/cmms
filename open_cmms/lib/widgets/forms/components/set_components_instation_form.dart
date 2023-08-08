@@ -209,7 +209,7 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
                         onPressed: () {
                           Get.back();
                         },
-                        child: const Text("Back")),
+                        child: const Text("Späť")),
                   ],
                 ),
                 Row(
@@ -217,9 +217,9 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
                     Obx(() {
                       return Row(
                         children: [
-                          Text("added: " + getNewItems().length.toString()),
+                          Text("pridané: " + getNewItems().length.toString()),
                           const VerticalDivider(),
-                          Text("removed: " +
+                          Text("odstranené: " +
                               getToRemoveItems().length.toString()),
                           const VerticalDivider(),
                         ],
@@ -275,7 +275,7 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
 
                           Get.back();
                         },
-                        child: const Text("submit")),
+                        child: const Text("uložiť")),
                   ],
                 ),
               ],
