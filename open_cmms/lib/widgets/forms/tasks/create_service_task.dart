@@ -88,16 +88,16 @@ class _CreateServiceTaskFormState extends State<CreateServiceTaskForm> {
                             stationId: widget.station.id,
                             name: taskName.text,
                             description: taskDescription.text)
-                      ]);
+                      ]).then((value) => Get.back(result: true));
                     } else {
                       TasksRemoteService()
                           .createTaskServiceRemoteCreateServiceRemoteTaskPost(
                               TaskServiceRemoteNewSchema(
                                   stationId: widget.station.id,
                                   name: taskName.text,
-                                  description: taskDescription.text));
+                                  description: taskDescription.text))
+                          .then((value) => Get.back(result: true));
                     }
-                    Get.back();
                   }
                 },
                 child: const Text("Vytvorit ulohu")),

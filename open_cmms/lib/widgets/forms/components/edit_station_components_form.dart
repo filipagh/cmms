@@ -91,7 +91,7 @@ class EditStationComponentsForm extends StatelessWidget
                         ElevatedButton(
                             onPressed: !hasChange
                                 ? null
-                                : () {
+                                : () async {
                                     List<TaskComponentAddNewSchema> add = [];
 
                                     getNewItems().forEach((element) {
@@ -107,12 +107,12 @@ class EditStationComponentsForm extends StatelessWidget
                                               element.assignedComponentId!));
                                     });
 
-                                    Get.back();
-                                    showFormDialog(
-                                        CreateChangeComponentsTaskForm(
-                                            station: station,
-                                            add: add,
-                                            remove: remove));
+                                    Get.back(
+                                        result: await showFormDialog(
+                                            CreateChangeComponentsTaskForm(
+                                                station: station,
+                                                add: add,
+                                                remove: remove)));
                                   },
                             child: Text("pokracovat"))
                       ],
