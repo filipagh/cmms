@@ -62,6 +62,6 @@ class StationPickerForm extends StatelessWidget implements hasFormTitle {
 
   @override
   String getTitle() {
-    return "Pick Station";
+    return "Vybrať stanicu";
   }
 }

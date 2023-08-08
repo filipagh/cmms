@@ -73,7 +73,7 @@ class EditStationComponentsForm extends StatelessWidget
                       onPressed: () {
                         Get.back();
                       },
-                      child: Text("spat")),
+                      child: Text("spať")),
                 ],
               ),
               Row(
@@ -114,7 +114,7 @@ class EditStationComponentsForm extends StatelessWidget
                                                 add: add,
                                                 remove: remove)));
                                   },
-                            child: Text("pokracovat"))
+                            child: Text("pokračovať"))
                       ],
                     );
                   }),

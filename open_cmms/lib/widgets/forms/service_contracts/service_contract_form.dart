@@ -53,7 +53,7 @@ class ServiceContractForm extends StatefulWidget implements hasFormTitle {
 
   @override
   String getTitle() {
-    return "Nova servisna zmluva";
+    return "Nova servisná zmluva";
   }
 
   @override
@@ -90,7 +90,7 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
           TextFormField(
             readOnly: widget.isNew ? false : true,
             controller: name,
-            decoration: const InputDecoration(label: Text("nazov zmluvy")),
+            decoration: const InputDecoration(label: Text("názov zmluvy")),
             validator: (v) {
               return (v == null || v.isEmpty) ? "zvolte nazov" : null;
             },

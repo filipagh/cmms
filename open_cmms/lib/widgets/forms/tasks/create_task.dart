@@ -63,7 +63,7 @@ class CreateTaskForm extends StatelessWidget implements hasFormTitle {
 
   @override
   String getTitle() {
-    return "Create new task for station: ${station.name}";
+    return "Vytvoriť novu úlohu pre ${station.name}";
   }
 
   // Widget buildTaskActionList() {

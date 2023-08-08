@@ -87,7 +87,7 @@ class Config extends StatelessWidget {
                 showFormDialog(Redmine_auth_form())
                     .then((value) => loadSettings());
               },
-              child: const Text("Integrovat"))
+              child: const Text("Integrovať"))
         ],
       ),
     ));

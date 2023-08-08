@@ -7,7 +7,7 @@ void showError(String message) {
       content: Text(message),
       actions: [
         TextButton(
-          child: const Text("OK"),
+          child: const Text("Zavrieť"),
           onPressed: () => Get.back(),
         ),
       ],

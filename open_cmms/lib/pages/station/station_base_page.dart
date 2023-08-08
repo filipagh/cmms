@@ -44,7 +44,6 @@ class StationBasePage extends StatelessWidget {
     try {
       ts = Get.find();
     } catch (e) {
-      print("put");
       ts = Get.put(StationState(assetId));
     }
     print(ts.station?.id ?? "null");

@@ -11,7 +11,7 @@ class UnknownPage extends StatelessWidget {
       appBar: CustomAppBar(),
       body: const Center(
         child: Text(
-          "404 not found",
+          "404 pozadovaná stránka sa nenašla",
           textScaleFactor: 5,
         ),
       ),

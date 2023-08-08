@@ -241,7 +241,7 @@ class RoadSegment extends StatelessWidget {
   Widget buildMissingRoadSegment() {
     return Center(
         child: Text(
-      "Missing data for Road Segment ID: " + segmentId,
+      "Zadné údaje pre cestný úsek ID: " + segmentId,
       textScaleFactor: 2,
     ));
   }

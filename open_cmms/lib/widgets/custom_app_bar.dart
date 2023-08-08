@@ -26,13 +26,13 @@ class _MainMenuWidgetState extends State<CustomAppBar> {
                       style: ButtonStyle(
                           backgroundColor: MaterialStateColor.resolveWith(
                               (x) => Colors.white)),
-                      child: Text("odhlas sa"),
+                      child: Text("odhlás sa"),
                       onPressed: () {
                         logout();
                       }),
                 );
               }
-              return Center(child: Text("neprihlaseny"));
+              return Center(child: Text("neprihláseny"));
             },
           ),
         ]);

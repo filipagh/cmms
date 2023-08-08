@@ -41,7 +41,7 @@ class SerialNumberForm extends StatelessWidget implements hasFormTitle {
               }
               Get.back(result: serialNumber);
             },
-            child: Text("submit")),
+            child: Text("uloziť")),
       ],
     );
 
