@@ -226,7 +226,7 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
                       );
                     }),
                     ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           List<schema.AssignedComponentNewSchema> col = [];
                           getNewItems().forEach((element) {
                             col.add(schema.AssignedComponentNewSchema(
@@ -258,7 +258,7 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
                           }
 
                           if (add) {
-                            AssignedComponentService()
+                            await AssignedComponentService()
                                 .createInstalledComponentAssignedComponentsCreateInstalledComponentPost(
                                     warrantyPeriodDays!,
                                     convertDatetimeToUtc(
@@ -266,14 +266,14 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
                                     col);
                           }
                           if (remove) {
-                            AssignedComponentService()
+                            await AssignedComponentService()
                                 .removeInstalledComponentAssignedComponentsRemoveInstalledComponentPost(
                                     convertDatetimeToUtc(
                                         DateTime.parse(removeDate.value.text)),
                                     colr);
                           }
 
-                          Get.back();
+                          Get.back(result: true);
                         },
                         child: const Text("uložiť")),
                   ],

@@ -76,7 +76,7 @@ class RoadSegmentFormState extends State<RoadSegmentForm> {
               },
               initialValue:
                   widget.editItem == null ? "" : widget.editItem!.ssud,
-              decoration: const InputDecoration(labelText: 'ssud'),
+              decoration: const InputDecoration(labelText: 'SSUD / SSUR'),
             ),
 
             TextButton(

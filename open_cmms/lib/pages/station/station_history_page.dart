@@ -33,7 +33,7 @@ class StationHistoryPage extends StatelessWidget
       children: [
         Expanded(
           child: GetX<StationsActionListState>(builder: (state) {
-            var i = state.getStationsHistory().reversed.toList();
+            var i = state.getStationsHistory().toList();
             return ListView.builder(
               controller: scrollController,
               itemCount: i.length,

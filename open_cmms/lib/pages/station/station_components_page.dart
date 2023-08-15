@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:open_cmms/pages/station/station_base_page.dart';
 import 'package:open_cmms/pages/tasks/task_page_factory.dart';
 import 'package:open_cmms/service/backend_api/station_service.dart';
+import 'package:open_cmms/snacbars.dart';
 import 'package:open_cmms/states/asset_types_state.dart';
 import 'package:open_cmms/states/auth_state.dart';
 import 'package:open_cmms/states/station/components_state.dart';
@@ -52,18 +53,24 @@ class StationComponentsPage extends StatelessWidget
                 children: [
                   if (authState.isAdmin.isTrue) ...[
                     ElevatedButton(
-                        onPressed: () {
-                          showFormDialog(
+                        onPressed: () async {
+                          if (await showFormDialog(
                               SetStationComponentsForm.editComponentsInStation(
-                                  station: station));
+                                  station: station))) {
+                            components.load();
+                            showOk("Komponenty boli nastavené");
+                          }
                         },
                         child: Text('Nastaviť komponenty'))
                   ],
                   VerticalDivider(),
                   ElevatedButton(
-                      onPressed: () {
-                        showFormDialog(
-                            EditStationComponentsForm(station: station));
+                      onPressed: () async {
+                        if (await showFormDialog(
+                            EditStationComponentsForm(station: station))) {
+                          components.load();
+                          showOk("Úloha bola vytvorená");
+                        }
                       },
                       child: Text('Editovať komponenty')),
                 ],

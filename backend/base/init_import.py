@@ -145,7 +145,7 @@ def import_assets():
             print("import skip")
             return
 
-    rs_id_beharovce = rs_router.create_road_segment(RoadSegmentNewSchema(name="Behárovce", ssud="10"))
+    rs_id_beharovce = rs_router.create_road_segment(RoadSegmentNewSchema(name="Behárovce", ssud="SSUD 10"))
     levoca = station_service.create_station(
         StationNewSchema(name="Levoča", road_segment_id=rs_id_beharovce, km_of_road=352,
                          km_of_road_note="",
@@ -592,7 +592,7 @@ def import_assets():
         warranty_period_days=365 * 4, installation_date=datetime(2018, 9, 12))
 
     # -------------------------------------------------------------
-    rs_id_pb = rs_router.create_road_segment(RoadSegmentNewSchema(name=import_rs_1, ssud="5"))
+    rs_id_pb = rs_router.create_road_segment(RoadSegmentNewSchema(name=import_rs_1, ssud="SSUD 5"))
 
     pb_stakada = station_service.create_station_legacy(
         StationNewSchema(name="PB Estakáda", road_segment_id=rs_id_pb, km_of_road=169.5,
@@ -646,7 +646,7 @@ def import_assets():
             station_id=kockovsky_kanal),
         warranty_period_days=365, installation_date=datetime.now())
 
-    rs_id_trencin = rs_router.create_road_segment(RoadSegmentNewSchema(name="Trenčín", ssud="4"))
+    rs_id_trencin = rs_router.create_road_segment(RoadSegmentNewSchema(name="Trenčín", ssud="SSUD 4"))
 
     prejta = station_service.create_station_legacy(
         StationNewSchema(name="Prejta", road_segment_id=rs_id_trencin, km_of_road=141, km_of_road_note='',
