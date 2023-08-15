@@ -37,6 +37,7 @@ class TaskChangeComponentsPage extends StatelessWidget {
         AssignedComponentsState com = Get.put(
             AssignedComponentsState(taskProjection!.stationId),
             tag: taskProjection!.stationId);
+        com.load();
       }
       loadTaskItems();
       loadRedmineData(taskProjection!.id);
