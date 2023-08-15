@@ -30,7 +30,7 @@ def save(station: ActionHistoryModel):
 def get_by_station(station: uuid.UUID, include_internal=False, page=None, page_size=None) -> list[ActionHistoryModel]:
     db: Session
     with _get_db() as db:
-        actions = db.query(ActionHistoryModel).order_by(ActionHistoryModel.datetime).where(
+        actions = db.query(ActionHistoryModel).order_by(ActionHistoryModel.datetime.desc()).where(
             ActionHistoryModel.station_id == station)
         if not include_internal:
             actions = actions.where(ActionHistoryModel.is_internal == False)
