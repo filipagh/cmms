@@ -68,8 +68,7 @@ class _StationFormState extends State<StationForm> {
               onSaved: (value) {
                 kmNote = value ?? "";
               },
-              decoration: const InputDecoration(
-                  labelText: 'kilometer cestneho useku poznamka'),
+              decoration: const InputDecoration(labelText: 'poznámka k polohe stanice'),
             ),
             TextFormField(
               onSaved: (value) {
