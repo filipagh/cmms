@@ -49,7 +49,7 @@ class EditStationComponentsForm extends StatelessWidget
               onPressed: () {
                 showFormDialog<AssetSchema>(ComponentPickerForm())
                     .then((value) {
-                  items.insert(0, FormItem(value!.id));
+                  items.insert(0, FormItem(value!));
                 });
               },
               child: Text('Pridat komponent')),
@@ -57,10 +57,12 @@ class EditStationComponentsForm extends StatelessWidget
             width: 500,
             height: Get.height - 300,
             child: Obx(() {
+              var list = items.value;
+              list.sort((a, b) => a.asset.name.compareTo(b.asset.name));
               return ListView.builder(
                   itemCount: items.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return buildCardFromFormItem(items[index]);
+                    return buildCardFromFormItem(list[index]);
                   });
             }),
           ),
@@ -96,7 +98,7 @@ class EditStationComponentsForm extends StatelessWidget
 
                                     getNewItems().forEach((element) {
                                       add.add(TaskComponentAddNewSchema(
-                                          newAssetId: element.assetId));
+                                          newAssetId: element.asset.id));
                                     });
 
                                     List<TaskComponentRemoveNewSchema> remove =
@@ -104,7 +106,7 @@ class EditStationComponentsForm extends StatelessWidget
                                     getToRemoveItems().forEach((element) {
                                       remove.add(TaskComponentRemoveNewSchema(
                                           assignedComponentId:
-                                              element.assignedComponentId!));
+                                              element.assignedComponent!.id));
                                     });
 
                                     var result = await showFormDialog(
@@ -154,27 +156,28 @@ class EditStationComponentsForm extends StatelessWidget
               onPressed: () => removeItem(item),
               icon: Icon(Icons.delete),
             ),
-            title: Text(_assets.getAssetById(item.assetId)!.name),
-            subtitle: Text(
-                serialNumberPrefix + (item.serialNumber ?? noSerialNumber)),
+            title: Text(_assets.getAssetById(item.asset.id)!.name),
+            subtitle: Text(serialNumberPrefix +
+                (item.assignedComponent!.serialNumber ?? noSerialNumber)),
           ),
         );
       case FormItemStatus.tobeinstaled:
         return Card(
           color: Colors.green[200],
           child: ListTile(
-            title: Text(_assets.getAssetById(item.assetId)!.name),
+            title: Text(item.asset.name),
             subtitle: Text(serialNumberPrefix +
-                (item.serialNumber ?? serialNumberWillAddTechnic)),
+                (item.assignedComponent!.serialNumber ??
+                    serialNumberWillAddTechnic)),
           ),
         );
       case FormItemStatus.toberemoved:
         return Card(
           color: Colors.red[200],
           child: ListTile(
-            title: Text(_assets.getAssetById(item.assetId)!.name),
-            subtitle: Text(
-                serialNumberPrefix + (item.serialNumber ?? noSerialNumber)),
+            title: Text(item.asset.name),
+            subtitle: Text(serialNumberPrefix +
+                (item.assignedComponent!.serialNumber ?? noSerialNumber)),
           ),
         );
       case FormItemStatus.nowadded:
@@ -185,9 +188,10 @@ class EditStationComponentsForm extends StatelessWidget
               onPressed: () => removeNowAddedItem(item),
               icon: Icon(Icons.close),
             ),
-            title: Text(_assets.getAssetById(item.assetId)!.name),
+            title: Text(item.asset.name),
             subtitle: Text(serialNumberPrefix +
-                (item.serialNumber ?? serialNumberWillAddTechnic)),
+                (item.assignedComponent?.serialNumber ??
+                    serialNumberWillAddTechnic)),
           ),
         );
       case FormItemStatus.nowremoved:
@@ -198,9 +202,9 @@ class EditStationComponentsForm extends StatelessWidget
                 onPressed: () => rollBackRemove(item),
                 icon: Icon(Icons.rotate_left),
               ),
-              title: Text(_assets.getAssetById(item.assetId)!.name),
-              subtitle: Text(
-                  serialNumberPrefix + (item.serialNumber ?? noSerialNumber))),
+              title: Text(item.asset.name),
+              subtitle: Text(serialNumberPrefix +
+                  (item.assignedComponent!.serialNumber ?? noSerialNumber))),
         );
     }
   }
@@ -221,7 +225,8 @@ class EditStationComponentsForm extends StatelessWidget
         case schema.AssignedComponentState.removed:
           return;
       }
-      items.add(FormItem.installed(element, status));
+      items.add(FormItem.installed(
+          element, status, _assets.getAssetById(element.assetId)!));
     });
   }
 
@@ -249,19 +254,13 @@ enum FormItemStatus {
 }
 
 class FormItem {
-  late String? assignedComponentId;
-  late String assetId;
+  AssignedComponentSchema? assignedComponent;
+  late AssetSchema asset;
   late FormItemStatus status;
-  String? serialNumber;
 
-  FormItem.new(this.assetId) {
+  FormItem.new(this.asset) {
     status = FormItemStatus.nowadded;
   }
 
-  FormItem.installed(
-      schema.AssignedComponentSchema assignedComponent, this.status) {
-    assignedComponentId = assignedComponent.id;
-    assetId = assignedComponent.assetId;
-    serialNumber = assignedComponent.serialNumber;
-  }
+  FormItem.installed(this.assignedComponent, this.status, this.asset) {}
 }

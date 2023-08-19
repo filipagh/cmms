@@ -82,7 +82,7 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
                         if (asset != null) {
                           showFormDialog(SerialNumberForm(asset: asset)).then(
                               (serialNumber) => items.insert(
-                                  0, FormItem(asset.id, serialNumber)));
+                                  0, FormItem(asset, serialNumber)));
                         }
                       });
                     },
@@ -91,11 +91,13 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
                   width: 500,
                   height: Get.height - 500,
                   child: Obx(() {
+                    var list = items.value;
+                    list.sort((a, b) => a.asset.name.compareTo(b.asset.name));
                     return ListView.builder(
                         // shrinkWrap: true,
-                        itemCount: items.length,
+                        itemCount: list.length,
                         itemBuilder: (BuildContext context, int index) {
-                          return buildCardFromFormItem(items[index]);
+                          return buildCardFromFormItem(list[index]);
                         });
                   }),
                 ),
@@ -110,7 +112,7 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
                   onTap: () {
                     var now = DateTime.now();
                     showDatePicker(
-                        context: context,
+                            context: context,
                             firstDate:
                                 now.subtract(const Duration(days: 365 * 10)),
                             lastDate: now,
@@ -142,7 +144,7 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
                               onTap: () {
                                 var now = DateTime.now();
                                 showDatePicker(
-                                    context: context,
+                                        context: context,
                                         firstDate:
                                             DateTime.parse(installDate.text),
                                         lastDate: now.add(
@@ -183,7 +185,7 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
                   onTap: () {
                     var now = DateTime.now();
                     showDatePicker(
-                        context: context,
+                            context: context,
                             firstDate:
                                 now.subtract(const Duration(days: 365 * 10)),
                             lastDate: now,
@@ -230,7 +232,7 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
                           List<schema.AssignedComponentNewSchema> col = [];
                           getNewItems().forEach((element) {
                             col.add(schema.AssignedComponentNewSchema(
-                                assetId: element.assetId,
+                                assetId: element.asset.id,
                                 stationId: station.id,
                                 serialNumber: element.serialNumber));
                           });
@@ -246,7 +248,7 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
                           List<schema.AssignedComponentIdSchema> colr = [];
                           getToRemoveItems().forEach((element) {
                             colr.add(schema.AssignedComponentIdSchema(
-                                id: element.assignedComponentId!));
+                                id: element.assignedComponent!.id));
                           });
                           if (colr.isNotEmpty) {
                             if (removeDate.value.text.isEmpty) {
@@ -310,7 +312,7 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
                 onPressed: () => removeItem(item),
                 icon: const Icon(Icons.delete),
               ),
-              title: Text(_assets.getAssetById(item.assetId)!.name),
+              title: Text(item.asset.name),
               subtitle: Text(
                   serialNumberPrefix + (item.serialNumber ?? noSerialNumber))),
         );
@@ -318,7 +320,7 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
         return Card(
           color: Colors.green[200],
           child: ListTile(
-              title: Text(_assets.getAssetById(item.assetId)!.name),
+              title: Text(item.asset.name),
               subtitle: Text(
                   serialNumberPrefix + (item.serialNumber ?? noSerialNumber))),
         );
@@ -326,7 +328,7 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
         return Card(
           color: Colors.red[200],
           child: ListTile(
-              title: Text(_assets.getAssetById(item.assetId)!.name),
+              title: Text(item.asset.name),
               subtitle: Text(
                   serialNumberPrefix + (item.serialNumber ?? noSerialNumber))),
         );
@@ -338,7 +340,7 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
                 onPressed: () => removeNowAddedItem(item),
                 icon: const Icon(Icons.close),
               ),
-              title: Text(_assets.getAssetById(item.assetId)!.name),
+              title: Text(item.asset.name),
               subtitle: Text(
                   serialNumberPrefix + (item.serialNumber ?? noSerialNumber))),
         );
@@ -350,7 +352,7 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
               onPressed: () => rollBackRemove(item),
               icon: const Icon(Icons.rotate_left),
             ),
-            title: Text(_assets.getAssetById(item.assetId)!.name),
+            title: Text(item.asset.name),
             subtitle: Text(
                 serialNumberPrefix + (item.serialNumber ?? noSerialNumber)),
           ),
@@ -374,7 +376,8 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
         case schema.AssignedComponentState.removed:
           return;
       }
-      items.add(FormItem.installed(element, status));
+      items.add(FormItem.installed(
+          element, status, _assets.getAssetById(element.assetId)!));
     });
   }
 
@@ -402,19 +405,16 @@ enum FormItemStatus {
 }
 
 class FormItem {
-  late String? assignedComponentId;
-  late String assetId;
+  late AssignedComponentSchema? assignedComponent;
+  late AssetSchema asset;
   late FormItemStatus status;
   late String? serialNumber;
 
-  FormItem.new(this.assetId, this.serialNumber) {
+  FormItem.new(this.asset, this.serialNumber) {
     status = FormItemStatus.nowadded;
   }
 
-  FormItem.installed(
-      schema.AssignedComponentSchema assignedComponent, this.status) {
-    assignedComponentId = assignedComponent.id;
-    assetId = assignedComponent.assetId;
-    serialNumber = assignedComponent.serialNumber;
+  FormItem.installed(this.assignedComponent, this.status, this.asset) {
+    serialNumber = assignedComponent!.serialNumber;
   }
 }
