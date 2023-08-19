@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/pages/tasks/task_utils.dart';
 import 'package:open_cmms/service/backend_api/tasks/tasks_remote_service.dart';
+import 'package:open_cmms/service/backend_api/tasks_service.dart';
 import 'package:open_cmms/widgets/forms/util/text_edit_form.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -12,17 +13,25 @@ import '../../snacbars.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/dialog_form.dart';
 import '../../widgets/main_menu_widget.dart';
+import '../station/station_base_page.dart';
 
 class TaskRemoteServicePage extends StatelessWidget {
   static const String ENDPOINT = '/TaskRemoteService';
   final String taskId;
+
+  final Rxn<TaskSchema> taskProjection = Rxn<TaskSchema>();
   final Rxn<TaskServiceRemoteSchema> task = Rxn<TaskServiceRemoteSchema>();
   final Rxn<RedmineIssueDataSchema> redmineData = Rxn<RedmineIssueDataSchema>();
 
   TaskRemoteServicePage({
     Key? key,
     required this.taskId,
-  }) : super(key: key);
+  }) : super(key: key) {
+    TasksService().loadByIdTaskManagerGetTaskGet(taskId).then((value) {
+      taskProjection.value = value;
+      taskProjection.refresh();
+    });
+  }
 
   TasksRemoteService getService() {
     return TasksRemoteService();
@@ -156,6 +165,21 @@ class TaskRemoteServicePage extends StatelessWidget {
       children: [
         Text("Stav: " + buildTaskStatusString()),
         Divider(),
+        taskProjection.value != null
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Stanica: " + taskProjection.value!.stationName),
+                  IconButton(
+                      onPressed: () {
+                        Get.toNamed(StationBasePage.ENDPOINT +
+                            "/" +
+                            taskProjection.value!.stationId);
+                      },
+                      icon: Icon(Icons.link)),
+                ],
+              )
+            : Text("nacitavam"),
         Text("Datum vytovrenia: " + task.value!.createdAt.toString()),
         Obx(() =>
             Text("Priradeny k: " + (redmineData.value?.assignedTo ?? ""))),

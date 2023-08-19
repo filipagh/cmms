@@ -2,6 +2,7 @@ import 'package:BackendAPI/api.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:open_cmms/pages/station/station_base_page.dart';
 import 'package:open_cmms/pages/tasks/task_utils.dart';
 import 'package:open_cmms/service/backend_api/tasks_service.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
@@ -196,7 +197,18 @@ class TaskChangeComponentsPage extends StatelessWidget {
         ),
         Divider(),
         Padding(padding: EdgeInsets.all(5)),
-        Text("Stanica: " + taskProjection!.stationName),
+        Row(
+          children: [
+            Text("Stanica: " + taskProjection!.stationName),
+            IconButton(
+                onPressed: () {
+                  Get.toNamed(StationBasePage.ENDPOINT +
+                      "/" +
+                      taskProjection!.stationId);
+                },
+                icon: Icon(Icons.link)),
+          ],
+        ),
         Text("Cestny usek: " + taskProjection!.roadSegmentName),
         Text("Datum vytovrenia: " + task.value!.createdAt.toString()),
         Obx(() =>
