@@ -107,12 +107,14 @@ class EditStationComponentsForm extends StatelessWidget
                                               element.assignedComponentId!));
                                     });
 
-                                    Get.back(
-                                        result: await showFormDialog(
-                                            CreateChangeComponentsTaskForm(
-                                                station: station,
-                                                add: add,
-                                                remove: remove)));
+                                    var result = await showFormDialog(
+                                        CreateChangeComponentsTaskForm(
+                                            station: station,
+                                            add: add,
+                                            remove: remove));
+                                    if (result != null) {
+                                      Get.back(result: result);
+                                    }
                                   },
                             child: Text("pokračovať"))
                       ],
