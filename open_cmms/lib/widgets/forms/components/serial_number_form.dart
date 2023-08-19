@@ -27,6 +27,7 @@ class SerialNumberForm extends StatelessWidget implements hasFormTitle {
         Text("Vložte sériové číslo"),
         Form(
           child: TextField(
+            autofocus: true,
             onChanged: (v) {
               serialNumber = v;
             },

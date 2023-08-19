@@ -29,6 +29,7 @@ class RoadSegmentPickerForm extends StatelessWidget implements hasFormTitle {
         Container(
           width: 200,
           child: TextField(
+            autofocus: true,
             onChanged: (v) {
               if (v.length >= 3) {
                 _query.value = v;
