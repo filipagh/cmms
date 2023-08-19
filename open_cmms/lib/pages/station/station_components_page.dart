@@ -2,6 +2,7 @@ import 'package:BackendAPI/api.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:open_cmms/models/assigned_asset_component.dart';
 import 'package:open_cmms/pages/station/station_base_page.dart';
 import 'package:open_cmms/pages/tasks/task_page_factory.dart';
 import 'package:open_cmms/service/backend_api/station_service.dart';
@@ -88,7 +89,12 @@ class StationComponentsPage extends StatelessWidget
     AssetTypesState stateAssetTypes = Get.find();
     components.removeWhere(
         (element) => element.status == AssignedComponentState.removed);
-    return components.isEmpty
+    List<AssignedAssetComponent> componentsWithAssets = [];
+    components.forEach((element) {
+      componentsWithAssets.add(AssignedAssetComponent(element));
+    });
+    componentsWithAssets.sort((a, b) => a.asset.name.compareTo(b.asset.name));
+    return componentsWithAssets.isEmpty
         ? Expanded(
             child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -118,37 +124,37 @@ class StationComponentsPage extends StatelessWidget
                 padding: const EdgeInsets.all(8),
                 itemCount: components.length,
                 itemBuilder: (BuildContext context, int index) {
+                  var item = componentsWithAssets[index];
                   return Card(
                       child: ListTile(
-                          tileColor: getColor(components[index]),
+                          tileColor: getColor(item.assignedComponent),
                           hoverColor: Colors.blue.shade200,
                           title: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
                                 width: 100,
-                                child: Text(stateAssetTypes
-                                    .getAssetById(components[index].assetId)!
-                                    .name),
+                                child: Text(item.asset.name),
                               ),
                               Spacer(),
-                              buildContextOfComponent(components[index])!,
+                              buildContextOfComponent(item.assignedComponent)!,
                               Spacer(),
                               Column(
                                 children: [
-                                  if (components[index].warrantyPeriodUntil !=
+                                  if (item.assignedComponent
+                                          .warrantyPeriodUntil !=
                                       null) ...[
                                     Text("Záruka do " +
-                                            components[index]
+                                            item.assignedComponent
                                                 .warrantyPeriodUntil!
                                                 .toIso8601String()
                                                 .substring(0, 10) ??
                                         '')
                                   ],
-                                  if (components[index].serialNumber !=
+                                  if (item.assignedComponent.serialNumber !=
                                       null) ...[
                                     Text("seriové číslo: " +
-                                        components[index].serialNumber!)
+                                        item.assignedComponent.serialNumber!)
                                   ]
                                 ],
                               )
@@ -186,7 +192,7 @@ class StationComponentsPage extends StatelessWidget
           children: [
             RichText(
                 text: TextSpan(
-                  text: "Bude odstránené v ",
+              text: "Bude odstránené v ",
               children: [
                 TextSpan(
                     recognizer: TapGestureRecognizer()
