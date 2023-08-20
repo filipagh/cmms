@@ -26,12 +26,15 @@ from roadsegmentmanager.application.road_segment_service import RoadSegmentServi
 from stationmanager.application.action_history.action_history_projector import ActionHistoryProjector
 from stationmanager.application.assigned_component.assigned_component_projector import AssignedComponentProjector
 from stationmanager.application.assigned_component.assigned_component_service import AssignedComponentsService
+from stationmanager.application.invesment_contract.investment_contract_projector import InvestmentContractProjector
+from stationmanager.application.invesment_contract.investment_contract_service import InvestmentContractService
 from stationmanager.application.service_contract.service_contract_projector import ServiceContractProjector
 from stationmanager.application.service_contract.service_contract_service import ServiceContractService
 from stationmanager.application.station_projector import StationProjector
 from stationmanager.application.station_service import StationService
 from stationmanager.infrastructure.action_history_rest_router import action_history_router
 from stationmanager.infrastructure.assigned_component_rest_router import assigned_component_router
+from stationmanager.infrastructure.investment_contract_rest_router import investment_contract_router
 from stationmanager.infrastructure.service_contract_rest_router import service_contract_router
 from stationmanager.infrastructure.station_rest_router import station_router
 from storagemanager.application.storage_item_projector import StorageItemProjector
@@ -87,7 +90,7 @@ services = [AssetService, AssetProjector, StorageItemProjector, RoadSegmentProje
             AssignedComponentProjector, ActionHistoryProjector, StorageItemService, RoadSegmentService, StationService,
             AssignedComponentsService, TasksProjector,
             TaskService, TaskServiceOnSiteService, TaskServiceRemoteService, ServiceContractService,
-            ServiceContractProjector, RedmineProjector]
+            ServiceContractProjector, RedmineProjector, InvestmentContractService, InvestmentContractProjector]
 
 system = System(pipes=[[AssetService, AssetProjector],
                        [AssetService, StorageItemService],
@@ -117,6 +120,7 @@ system = System(pipes=[[AssetService, AssetProjector],
                        [StationService, IssueProjector],
                        [StationService, TasksProjector],
                        [StationService, RedmineProjector],
+                       [InvestmentContractService, InvestmentContractProjector],
                        ])
 
 runner = SingleThreadedRunner(system)
@@ -165,6 +169,7 @@ app.include_router(service_contract_router)
 app.include_router(auth_router)
 app.include_router(redmine_router)
 app.include_router(issue_router)
+app.include_router(investment_contract_router)
 origins = [
     "http://localhost:5000",
     "http://localhost:22222",
@@ -201,7 +206,10 @@ def import_settings():
 
 
 import_settings()
-import_assets()
+
+test_ = os.environ.get('TEST')
+if test_ != '1':
+    import_assets()
 
 
 @app.get("/")
