@@ -36,6 +36,7 @@ class ComponentPickerForm extends StatelessWidget implements hasFormTitle {
         SizedBox(
           width: 200,
           child: TextField(
+            autofocus: true,
             onChanged: (value) {
               searchText.value = value;
               _loadFilteredAssets();

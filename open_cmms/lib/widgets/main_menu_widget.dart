@@ -29,21 +29,21 @@ class _MainMenuWidgetState extends State<MainMenuWidget>
       child: Column(
         children: [
           Tooltip(
-            message: "Dashboard",
+            message: "Mapa",
             child: IconButton(
-              icon: const Icon(Icons.widgets_outlined),
+              icon: const Icon(Icons.map_outlined),
               onPressed: () => Get.offAllNamed("/"),
             ),
           ),
           Tooltip(
-            message: "My tasks",
+            message: "Ǔlohy",
             child: IconButton(
-              icon: const Icon(Icons.note_outlined),
+              icon: const Icon(Icons.task_outlined),
               onPressed: () => Get.offAllNamed("/Tasks"),
             ),
           ),
           Tooltip(
-            message: "Issues",
+            message: "Hlásenia",
             child: IconButton(
               icon: const Icon(Icons.report_problem_outlined),
               onPressed: () => Get.offAllNamed(IssuesPage.ENDPOINT),
@@ -62,21 +62,21 @@ class _MainMenuWidgetState extends State<MainMenuWidget>
             ),
           ),
           Tooltip(
-            message: "Stations",
+            message: "Stanice",
             child: IconButton(
               icon: const Icon(Icons.settings_input_component),
               onPressed: () => Get.offAllNamed(Stations.ENDPOINT),
             ),
           ),
           Tooltip(
-            message: "storage",
+            message: "Sklad",
             child: IconButton(
               icon: const Icon(Icons.storefront),
               onPressed: () => Get.offAllNamed("/Storage"),
             ),
           ),
           Tooltip(
-            message: "service contracts",
+            message: "Servisné zmluvy",
             child: IconButton(
               icon: const Icon(Icons.document_scanner),
               onPressed: () => Get.offAllNamed(ServiceContracts.ENDPOINT),
@@ -88,7 +88,7 @@ class _MainMenuWidgetState extends State<MainMenuWidget>
                 thickness: 1.0,
               )),
           Tooltip(
-            message: "asset management",
+            message: "Manažment komponentov",
             child: IconButton(
               icon: const Icon(Icons.post_add),
               onPressed: () => Get.offAllNamed("/AssetManagement"),
@@ -100,7 +100,7 @@ class _MainMenuWidgetState extends State<MainMenuWidget>
               onPressed: () => Get.offAllNamed(Config.ENDPOINT),
             ),
             Tooltip(
-              message: "manazment pouzivatelov",
+              message: "Manažment používateľov",
               child: IconButton(
                 icon: const Icon(Icons.person),
                 onPressed: () => Get.offAllNamed(Users.ENDPOINT),

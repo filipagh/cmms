@@ -29,7 +29,7 @@ service_contract_router = APIRouter(
                               response_model=uuid.UUID)
 def create_contract(new_contract: schema.ServiceContractNewSchema,
                     _user: FiefUserInfo = Depends(custom_auth(write_permission))):
-    service_contract_service = main.runner.get(ServiceContractService)
+    service_contract_service: ServiceContractService = main.runner.get(ServiceContractService)
     return service_contract_service.create_new_contract(new_contract.name, new_contract.valid_from,
                                                         new_contract.valid_until, new_contract.station_id_list)
 
