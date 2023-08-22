@@ -7,9 +7,11 @@ from eventsourcing.system import ProcessApplication
 
 import base.main
 from assetmanager.application import asset_manager_loader
+from assetmanager.application.asset_manager_loader import load_asset_by_id
 from roadsegmentmanager.application.road_segment_projector import RoadSegmentProjector
 from stationmanager.application.assigned_component.assigned_component_projector import AssignedComponentProjector
 from stationmanager.application.station_projector import StationProjector
+from stationmanager.domain.model.assigned_component import AssignedComponent
 from stationmanager.domain.model.station import Station
 from taskmanager.application.model.redmine_integration.schema import RedmineIssueDataSchema
 from taskmanager.application.tasks_projector import TasksProjector
@@ -187,6 +189,34 @@ class RedmineProjector(ProcessApplication):
 
             change_category(issues_to_update, new_category)
 
+        except Exception as e:
+            self.log_error_redmine_projection(e)
+
+    @policy.register(AssignedComponent.AssignedComponentInstalled)
+    def _(self, domain_event: AssignedComponent.AssignedComponentInstalled, process_event):
+        try:
+            if domain_event.task_id is None:
+                return
+            issue = self.load_issue(domain_event.task_id)
+            if issue is None:
+                return
+            asset = load_asset_by_id(domain_event.asset_id)
+            add_note_to_issue(issue.task_id,
+                              f'Komponent {asset.name}, so sériovým číslom "{domain_event.serial_number}", bol nainštalovaný dňa {str(domain_event.installed_at.date())} ')
+        except Exception as e:
+            self.log_error_redmine_projection(e)
+
+    @policy.register(AssignedComponent.AssignedComponentRemoved)
+    def _(self, domain_event: AssignedComponent.AssignedComponentRemoved, process_event):
+        try:
+            if domain_event.task_id is None:
+                return
+            issue = self.load_issue(domain_event.task_id)
+            if issue is None:
+                return
+            asset = load_asset_by_id(domain_event.asset_id)
+            add_note_to_issue(issue.task_id,
+                              f'Komponent {asset.name}, so sériovým číslom "{domain_event.serial_number}", bol odstránený dňa {str(domain_event.removed_at.date())} ')
         except Exception as e:
             self.log_error_redmine_projection(e)
 

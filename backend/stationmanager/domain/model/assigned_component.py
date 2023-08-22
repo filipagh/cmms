@@ -101,7 +101,7 @@ class AssignedComponent(Aggregate):
                            asset_id: uuid):
         self.warranty_period_until = warranty_period_until
         self.status = new_status
-        self.task_id = None
+        self.task_id = task_id
         self.serial_number = serial_number
 
     def remove_component(self, task_id, removed_at):
@@ -117,4 +117,4 @@ class AssignedComponent(Aggregate):
     def _remove_component(self, new_status, removed_at, station_id, asset_id, task_id: Optional[uuid.UUID],
                           serial_number: Optional[str]):
         self.status = new_status
-        self.task_id = None
+        self.task_id = task_id
