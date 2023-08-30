@@ -4,6 +4,7 @@ import 'package:open_cmms/auth_guard.dart';
 import 'package:open_cmms/pages/assets_management.dart';
 import 'package:open_cmms/pages/dashboard.dart';
 import 'package:open_cmms/pages/forbidden.dart';
+import 'package:open_cmms/pages/investment_contracts.dart';
 import 'package:open_cmms/pages/issue_report.dart';
 import 'package:open_cmms/pages/issues.dart';
 import 'package:open_cmms/pages/login.dart';
@@ -88,6 +89,12 @@ class MyApp extends StatelessWidget {
             name: ServiceContracts.ENDPOINT,
             page: () {
               return ServiceContracts();
+            },
+            middlewares: [AuthGuard()]),
+        GetPage(
+            name: InvestmentContracts.ENDPOINT,
+            page: () {
+              return InvestmentContracts();
             },
             middlewares: [AuthGuard()]),
         GetPage(
