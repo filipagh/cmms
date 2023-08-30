@@ -90,24 +90,32 @@ class StationNewSchema {
   String toString() => 'StationNewSchema[name=$name, roadSegmentId=$roadSegmentId, kmOfRoad=$kmOfRoad, kmOfRoadNote=$kmOfRoadNote, latitude=$latitude, longitude=$longitude, seeLevel=$seeLevel, description=$description]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'name'] = name;
-      _json[r'road_segment_id'] = roadSegmentId;
-    if (kmOfRoad != null) {
-      _json[r'km_of_road'] = kmOfRoad;
+    final json = <String, dynamic>{};
+    json[r'name'] = this.name;
+    json[r'road_segment_id'] = this.roadSegmentId;
+    if (this.kmOfRoad != null) {
+      json[r'km_of_road'] = this.kmOfRoad;
+    } else {
+      json[r'km_of_road'] = null;
     }
-      _json[r'km_of_road_note'] = kmOfRoadNote;
-    if (latitude != null) {
-      _json[r'latitude'] = latitude;
+    json[r'km_of_road_note'] = this.kmOfRoadNote;
+    if (this.latitude != null) {
+      json[r'latitude'] = this.latitude;
+    } else {
+      json[r'latitude'] = null;
     }
-    if (longitude != null) {
-      _json[r'longitude'] = longitude;
+    if (this.longitude != null) {
+      json[r'longitude'] = this.longitude;
+    } else {
+      json[r'longitude'] = null;
     }
-    if (seeLevel != null) {
-      _json[r'see_level'] = seeLevel;
+    if (this.seeLevel != null) {
+      json[r'see_level'] = this.seeLevel;
+    } else {
+      json[r'see_level'] = null;
     }
-      _json[r'description'] = description;
-    return _json;
+    json[r'description'] = this.description;
+    return json;
   }
 
   /// Returns a new [StationNewSchema] instance and imports its values from
@@ -148,7 +156,10 @@ class StationNewSchema {
     return null;
   }
 
-  static List<StationNewSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<StationNewSchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <StationNewSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -179,12 +190,13 @@ class StationNewSchema {
   static Map<String, List<StationNewSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<StationNewSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = StationNewSchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = StationNewSchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

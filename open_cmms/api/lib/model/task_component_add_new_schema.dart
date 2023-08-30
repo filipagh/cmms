@@ -31,9 +31,9 @@ class TaskComponentAddNewSchema {
   String toString() => 'TaskComponentAddNewSchema[newAssetId=$newAssetId]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'new_asset_id'] = newAssetId;
-    return _json;
+    final json = <String, dynamic>{};
+    json[r'new_asset_id'] = this.newAssetId;
+    return json;
   }
 
   /// Returns a new [TaskComponentAddNewSchema] instance and imports its values from
@@ -61,7 +61,10 @@ class TaskComponentAddNewSchema {
     return null;
   }
 
-  static List<TaskComponentAddNewSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<TaskComponentAddNewSchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <TaskComponentAddNewSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -92,12 +95,13 @@ class TaskComponentAddNewSchema {
   static Map<String, List<TaskComponentAddNewSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<TaskComponentAddNewSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = TaskComponentAddNewSchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = TaskComponentAddNewSchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

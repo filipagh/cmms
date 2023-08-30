@@ -39,16 +39,16 @@ Please follow the [installation procedure](#installation--usage) and then run th
 ```dart
 import 'package:BackendAPI/api.dart';
 
-// TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
-//defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
-// TODO Configure API key authorization: api_key
-//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKey = 'YOUR_API_KEY';
-// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKeyPrefix = 'Bearer';
 // TODO Configure API key authorization: user_session
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKey = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: api_key
+//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKeyPrefix = 'Bearer';
+// TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
+//defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
 
 final api_instance = ActionHistoryApi();
 final page = 56; // int | 
@@ -89,6 +89,9 @@ All URIs are relative to *http://localhost*
  *AuthApi*               | [**updateUserRoleAuthUserUserIdRolePost**](doc//AuthApi.md#updateuserroleauthuseruseridrolepost)                                                                                                        | **POST** /auth/user/{user_id}/role                             | Update User Role                     
  *DefaultApi*            | [**rootGet**](doc//DefaultApi.md#rootget)                                                                                                                                                               | **GET** /                                                      | Root                                 
  *DefaultApi*            | [**settingsSettingsGet**](doc//DefaultApi.md#settingssettingsget)                                                                                                                                       | **GET** /settings                                              | Settings                             
+ *InvestmentContractApi* | [**createContractInvestmentContractCreateContractPost**](doc//InvestmentContractApi.md#createcontractinvestmentcontractcreatecontractpost)                                                              | **POST** /investment-contract/create_contract                  | Create Contract                      
+ *InvestmentContractApi* | [**getContractInvestmentContractContractGet**](doc//InvestmentContractApi.md#getcontractinvestmentcontractcontractget)                                                                                  | **GET** /investment-contract/contract                          | Get Contract                         
+ *InvestmentContractApi* | [**getContractsInvestmentContractContractsGet**](doc//InvestmentContractApi.md#getcontractsinvestmentcontractcontractsget)                                                                              | **GET** /investment-contract/contracts                         | Get Contracts                        
  *IssuesApi*             | [**createIssuesPost**](doc//IssuesApi.md#createissuespost)                                                                                                                                              | **POST** /issues/                                              | Create                               
  *IssuesApi*             | [**getActiveIssuesIssuesActiveGet**](doc//IssuesApi.md#getactiveissuesissuesactiveget)                                                                                                                  | **GET** /issues/active                                         | Get Active Issues                    
  *IssuesApi*             | [**getIssueIssuesTaskIdGet**](doc//IssuesApi.md#getissueissuestaskidget)                                                                                                                                | **GET** /issues/{task_id}                                      | Get Issue                            
@@ -163,6 +166,8 @@ All URIs are relative to *http://localhost*
  - [AssignedComponentSchema](doc//AssignedComponentSchema.md)
  - [AssignedComponentState](doc//AssignedComponentState.md)
  - [HTTPValidationError](doc//HTTPValidationError.md)
+- [InvestmentContractNewSchema](doc//InvestmentContractNewSchema.md)
+- [InvestmentContractSchema](doc//InvestmentContractSchema.md)
  - [IssueNewSchema](doc//IssueNewSchema.md)
  - [IssueSchema](doc//IssueSchema.md)
  - [RedmineAuthResponseSchema](doc//RedmineAuthResponseSchema.md)
@@ -207,27 +212,28 @@ All URIs are relative to *http://localhost*
 
 ## Documentation For Authorization
 
+Authentication schemes defined for the API:
 
-## OAuth2AuthorizationCodeBearer
-
-- **Type**: OAuth
-- **Flow**: accessCode
-- **Authorization URL**: https://cmms.fief.dev/authorize
-- **Scopes**: 
- - **openid**: openid
- - **offline_access**: offline_access
-
-## api_key
+### api_key
 
 - **Type**: API key
 - **API key parameter name**: api_key
 - **Location**: HTTP header
 
-## user_session
+### user_session
 
 - **Type**: API key
 - **API key parameter name**: user_session
 - **Location**: 
+
+### OAuth2AuthorizationCodeBearer
+
+- **Type**: OAuth
+- **Flow**: accessCode
+- **Authorization URL**: https://cmms.fief.dev/authorize
+- **Scopes**:
+- **openid**: openid
+- **offline_access**: offline_access
 
 
 ## Author

@@ -41,11 +41,11 @@ class SettingSchema {
   String toString() => 'SettingSchema[key=$key, enabled=$enabled, value=$value]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'key'] = key;
-      _json[r'enabled'] = enabled;
-      _json[r'value'] = value;
-    return _json;
+    final json = <String, dynamic>{};
+    json[r'key'] = this.key;
+    json[r'enabled'] = this.enabled;
+    json[r'value'] = this.value;
+    return json;
   }
 
   /// Returns a new [SettingSchema] instance and imports its values from
@@ -75,7 +75,10 @@ class SettingSchema {
     return null;
   }
 
-  static List<SettingSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<SettingSchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <SettingSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -106,12 +109,13 @@ class SettingSchema {
   static Map<String, List<SettingSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<SettingSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = SettingSchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = SettingSchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

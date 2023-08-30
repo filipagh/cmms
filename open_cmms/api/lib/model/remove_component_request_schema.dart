@@ -41,11 +41,11 @@ class RemoveComponentRequestSchema {
   String toString() => 'RemoveComponentRequestSchema[id=$id, assignedComponentId=$assignedComponentId, state=$state]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'id'] = id;
-      _json[r'assigned_component_id'] = assignedComponentId;
-      _json[r'state'] = state;
-    return _json;
+    final json = <String, dynamic>{};
+    json[r'id'] = this.id;
+    json[r'assigned_component_id'] = this.assignedComponentId;
+    json[r'state'] = this.state;
+    return json;
   }
 
   /// Returns a new [RemoveComponentRequestSchema] instance and imports its values from
@@ -75,7 +75,10 @@ class RemoveComponentRequestSchema {
     return null;
   }
 
-  static List<RemoveComponentRequestSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<RemoveComponentRequestSchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <RemoveComponentRequestSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -106,12 +109,13 @@ class RemoveComponentRequestSchema {
   static Map<String, List<RemoveComponentRequestSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<RemoveComponentRequestSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = RemoveComponentRequestSchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = RemoveComponentRequestSchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

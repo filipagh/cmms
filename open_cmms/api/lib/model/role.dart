@@ -36,7 +36,10 @@ class Role {
 
   static Role? fromJson(dynamic value) => RoleTypeTransformer().decode(value);
 
-  static List<Role>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<Role> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <Role>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -69,7 +72,7 @@ class RoleTypeTransformer {
   /// and users are still using an old app with the old code.
   Role? decode(dynamic data, {bool allowNull = true}) {
     if (data != null) {
-      switch (data.toString()) {
+      switch (data) {
         case r'admin': return Role.admin;
         case r'verified': return Role.verified;
         case r'unverified': return Role.unverified;

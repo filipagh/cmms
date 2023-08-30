@@ -47,13 +47,15 @@ class AssignedComponentNewSchema {
   String toString() => 'AssignedComponentNewSchema[assetId=$assetId, stationId=$stationId, serialNumber=$serialNumber]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'asset_id'] = assetId;
-      _json[r'station_id'] = stationId;
-    if (serialNumber != null) {
-      _json[r'serial_number'] = serialNumber;
+    final json = <String, dynamic>{};
+    json[r'asset_id'] = this.assetId;
+    json[r'station_id'] = this.stationId;
+    if (this.serialNumber != null) {
+      json[r'serial_number'] = this.serialNumber;
+    } else {
+      json[r'serial_number'] = null;
     }
-    return _json;
+    return json;
   }
 
   /// Returns a new [AssignedComponentNewSchema] instance and imports its values from
@@ -83,7 +85,10 @@ class AssignedComponentNewSchema {
     return null;
   }
 
-  static List<AssignedComponentNewSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<AssignedComponentNewSchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <AssignedComponentNewSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -114,12 +119,13 @@ class AssignedComponentNewSchema {
   static Map<String, List<AssignedComponentNewSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<AssignedComponentNewSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = AssignedComponentNewSchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = AssignedComponentNewSchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

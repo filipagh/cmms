@@ -84,19 +84,19 @@ class IssueSchema {
       'IssueSchema[username=$username, subject=$subject, description=$description, stationId=$stationId, roadSegmentId=$roadSegmentId, id=$id, isExternal=$isExternal, createdOn=$createdOn, active=$active, stationName=$stationName, roadSegmentName=$roadSegmentName]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-    _json[r'username'] = username;
-    _json[r'subject'] = subject;
-    _json[r'description'] = description;
-    _json[r'station_id'] = stationId;
-    _json[r'road_segment_id'] = roadSegmentId;
-    _json[r'id'] = id;
-    _json[r'is_external'] = isExternal;
-    _json[r'created_on'] = createdOn.toUtc().toIso8601String();
-    _json[r'active'] = active;
-    _json[r'station_name'] = stationName;
-    _json[r'road_segment_name'] = roadSegmentName;
-    return _json;
+    final json = <String, dynamic>{};
+    json[r'username'] = this.username;
+    json[r'subject'] = this.subject;
+    json[r'description'] = this.description;
+    json[r'station_id'] = this.stationId;
+    json[r'road_segment_id'] = this.roadSegmentId;
+    json[r'id'] = this.id;
+    json[r'is_external'] = this.isExternal;
+    json[r'created_on'] = this.createdOn.toUtc().toIso8601String();
+    json[r'active'] = this.active;
+    json[r'station_name'] = this.stationName;
+    json[r'road_segment_name'] = this.roadSegmentName;
+    return json;
   }
 
   /// Returns a new [IssueSchema] instance and imports its values from
@@ -134,7 +134,10 @@ class IssueSchema {
     return null;
   }
 
-  static List<IssueSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<IssueSchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <IssueSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -165,12 +168,13 @@ class IssueSchema {
   static Map<String, List<IssueSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<IssueSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = IssueSchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = IssueSchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

@@ -31,9 +31,9 @@ class HTTPValidationError {
   String toString() => 'HTTPValidationError[detail=$detail]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'detail'] = detail;
-    return _json;
+    final json = <String, dynamic>{};
+    json[r'detail'] = this.detail;
+    return json;
   }
 
   /// Returns a new [HTTPValidationError] instance and imports its values from
@@ -55,13 +55,16 @@ class HTTPValidationError {
       }());
 
       return HTTPValidationError(
-        detail: ValidationError.listFromJson(json[r'detail']) ?? const [],
+        detail: ValidationError.listFromJson(json[r'detail']),
       );
     }
     return null;
   }
 
-  static List<HTTPValidationError>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<HTTPValidationError> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <HTTPValidationError>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -92,12 +95,13 @@ class HTTPValidationError {
   static Map<String, List<HTTPValidationError>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<HTTPValidationError>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = HTTPValidationError.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = HTTPValidationError.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

@@ -36,10 +36,10 @@ class TelemetryOptions {
   String toString() => 'TelemetryOptions[types=$types, values=$values]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'types'] = types;
-      _json[r'values'] = values;
-    return _json;
+    final json = <String, dynamic>{};
+    json[r'types'] = this.types;
+    json[r'values'] = this.values;
+    return json;
   }
 
   /// Returns a new [TelemetryOptions] instance and imports its values from
@@ -61,14 +61,17 @@ class TelemetryOptions {
       }());
 
       return TelemetryOptions(
-        types: AssetTelemetryType.listFromJson(json[r'types'])!,
-        values: AssetTelemetryValue.listFromJson(json[r'values'])!,
+        types: AssetTelemetryType.listFromJson(json[r'types']),
+        values: AssetTelemetryValue.listFromJson(json[r'values']),
       );
     }
     return null;
   }
 
-  static List<TelemetryOptions>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<TelemetryOptions> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <TelemetryOptions>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -99,12 +102,13 @@ class TelemetryOptions {
   static Map<String, List<TelemetryOptions>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<TelemetryOptions>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = TelemetryOptions.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = TelemetryOptions.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

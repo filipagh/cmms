@@ -28,16 +28,16 @@ Create Station
 ### Example
 ```dart
 import 'package:BackendAPI/api.dart';
-// TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
-//defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
-// TODO Configure API key authorization: api_key
-//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKey = 'YOUR_API_KEY';
-// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKeyPrefix = 'Bearer';
 // TODO Configure API key authorization: user_session
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKey = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: api_key
+//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKeyPrefix = 'Bearer';
+// TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
+//defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
 
 final api_instance = StationApi();
 final stationNewSchema = StationNewSchema(); // StationNewSchema | 
@@ -62,7 +62,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2AuthorizationCodeBearer](../README.md#OAuth2AuthorizationCodeBearer), [api_key](../README.md#api_key), [user_session](../README.md#user_session)
+[user_session](../README.md#user_session), [api_key](../README.md#api_key), [OAuth2AuthorizationCodeBearer](../README.md#OAuth2AuthorizationCodeBearer)
 
 ### HTTP request headers
 
@@ -79,16 +79,16 @@ Export
 ### Example
 ```dart
 import 'package:BackendAPI/api.dart';
-// TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
-//defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
-// TODO Configure API key authorization: api_key
-//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKey = 'YOUR_API_KEY';
-// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKeyPrefix = 'Bearer';
 // TODO Configure API key authorization: user_session
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKey = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: api_key
+//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKeyPrefix = 'Bearer';
+// TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
+//defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
 
 final api_instance = StationApi();
 final segmentId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
@@ -112,7 +112,7 @@ void (empty response body)
 
 ### Authorization
 
-[OAuth2AuthorizationCodeBearer](../README.md#OAuth2AuthorizationCodeBearer), [api_key](../README.md#api_key), [user_session](../README.md#user_session)
+[user_session](../README.md#user_session), [api_key](../README.md#api_key), [OAuth2AuthorizationCodeBearer](../README.md#OAuth2AuthorizationCodeBearer)
 
 ### HTTP request headers
 
@@ -163,7 +163,6 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getAllStationStationsGet**
-
 > List<StationSchema> getAllStationStationsGet(page, pageSize, roadSegmentId, onlyActive)
 
 Get All
@@ -171,16 +170,16 @@ Get All
 ### Example
 ```dart
 import 'package:BackendAPI/api.dart';
-// TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
-//defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
-// TODO Configure API key authorization: api_key
-//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKey = 'YOUR_API_KEY';
-// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKeyPrefix = 'Bearer';
 // TODO Configure API key authorization: user_session
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKey = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: api_key
+//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKeyPrefix = 'Bearer';
+// TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
+//defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
 
 final api_instance = StationApi();
 final page = 56; // int | 
@@ -211,7 +210,7 @@ try {
 
 ### Authorization
 
-[OAuth2AuthorizationCodeBearer](../README.md#OAuth2AuthorizationCodeBearer), [api_key](../README.md#api_key), [user_session](../README.md#user_session)
+[user_session](../README.md#user_session), [api_key](../README.md#api_key), [OAuth2AuthorizationCodeBearer](../README.md#OAuth2AuthorizationCodeBearer)
 
 ### HTTP request headers
 
@@ -228,16 +227,16 @@ Get By Id
 ### Example
 ```dart
 import 'package:BackendAPI/api.dart';
-// TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
-//defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
-// TODO Configure API key authorization: api_key
-//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKey = 'YOUR_API_KEY';
-// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKeyPrefix = 'Bearer';
 // TODO Configure API key authorization: user_session
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKey = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: api_key
+//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKeyPrefix = 'Bearer';
+// TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
+//defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
 
 final api_instance = StationApi();
 final stationId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
@@ -262,7 +261,7 @@ try {
 
 ### Authorization
 
-[OAuth2AuthorizationCodeBearer](../README.md#OAuth2AuthorizationCodeBearer), [api_key](../README.md#api_key), [user_session](../README.md#user_session)
+[user_session](../README.md#user_session), [api_key](../README.md#api_key), [OAuth2AuthorizationCodeBearer](../README.md#OAuth2AuthorizationCodeBearer)
 
 ### HTTP request headers
 
@@ -272,25 +271,23 @@ try {
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getRoadSegmentStationsStationStationsOfRoadSegmentGet**
-
 > List<StationSchema> getRoadSegmentStationsStationStationsOfRoadSegmentGet(roadSegmentId, onlyActive)
 
 Get Road Segment Stations
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
-// TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
-//defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
-// TODO Configure API key authorization: api_key
-//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKey = 'YOUR_API_KEY';
-// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKeyPrefix = 'Bearer';
 // TODO Configure API key authorization: user_session
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKey = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: api_key
+//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKeyPrefix = 'Bearer';
+// TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
+//defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
 
 final api_instance = StationApi();
 final roadSegmentId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
@@ -317,7 +314,7 @@ try {
 
 ### Authorization
 
-[OAuth2AuthorizationCodeBearer](../README.md#OAuth2AuthorizationCodeBearer), [api_key](../README.md#api_key), [user_session](../README.md#user_session)
+[user_session](../README.md#user_session), [api_key](../README.md#api_key), [OAuth2AuthorizationCodeBearer](../README.md#OAuth2AuthorizationCodeBearer)
 
 ### HTTP request headers
 
@@ -327,25 +324,23 @@ try {
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **relocateStationStationRelocateStationPost**
-
 > String relocateStationStationRelocateStationPost(stationRelocateSchema)
 
 Relocate Station
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
-// TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
-//defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
-// TODO Configure API key authorization: api_key
-//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKey = 'YOUR_API_KEY';
-// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKeyPrefix = 'Bearer';
 // TODO Configure API key authorization: user_session
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKey = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: api_key
+//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKeyPrefix = 'Bearer';
+// TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
+//defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
 
 final api_instance = StationApi();
 final stationRelocateSchema = StationRelocateSchema(); // StationRelocateSchema | 
@@ -370,7 +365,7 @@ try {
 
 ### Authorization
 
-[OAuth2AuthorizationCodeBearer](../README.md#OAuth2AuthorizationCodeBearer), [api_key](../README.md#api_key), [user_session](../README.md#user_session)
+[user_session](../README.md#user_session), [api_key](../README.md#api_key), [OAuth2AuthorizationCodeBearer](../README.md#OAuth2AuthorizationCodeBearer)
 
 ### HTTP request headers
 
@@ -387,16 +382,16 @@ Remove Station
 ### Example
 ```dart
 import 'package:BackendAPI/api.dart';
-// TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
-//defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
-// TODO Configure API key authorization: api_key
-//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKey = 'YOUR_API_KEY';
-// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKeyPrefix = 'Bearer';
 // TODO Configure API key authorization: user_session
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKey = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: api_key
+//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKeyPrefix = 'Bearer';
+// TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
+//defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
 
 final api_instance = StationApi();
 final stationIdSchema = StationIdSchema(); // StationIdSchema | 
@@ -421,7 +416,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2AuthorizationCodeBearer](../README.md#OAuth2AuthorizationCodeBearer), [api_key](../README.md#api_key), [user_session](../README.md#user_session)
+[user_session](../README.md#user_session), [api_key](../README.md#api_key), [OAuth2AuthorizationCodeBearer](../README.md#OAuth2AuthorizationCodeBearer)
 
 ### HTTP request headers
 
@@ -431,13 +426,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **searchStationsStationStationsSearchGet**
-
 > List<StationSchema> searchStationsStationStationsSearchGet(query, page, pageSize, onlyActive)
 
 Search Stations
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
 
@@ -448,12 +441,10 @@ final pageSize = 56; // int |
 final onlyActive = true; // bool | 
 
 try {
-final result = api_instance.searchStationsStationStationsSearchGet(query, page, pageSize, onlyActive);
-print(result);
-} catch
-(
-e) {
-print('Exception when calling StationApi->searchStationsStationStationsSearchGet: $e\n');
+    final result = api_instance.searchStationsStationStationsSearchGet(query, page, pageSize, onlyActive);
+    print(result);
+} catch (e) {
+    print('Exception when calling StationApi->searchStationsStationStationsSearchGet: $e\n');
 }
 ```
 

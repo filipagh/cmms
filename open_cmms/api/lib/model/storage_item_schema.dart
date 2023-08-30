@@ -46,12 +46,12 @@ class StorageItemSchema {
   String toString() => 'StorageItemSchema[assetId=$assetId, inStorage=$inStorage, allocated=$allocated, id=$id]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'asset_id'] = assetId;
-      _json[r'in_storage'] = inStorage;
-      _json[r'allocated'] = allocated;
-      _json[r'id'] = id;
-    return _json;
+    final json = <String, dynamic>{};
+    json[r'asset_id'] = this.assetId;
+    json[r'in_storage'] = this.inStorage;
+    json[r'allocated'] = this.allocated;
+    json[r'id'] = this.id;
+    return json;
   }
 
   /// Returns a new [StorageItemSchema] instance and imports its values from
@@ -82,7 +82,10 @@ class StorageItemSchema {
     return null;
   }
 
-  static List<StorageItemSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<StorageItemSchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <StorageItemSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -113,12 +116,13 @@ class StorageItemSchema {
   static Map<String, List<StorageItemSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<StorageItemSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = StorageItemSchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = StorageItemSchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

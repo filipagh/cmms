@@ -36,10 +36,10 @@ class AssetTelemetry {
   String toString() => 'AssetTelemetry[type=$type, value=$value]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'type'] = type;
-      _json[r'value'] = value;
-    return _json;
+    final json = <String, dynamic>{};
+    json[r'type'] = this.type;
+    json[r'value'] = this.value;
+    return json;
   }
 
   /// Returns a new [AssetTelemetry] instance and imports its values from
@@ -68,7 +68,10 @@ class AssetTelemetry {
     return null;
   }
 
-  static List<AssetTelemetry>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<AssetTelemetry> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <AssetTelemetry>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -99,12 +102,13 @@ class AssetTelemetry {
   static Map<String, List<AssetTelemetry>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<AssetTelemetry>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = AssetTelemetry.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = AssetTelemetry.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

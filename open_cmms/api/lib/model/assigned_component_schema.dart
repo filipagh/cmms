@@ -100,26 +100,35 @@ class AssignedComponentSchema {
   String toString() => 'AssignedComponentSchema[assetId=$assetId, stationId=$stationId, serialNumber=$serialNumber, id=$id, status=$status, taskId=$taskId, installedAt=$installedAt, removedAt=$removedAt, warrantyPeriodDays=$warrantyPeriodDays, warrantyPeriodUntil=$warrantyPeriodUntil]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'asset_id'] = assetId;
-      _json[r'station_id'] = stationId;
-    if (serialNumber != null) {
-      _json[r'serial_number'] = serialNumber;
+    final json = <String, dynamic>{};
+    json[r'asset_id'] = this.assetId;
+    json[r'station_id'] = this.stationId;
+    if (this.serialNumber != null) {
+      json[r'serial_number'] = this.serialNumber;
+    } else {
+      json[r'serial_number'] = null;
     }
-      _json[r'id'] = id;
-      _json[r'status'] = status;
-    if (taskId != null) {
-      _json[r'task_id'] = taskId;
+    json[r'id'] = this.id;
+    json[r'status'] = this.status;
+    if (this.taskId != null) {
+      json[r'task_id'] = this.taskId;
+    } else {
+      json[r'task_id'] = null;
     }
-      _json[r'installed_at'] = installedAt.toUtc().toIso8601String();
-    if (removedAt != null) {
-      _json[r'removed_at'] = removedAt!.toUtc().toIso8601String();
+    json[r'installed_at'] = this.installedAt.toUtc().toIso8601String();
+    if (this.removedAt != null) {
+      json[r'removed_at'] = this.removedAt!.toUtc().toIso8601String();
+    } else {
+      json[r'removed_at'] = null;
     }
-      _json[r'warranty_period_days'] = warrantyPeriodDays;
-    if (warrantyPeriodUntil != null) {
-      _json[r'warranty_period_until'] = _dateFormatter.format(warrantyPeriodUntil!.toUtc());
+    json[r'warranty_period_days'] = this.warrantyPeriodDays;
+    if (this.warrantyPeriodUntil != null) {
+      json[r'warranty_period_until'] =
+          _dateFormatter.format(this.warrantyPeriodUntil!.toUtc());
+    } else {
+      json[r'warranty_period_until'] = null;
     }
-    return _json;
+    return json;
   }
 
   /// Returns a new [AssignedComponentSchema] instance and imports its values from
@@ -156,7 +165,10 @@ class AssignedComponentSchema {
     return null;
   }
 
-  static List<AssignedComponentSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<AssignedComponentSchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <AssignedComponentSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -187,12 +199,13 @@ class AssignedComponentSchema {
   static Map<String, List<AssignedComponentSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<AssignedComponentSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = AssignedComponentSchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = AssignedComponentSchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

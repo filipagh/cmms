@@ -31,9 +31,9 @@ class AssignedComponentIdSchema {
   String toString() => 'AssignedComponentIdSchema[id=$id]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'id'] = id;
-    return _json;
+    final json = <String, dynamic>{};
+    json[r'id'] = this.id;
+    return json;
   }
 
   /// Returns a new [AssignedComponentIdSchema] instance and imports its values from
@@ -61,7 +61,10 @@ class AssignedComponentIdSchema {
     return null;
   }
 
-  static List<AssignedComponentIdSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<AssignedComponentIdSchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <AssignedComponentIdSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -92,12 +95,13 @@ class AssignedComponentIdSchema {
   static Map<String, List<AssignedComponentIdSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<AssignedComponentIdSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = AssignedComponentIdSchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = AssignedComponentIdSchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

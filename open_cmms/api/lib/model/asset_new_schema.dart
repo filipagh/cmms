@@ -52,14 +52,16 @@ class AssetNewSchema {
   String toString() => 'AssetNewSchema[categoryId=$categoryId, name=$name, description=$description, telemetry=$telemetry]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'category_id'] = categoryId;
-      _json[r'name'] = name;
-    if (description != null) {
-      _json[r'description'] = description;
+    final json = <String, dynamic>{};
+    json[r'category_id'] = this.categoryId;
+    json[r'name'] = this.name;
+    if (this.description != null) {
+      json[r'description'] = this.description;
+    } else {
+      json[r'description'] = null;
     }
-      _json[r'telemetry'] = telemetry;
-    return _json;
+    json[r'telemetry'] = this.telemetry;
+    return json;
   }
 
   /// Returns a new [AssetNewSchema] instance and imports its values from
@@ -84,13 +86,16 @@ class AssetNewSchema {
         categoryId: mapValueOfType<String>(json, r'category_id')!,
         name: mapValueOfType<String>(json, r'name')!,
         description: mapValueOfType<String>(json, r'description'),
-        telemetry: AssetTelemetry.listFromJson(json[r'telemetry'])!,
+        telemetry: AssetTelemetry.listFromJson(json[r'telemetry']),
       );
     }
     return null;
   }
 
-  static List<AssetNewSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<AssetNewSchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <AssetNewSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -121,12 +126,13 @@ class AssetNewSchema {
   static Map<String, List<AssetNewSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<AssetNewSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = AssetNewSchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = AssetNewSchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

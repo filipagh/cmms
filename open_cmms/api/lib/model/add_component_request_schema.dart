@@ -52,14 +52,16 @@ class AddComponentRequestSchema {
   String toString() => 'AddComponentRequestSchema[id=$id, newAssetId=$newAssetId, assignedComponent=$assignedComponent, state=$state]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'id'] = id;
-      _json[r'new_asset_id'] = newAssetId;
-    if (assignedComponent != null) {
-      _json[r'assigned_component'] = assignedComponent;
+    final json = <String, dynamic>{};
+    json[r'id'] = this.id;
+    json[r'new_asset_id'] = this.newAssetId;
+    if (this.assignedComponent != null) {
+      json[r'assigned_component'] = this.assignedComponent;
+    } else {
+      json[r'assigned_component'] = null;
     }
-      _json[r'state'] = state;
-    return _json;
+    json[r'state'] = this.state;
+    return json;
   }
 
   /// Returns a new [AddComponentRequestSchema] instance and imports its values from
@@ -90,7 +92,10 @@ class AddComponentRequestSchema {
     return null;
   }
 
-  static List<AddComponentRequestSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<AddComponentRequestSchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <AddComponentRequestSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -121,12 +126,13 @@ class AddComponentRequestSchema {
   static Map<String, List<AddComponentRequestSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<AddComponentRequestSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = AddComponentRequestSchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = AddComponentRequestSchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

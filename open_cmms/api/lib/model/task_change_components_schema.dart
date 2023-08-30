@@ -71,17 +71,17 @@ class TaskChangeComponentsSchema {
   String toString() => 'TaskChangeComponentsSchema[stationId=$stationId, name=$name, description=$description, warrantyPeriodDays=$warrantyPeriodDays, id=$id, state=$state, createdAt=$createdAt, add=$add, remove=$remove]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'station_id'] = stationId;
-      _json[r'name'] = name;
-      _json[r'description'] = description;
-      _json[r'warranty_period_days'] = warrantyPeriodDays;
-      _json[r'id'] = id;
-      _json[r'state'] = state;
-      _json[r'created_at'] = createdAt.toUtc().toIso8601String();
-      _json[r'add'] = add;
-      _json[r'remove'] = remove;
-    return _json;
+    final json = <String, dynamic>{};
+    json[r'station_id'] = this.stationId;
+    json[r'name'] = this.name;
+    json[r'description'] = this.description;
+    json[r'warranty_period_days'] = this.warrantyPeriodDays;
+    json[r'id'] = this.id;
+    json[r'state'] = this.state;
+    json[r'created_at'] = this.createdAt.toUtc().toIso8601String();
+    json[r'add'] = this.add;
+    json[r'remove'] = this.remove;
+    return json;
   }
 
   /// Returns a new [TaskChangeComponentsSchema] instance and imports its values from
@@ -110,14 +110,17 @@ class TaskChangeComponentsSchema {
         id: mapValueOfType<String>(json, r'id')!,
         state: TaskState.fromJson(json[r'state'])!,
         createdAt: mapDateTime(json, r'created_at', '')!,
-        add: AddComponentRequestSchema.listFromJson(json[r'add'])!,
-        remove: RemoveComponentRequestSchema.listFromJson(json[r'remove'])!,
+        add: AddComponentRequestSchema.listFromJson(json[r'add']),
+        remove: RemoveComponentRequestSchema.listFromJson(json[r'remove']),
       );
     }
     return null;
   }
 
-  static List<TaskChangeComponentsSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<TaskChangeComponentsSchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <TaskChangeComponentsSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -148,12 +151,13 @@ class TaskChangeComponentsSchema {
   static Map<String, List<TaskChangeComponentsSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<TaskChangeComponentsSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = TaskChangeComponentsSchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = TaskChangeComponentsSchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

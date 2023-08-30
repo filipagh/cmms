@@ -51,13 +51,13 @@ class RedmineIssueDataSchema {
   String toString() => 'RedmineIssueDataSchema[taskId=$taskId, description=$description, assignedTo=$assignedTo, linkToRedmine=$linkToRedmine, comments=$comments]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'task_id'] = taskId;
-      _json[r'description'] = description;
-      _json[r'assigned_to'] = assignedTo;
-      _json[r'link_to_redmine'] = linkToRedmine;
-      _json[r'comments'] = comments;
-    return _json;
+    final json = <String, dynamic>{};
+    json[r'task_id'] = this.taskId;
+    json[r'description'] = this.description;
+    json[r'assigned_to'] = this.assignedTo;
+    json[r'link_to_redmine'] = this.linkToRedmine;
+    json[r'comments'] = this.comments;
+    return json;
   }
 
   /// Returns a new [RedmineIssueDataSchema] instance and imports its values from
@@ -83,13 +83,16 @@ class RedmineIssueDataSchema {
         description: mapValueOfType<String>(json, r'description')!,
         assignedTo: mapValueOfType<String>(json, r'assigned_to')!,
         linkToRedmine: mapValueOfType<String>(json, r'link_to_redmine')!,
-        comments: RedmineCommentDataSchema.listFromJson(json[r'comments'])!,
+        comments: RedmineCommentDataSchema.listFromJson(json[r'comments']),
       );
     }
     return null;
   }
 
-  static List<RedmineIssueDataSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<RedmineIssueDataSchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <RedmineIssueDataSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -120,12 +123,13 @@ class RedmineIssueDataSchema {
   static Map<String, List<RedmineIssueDataSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<RedmineIssueDataSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = RedmineIssueDataSchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = RedmineIssueDataSchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

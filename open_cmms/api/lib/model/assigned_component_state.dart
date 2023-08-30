@@ -38,7 +38,10 @@ class AssignedComponentState {
 
   static AssignedComponentState? fromJson(dynamic value) => AssignedComponentStateTypeTransformer().decode(value);
 
-  static List<AssignedComponentState>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<AssignedComponentState> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <AssignedComponentState>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -71,7 +74,7 @@ class AssignedComponentStateTypeTransformer {
   /// and users are still using an old app with the old code.
   AssignedComponentState? decode(dynamic data, {bool allowNull = true}) {
     if (data != null) {
-      switch (data.toString()) {
+      switch (data) {
         case r'awaiting': return AssignedComponentState.awaiting;
         case r'installed': return AssignedComponentState.installed;
         case r'willBeRemoved': return AssignedComponentState.willBeRemoved;

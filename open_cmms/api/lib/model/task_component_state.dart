@@ -38,7 +38,10 @@ class TaskComponentState {
 
   static TaskComponentState? fromJson(dynamic value) => TaskComponentStateTypeTransformer().decode(value);
 
-  static List<TaskComponentState>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<TaskComponentState> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <TaskComponentState>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -71,7 +74,7 @@ class TaskComponentStateTypeTransformer {
   /// and users are still using an old app with the old code.
   TaskComponentState? decode(dynamic data, {bool allowNull = true}) {
     if (data != null) {
-      switch (data.toString()) {
+      switch (data) {
         case r'awaiting': return TaskComponentState.awaiting;
         case r'allocated': return TaskComponentState.allocated;
         case r'installed': return TaskComponentState.installed;

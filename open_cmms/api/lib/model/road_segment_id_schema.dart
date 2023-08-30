@@ -31,9 +31,9 @@ class RoadSegmentIdSchema {
   String toString() => 'RoadSegmentIdSchema[id=$id]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-    _json[r'id'] = id;
-    return _json;
+    final json = <String, dynamic>{};
+    json[r'id'] = this.id;
+    return json;
   }
 
   /// Returns a new [RoadSegmentIdSchema] instance and imports its values from
@@ -63,7 +63,7 @@ class RoadSegmentIdSchema {
     return null;
   }
 
-  static List<RoadSegmentIdSchema>? listFromJson(
+  static List<RoadSegmentIdSchema> listFromJson(
     dynamic json, {
     bool growable = false,
   }) {
@@ -100,15 +100,13 @@ class RoadSegmentIdSchema {
   }) {
     final map = <String, List<RoadSegmentIdSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = RoadSegmentIdSchema.listFromJson(
+        map[entry.key] = RoadSegmentIdSchema.listFromJson(
           entry.value,
           growable: growable,
         );
-        if (value != null) {
-          map[entry.key] = value;
-        }
       }
     }
     return map;

@@ -10,66 +10,69 @@
 
 part of openapi.api;
 
-class ServiceContractSchema {
-  /// Returns a new [ServiceContractSchema] instance.
-  ServiceContractSchema({
-    required this.name,
+class InvestmentContractSchema {
+  /// Returns a new [InvestmentContractSchema] instance.
+  InvestmentContractSchema({
+    required this.identifier,
     required this.validFrom,
     required this.validUntil,
-    this.stationIdList = const [],
+    required this.warrantyPeriodDays,
     required this.id,
     required this.createdAt,
   });
 
-  String name;
+  String identifier;
 
   DateTime validFrom;
 
   DateTime validUntil;
 
-  List<String> stationIdList;
+  int warrantyPeriodDays;
 
   String id;
 
   DateTime createdAt;
 
   @override
-  bool operator ==(Object other) => identical(this, other) || other is ServiceContractSchema &&
-     other.name == name &&
-     other.validFrom == validFrom &&
-     other.validUntil == validUntil &&
-     other.stationIdList == stationIdList &&
-     other.id == id &&
-     other.createdAt == createdAt;
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is InvestmentContractSchema &&
+          other.identifier == identifier &&
+          other.validFrom == validFrom &&
+          other.validUntil == validUntil &&
+          other.warrantyPeriodDays == warrantyPeriodDays &&
+          other.id == id &&
+          other.createdAt == createdAt;
 
   @override
   int get hashCode =>
-    // ignore: unnecessary_parenthesis
-    (name.hashCode) +
-    (validFrom.hashCode) +
-    (validUntil.hashCode) +
-    (stationIdList.hashCode) +
-    (id.hashCode) +
-    (createdAt.hashCode);
+      // ignore: unnecessary_parenthesis
+      (identifier.hashCode) +
+      (validFrom.hashCode) +
+      (validUntil.hashCode) +
+      (warrantyPeriodDays.hashCode) +
+      (id.hashCode) +
+      (createdAt.hashCode);
 
   @override
-  String toString() => 'ServiceContractSchema[name=$name, validFrom=$validFrom, validUntil=$validUntil, stationIdList=$stationIdList, id=$id, createdAt=$createdAt]';
+  String toString() =>
+      'InvestmentContractSchema[identifier=$identifier, validFrom=$validFrom, validUntil=$validUntil, warrantyPeriodDays=$warrantyPeriodDays, id=$id, createdAt=$createdAt]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    json[r'name'] = this.name;
+    json[r'identifier'] = this.identifier;
     json[r'valid_from'] = _dateFormatter.format(this.validFrom.toUtc());
     json[r'valid_until'] = _dateFormatter.format(this.validUntil.toUtc());
-    json[r'station_id_list'] = this.stationIdList;
+    json[r'warranty_period_days'] = this.warrantyPeriodDays;
     json[r'id'] = this.id;
     json[r'created_at'] = _dateFormatter.format(this.createdAt.toUtc());
     return json;
   }
 
-  /// Returns a new [ServiceContractSchema] instance and imports its values from
+  /// Returns a new [InvestmentContractSchema] instance and imports its values from
   /// [value] if it's a [Map], null otherwise.
   // ignore: prefer_constructors_over_static_methods
-  static ServiceContractSchema? fromJson(dynamic value) {
+  static InvestmentContractSchema? fromJson(dynamic value) {
     if (value is Map) {
       final json = value.cast<String, dynamic>();
 
@@ -78,19 +81,19 @@ class ServiceContractSchema {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key), 'Required key "ServiceContractSchema[$key]" is missing from JSON.');
-          assert(json[key] != null, 'Required key "ServiceContractSchema[$key]" has a null value in JSON.');
+          assert(json.containsKey(key),
+              'Required key "InvestmentContractSchema[$key]" is missing from JSON.');
+          assert(json[key] != null,
+              'Required key "InvestmentContractSchema[$key]" has a null value in JSON.');
         });
         return true;
       }());
 
-      return ServiceContractSchema(
-        name: mapValueOfType<String>(json, r'name')!,
+      return InvestmentContractSchema(
+        identifier: mapValueOfType<String>(json, r'identifier')!,
         validFrom: mapDateTime(json, r'valid_from', '')!,
         validUntil: mapDateTime(json, r'valid_until', '')!,
-        stationIdList: json[r'station_id_list'] is List
-            ? (json[r'station_id_list'] as List).cast<String>()
-            : const [],
+        warrantyPeriodDays: mapValueOfType<int>(json, r'warranty_period_days')!,
         id: mapValueOfType<String>(json, r'id')!,
         createdAt: mapDateTime(json, r'created_at', '')!,
       );
@@ -98,14 +101,14 @@ class ServiceContractSchema {
     return null;
   }
 
-  static List<ServiceContractSchema> listFromJson(
+  static List<InvestmentContractSchema> listFromJson(
     dynamic json, {
     bool growable = false,
   }) {
-    final result = <ServiceContractSchema>[];
+    final result = <InvestmentContractSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
-        final value = ServiceContractSchema.fromJson(row);
+        final value = InvestmentContractSchema.fromJson(row);
         if (value != null) {
           result.add(value);
         }
@@ -114,12 +117,12 @@ class ServiceContractSchema {
     return result.toList(growable: growable);
   }
 
-  static Map<String, ServiceContractSchema> mapFromJson(dynamic json) {
-    final map = <String, ServiceContractSchema>{};
+  static Map<String, InvestmentContractSchema> mapFromJson(dynamic json) {
+    final map = <String, InvestmentContractSchema>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = ServiceContractSchema.fromJson(entry.value);
+        final value = InvestmentContractSchema.fromJson(entry.value);
         if (value != null) {
           map[entry.key] = value;
         }
@@ -128,14 +131,17 @@ class ServiceContractSchema {
     return map;
   }
 
-  // maps a json object with a list of ServiceContractSchema-objects as value to a dart map
-  static Map<String, List<ServiceContractSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
-    final map = <String, List<ServiceContractSchema>>{};
+  // maps a json object with a list of InvestmentContractSchema-objects as value to a dart map
+  static Map<String, List<InvestmentContractSchema>> mapListFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
+    final map = <String, List<InvestmentContractSchema>>{};
     if (json is Map && json.isNotEmpty) {
       // ignore: parameter_assignments
       json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        map[entry.key] = ServiceContractSchema.listFromJson(
+        map[entry.key] = InvestmentContractSchema.listFromJson(
           entry.value,
           growable: growable,
         );
@@ -146,12 +152,11 @@ class ServiceContractSchema {
 
   /// The list of required keys that must be present in a JSON.
   static const requiredKeys = <String>{
-    'name',
+    'identifier',
     'valid_from',
     'valid_until',
-    'station_id_list',
+    'warranty_period_days',
     'id',
     'created_at',
   };
 }
-

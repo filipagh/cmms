@@ -46,12 +46,12 @@ class RoadSegmentSchema {
       'RoadSegmentSchema[name=$name, ssud=$ssud, id=$id, isActive=$isActive]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-    _json[r'name'] = name;
-    _json[r'ssud'] = ssud;
-    _json[r'id'] = id;
-    _json[r'is_active'] = isActive;
-    return _json;
+    final json = <String, dynamic>{};
+    json[r'name'] = this.name;
+    json[r'ssud'] = this.ssud;
+    json[r'id'] = this.id;
+    json[r'is_active'] = this.isActive;
+    return json;
   }
 
   /// Returns a new [RoadSegmentSchema] instance and imports its values from
@@ -82,7 +82,10 @@ class RoadSegmentSchema {
     return null;
   }
 
-  static List<RoadSegmentSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<RoadSegmentSchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <RoadSegmentSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -113,12 +116,13 @@ class RoadSegmentSchema {
   static Map<String, List<RoadSegmentSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<RoadSegmentSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = RoadSegmentSchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = RoadSegmentSchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

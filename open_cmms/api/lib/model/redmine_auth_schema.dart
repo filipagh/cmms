@@ -36,10 +36,10 @@ class RedmineAuthSchema {
   String toString() => 'RedmineAuthSchema[redmineUrl=$redmineUrl, redmineApiKey=$redmineApiKey]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'redmine_url'] = redmineUrl;
-      _json[r'redmine_api_key'] = redmineApiKey;
-    return _json;
+    final json = <String, dynamic>{};
+    json[r'redmine_url'] = this.redmineUrl;
+    json[r'redmine_api_key'] = this.redmineApiKey;
+    return json;
   }
 
   /// Returns a new [RedmineAuthSchema] instance and imports its values from
@@ -68,7 +68,10 @@ class RedmineAuthSchema {
     return null;
   }
 
-  static List<RedmineAuthSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<RedmineAuthSchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <RedmineAuthSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -99,12 +102,13 @@ class RedmineAuthSchema {
   static Map<String, List<RedmineAuthSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<RedmineAuthSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = RedmineAuthSchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = RedmineAuthSchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

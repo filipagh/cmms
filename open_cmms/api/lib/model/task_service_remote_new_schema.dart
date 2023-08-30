@@ -41,11 +41,11 @@ class TaskServiceRemoteNewSchema {
   String toString() => 'TaskServiceRemoteNewSchema[stationId=$stationId, name=$name, description=$description]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'station_id'] = stationId;
-      _json[r'name'] = name;
-      _json[r'description'] = description;
-    return _json;
+    final json = <String, dynamic>{};
+    json[r'station_id'] = this.stationId;
+    json[r'name'] = this.name;
+    json[r'description'] = this.description;
+    return json;
   }
 
   /// Returns a new [TaskServiceRemoteNewSchema] instance and imports its values from
@@ -75,7 +75,10 @@ class TaskServiceRemoteNewSchema {
     return null;
   }
 
-  static List<TaskServiceRemoteNewSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<TaskServiceRemoteNewSchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <TaskServiceRemoteNewSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -106,12 +109,13 @@ class TaskServiceRemoteNewSchema {
   static Map<String, List<TaskServiceRemoteNewSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<TaskServiceRemoteNewSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = TaskServiceRemoteNewSchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = TaskServiceRemoteNewSchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

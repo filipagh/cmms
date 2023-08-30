@@ -36,10 +36,10 @@ class RedmineObjectSchema {
   String toString() => 'RedmineObjectSchema[id=$id, name=$name]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'id'] = id;
-      _json[r'name'] = name;
-    return _json;
+    final json = <String, dynamic>{};
+    json[r'id'] = this.id;
+    json[r'name'] = this.name;
+    return json;
   }
 
   /// Returns a new [RedmineObjectSchema] instance and imports its values from
@@ -68,7 +68,10 @@ class RedmineObjectSchema {
     return null;
   }
 
-  static List<RedmineObjectSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<RedmineObjectSchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <RedmineObjectSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -99,12 +102,13 @@ class RedmineObjectSchema {
   static Map<String, List<RedmineObjectSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<RedmineObjectSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = RedmineObjectSchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = RedmineObjectSchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

@@ -41,11 +41,11 @@ class ValidationError {
   String toString() => 'ValidationError[loc=$loc, msg=$msg, type=$type]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'loc'] = loc;
-      _json[r'msg'] = msg;
-      _json[r'type'] = type;
-    return _json;
+    final json = <String, dynamic>{};
+    json[r'loc'] = this.loc;
+    json[r'msg'] = this.msg;
+    json[r'type'] = this.type;
+    return json;
   }
 
   /// Returns a new [ValidationError] instance and imports its values from
@@ -77,7 +77,10 @@ class ValidationError {
     return null;
   }
 
-  static List<ValidationError>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<ValidationError> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <ValidationError>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -108,12 +111,13 @@ class ValidationError {
   static Map<String, List<ValidationError>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<ValidationError>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = ValidationError.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = ValidationError.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

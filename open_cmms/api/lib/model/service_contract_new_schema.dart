@@ -46,12 +46,12 @@ class ServiceContractNewSchema {
   String toString() => 'ServiceContractNewSchema[name=$name, validFrom=$validFrom, validUntil=$validUntil, stationIdList=$stationIdList]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'name'] = name;
-      _json[r'valid_from'] = _dateFormatter.format(validFrom.toUtc());
-      _json[r'valid_until'] = _dateFormatter.format(validUntil.toUtc());
-      _json[r'station_id_list'] = stationIdList;
-    return _json;
+    final json = <String, dynamic>{};
+    json[r'name'] = this.name;
+    json[r'valid_from'] = _dateFormatter.format(this.validFrom.toUtc());
+    json[r'valid_until'] = _dateFormatter.format(this.validUntil.toUtc());
+    json[r'station_id_list'] = this.stationIdList;
+    return json;
   }
 
   /// Returns a new [ServiceContractNewSchema] instance and imports its values from
@@ -84,7 +84,10 @@ class ServiceContractNewSchema {
     return null;
   }
 
-  static List<ServiceContractNewSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<ServiceContractNewSchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <ServiceContractNewSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -115,12 +118,13 @@ class ServiceContractNewSchema {
   static Map<String, List<ServiceContractNewSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<ServiceContractNewSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = ServiceContractNewSchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = ServiceContractNewSchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;
