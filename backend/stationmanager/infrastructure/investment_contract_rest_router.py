@@ -7,8 +7,8 @@ from base import main
 from base.auth_def import custom_auth, read_permission, write_permission
 from stationmanager.application.invesment_contract.investment_contract_projector import InvestmentContractProjector
 from stationmanager.application.invesment_contract.investment_contract_service import InvestmentContractService
-from stationmanager.application.invesment_contract.model.schema import InvestmentContractNewSchema
-from stationmanager.application.service_contract.model import schema
+from stationmanager.application.invesment_contract.model.schema import InvestmentContractNewSchema, \
+    InvestmentContractSchema
 
 investment_contract_router = APIRouter(
     prefix="/investment-contract",
@@ -27,12 +27,12 @@ def create_contract(new_contract: InvestmentContractNewSchema,
 
 
 @investment_contract_router.get("/contract",
-                                response_model=InvestmentContractNewSchema)
+                                response_model=InvestmentContractSchema)
 def get_contract(contract_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_auth(read_permission))):
     return main.runner.get(InvestmentContractProjector).get_by_id(contract_id)
 
 
 @investment_contract_router.get("/contracts",
-                                response_model=list[schema.ServiceContractSchema])
+                                response_model=list[InvestmentContractSchema])
 def get_contracts(only_active=True, _user: FiefUserInfo = Depends(custom_auth(read_permission))):
     return main.runner.get(InvestmentContractProjector).get_all(only_active)
