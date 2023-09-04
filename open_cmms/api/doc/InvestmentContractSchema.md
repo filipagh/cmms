@@ -1,7 +1,6 @@
 # BackendAPI.model.InvestmentContractSchema
 
 ## Load the model package
-
 ```dart
 import 'package:BackendAPI/api.dart';
 ```

@@ -144,3 +144,4 @@ class InvestmentContractNewSchema {
     'warranty_period_days',
   };
 }
+

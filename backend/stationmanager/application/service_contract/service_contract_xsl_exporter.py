@@ -10,8 +10,10 @@ from stationmanager.infrastructure.persistence.service_contract_repo import Stat
 
 
 def export_stations_without_service_contract_xslx():
-    active_contracts = main.runner.get(ServiceContractProjector).get_all_active()
-    stations = main.runner.get(StationProjector).get_all_active()
+    service_contract_projector: ServiceContractProjector = main.runner.get(ServiceContractProjector)
+    active_contracts = service_contract_projector.get_all_active()
+    station_projector: StationProjector = main.runner.get(StationProjector)
+    stations = station_projector.get_all_active()
     station_ids = []
     for station in stations:
         station_ids.append(station.id)
@@ -20,7 +22,7 @@ def export_stations_without_service_contract_xslx():
 
     for contract in active_contracts:
         station_in_contract: StationServiceContractModel
-        for station_in_contract in contract.station_id_list:
+        for station_in_contract in contract.stations_list:
             try:
                 station_ids.remove(station_in_contract.station_id)
             except ValueError:

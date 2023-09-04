@@ -160,3 +160,4 @@ class InvestmentContractSchema {
     'created_at',
   };
 }
+

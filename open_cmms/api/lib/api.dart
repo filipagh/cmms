@@ -75,6 +75,7 @@ part 'model/road_segment_schema.dart';
 part 'model/role.dart';
 part 'model/service_contract_new_schema.dart';
 part 'model/service_contract_schema.dart';
+part 'model/service_contract_station_components_schema.dart';
 part 'model/setting_schema.dart';
 part 'model/settings_enum.dart';
 part 'model/station_id_schema.dart';

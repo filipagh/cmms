@@ -16,7 +16,7 @@ class ServiceContractSchema {
     required this.name,
     required this.validFrom,
     required this.validUntil,
-    this.stationIdList = const [],
+    this.stationsList = const [],
     required this.id,
     required this.createdAt,
   });
@@ -27,7 +27,7 @@ class ServiceContractSchema {
 
   DateTime validUntil;
 
-  List<String> stationIdList;
+  List<ServiceContractStationComponentsSchema> stationsList;
 
   String id;
 
@@ -38,8 +38,8 @@ class ServiceContractSchema {
      other.name == name &&
      other.validFrom == validFrom &&
      other.validUntil == validUntil &&
-     other.stationIdList == stationIdList &&
-     other.id == id &&
+          other.stationsList == stationsList &&
+          other.id == id &&
      other.createdAt == createdAt;
 
   @override
@@ -48,19 +48,20 @@ class ServiceContractSchema {
     (name.hashCode) +
     (validFrom.hashCode) +
     (validUntil.hashCode) +
-    (stationIdList.hashCode) +
-    (id.hashCode) +
+      (stationsList.hashCode) +
+      (id.hashCode) +
     (createdAt.hashCode);
 
   @override
-  String toString() => 'ServiceContractSchema[name=$name, validFrom=$validFrom, validUntil=$validUntil, stationIdList=$stationIdList, id=$id, createdAt=$createdAt]';
+  String toString() =>
+      'ServiceContractSchema[name=$name, validFrom=$validFrom, validUntil=$validUntil, stationsList=$stationsList, id=$id, createdAt=$createdAt]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
     json[r'name'] = this.name;
     json[r'valid_from'] = _dateFormatter.format(this.validFrom.toUtc());
     json[r'valid_until'] = _dateFormatter.format(this.validUntil.toUtc());
-    json[r'station_id_list'] = this.stationIdList;
+    json[r'stations_list'] = this.stationsList;
     json[r'id'] = this.id;
     json[r'created_at'] = _dateFormatter.format(this.createdAt.toUtc());
     return json;
@@ -88,9 +89,8 @@ class ServiceContractSchema {
         name: mapValueOfType<String>(json, r'name')!,
         validFrom: mapDateTime(json, r'valid_from', '')!,
         validUntil: mapDateTime(json, r'valid_until', '')!,
-        stationIdList: json[r'station_id_list'] is List
-            ? (json[r'station_id_list'] as List).cast<String>()
-            : const [],
+        stationsList: ServiceContractStationComponentsSchema.listFromJson(
+            json[r'stations_list']),
         id: mapValueOfType<String>(json, r'id')!,
         createdAt: mapDateTime(json, r'created_at', '')!,
       );
@@ -149,7 +149,7 @@ class ServiceContractSchema {
     'name',
     'valid_from',
     'valid_until',
-    'station_id_list',
+    'stations_list',
     'id',
     'created_at',
   };

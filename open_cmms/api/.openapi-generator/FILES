@@ -46,6 +46,7 @@ doc/Role.md
 doc/ServiceContractApi.md
 doc/ServiceContractNewSchema.md
 doc/ServiceContractSchema.md
+doc/ServiceContractStationComponentsSchema.md
 doc/SettingSchema.md
 doc/SettingsEnum.md
 doc/StationApi.md
@@ -135,6 +136,7 @@ lib/model/road_segment_schema.dart
 lib/model/role.dart
 lib/model/service_contract_new_schema.dart
 lib/model/service_contract_schema.dart
+lib/model/service_contract_station_components_schema.dart
 lib/model/setting_schema.dart
 lib/model/settings_enum.dart
 lib/model/station_id_schema.dart

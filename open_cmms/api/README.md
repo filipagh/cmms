@@ -183,6 +183,7 @@ All URIs are relative to *http://localhost*
  - [Role](doc//Role.md)
  - [ServiceContractNewSchema](doc//ServiceContractNewSchema.md)
  - [ServiceContractSchema](doc//ServiceContractSchema.md)
+- [ServiceContractStationComponentsSchema](doc//ServiceContractStationComponentsSchema.md)
  - [SettingSchema](doc//SettingSchema.md)
  - [SettingsEnum](doc//SettingsEnum.md)
  - [StationIdSchema](doc//StationIdSchema.md)
@@ -212,8 +213,8 @@ All URIs are relative to *http://localhost*
 
 ## Documentation For Authorization
 
-Authentication schemes defined for the API:
 
+Authentication schemes defined for the API:
 ### api_key
 
 - **Type**: API key

@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime
 
-from sqlalchemy import Column, String, ForeignKey, Date, text
+from sqlalchemy import Column, String, ForeignKey, Date, text, ForeignKeyConstraint
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import Session, relationship
 
@@ -14,7 +14,19 @@ class StationServiceContractModel(Base):
     station_id = Column(postgresql.UUID(as_uuid=True), index=True, primary_key=True, )
     contract_id = Column(postgresql.UUID(as_uuid=True), ForeignKey("service_contracts.id"), index=True,
                          primary_key=True)
+    components_id_list = relationship("ComponentServiceContractModel", lazy="joined")
 
+
+class ComponentServiceContractModel(Base):
+    __tablename__ = "component_service_contracts"
+    component_id = Column(postgresql.UUID(as_uuid=True), index=True, primary_key=True, )
+    station_id = Column(postgresql.UUID(as_uuid=True), index=True,
+                        primary_key=True, )
+    contract_id = Column(postgresql.UUID(as_uuid=True), index=True,
+                         primary_key=True)
+    __table_args__ = (ForeignKeyConstraint((station_id, contract_id),
+                                           (StationServiceContractModel.station_id,
+                                            StationServiceContractModel.contract_id)), {})
 
 class ServiceContractModel(Base):
     __tablename__ = "service_contracts"

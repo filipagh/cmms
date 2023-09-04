@@ -252,6 +252,8 @@ class ApiClient {
           return ServiceContractNewSchema.fromJson(value);
         case 'ServiceContractSchema':
           return ServiceContractSchema.fromJson(value);
+        case 'ServiceContractStationComponentsSchema':
+          return ServiceContractStationComponentsSchema.fromJson(value);
         case 'SettingSchema':
           return SettingSchema.fromJson(value);
         case 'SettingsEnum':

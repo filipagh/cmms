@@ -1,7 +1,6 @@
 # BackendAPI.api.InvestmentContractApi
 
 ## Load the API package
-
 ```dart
 import 'package:BackendAPI/api.dart';
 ```
@@ -14,17 +13,15 @@ All URIs are relative to *http://localhost*
  [**getContractInvestmentContractContractGet**](InvestmentContractApi.md#getcontractinvestmentcontractcontractget)                     | **GET** /investment-contract/contract         | Get Contract    
  [**getContractsInvestmentContractContractsGet**](InvestmentContractApi.md#getcontractsinvestmentcontractcontractsget)                 | **GET** /investment-contract/contracts        | Get Contracts   
 
-# **createContractInvestmentContractCreateContractPost**
 
+# **createContractInvestmentContractCreateContractPost**
 > String createContractInvestmentContractCreateContractPost(investmentContractNewSchema)
 
 Create Contract
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
-
 // TODO Configure API key authorization: user_session
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKey = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -40,12 +37,10 @@ final api_instance = InvestmentContractApi();
 final investmentContractNewSchema = InvestmentContractNewSchema(); // InvestmentContractNewSchema | 
 
 try {
-final result = api_instance.createContractInvestmentContractCreateContractPost(investmentContractNewSchema);
-print(result);
-} catch
-(
-e) {
-print('Exception when calling InvestmentContractApi->createContractInvestmentContractCreateContractPost: $e\n');
+    final result = api_instance.createContractInvestmentContractCreateContractPost(investmentContractNewSchema);
+    print(result);
+} catch (e) {
+    print('Exception when calling InvestmentContractApi->createContractInvestmentContractCreateContractPost: $e\n');
 }
 ```
 
@@ -71,16 +66,13 @@ print('Exception when calling InvestmentContractApi->createContractInvestmentCon
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getContractInvestmentContractContractGet**
-
 > InvestmentContractSchema getContractInvestmentContractContractGet(contractId)
 
 Get Contract
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
-
 // TODO Configure API key authorization: user_session
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKey = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -93,18 +85,13 @@ import 'package:BackendAPI/api.dart';
 //defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
 
 final api_instance = InvestmentContractApi();
-final contractId = 38400000 - 8
-cf0-11
-bd-b23e-10
-b96e4ef00d; // String | 
+final contractId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-final result = api_instance.getContractInvestmentContractContractGet(contractId);
-print(result);
-} catch
-(
-e) {
-print('Exception when calling InvestmentContractApi->getContractInvestmentContractContractGet: $e\n');
+    final result = api_instance.getContractInvestmentContractContractGet(contractId);
+    print(result);
+} catch (e) {
+    print('Exception when calling InvestmentContractApi->getContractInvestmentContractContractGet: $e\n');
 }
 ```
 
@@ -130,16 +117,13 @@ print('Exception when calling InvestmentContractApi->getContractInvestmentContra
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getContractsInvestmentContractContractsGet**
-
 > List<InvestmentContractSchema> getContractsInvestmentContractContractsGet(onlyActive)
 
 Get Contracts
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
-
 // TODO Configure API key authorization: user_session
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKey = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -152,15 +136,13 @@ import 'package:BackendAPI/api.dart';
 //defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
 
 final api_instance = InvestmentContractApi();
-final onlyActive =; // Object | 
+final onlyActive = ; // Object | 
 
 try {
-final result = api_instance.getContractsInvestmentContractContractsGet(onlyActive);
-print(result);
-} catch
-(
-e) {
-print('Exception when calling InvestmentContractApi->getContractsInvestmentContractContractsGet: $e\n');
+    final result = api_instance.getContractsInvestmentContractContractsGet(onlyActive);
+    print(result);
+} catch (e) {
+    print('Exception when calling InvestmentContractApi->getContractsInvestmentContractContractsGet: $e\n');
 }
 ```
 

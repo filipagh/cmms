@@ -46,7 +46,8 @@ class StationService(ProcessApplication):
         self.save(station)
 
     def relocate_station(self, station: schema.StationRelocateSchema):
-        road_segment = base.main.runner.get(RoadSegmentProjector).get_by_id(station.new_road_segment_id)
+        road_segment_projector: RoadSegmentProjector = base.main.runner.get(RoadSegmentProjector)
+        road_segment = road_segment_projector.get_by_id(station.new_road_segment_id)
         if road_segment is None:
             raise AppStationException("Road segment not found")
         try:

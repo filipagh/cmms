@@ -35,4 +35,5 @@ def get_contract(contract_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_au
 @investment_contract_router.get("/contracts",
                                 response_model=list[InvestmentContractSchema])
 def get_contracts(only_active=True, _user: FiefUserInfo = Depends(custom_auth(read_permission))):
-    return main.runner.get(InvestmentContractProjector).get_all(only_active)
+    investment_contract_projector: InvestmentContractProjector = main.runner.get(InvestmentContractProjector)
+    return investment_contract_projector.get_all(only_active)
