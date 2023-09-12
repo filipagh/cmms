@@ -1,7 +1,7 @@
 import uuid
 from datetime import datetime
 
-from sqlalchemy import Column, String, ForeignKey, Date, text
+from sqlalchemy import Column, String, ForeignKey, Date, text, ForeignKeyConstraint
 from sqlalchemy.dialects import postgresql
 from sqlalchemy.orm import Session, relationship
 
@@ -14,7 +14,19 @@ class StationServiceContractModel(Base):
     station_id = Column(postgresql.UUID(as_uuid=True), index=True, primary_key=True, )
     contract_id = Column(postgresql.UUID(as_uuid=True), ForeignKey("service_contracts.id"), index=True,
                          primary_key=True)
+    components_id_list = relationship("ComponentServiceContractModel", lazy="joined", cascade="all, delete-orphan")
 
+
+class ComponentServiceContractModel(Base):
+    __tablename__ = "component_service_contracts"
+    component_id = Column(postgresql.UUID(as_uuid=True), index=True, primary_key=True, )
+    station_id = Column(postgresql.UUID(as_uuid=True), index=True,
+                        primary_key=True, )
+    contract_id = Column(postgresql.UUID(as_uuid=True), index=True,
+                         primary_key=True)
+    __table_args__ = (ForeignKeyConstraint((station_id, contract_id),
+                                           (StationServiceContractModel.station_id,
+                                            StationServiceContractModel.contract_id)), {})
 
 class ServiceContractModel(Base):
     __tablename__ = "service_contracts"
@@ -23,14 +35,15 @@ class ServiceContractModel(Base):
     valid_from = Column(Date, nullable=False)
     valid_until = Column(Date, nullable=False)
     name = Column(String, nullable=False)
-    station_id_list = relationship("StationServiceContractModel", lazy="joined")
+    station_id_list = relationship("StationServiceContractModel", lazy="joined",
+                                   cascade="save-update,delete, delete-orphan")
 
 
 def _get_db():
     return base.database.get_sesionmaker()
 
 
-def save_new(contract: ServiceContractModel):
+def save(contract: ServiceContractModel):
     with _get_db() as db:
         db.add(contract)
         db.commit()
@@ -42,6 +55,15 @@ def get_contract_by_station_id(station_id: uuid) -> list[ServiceContractModel]:
     with _get_db() as db:
         return db.query(ServiceContractModel).join(ServiceContractModel.station_id_list, aliased=True).filter_by(
             station_id=station_id)
+
+
+def get_contract_by_component_id(component_id: uuid) -> list[ServiceContractModel]:
+    db: Session
+    with _get_db() as db:
+        return db.query(ServiceContractModel).join(ServiceContractModel.station_id_list, aliased=True).join(
+            StationServiceContractModel.components_id_list, aliased=True).filter_by(
+            component_id=component_id)
+
 
 
 def get_contract_by_id(contract_id) -> ServiceContractModel:

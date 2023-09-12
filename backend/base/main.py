@@ -32,6 +32,7 @@ from stationmanager.application.service_contract.service_contract_projector impo
 from stationmanager.application.service_contract.service_contract_service import ServiceContractService
 from stationmanager.application.station_projector import StationProjector
 from stationmanager.application.station_service import StationService
+from stationmanager.domain.model.assigned_component import AssignedComponentWarrantyAsStr
 from stationmanager.infrastructure.action_history_rest_router import action_history_router
 from stationmanager.infrastructure.assigned_component_rest_router import assigned_component_router
 from stationmanager.infrastructure.investment_contract_rest_router import investment_contract_router
@@ -97,24 +98,26 @@ system = System(pipes=[[AssetService, AssetProjector],
                        [StorageItemService, StorageItemProjector],
                        [RoadSegmentService, RoadSegmentProjector],
                        [StationService, StationProjector],
-                       [AssignedComponentsService, AssignedComponentProjector],
                        [StationService, ActionHistoryProjector],
                        [TaskService, ActionHistoryProjector],
                        [TaskServiceRemoteService, ActionHistoryProjector],
                        [TaskServiceOnSiteService, ActionHistoryProjector],
-                       [AssignedComponentsService, ActionHistoryProjector],
                        [TaskService, TasksProjector],
                        [TaskService, AssignedComponentsService],
                        [AssignedComponentsService, TaskService],
+                       [AssignedComponentsService, ServiceContractService],
+                       [AssignedComponentsService, RedmineProjector],
+                       [AssignedComponentsService, AssignedComponentProjector],
+                       [AssignedComponentsService, ActionHistoryProjector],
                        [StorageItemService, TaskService],
                        [TaskService, StorageItemService],
                        [TaskServiceOnSiteService, TasksProjector],
                        [TaskServiceRemoteService, TasksProjector],
                        [TaskService, RedmineProjector],
-                       [AssignedComponentsService, RedmineProjector],
                        [TaskServiceOnSiteService, RedmineProjector],
                        [TaskServiceRemoteService, RedmineProjector],
                        [ServiceContractService, ServiceContractProjector],
+                       [ServiceContractService, AssignedComponentsService],
                        [StationService, TaskService],
                        [StationService, TaskServiceRemoteService],
                        [StationService, TaskServiceOnSiteService],
@@ -122,6 +125,7 @@ system = System(pipes=[[AssetService, AssetProjector],
                        [StationService, TasksProjector],
                        [StationService, RedmineProjector],
                        [InvestmentContractService, InvestmentContractProjector],
+
                        ])
 
 runner = SingleThreadedRunner(system)
@@ -136,7 +140,9 @@ register_transcoder(
 register_transcoder(
     [TasksProjector, AssignedComponentsService, StorageItemService, RedmineProjector, ActionHistoryProjector],
     RemoveComponentRequestAsStr())
+
 add_transcoder(DateAsIso())
+add_transcoder(AssignedComponentWarrantyAsStr())
 add_transcoder(AssetTelemetryAsJSON())
 
 # ActionHistoryProjector

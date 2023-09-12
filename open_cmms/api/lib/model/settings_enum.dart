@@ -42,7 +42,10 @@ class SettingsEnum {
 
   static SettingsEnum? fromJson(dynamic value) => SettingsEnumTypeTransformer().decode(value);
 
-  static List<SettingsEnum>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<SettingsEnum> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <SettingsEnum>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -75,7 +78,7 @@ class SettingsEnumTypeTransformer {
   /// and users are still using an old app with the old code.
   SettingsEnum? decode(dynamic data, {bool allowNull = true}) {
     if (data != null) {
-      switch (data.toString()) {
+      switch (data) {
         case r'redmine_feature': return SettingsEnum.feature;
         case r'redmine_url': return SettingsEnum.url;
         case r'redmine_api_key': return SettingsEnum.apiKey;

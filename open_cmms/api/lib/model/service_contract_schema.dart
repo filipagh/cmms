@@ -16,7 +16,7 @@ class ServiceContractSchema {
     required this.name,
     required this.validFrom,
     required this.validUntil,
-    this.stationIdList = const [],
+    this.stationsList = const [],
     required this.id,
     required this.createdAt,
   });
@@ -27,7 +27,7 @@ class ServiceContractSchema {
 
   DateTime validUntil;
 
-  List<String> stationIdList;
+  List<ServiceContractStationComponentsSchema> stationsList;
 
   String id;
 
@@ -38,9 +38,9 @@ class ServiceContractSchema {
      other.name == name &&
      other.validFrom == validFrom &&
      other.validUntil == validUntil &&
-     other.stationIdList == stationIdList &&
-     other.id == id &&
-     other.createdAt == createdAt;
+          other.stationsList == stationsList &&
+          other.id == id &&
+          other.createdAt == createdAt;
 
   @override
   int get hashCode =>
@@ -48,22 +48,23 @@ class ServiceContractSchema {
     (name.hashCode) +
     (validFrom.hashCode) +
     (validUntil.hashCode) +
-    (stationIdList.hashCode) +
-    (id.hashCode) +
-    (createdAt.hashCode);
+      (stationsList.hashCode) +
+      (id.hashCode) +
+      (createdAt.hashCode);
 
   @override
-  String toString() => 'ServiceContractSchema[name=$name, validFrom=$validFrom, validUntil=$validUntil, stationIdList=$stationIdList, id=$id, createdAt=$createdAt]';
+  String toString() =>
+      'ServiceContractSchema[name=$name, validFrom=$validFrom, validUntil=$validUntil, stationsList=$stationsList, id=$id, createdAt=$createdAt]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'name'] = name;
-      _json[r'valid_from'] = _dateFormatter.format(validFrom.toUtc());
-      _json[r'valid_until'] = _dateFormatter.format(validUntil.toUtc());
-      _json[r'station_id_list'] = stationIdList;
-      _json[r'id'] = id;
-      _json[r'created_at'] = _dateFormatter.format(createdAt.toUtc());
-    return _json;
+    final json = <String, dynamic>{};
+    json[r'name'] = this.name;
+    json[r'valid_from'] = _dateFormatter.format(this.validFrom.toUtc());
+    json[r'valid_until'] = _dateFormatter.format(this.validUntil.toUtc());
+    json[r'stations_list'] = this.stationsList;
+    json[r'id'] = this.id;
+    json[r'created_at'] = _dateFormatter.format(this.createdAt.toUtc());
+    return json;
   }
 
   /// Returns a new [ServiceContractSchema] instance and imports its values from
@@ -88,9 +89,8 @@ class ServiceContractSchema {
         name: mapValueOfType<String>(json, r'name')!,
         validFrom: mapDateTime(json, r'valid_from', '')!,
         validUntil: mapDateTime(json, r'valid_until', '')!,
-        stationIdList: json[r'station_id_list'] is List
-            ? (json[r'station_id_list'] as List).cast<String>()
-            : const [],
+        stationsList: ServiceContractStationComponentsSchema.listFromJson(
+            json[r'stations_list']),
         id: mapValueOfType<String>(json, r'id')!,
         createdAt: mapDateTime(json, r'created_at', '')!,
       );
@@ -98,7 +98,10 @@ class ServiceContractSchema {
     return null;
   }
 
-  static List<ServiceContractSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<ServiceContractSchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <ServiceContractSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -129,12 +132,13 @@ class ServiceContractSchema {
   static Map<String, List<ServiceContractSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<ServiceContractSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = ServiceContractSchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = ServiceContractSchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;
@@ -145,7 +149,7 @@ class ServiceContractSchema {
     'name',
     'valid_from',
     'valid_until',
-    'station_id_list',
+    'stations_list',
     'id',
     'created_at',
   };

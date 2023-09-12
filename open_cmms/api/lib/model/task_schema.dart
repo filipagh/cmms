@@ -82,20 +82,22 @@ class TaskSchema {
   String toString() => 'TaskSchema[stationId=$stationId, name=$name, description=$description, id=$id, state=$state, taskType=$taskType, createdOn=$createdOn, finishedAt=$finishedAt, stationName=$stationName, roadSegmentName=$roadSegmentName]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'station_id'] = stationId;
-      _json[r'name'] = name;
-      _json[r'description'] = description;
-      _json[r'id'] = id;
-      _json[r'state'] = state;
-      _json[r'task_type'] = taskType;
-      _json[r'created_on'] = createdOn.toUtc().toIso8601String();
-    if (finishedAt != null) {
-      _json[r'finished_at'] = finishedAt!.toUtc().toIso8601String();
+    final json = <String, dynamic>{};
+    json[r'station_id'] = this.stationId;
+    json[r'name'] = this.name;
+    json[r'description'] = this.description;
+    json[r'id'] = this.id;
+    json[r'state'] = this.state;
+    json[r'task_type'] = this.taskType;
+    json[r'created_on'] = this.createdOn.toUtc().toIso8601String();
+    if (this.finishedAt != null) {
+      json[r'finished_at'] = this.finishedAt!.toUtc().toIso8601String();
+    } else {
+      json[r'finished_at'] = null;
     }
-      _json[r'station_name'] = stationName;
-      _json[r'road_segment_name'] = roadSegmentName;
-    return _json;
+    json[r'station_name'] = this.stationName;
+    json[r'road_segment_name'] = this.roadSegmentName;
+    return json;
   }
 
   /// Returns a new [TaskSchema] instance and imports its values from
@@ -132,7 +134,10 @@ class TaskSchema {
     return null;
   }
 
-  static List<TaskSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<TaskSchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <TaskSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -163,12 +168,13 @@ class TaskSchema {
   static Map<String, List<TaskSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<TaskSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = TaskSchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = TaskSchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

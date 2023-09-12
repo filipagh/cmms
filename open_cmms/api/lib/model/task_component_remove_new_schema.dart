@@ -31,9 +31,9 @@ class TaskComponentRemoveNewSchema {
   String toString() => 'TaskComponentRemoveNewSchema[assignedComponentId=$assignedComponentId]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'assigned_component_id'] = assignedComponentId;
-    return _json;
+    final json = <String, dynamic>{};
+    json[r'assigned_component_id'] = this.assignedComponentId;
+    return json;
   }
 
   /// Returns a new [TaskComponentRemoveNewSchema] instance and imports its values from
@@ -61,7 +61,10 @@ class TaskComponentRemoveNewSchema {
     return null;
   }
 
-  static List<TaskComponentRemoveNewSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<TaskComponentRemoveNewSchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <TaskComponentRemoveNewSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -92,12 +95,13 @@ class TaskComponentRemoveNewSchema {
   static Map<String, List<TaskComponentRemoveNewSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<TaskComponentRemoveNewSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = TaskComponentRemoveNewSchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = TaskComponentRemoveNewSchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

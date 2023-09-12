@@ -41,11 +41,11 @@ class TaskServiceOnSiteNewSchema {
   String toString() => 'TaskServiceOnSiteNewSchema[stationId=$stationId, name=$name, description=$description]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'station_id'] = stationId;
-      _json[r'name'] = name;
-      _json[r'description'] = description;
-    return _json;
+    final json = <String, dynamic>{};
+    json[r'station_id'] = this.stationId;
+    json[r'name'] = this.name;
+    json[r'description'] = this.description;
+    return json;
   }
 
   /// Returns a new [TaskServiceOnSiteNewSchema] instance and imports its values from
@@ -75,7 +75,10 @@ class TaskServiceOnSiteNewSchema {
     return null;
   }
 
-  static List<TaskServiceOnSiteNewSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<TaskServiceOnSiteNewSchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <TaskServiceOnSiteNewSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -106,12 +109,13 @@ class TaskServiceOnSiteNewSchema {
   static Map<String, List<TaskServiceOnSiteNewSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<TaskServiceOnSiteNewSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = TaskServiceOnSiteNewSchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = TaskServiceOnSiteNewSchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

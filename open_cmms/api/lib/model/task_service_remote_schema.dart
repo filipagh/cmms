@@ -67,17 +67,19 @@ class TaskServiceRemoteSchema {
   String toString() => 'TaskServiceRemoteSchema[stationId=$stationId, name=$name, description=$description, id=$id, state=$state, createdAt=$createdAt, finishedAt=$finishedAt]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'station_id'] = stationId;
-      _json[r'name'] = name;
-      _json[r'description'] = description;
-      _json[r'id'] = id;
-      _json[r'state'] = state;
-      _json[r'created_at'] = createdAt.toUtc().toIso8601String();
-    if (finishedAt != null) {
-      _json[r'finished_at'] = finishedAt!.toUtc().toIso8601String();
+    final json = <String, dynamic>{};
+    json[r'station_id'] = this.stationId;
+    json[r'name'] = this.name;
+    json[r'description'] = this.description;
+    json[r'id'] = this.id;
+    json[r'state'] = this.state;
+    json[r'created_at'] = this.createdAt.toUtc().toIso8601String();
+    if (this.finishedAt != null) {
+      json[r'finished_at'] = this.finishedAt!.toUtc().toIso8601String();
+    } else {
+      json[r'finished_at'] = null;
     }
-    return _json;
+    return json;
   }
 
   /// Returns a new [TaskServiceRemoteSchema] instance and imports its values from
@@ -111,7 +113,10 @@ class TaskServiceRemoteSchema {
     return null;
   }
 
-  static List<TaskServiceRemoteSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<TaskServiceRemoteSchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <TaskServiceRemoteSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -142,12 +147,13 @@ class TaskServiceRemoteSchema {
   static Map<String, List<TaskServiceRemoteSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<TaskServiceRemoteSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = TaskServiceRemoteSchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = TaskServiceRemoteSchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

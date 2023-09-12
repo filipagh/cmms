@@ -1,4 +1,7 @@
-convertDatetimeToUtc(DateTime date) {
+convertDatetimeToUtc(DateTime? date) {
+  if (date == null) {
+    return null;
+  }
   return DateTime.utc(
     date.year,
     date.month,

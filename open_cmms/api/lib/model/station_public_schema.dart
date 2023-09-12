@@ -55,14 +55,16 @@ class StationPublicSchema {
       'StationPublicSchema[name=$name, roadSegmentId=$roadSegmentId, id=$id, kmOfRoad=$kmOfRoad]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-    _json[r'name'] = name;
-    _json[r'road_segment_id'] = roadSegmentId;
-    _json[r'id'] = id;
-    if (kmOfRoad != null) {
-      _json[r'km_of_road'] = kmOfRoad;
+    final json = <String, dynamic>{};
+    json[r'name'] = this.name;
+    json[r'road_segment_id'] = this.roadSegmentId;
+    json[r'id'] = this.id;
+    if (this.kmOfRoad != null) {
+      json[r'km_of_road'] = this.kmOfRoad;
+    } else {
+      json[r'km_of_road'] = null;
     }
-    return _json;
+    return json;
   }
 
   /// Returns a new [StationPublicSchema] instance and imports its values from
@@ -97,7 +99,7 @@ class StationPublicSchema {
     return null;
   }
 
-  static List<StationPublicSchema>? listFromJson(
+  static List<StationPublicSchema> listFromJson(
     dynamic json, {
     bool growable = false,
   }) {
@@ -134,15 +136,13 @@ class StationPublicSchema {
   }) {
     final map = <String, List<StationPublicSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = StationPublicSchema.listFromJson(
+        map[entry.key] = StationPublicSchema.listFromJson(
           entry.value,
           growable: growable,
         );
-        if (value != null) {
-          map[entry.key] = value;
-        }
       }
     }
     return map;

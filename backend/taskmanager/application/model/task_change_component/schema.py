@@ -4,6 +4,7 @@ from typing import Optional
 
 from pydantic import BaseModel
 
+from stationmanager.domain.model.assigned_component import ComponentWarrantySource
 from taskmanager.application.model.task.schema import TaskIdSchema
 from taskmanager.domain.model.task_component_state import TaskComponentState
 from taskmanager.domain.model.task_state import TaskState
@@ -13,18 +14,31 @@ class TaskChangeComponentSchemaBASE(BaseModel):
     station_id: uuid.UUID
     name: str
     description: str
-    warranty_period_days: int
-    pass
+
+
+class ComponentWarranty(BaseModel):
+    component_warranty_until: Optional[datetime.datetime]
+    component_warranty_days: int
+    component_warranty_source: ComponentWarrantySource
+    component_warranty_id: Optional[uuid.UUID]
+
+    component_prepaid_service_until: Optional[datetime.datetime]
+    component_prepaid_service_days: int
+
+    component_technical_warranty_until: Optional[datetime.datetime]
+    component_technical_warranty_id: Optional[uuid.UUID]
 
 
 class TaskComponentAddNewSchema(BaseModel):
     new_asset_id: uuid.UUID
-    pass
+    warranty: ComponentWarranty
+    replaced_component_id: Optional[uuid.UUID]
+    service_contracts_id: list[uuid.UUID]
+
 
 
 class TaskComponentRemoveNewSchema(BaseModel):
     assigned_component_id: uuid.UUID
-    pass
 
 
 class TaskChangeComponentsNewSchema(TaskChangeComponentSchemaBASE):

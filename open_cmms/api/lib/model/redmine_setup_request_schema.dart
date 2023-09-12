@@ -51,13 +51,13 @@ class RedmineSetupRequestSchema {
   String toString() => 'RedmineSetupRequestSchema[redmineUrl=$redmineUrl, redmineApiKey=$redmineApiKey, redmineProjectId=$redmineProjectId, redmineTrackerId=$redmineTrackerId, redmineSupervisorId=$redmineSupervisorId]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'redmine_url'] = redmineUrl;
-      _json[r'redmine_api_key'] = redmineApiKey;
-      _json[r'redmine_project_id'] = redmineProjectId;
-      _json[r'redmine_tracker_id'] = redmineTrackerId;
-      _json[r'redmine_supervisor_id'] = redmineSupervisorId;
-    return _json;
+    final json = <String, dynamic>{};
+    json[r'redmine_url'] = this.redmineUrl;
+    json[r'redmine_api_key'] = this.redmineApiKey;
+    json[r'redmine_project_id'] = this.redmineProjectId;
+    json[r'redmine_tracker_id'] = this.redmineTrackerId;
+    json[r'redmine_supervisor_id'] = this.redmineSupervisorId;
+    return json;
   }
 
   /// Returns a new [RedmineSetupRequestSchema] instance and imports its values from
@@ -89,7 +89,10 @@ class RedmineSetupRequestSchema {
     return null;
   }
 
-  static List<RedmineSetupRequestSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<RedmineSetupRequestSchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <RedmineSetupRequestSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -120,12 +123,13 @@ class RedmineSetupRequestSchema {
   static Map<String, List<RedmineSetupRequestSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<RedmineSetupRequestSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = RedmineSetupRequestSchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = RedmineSetupRequestSchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

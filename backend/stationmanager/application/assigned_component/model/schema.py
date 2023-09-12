@@ -4,7 +4,7 @@ from typing import Optional
 
 from pydantic import BaseModel
 
-from stationmanager.domain.model.assigned_component import AssignedComponentState
+from stationmanager.domain.model.assigned_component import AssignedComponentState, ComponentWarrantySource
 
 
 class AssignedComponentSchemaBASE(BaseModel):
@@ -14,7 +14,8 @@ class AssignedComponentSchemaBASE(BaseModel):
 
 
 class AssignedComponentNewSchema(AssignedComponentSchemaBASE):
-    pass
+    service_contracts_id: list[uuid.UUID]
+
 
 
 class AssignedComponentIdSchema(BaseModel):
@@ -26,5 +27,9 @@ class AssignedComponentSchema(AssignedComponentIdSchema, AssignedComponentSchema
     task_id: Optional[uuid.UUID]
     installed_at: datetime.datetime
     removed_at: Optional[datetime.datetime]
-    warranty_period_days: int
-    warranty_period_until: Optional[datetime.date]
+    component_warranty_until: Optional[datetime.date]
+    component_warranty_source: ComponentWarrantySource
+    component_warranty_id: Optional[uuid.UUID]
+    prepaid_service_until: Optional[datetime.date]
+    service_contract_until: Optional[datetime.date]
+    service_contract_id: Optional[uuid.UUID]

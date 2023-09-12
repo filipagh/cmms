@@ -36,10 +36,10 @@ class AssetItemToAdd {
   String toString() => 'AssetItemToAdd[storageItemId=$storageItemId, countToAdd=$countToAdd]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'storage_item_id'] = storageItemId;
-      _json[r'count_to_add'] = countToAdd;
-    return _json;
+    final json = <String, dynamic>{};
+    json[r'storage_item_id'] = this.storageItemId;
+    json[r'count_to_add'] = this.countToAdd;
+    return json;
   }
 
   /// Returns a new [AssetItemToAdd] instance and imports its values from
@@ -68,7 +68,10 @@ class AssetItemToAdd {
     return null;
   }
 
-  static List<AssetItemToAdd>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<AssetItemToAdd> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <AssetItemToAdd>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -99,12 +102,13 @@ class AssetItemToAdd {
   static Map<String, List<AssetItemToAdd>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<AssetItemToAdd>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = AssetItemToAdd.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = AssetItemToAdd.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

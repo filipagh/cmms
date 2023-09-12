@@ -46,12 +46,12 @@ class ActionHistorySchema {
   String toString() => 'ActionHistorySchema[stationId=$stationId, text=$text, datetime=$datetime, id=$id]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'station_id'] = stationId;
-      _json[r'text'] = text;
-      _json[r'datetime'] = datetime.toUtc().toIso8601String();
-      _json[r'id'] = id;
-    return _json;
+    final json = <String, dynamic>{};
+    json[r'station_id'] = this.stationId;
+    json[r'text'] = this.text;
+    json[r'datetime'] = this.datetime.toUtc().toIso8601String();
+    json[r'id'] = this.id;
+    return json;
   }
 
   /// Returns a new [ActionHistorySchema] instance and imports its values from
@@ -82,7 +82,10 @@ class ActionHistorySchema {
     return null;
   }
 
-  static List<ActionHistorySchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<ActionHistorySchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <ActionHistorySchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -113,12 +116,13 @@ class ActionHistorySchema {
   static Map<String, List<ActionHistorySchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<ActionHistorySchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = ActionHistorySchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = ActionHistorySchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

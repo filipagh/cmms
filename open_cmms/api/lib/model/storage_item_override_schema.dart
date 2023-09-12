@@ -42,11 +42,11 @@ class StorageItemOverrideSchema {
       'StorageItemOverrideSchema[reason=$reason, id=$id, newCount=$newCount]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-    _json[r'reason'] = reason;
-    _json[r'id'] = id;
-    _json[r'new_count'] = newCount;
-    return _json;
+    final json = <String, dynamic>{};
+    json[r'reason'] = this.reason;
+    json[r'id'] = this.id;
+    json[r'new_count'] = this.newCount;
+    return json;
   }
 
   /// Returns a new [StorageItemOverrideSchema] instance and imports its values from
@@ -78,7 +78,7 @@ class StorageItemOverrideSchema {
     return null;
   }
 
-  static List<StorageItemOverrideSchema>? listFromJson(
+  static List<StorageItemOverrideSchema> listFromJson(
     dynamic json, {
     bool growable = false,
   }) {
@@ -115,15 +115,13 @@ class StorageItemOverrideSchema {
   }) {
     final map = <String, List<StorageItemOverrideSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = StorageItemOverrideSchema.listFromJson(
+        map[entry.key] = StorageItemOverrideSchema.listFromJson(
           entry.value,
           growable: growable,
         );
-        if (value != null) {
-          map[entry.key] = value;
-        }
       }
     }
     return map;

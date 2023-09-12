@@ -11,6 +11,7 @@ from assetmanager.application.model.schema import AssetCategoryNewSchema, AssetN
 from roadsegmentmanager.application.model.schema import RoadSegmentNewSchema
 from stationmanager.application.assigned_component.model.schema import AssignedComponentNewSchema
 from stationmanager.application.model.schema import StationNewSchema, StationIdSchema
+from stationmanager.domain.model.assigned_component import ComponentWarrantySource
 from test.db_test_util import db_app_setup, db_app_clean
 
 
@@ -19,7 +20,6 @@ def setup():
     db_app_setup()
 
 
-@pytest.fixture(scope="function", autouse=True)
 def teardown():
     db_app_clean()
 
@@ -74,8 +74,10 @@ def test_try_delete_station_with_components(mocker):
     cat = a_api.create_new_category(new_category=AssetCategoryNewSchema(name="category", description="")).id
     asset = a_api.create_new_asset(new_asset=AssetNewSchema(name="asset", category_id=cat, telemetry=[])).id
     as_api.create_installed_component(new_components=[
-        AssignedComponentNewSchema(asset_id=asset, station_id=station_id, serial_number="asset")],
-        warranty_period_days=10, installation_date=datetime.now())
+        AssignedComponentNewSchema(asset_id=asset, station_id=station_id, serial_number="asset",
+                                   service_contracts_id=[])],
+        components_warranty_source=ComponentWarrantySource.NAN, component_warranty_until=None, paid_service_until=None,
+        installation_date=datetime.now())
     try:
         api.remove_station(StationIdSchema(id=station_id))
     except Exception:

@@ -51,13 +51,13 @@ class UserSchema {
   String toString() => 'UserSchema[id=$id, name=$name, isVerified=$isVerified, isAdmin=$isAdmin, role=$role]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'id'] = id;
-      _json[r'name'] = name;
-      _json[r'isVerified'] = isVerified;
-      _json[r'isAdmin'] = isAdmin;
-      _json[r'role'] = role;
-    return _json;
+    final json = <String, dynamic>{};
+    json[r'id'] = this.id;
+    json[r'name'] = this.name;
+    json[r'isVerified'] = this.isVerified;
+    json[r'isAdmin'] = this.isAdmin;
+    json[r'role'] = this.role;
+    return json;
   }
 
   /// Returns a new [UserSchema] instance and imports its values from
@@ -89,7 +89,10 @@ class UserSchema {
     return null;
   }
 
-  static List<UserSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<UserSchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <UserSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -120,12 +123,13 @@ class UserSchema {
   static Map<String, List<UserSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<UserSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = UserSchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = UserSchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

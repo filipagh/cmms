@@ -41,11 +41,11 @@ class RedmineCommentDataSchema {
   String toString() => 'RedmineCommentDataSchema[comment=$comment, author=$author, createdOn=$createdOn]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'comment'] = comment;
-      _json[r'author'] = author;
-      _json[r'created_on'] = createdOn.toUtc().toIso8601String();
-    return _json;
+    final json = <String, dynamic>{};
+    json[r'comment'] = this.comment;
+    json[r'author'] = this.author;
+    json[r'created_on'] = this.createdOn.toUtc().toIso8601String();
+    return json;
   }
 
   /// Returns a new [RedmineCommentDataSchema] instance and imports its values from
@@ -75,7 +75,10 @@ class RedmineCommentDataSchema {
     return null;
   }
 
-  static List<RedmineCommentDataSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<RedmineCommentDataSchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <RedmineCommentDataSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -106,12 +109,13 @@ class RedmineCommentDataSchema {
   static Map<String, List<RedmineCommentDataSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<RedmineCommentDataSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = RedmineCommentDataSchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = RedmineCommentDataSchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

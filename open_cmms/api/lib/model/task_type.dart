@@ -36,7 +36,10 @@ class TaskType {
 
   static TaskType? fromJson(dynamic value) => TaskTypeTypeTransformer().decode(value);
 
-  static List<TaskType>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<TaskType> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <TaskType>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -69,7 +72,7 @@ class TaskTypeTypeTransformer {
   /// and users are still using an old app with the old code.
   TaskType? decode(dynamic data, {bool allowNull = true}) {
     if (data != null) {
-      switch (data.toString()) {
+      switch (data) {
         case r'component_change': return TaskType.componentChange;
         case r'remote_service': return TaskType.remoteService;
         case r'on_site_service': return TaskType.onSiteService;

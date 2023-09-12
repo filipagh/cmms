@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:open_cmms/pages/investment_contracts.dart';
 import 'package:open_cmms/pages/issues.dart';
 import 'package:open_cmms/pages/service_contracts.dart';
 import 'package:open_cmms/pages/stations.dart';
@@ -80,6 +81,13 @@ class _MainMenuWidgetState extends State<MainMenuWidget>
             child: IconButton(
               icon: const Icon(Icons.document_scanner),
               onPressed: () => Get.offAllNamed(ServiceContracts.ENDPOINT),
+            ),
+          ),
+          Tooltip(
+            message: "Investičné zmluvy",
+            child: IconButton(
+              icon: const Icon(Icons.account_balance_wallet),
+              onPressed: () => Get.offAllNamed(InvestmentContracts.ENDPOINT),
             ),
           ),
           Container(

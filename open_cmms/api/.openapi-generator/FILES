@@ -22,8 +22,13 @@ doc/AssignedComponentSchema.md
 doc/AssignedComponentState.md
 doc/AssignedComponentsApi.md
 doc/AuthApi.md
+doc/ComponentWarranty.md
+doc/ComponentWarrantySource.md
 doc/DefaultApi.md
 doc/HTTPValidationError.md
+doc/InvestmentContractApi.md
+doc/InvestmentContractNewSchema.md
+doc/InvestmentContractSchema.md
 doc/IssueNewSchema.md
 doc/IssueSchema.md
 doc/IssuesApi.md
@@ -43,6 +48,7 @@ doc/Role.md
 doc/ServiceContractApi.md
 doc/ServiceContractNewSchema.md
 doc/ServiceContractSchema.md
+doc/ServiceContractStationComponentsSchema.md
 doc/SettingSchema.md
 doc/SettingsEnum.md
 doc/StationApi.md
@@ -80,6 +86,7 @@ lib/api/asset_manager_api.dart
 lib/api/assigned_components_api.dart
 lib/api/auth_api.dart
 lib/api/default_api.dart
+lib/api/investment_contract_api.dart
 lib/api/issues_api.dart
 lib/api/redmine_api.dart
 lib/api/road_segment_manager_api.dart
@@ -113,7 +120,11 @@ lib/model/assigned_component_id_schema.dart
 lib/model/assigned_component_new_schema.dart
 lib/model/assigned_component_schema.dart
 lib/model/assigned_component_state.dart
+lib/model/component_warranty.dart
+lib/model/component_warranty_source.dart
 lib/model/http_validation_error.dart
+lib/model/investment_contract_new_schema.dart
+lib/model/investment_contract_schema.dart
 lib/model/issue_new_schema.dart
 lib/model/issue_schema.dart
 lib/model/redmine_auth_response_schema.dart
@@ -129,6 +140,7 @@ lib/model/road_segment_schema.dart
 lib/model/role.dart
 lib/model/service_contract_new_schema.dart
 lib/model/service_contract_schema.dart
+lib/model/service_contract_station_components_schema.dart
 lib/model/setting_schema.dart
 lib/model/settings_enum.dart
 lib/model/station_id_schema.dart

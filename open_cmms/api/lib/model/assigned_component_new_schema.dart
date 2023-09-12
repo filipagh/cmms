@@ -16,6 +16,7 @@ class AssignedComponentNewSchema {
     required this.assetId,
     required this.stationId,
     this.serialNumber,
+    this.serviceContractsId = const [],
   });
 
   String assetId;
@@ -30,30 +31,38 @@ class AssignedComponentNewSchema {
   ///
   String? serialNumber;
 
+  List<String> serviceContractsId;
+
   @override
   bool operator ==(Object other) => identical(this, other) || other is AssignedComponentNewSchema &&
      other.assetId == assetId &&
      other.stationId == stationId &&
-     other.serialNumber == serialNumber;
+          other.serialNumber == serialNumber &&
+          other.serviceContractsId == serviceContractsId;
 
   @override
   int get hashCode =>
     // ignore: unnecessary_parenthesis
     (assetId.hashCode) +
     (stationId.hashCode) +
-    (serialNumber == null ? 0 : serialNumber!.hashCode);
+      (serialNumber == null ? 0 : serialNumber!.hashCode) +
+      (serviceContractsId.hashCode);
 
   @override
-  String toString() => 'AssignedComponentNewSchema[assetId=$assetId, stationId=$stationId, serialNumber=$serialNumber]';
+  String toString() =>
+      'AssignedComponentNewSchema[assetId=$assetId, stationId=$stationId, serialNumber=$serialNumber, serviceContractsId=$serviceContractsId]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'asset_id'] = assetId;
-      _json[r'station_id'] = stationId;
-    if (serialNumber != null) {
-      _json[r'serial_number'] = serialNumber;
+    final json = <String, dynamic>{};
+    json[r'asset_id'] = this.assetId;
+    json[r'station_id'] = this.stationId;
+    if (this.serialNumber != null) {
+      json[r'serial_number'] = this.serialNumber;
+    } else {
+      json[r'serial_number'] = null;
     }
-    return _json;
+    json[r'service_contracts_id'] = this.serviceContractsId;
+    return json;
   }
 
   /// Returns a new [AssignedComponentNewSchema] instance and imports its values from
@@ -78,12 +87,18 @@ class AssignedComponentNewSchema {
         assetId: mapValueOfType<String>(json, r'asset_id')!,
         stationId: mapValueOfType<String>(json, r'station_id')!,
         serialNumber: mapValueOfType<String>(json, r'serial_number'),
+        serviceContractsId: json[r'service_contracts_id'] is List
+            ? (json[r'service_contracts_id'] as List).cast<String>()
+            : const [],
       );
     }
     return null;
   }
 
-  static List<AssignedComponentNewSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<AssignedComponentNewSchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <AssignedComponentNewSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -114,12 +129,13 @@ class AssignedComponentNewSchema {
   static Map<String, List<AssignedComponentNewSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<AssignedComponentNewSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = AssignedComponentNewSchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = AssignedComponentNewSchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;
@@ -129,6 +145,7 @@ class AssignedComponentNewSchema {
   static const requiredKeys = <String>{
     'asset_id',
     'station_id',
+    'service_contracts_id',
   };
 }
 

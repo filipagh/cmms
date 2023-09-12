@@ -2,9 +2,11 @@ import 'package:BackendAPI/api.dart' as schema;
 import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:open_cmms/snacbars.dart';
 import 'package:open_cmms/states/asset_types_state.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 import 'package:open_cmms/widgets/forms/components/component_picker.dart';
+import 'package:open_cmms/widgets/forms/components/set_new_component_warranty_form.dart';
 import 'package:open_cmms/widgets/forms/tasks/create_change_components_task.dart';
 
 import '../../../states/station/components_state.dart';
@@ -96,10 +98,23 @@ class EditStationComponentsForm extends StatelessWidget
                                 : () async {
                                     List<TaskComponentAddNewSchema> add = [];
 
-                                    getNewItems().forEach((element) {
-                                      add.add(TaskComponentAddNewSchema(
-                                          newAssetId: element.asset.id));
-                                    });
+                                    var newItems = getNewItems();
+                                    if (newItems.length > 0) {
+                                      ComponentWarranty? varranty =
+                                          await showFormDialog(
+                                              SetNewComponentWarrantyForm());
+                                      if (varranty == null) {
+                                        showError(
+                                            "musite zvolit zaruku pre nove komponenty");
+                                        return;
+                                      }
+
+                                      newItems.forEach((element) {
+                                        add.add(TaskComponentAddNewSchema(
+                                            newAssetId: element.asset.id,
+                                            warranty: varranty));
+                                      });
+                                    }
 
                                     List<TaskComponentRemoveNewSchema> remove =
                                         [];

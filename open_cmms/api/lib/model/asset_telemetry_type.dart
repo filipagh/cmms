@@ -68,7 +68,10 @@ class AssetTelemetryType {
 
   static AssetTelemetryType? fromJson(dynamic value) => AssetTelemetryTypeTypeTransformer().decode(value);
 
-  static List<AssetTelemetryType>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<AssetTelemetryType> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <AssetTelemetryType>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -101,7 +104,7 @@ class AssetTelemetryTypeTypeTransformer {
   /// and users are still using an old app with the old code.
   AssetTelemetryType? decode(dynamic data, {bool allowNull = true}) {
     if (data != null) {
-      switch (data.toString()) {
+      switch (data) {
         case r'AIR_TEMPERATURE': return AssetTelemetryType.AIR_TEMPERATURE;
         case r'GROUND_TEMPERATURE': return AssetTelemetryType.GROUND_TEMPERATURE;
         case r'ROAD_TEMPERATURE': return AssetTelemetryType.ROAD_TEMPERATURE;

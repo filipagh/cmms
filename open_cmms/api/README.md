@@ -39,16 +39,16 @@ Please follow the [installation procedure](#installation--usage) and then run th
 ```dart
 import 'package:BackendAPI/api.dart';
 
-// TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
-//defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
-// TODO Configure API key authorization: api_key
-//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKey = 'YOUR_API_KEY';
-// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
-//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKeyPrefix = 'Bearer';
 // TODO Configure API key authorization: user_session
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKey = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: api_key
+//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKeyPrefix = 'Bearer';
+// TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
+//defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
 
 final api_instance = ActionHistoryApi();
 final page = 56; // int | 
@@ -80,6 +80,8 @@ All URIs are relative to *http://localhost*
  *AssetManagerApi*       | [**getTelemetryOptionsAssetManagerTelemetryOptionsGet**](doc//AssetManagerApi.md#gettelemetryoptionsassetmanagertelemetryoptionsget)                                                                    | **GET** /assetManager/telemetry_options                        | Get Telemetry Options                
  *AssignedComponentsApi* | [**createInstalledComponentAssignedComponentsCreateInstalledComponentPost**](doc//AssignedComponentsApi.md#createinstalledcomponentassignedcomponentscreateinstalledcomponentpost)                      | **POST** /assigned_components/create_installed_component       | Create Installed Component           
  *AssignedComponentsApi* | [**getAllAssignedComponentsComponentsGet**](doc//AssignedComponentsApi.md#getallassignedcomponentscomponentsget)                                                                                        | **GET** /assigned_components/components                        | Get All                              
+ *AssignedComponentsApi* | [**getReplacmentWarrantyAssignedComponentsReplacmentWarranryGet**](doc//AssignedComponentsApi.md#getreplacmentwarrantyassignedcomponentsreplacmentwarranryget)                                          | **GET** /assigned_components/replacment_warranry               | Get Replacment Warranty              
+ *AssignedComponentsApi* | [**overrideWarrantyAssignedComponentsOverrideWarrantyPost**](doc//AssignedComponentsApi.md#overridewarrantyassignedcomponentsoverridewarrantypost)                                                      | **POST** /assigned_components/override_warranty                | Override Warranty                    
  *AssignedComponentsApi* | [**removeInstalledComponentAssignedComponentsRemoveInstalledComponentPost**](doc//AssignedComponentsApi.md#removeinstalledcomponentassignedcomponentsremoveinstalledcomponentpost)                      | **POST** /assigned_components/remove_installed_component       | Remove Installed Component           
  *AuthApi*               | [**authTestAuthAuthTestGet**](doc//AuthApi.md#authtestauthauthtestget)                                                                                                                                  | **GET** /auth/auth_test                                        | Auth Test                            
  *AuthApi*               | [**getAllAuthUsersGet**](doc//AuthApi.md#getallauthusersget)                                                                                                                                            | **GET** /auth/users                                            | Get All                              
@@ -89,6 +91,9 @@ All URIs are relative to *http://localhost*
  *AuthApi*               | [**updateUserRoleAuthUserUserIdRolePost**](doc//AuthApi.md#updateuserroleauthuseruseridrolepost)                                                                                                        | **POST** /auth/user/{user_id}/role                             | Update User Role                     
  *DefaultApi*            | [**rootGet**](doc//DefaultApi.md#rootget)                                                                                                                                                               | **GET** /                                                      | Root                                 
  *DefaultApi*            | [**settingsSettingsGet**](doc//DefaultApi.md#settingssettingsget)                                                                                                                                       | **GET** /settings                                              | Settings                             
+ *InvestmentContractApi* | [**createContractInvestmentContractCreateContractPost**](doc//InvestmentContractApi.md#createcontractinvestmentcontractcreatecontractpost)                                                              | **POST** /investment-contract/create_contract                  | Create Contract                      
+ *InvestmentContractApi* | [**getContractInvestmentContractContractGet**](doc//InvestmentContractApi.md#getcontractinvestmentcontractcontractget)                                                                                  | **GET** /investment-contract/contract                          | Get Contract                         
+ *InvestmentContractApi* | [**getContractsInvestmentContractContractsGet**](doc//InvestmentContractApi.md#getcontractsinvestmentcontractcontractsget)                                                                              | **GET** /investment-contract/contracts                         | Get Contracts                        
  *IssuesApi*             | [**createIssuesPost**](doc//IssuesApi.md#createissuespost)                                                                                                                                              | **POST** /issues/                                              | Create                               
  *IssuesApi*             | [**getActiveIssuesIssuesActiveGet**](doc//IssuesApi.md#getactiveissuesissuesactiveget)                                                                                                                  | **GET** /issues/active                                         | Get Active Issues                    
  *IssuesApi*             | [**getIssueIssuesTaskIdGet**](doc//IssuesApi.md#getissueissuestaskidget)                                                                                                                                | **GET** /issues/{task_id}                                      | Get Issue                            
@@ -108,6 +113,7 @@ All URIs are relative to *http://localhost*
  *ServiceContractApi*    | [**getContractServiceContractContractGet**](doc//ServiceContractApi.md#getcontractservicecontractcontractget)                                                                                           | **GET** /service-contract/contract                             | Get Contract                         
  *ServiceContractApi*    | [**getContractsServiceContractContractsGet**](doc//ServiceContractApi.md#getcontractsservicecontractcontractsget)                                                                                       | **GET** /service-contract/contracts                            | Get Contracts                        
  *ServiceContractApi*    | [**getServiceContractContractForStationGet**](doc//ServiceContractApi.md#getservicecontractcontractforstationget)                                                                                       | **GET** /service-contract/contract_for_station                 | Get                                  
+ *ServiceContractApi*    | [**getServiceContractContractsForComponentGet**](doc//ServiceContractApi.md#getservicecontractcontractsforcomponentget)                                                                                 | **GET** /service-contract/contracts_for_component              | Get                                  
  *ServiceContractApi*    | [**getStationsWithoutContractExportServiceContractStationsWithoutContractExportXslGet**](doc//ServiceContractApi.md#getstationswithoutcontractexportservicecontractstationswithoutcontractexportxslget) | **GET** /service-contract/stations_without_contract/export_xsl | Get Stations Without Contract Export 
  *ServiceContractApi*    | [**getStationsWithoutContractServiceContractStationsWithoutContractGet**](doc//ServiceContractApi.md#getstationswithoutcontractservicecontractstationswithoutcontractget)                               | **GET** /service-contract/stations_without_contract            | Get Stations Without Contract        
  *ServiceContractApi*    | [**searchServiceContractContractsSearchGet**](doc//ServiceContractApi.md#searchservicecontractcontractssearchget)                                                                                       | **GET** /service-contract/contracts_search                     | Search                               
@@ -162,7 +168,11 @@ All URIs are relative to *http://localhost*
  - [AssignedComponentNewSchema](doc//AssignedComponentNewSchema.md)
  - [AssignedComponentSchema](doc//AssignedComponentSchema.md)
  - [AssignedComponentState](doc//AssignedComponentState.md)
+- [ComponentWarranty](doc//ComponentWarranty.md)
+- [ComponentWarrantySource](doc//ComponentWarrantySource.md)
  - [HTTPValidationError](doc//HTTPValidationError.md)
+- [InvestmentContractNewSchema](doc//InvestmentContractNewSchema.md)
+- [InvestmentContractSchema](doc//InvestmentContractSchema.md)
  - [IssueNewSchema](doc//IssueNewSchema.md)
  - [IssueSchema](doc//IssueSchema.md)
  - [RedmineAuthResponseSchema](doc//RedmineAuthResponseSchema.md)
@@ -178,6 +188,7 @@ All URIs are relative to *http://localhost*
  - [Role](doc//Role.md)
  - [ServiceContractNewSchema](doc//ServiceContractNewSchema.md)
  - [ServiceContractSchema](doc//ServiceContractSchema.md)
+- [ServiceContractStationComponentsSchema](doc//ServiceContractStationComponentsSchema.md)
  - [SettingSchema](doc//SettingSchema.md)
  - [SettingsEnum](doc//SettingsEnum.md)
  - [StationIdSchema](doc//StationIdSchema.md)
@@ -208,26 +219,27 @@ All URIs are relative to *http://localhost*
 ## Documentation For Authorization
 
 
-## OAuth2AuthorizationCodeBearer
-
-- **Type**: OAuth
-- **Flow**: accessCode
-- **Authorization URL**: https://cmms.fief.dev/authorize
-- **Scopes**: 
- - **openid**: openid
- - **offline_access**: offline_access
-
-## api_key
+Authentication schemes defined for the API:
+### api_key
 
 - **Type**: API key
 - **API key parameter name**: api_key
 - **Location**: HTTP header
 
-## user_session
+### user_session
 
 - **Type**: API key
 - **API key parameter name**: user_session
 - **Location**: 
+
+### OAuth2AuthorizationCodeBearer
+
+- **Type**: OAuth
+- **Flow**: accessCode
+- **Authorization URL**: https://cmms.fief.dev/authorize
+- **Scopes**:
+- **openid**: openid
+- **offline_access**: offline_access
 
 
 ## Author

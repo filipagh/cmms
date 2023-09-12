@@ -2,10 +2,14 @@ import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/service/backend_api/RoadSegmentManager.dart';
+import 'package:open_cmms/service/backend_api/assigned_components_service.dart';
 import 'package:open_cmms/service/backend_api/service_contract_service.dart';
 import 'package:open_cmms/service/backend_api/station_service.dart';
 import 'package:open_cmms/snacbars.dart';
+import 'package:open_cmms/states/asset_types_state.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
+
+import '../util/date_utils.dart';
 
 class ServiceContractForm extends StatefulWidget implements hasFormTitle {
   ServiceContractForm(
@@ -15,15 +19,15 @@ class ServiceContractForm extends StatefulWidget implements hasFormTitle {
       this.stationsWithoutContract = const []})
       : super(key: key) {
     RoadSegmentService().getAllRoadSegmentManagerSegmentsGet().then((value) {
+      if (contract != null) {
+        this.contract = contract;
+      }
       segments.addAll(value ?? []);
       for (var element in segments) {
         loadStationOfSegment(element.id);
       }
       segments.refresh();
     });
-    if (contract != null) {
-      this.contract = contract;
-    }
   }
 
   ServiceContractSchema? contract;
@@ -38,6 +42,32 @@ class ServiceContractForm extends StatefulWidget implements hasFormTitle {
           .then((value) {
         stations[id] = (value ?? []);
         segments.refresh();
+        for (var station in stations[id]!) {
+          AssignedComponentService()
+              .getAllAssignedComponentsComponentsGet(stationId: station.id)
+              .then((value) {
+            if (isNew) {
+              value = value
+                  ?.where((element) =>
+                      element.status != AssignedComponentState.removed)
+                  .toList();
+            }
+            stationsComponents[station.id] = value ?? [];
+            if (contract != null) {
+              var componentsFilteredList = contract!.stationsList
+                  .firstWhere((contractStation) =>
+                      contractStation.stationId == station.id)
+                  .componentIdList;
+              componentsFilteredList = componentsFilteredList
+                  .where((componentId) => stationsComponents[station.id]!
+                      .any((element) => element.id == componentId))
+                  .toList();
+              selectedStationsWithComponents[station.id] =
+                  componentsFilteredList;
+            }
+            segments.refresh();
+          });
+        }
       });
     }
   }
@@ -45,8 +75,12 @@ class ServiceContractForm extends StatefulWidget implements hasFormTitle {
   RxList<RoadSegmentSchema> segments = <RoadSegmentSchema>[].obs;
   RxMap<String, List<StationSchema>> stations =
       <String, List<StationSchema>>{}.obs;
-  RxList<String> selectedStations = <String>[].obs;
+  RxMap<String, List<AssignedComponentSchema>> stationsComponents =
+      <String, List<AssignedComponentSchema>>{}.obs;
+  RxMap<String, List<String>> selectedStationsWithComponents =
+      <String, List<String>>{}.obs;
   List<StationIdSchema> stationsWithoutContract;
+  AssetTypesState _assetTypes = Get.find();
 
   @override
   State<ServiceContractForm> createState() => _ServiceContractFormState();
@@ -77,7 +111,6 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
       dateDue.text = widget.contract!.validUntil.toString().substring(0, 10);
       dateFromDT = widget.contract!.validFrom;
       dateDueDT = widget.contract!.validUntil;
-      widget.selectedStations.value = widget.contract!.stationIdList.toList();
       name.text = widget.contract!.name;
       widget.contract = null;
       widget.segments.refresh();
@@ -159,46 +192,110 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
                                   var station =
                                       widget.stations[segment.id]![index];
                                   return Obx(
-                                    () => CheckboxListTile(
-                                      title: Row(
+                                    () => ExpansionTile(
                                         children: [
-                                          Text(station.name),
-                                          if (!station.isActive) ...[
-                                            const SizedBox(
-                                              width: 10,
-                                            ),
-                                            const Tooltip(
-                                              message: "stanica je zmazaná",
-                                              child: Icon(
-                                                Icons.remove_circle_outline,
-                                                color: Colors.red,
-                                              ),
+                                          if ((widget
+                                                      .stationsComponents[
+                                                          station.id]
+                                                      ?.length ??
+                                                  0) ==
+                                              0)
+                                            const ListTile(
+                                              title: Text("ziadne komponenty"),
                                             )
-                                          ]
+                                          else
+                                            ListView.builder(
+                                                shrinkWrap: true,
+                                                itemCount: widget
+                                                    .stationsComponents[
+                                                        station.id]!
+                                                    .length,
+                                                itemBuilder: (context, index) {
+                                                  var component =
+                                                      widget.stationsComponents[
+                                                          station.id]![index];
+                                                  return CheckboxListTile(
+                                                    title: Text(widget
+                                                        ._assetTypes
+                                                        .getAssetById(
+                                                            component.assetId)!
+                                                        .name),
+                                                    subtitle: Text(
+                                                        "instalovane dna: " +
+                                                            component
+                                                                .installedAt
+                                                                .toString()
+                                                                .substring(
+                                                                    0, 10) +
+                                                            " seriove cislo: " +
+                                                            (component
+                                                                    .serialNumber ??
+                                                                "")),
+                                                    value: widget
+                                                            .selectedStationsWithComponents[
+                                                                station.id]
+                                                            ?.contains(
+                                                                component.id) ??
+                                                        false,
+                                                    onChanged: widget.isNew
+                                                        ? (bool? value) {
+                                                            selectComponent(
+                                                                station.id,
+                                                                component.id,
+                                                                value ?? false);
+                                                          }
+                                                        : null,
+                                                  );
+                                                })
                                         ],
-                                      ),
-                                      subtitle: widget.stationsWithoutContract
-                                              .contains(StationIdSchema(
-                                                  id: station.id))
-                                          ? const Text(
-                                              "stanica nemá servisnú zmluvu")
-                                          : null,
-                                      value: widget.selectedStations
-                                          .contains(station.id),
-                                      onChanged: widget.isNew
-                                          ? (bool? value) {
-                                              if (value!) {
-                                                widget.selectedStations
-                                                    .add(station.id);
-                                                widget.segments.refresh();
-                                              } else {
-                                                widget.selectedStations
-                                                    .remove(station.id);
-                                                widget.segments.refresh();
-                                              }
-                                            }
-                                          : null,
-                                    ),
+                                        title: Row(
+                                          children: [
+                                            Text(station.name),
+                                            if (!station.isActive) ...[
+                                              const SizedBox(
+                                                width: 10,
+                                              ),
+                                              const Tooltip(
+                                                message: "stanica je zmazaná",
+                                                child: Icon(
+                                                  Icons.remove_circle_outline,
+                                                  color: Colors.red,
+                                                ),
+                                              )
+                                            ]
+                                          ],
+                                        ),
+                                        subtitle: widget.stationsWithoutContract
+                                                .contains(StationIdSchema(
+                                                    id: station.id))
+                                            ? const Text(
+                                                "stanica nemá servisnú zmluvu")
+                                            : null,
+                                        trailing: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            const Icon(Icons.arrow_drop_down),
+                                            (widget
+                                                        .stationsComponents[
+                                                            station.id]
+                                                        ?.isEmpty ??
+                                                    false)
+                                                ? const Icon(Icons.close)
+                                                : Checkbox(
+                                                    tristate: true,
+                                                    value:
+                                                        getStationCheckBoxValue(
+                                                            station.id),
+                                                    onChanged: widget.isNew
+                                                        ? (bool? value) {
+                                                            changeAllInStation(
+                                                                station.id,
+                                                                value ?? false);
+                                                          }
+                                                        : null,
+                                                  ),
+                                          ],
+                                        )),
                                   );
                                 })
                       ],
@@ -236,17 +333,26 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
                   ? ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          if (widget.selectedStations.isEmpty) {
+                          if (widget.selectedStationsWithComponents.isEmpty) {
                             showError("zvolte aspon jednu stanicu");
                             return;
                           }
+                          List<ServiceContractStationComponentsSchema> list =
+                              [];
+                          widget.selectedStationsWithComponents.forEach(
+                              (element, values) => list.add(
+                                  ServiceContractStationComponentsSchema(
+                                      stationId: element,
+                                      componentIdList: values)));
                           ServiceContractService()
                               .createContractServiceContractCreateContractPost(
                                   ServiceContractNewSchema(
                                       name: name.value.text,
-                                      validFrom: dateFromDT!,
-                                      validUntil: dateDueDT!,
-                                      stationIdList: widget.selectedStations))
+                                      validFrom:
+                                          convertDatetimeToUtc(dateFromDT!),
+                                      validUntil:
+                                          convertDatetimeToUtc(dateDueDT!),
+                                      stationsList: list))
                               .then((value) {
                             Get.back();
                             showOk("Servisna zmluva bola pridana");
@@ -266,8 +372,8 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
     if (widget.stations[id] == null || widget.stations[id] == []) return false;
 
     var stationList = widget.stations[id]!.map((e) => e.id).toList();
-    var missingStations = stationList
-        .where((element) => !widget.selectedStations.contains(element));
+    var missingStations = stationList.where(
+        (element) => !(widget.selectedStationsWithComponents[element] != null));
     if (missingStations.length == stationList.length) {
       return false;
     } else if (missingStations.isEmpty) {
@@ -276,17 +382,59 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
     return null;
   }
 
+  bool? getStationCheckBoxValue(String id) {
+    if (widget.selectedStationsWithComponents[id] == null ||
+        widget.selectedStationsWithComponents[id]!.isEmpty) {
+      return false;
+    }
+    if (widget.selectedStationsWithComponents[id]!.length ==
+        widget.stationsComponents[id]!.length) {
+      return true;
+    }
+
+    return null;
+  }
+
   changeAllInSegment(String id, bool addAll) {
     var stationList = widget.stations[id]!.map((e) => e.id).toList();
     if (addAll) {
       stationList.forEach((element) {
-        widget.selectedStations
-            .addIf(!widget.selectedStations.contains(element), element);
+        widget.selectedStationsWithComponents.addIf(
+            !(widget.selectedStationsWithComponents[element] != null),
+            element,
+            widget.stationsComponents[element]!.map((e) => e.id).toList());
       });
     } else {
       stationList.forEach((element) {
-        widget.selectedStations.remove(element);
+        widget.selectedStationsWithComponents.remove(element);
       });
+    }
+    widget.segments.refresh();
+  }
+
+  changeAllInStation(String id, bool addAll) {
+    if (addAll) {
+      widget.selectedStationsWithComponents[id] =
+          widget.stationsComponents[id]!.map((e) => e.id).toList();
+    } else {
+      widget.selectedStationsWithComponents.remove(id);
+    }
+
+    widget.segments.refresh();
+  }
+
+  selectComponent(String stationId, String componentId, bool add) {
+    if (add) {
+      if (widget.selectedStationsWithComponents[stationId] == null) {
+        widget.selectedStationsWithComponents[stationId] = [componentId];
+      } else {
+        widget.selectedStationsWithComponents[stationId]!.add(componentId);
+      }
+    } else {
+      widget.selectedStationsWithComponents[stationId]!.remove(componentId);
+      if (widget.selectedStationsWithComponents[stationId]!.isEmpty) {
+        widget.selectedStationsWithComponents.remove(stationId);
+      }
     }
     widget.segments.refresh();
   }

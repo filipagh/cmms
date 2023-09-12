@@ -51,13 +51,13 @@ class RedmineAuthResponseSchema {
   String toString() => 'RedmineAuthResponseSchema[redmineUrl=$redmineUrl, redmineApiKey=$redmineApiKey, projects=$projects, trackers=$trackers, users=$users]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'redmine_url'] = redmineUrl;
-      _json[r'redmine_api_key'] = redmineApiKey;
-      _json[r'projects'] = projects;
-      _json[r'trackers'] = trackers;
-      _json[r'users'] = users;
-    return _json;
+    final json = <String, dynamic>{};
+    json[r'redmine_url'] = this.redmineUrl;
+    json[r'redmine_api_key'] = this.redmineApiKey;
+    json[r'projects'] = this.projects;
+    json[r'trackers'] = this.trackers;
+    json[r'users'] = this.users;
+    return json;
   }
 
   /// Returns a new [RedmineAuthResponseSchema] instance and imports its values from
@@ -81,15 +81,18 @@ class RedmineAuthResponseSchema {
       return RedmineAuthResponseSchema(
         redmineUrl: mapValueOfType<String>(json, r'redmine_url')!,
         redmineApiKey: mapValueOfType<String>(json, r'redmine_api_key')!,
-        projects: RedmineObjectSchema.listFromJson(json[r'projects'])!,
-        trackers: RedmineObjectSchema.listFromJson(json[r'trackers'])!,
-        users: RedmineObjectSchema.listFromJson(json[r'users'])!,
+        projects: RedmineObjectSchema.listFromJson(json[r'projects']),
+        trackers: RedmineObjectSchema.listFromJson(json[r'trackers']),
+        users: RedmineObjectSchema.listFromJson(json[r'users']),
       );
     }
     return null;
   }
 
-  static List<RedmineAuthResponseSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<RedmineAuthResponseSchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <RedmineAuthResponseSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -120,12 +123,13 @@ class RedmineAuthResponseSchema {
   static Map<String, List<RedmineAuthResponseSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<RedmineAuthResponseSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = RedmineAuthResponseSchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = RedmineAuthResponseSchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

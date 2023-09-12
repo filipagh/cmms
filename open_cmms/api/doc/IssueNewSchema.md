@@ -1,7 +1,6 @@
 # BackendAPI.model.IssueNewSchema
 
 ## Load the model package
-
 ```dart
 import 'package:BackendAPI/api.dart';
 ```

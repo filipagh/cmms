@@ -65,16 +65,18 @@ class AssetSchema {
       'AssetSchema[categoryId=$categoryId, name=$name, description=$description, telemetry=$telemetry, id=$id, isArchived=$isArchived]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-    _json[r'category_id'] = categoryId;
-    _json[r'name'] = name;
-    if (description != null) {
-      _json[r'description'] = description;
+    final json = <String, dynamic>{};
+    json[r'category_id'] = this.categoryId;
+    json[r'name'] = this.name;
+    if (this.description != null) {
+      json[r'description'] = this.description;
+    } else {
+      json[r'description'] = null;
     }
-    _json[r'telemetry'] = telemetry;
-    _json[r'id'] = id;
-    _json[r'is_archived'] = isArchived;
-    return _json;
+    json[r'telemetry'] = this.telemetry;
+    json[r'id'] = this.id;
+    json[r'is_archived'] = this.isArchived;
+    return json;
   }
 
   /// Returns a new [AssetSchema] instance and imports its values from
@@ -99,7 +101,7 @@ class AssetSchema {
         categoryId: mapValueOfType<String>(json, r'category_id')!,
         name: mapValueOfType<String>(json, r'name')!,
         description: mapValueOfType<String>(json, r'description'),
-        telemetry: AssetTelemetry.listFromJson(json[r'telemetry'])!,
+        telemetry: AssetTelemetry.listFromJson(json[r'telemetry']),
         id: mapValueOfType<String>(json, r'id')!,
         isArchived: mapValueOfType<bool>(json, r'is_archived')!,
       );
@@ -107,7 +109,10 @@ class AssetSchema {
     return null;
   }
 
-  static List<AssetSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<AssetSchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <AssetSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -138,12 +143,13 @@ class AssetSchema {
   static Map<String, List<AssetSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<AssetSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = AssetSchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = AssetSchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

@@ -47,13 +47,15 @@ class AssetCategoryNewSchema {
   String toString() => 'AssetCategoryNewSchema[parentId=$parentId, name=$name, description=$description]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-    if (parentId != null) {
-      _json[r'parent_id'] = parentId;
+    final json = <String, dynamic>{};
+    if (this.parentId != null) {
+      json[r'parent_id'] = this.parentId;
+    } else {
+      json[r'parent_id'] = null;
     }
-      _json[r'name'] = name;
-      _json[r'description'] = description;
-    return _json;
+    json[r'name'] = this.name;
+    json[r'description'] = this.description;
+    return json;
   }
 
   /// Returns a new [AssetCategoryNewSchema] instance and imports its values from
@@ -83,7 +85,10 @@ class AssetCategoryNewSchema {
     return null;
   }
 
-  static List<AssetCategoryNewSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<AssetCategoryNewSchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <AssetCategoryNewSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -114,12 +119,13 @@ class AssetCategoryNewSchema {
   static Map<String, List<AssetCategoryNewSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<AssetCategoryNewSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = AssetCategoryNewSchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = AssetCategoryNewSchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

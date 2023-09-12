@@ -16,7 +16,6 @@ class TaskChangeComponentsNewSchema {
     required this.stationId,
     required this.name,
     required this.description,
-    required this.warrantyPeriodDays,
     this.add = const [],
     this.remove = const [],
   });
@@ -27,8 +26,6 @@ class TaskChangeComponentsNewSchema {
 
   String description;
 
-  int warrantyPeriodDays;
-
   List<TaskComponentAddNewSchema> add;
 
   List<TaskComponentRemoveNewSchema> remove;
@@ -38,7 +35,6 @@ class TaskChangeComponentsNewSchema {
      other.stationId == stationId &&
      other.name == name &&
      other.description == description &&
-     other.warrantyPeriodDays == warrantyPeriodDays &&
      other.add == add &&
      other.remove == remove;
 
@@ -48,22 +44,21 @@ class TaskChangeComponentsNewSchema {
     (stationId.hashCode) +
     (name.hashCode) +
     (description.hashCode) +
-    (warrantyPeriodDays.hashCode) +
     (add.hashCode) +
     (remove.hashCode);
 
   @override
-  String toString() => 'TaskChangeComponentsNewSchema[stationId=$stationId, name=$name, description=$description, warrantyPeriodDays=$warrantyPeriodDays, add=$add, remove=$remove]';
+  String toString() =>
+      'TaskChangeComponentsNewSchema[stationId=$stationId, name=$name, description=$description, add=$add, remove=$remove]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'station_id'] = stationId;
-      _json[r'name'] = name;
-      _json[r'description'] = description;
-      _json[r'warranty_period_days'] = warrantyPeriodDays;
-      _json[r'add'] = add;
-      _json[r'remove'] = remove;
-    return _json;
+    final json = <String, dynamic>{};
+    json[r'station_id'] = this.stationId;
+    json[r'name'] = this.name;
+    json[r'description'] = this.description;
+    json[r'add'] = this.add;
+    json[r'remove'] = this.remove;
+    return json;
   }
 
   /// Returns a new [TaskChangeComponentsNewSchema] instance and imports its values from
@@ -88,15 +83,17 @@ class TaskChangeComponentsNewSchema {
         stationId: mapValueOfType<String>(json, r'station_id')!,
         name: mapValueOfType<String>(json, r'name')!,
         description: mapValueOfType<String>(json, r'description')!,
-        warrantyPeriodDays: mapValueOfType<int>(json, r'warranty_period_days')!,
-        add: TaskComponentAddNewSchema.listFromJson(json[r'add'])!,
-        remove: TaskComponentRemoveNewSchema.listFromJson(json[r'remove'])!,
+        add: TaskComponentAddNewSchema.listFromJson(json[r'add']),
+        remove: TaskComponentRemoveNewSchema.listFromJson(json[r'remove']),
       );
     }
     return null;
   }
 
-  static List<TaskChangeComponentsNewSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<TaskChangeComponentsNewSchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <TaskChangeComponentsNewSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -127,12 +124,13 @@ class TaskChangeComponentsNewSchema {
   static Map<String, List<TaskChangeComponentsNewSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<TaskChangeComponentsNewSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = TaskChangeComponentsNewSchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = TaskChangeComponentsNewSchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;
@@ -143,7 +141,6 @@ class TaskChangeComponentsNewSchema {
     'station_id',
     'name',
     'description',
-    'warranty_period_days',
     'add',
     'remove',
   };

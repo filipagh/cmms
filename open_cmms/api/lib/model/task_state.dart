@@ -38,7 +38,10 @@ class TaskState {
 
   static TaskState? fromJson(dynamic value) => TaskStateTypeTransformer().decode(value);
 
-  static List<TaskState>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<TaskState> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <TaskState>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -71,7 +74,7 @@ class TaskStateTypeTransformer {
   /// and users are still using an old app with the old code.
   TaskState? decode(dynamic data, {bool allowNull = true}) {
     if (data != null) {
-      switch (data.toString()) {
+      switch (data) {
         case r'open': return TaskState.open;
         case r'ready': return TaskState.ready;
         case r'done': return TaskState.done;

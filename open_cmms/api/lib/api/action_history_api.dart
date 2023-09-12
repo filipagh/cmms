@@ -92,7 +92,6 @@ class ActionHistoryApi {
               responseBody, 'List<ActionHistorySchema>') as List)
           .cast<ActionHistorySchema>()
           .toList();
-
     }
     return null;
   }

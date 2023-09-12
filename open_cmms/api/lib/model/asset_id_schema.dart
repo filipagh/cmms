@@ -31,9 +31,9 @@ class AssetIdSchema {
   String toString() => 'AssetIdSchema[id=$id]';
 
   Map<String, dynamic> toJson() {
-    final _json = <String, dynamic>{};
-      _json[r'id'] = id;
-    return _json;
+    final json = <String, dynamic>{};
+    json[r'id'] = this.id;
+    return json;
   }
 
   /// Returns a new [AssetIdSchema] instance and imports its values from
@@ -61,7 +61,10 @@ class AssetIdSchema {
     return null;
   }
 
-  static List<AssetIdSchema>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<AssetIdSchema> listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <AssetIdSchema>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -92,12 +95,13 @@ class AssetIdSchema {
   static Map<String, List<AssetIdSchema>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<AssetIdSchema>>{};
     if (json is Map && json.isNotEmpty) {
-      json = json.cast<String, dynamic>(); // ignore: parameter_assignments
+      // ignore: parameter_assignments
+      json = json.cast<String, dynamic>();
       for (final entry in json.entries) {
-        final value = AssetIdSchema.listFromJson(entry.value, growable: growable,);
-        if (value != null) {
-          map[entry.key] = value;
-        }
+        map[entry.key] = AssetIdSchema.listFromJson(
+          entry.value,
+          growable: growable,
+        );
       }
     }
     return map;

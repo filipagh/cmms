@@ -28,7 +28,7 @@ def create_road_segment(new_segment: schema.RoadSegmentNewSchema,
 @road_segment_manager.get("/segment",
                           response_model=schema.RoadSegmentSchema)
 def get_by_id(segment_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_auth(read_permission))):
-    segment_projector = main.runner.get(RoadSegmentProjector)
+    segment_projector: RoadSegmentProjector = main.runner.get(RoadSegmentProjector)
 
     return schema.RoadSegmentSchema(**segment_projector.get_by_id(segment_id).__dict__)
 

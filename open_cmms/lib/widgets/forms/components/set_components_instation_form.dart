@@ -262,10 +262,14 @@ class SetStationComponentsForm extends StatelessWidget implements hasFormTitle {
                           if (add) {
                             await AssignedComponentService()
                                 .createInstalledComponentAssignedComponentsCreateInstalledComponentPost(
-                                    warrantyPeriodDays!,
+                                    // todo
+
+                                    ComponentWarrantySource.NAN,
                                     convertDatetimeToUtc(
                                         DateTime.parse(installDate.value.text)),
-                                    col);
+                                    col,
+                                    componentWarrantyUntil: DateTime.now(),
+                                    paidServiceUntil: DateTime.now());
                           }
                           if (remove) {
                             await AssignedComponentService()
