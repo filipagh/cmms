@@ -16,6 +16,7 @@ class AssignedComponentNewSchema {
     required this.assetId,
     required this.stationId,
     this.serialNumber,
+    this.serviceContractsId = const [],
   });
 
   String assetId;
@@ -30,21 +31,26 @@ class AssignedComponentNewSchema {
   ///
   String? serialNumber;
 
+  List<String> serviceContractsId;
+
   @override
   bool operator ==(Object other) => identical(this, other) || other is AssignedComponentNewSchema &&
      other.assetId == assetId &&
      other.stationId == stationId &&
-     other.serialNumber == serialNumber;
+          other.serialNumber == serialNumber &&
+          other.serviceContractsId == serviceContractsId;
 
   @override
   int get hashCode =>
     // ignore: unnecessary_parenthesis
     (assetId.hashCode) +
     (stationId.hashCode) +
-    (serialNumber == null ? 0 : serialNumber!.hashCode);
+      (serialNumber == null ? 0 : serialNumber!.hashCode) +
+      (serviceContractsId.hashCode);
 
   @override
-  String toString() => 'AssignedComponentNewSchema[assetId=$assetId, stationId=$stationId, serialNumber=$serialNumber]';
+  String toString() =>
+      'AssignedComponentNewSchema[assetId=$assetId, stationId=$stationId, serialNumber=$serialNumber, serviceContractsId=$serviceContractsId]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -55,6 +61,7 @@ class AssignedComponentNewSchema {
     } else {
       json[r'serial_number'] = null;
     }
+    json[r'service_contracts_id'] = this.serviceContractsId;
     return json;
   }
 
@@ -80,6 +87,9 @@ class AssignedComponentNewSchema {
         assetId: mapValueOfType<String>(json, r'asset_id')!,
         stationId: mapValueOfType<String>(json, r'station_id')!,
         serialNumber: mapValueOfType<String>(json, r'serial_number'),
+        serviceContractsId: json[r'service_contracts_id'] is List
+            ? (json[r'service_contracts_id'] as List).cast<String>()
+            : const [],
       );
     }
     return null;
@@ -135,6 +145,7 @@ class AssignedComponentNewSchema {
   static const requiredKeys = <String>{
     'asset_id',
     'station_id',
+    'service_contracts_id',
   };
 }
 

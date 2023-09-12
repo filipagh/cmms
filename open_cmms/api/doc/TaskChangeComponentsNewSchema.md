@@ -11,7 +11,6 @@ Name | Type | Description | Notes
 **stationId** | **String** |  | 
 **name** | **String** |  | 
 **description** | **String** |  | 
-**warrantyPeriodDays** | **int** |  | 
 **add** | [**List<TaskComponentAddNewSchema>**](TaskComponentAddNewSchema.md) |  | [default to const []]
 **remove** | [**List<TaskComponentRemoveNewSchema>**](TaskComponentRemoveNewSchema.md) |  | [default to const []]
 

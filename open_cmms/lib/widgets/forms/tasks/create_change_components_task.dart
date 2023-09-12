@@ -99,70 +99,8 @@ class _CreateChangeComponentsTaskFormState
             ],
           ),
 
-          // Row(
-          //   children: [
-          //     ElevatedButton(onPressed: () {}, child: Text("edit components")),
-          //     ElevatedButton(onPressed: () {}, child: Text("manual service")),
-          //     ElevatedButton(onPressed: () {}, child: Text("remote service")),
-          //   ],
-          // ),
           Container(height: 400, width: 500, child: buildComponentsEditList()),
           // Spacer(),
-          Flexible(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                          child: TextFormField(
-                        decoration:
-                            const InputDecoration(labelText: "Zaruka do"),
-                        controller: warrantyDate,
-                        validator: (v) {
-                          return widget.add.isNotEmpty &&
-                                  (v == null || v.isEmpty)
-                              ? "zvolte datum"
-                              : null;
-                        },
-                        onTap: () {
-                          var now = DateTime.now();
-                          showDatePicker(
-                                  context: context,
-                                  firstDate: now,
-                                  lastDate:
-                                      now.add(const Duration(days: 365 * 20)),
-                                  initialDate: DateTime(
-                                      now.year + 2, now.month, now.day))
-                              .then((value) {
-                            updateWarranty(value!);
-                          });
-                        },
-                      )),
-                      const Spacer(),
-                      Expanded(
-                          child: TextFormField(
-                        decoration: const InputDecoration(
-                            labelText: "Pocet dni na zaruku"),
-                        validator: (v) {
-                          return widget.add.isNotEmpty &&
-                                  (v == null || v.isEmpty)
-                              ? "zvolte pocet dni"
-                              : null;
-                        },
-                        onChanged: (v) {
-                          updateWarrantyDays(int.parse(v));
-                        },
-                        controller: warrantyDays,
-                      )),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
           Padding(
             padding: const EdgeInsets.only(top: 20),
             child: Row(
@@ -185,8 +123,7 @@ class _CreateChangeComponentsTaskFormState
                                     description: taskDescription.text,
                                     add: widget.add,
                                     remove: widget.remove,
-                                    warrantyPeriodDays:
-                                        warrantyPeriodDays ?? 0))
+                            ))
                             .then((value) => Get.back(result: true));
                       }
                     },

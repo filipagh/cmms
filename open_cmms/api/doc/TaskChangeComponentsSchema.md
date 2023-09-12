@@ -11,7 +11,6 @@ Name | Type | Description | Notes
 **stationId** | **String** |  | 
 **name** | **String** |  | 
 **description** | **String** |  | 
-**warrantyPeriodDays** | **int** |  | 
 **id** | **String** |  | 
 **state** | [**TaskState**](TaskState.md) |  | 
 **createdAt** | [**DateTime**](DateTime.md) |  | 

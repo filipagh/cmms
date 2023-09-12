@@ -57,6 +57,8 @@ part 'model/assigned_component_id_schema.dart';
 part 'model/assigned_component_new_schema.dart';
 part 'model/assigned_component_schema.dart';
 part 'model/assigned_component_state.dart';
+part 'model/component_warranty.dart';
+part 'model/component_warranty_source.dart';
 part 'model/http_validation_error.dart';
 part 'model/investment_contract_new_schema.dart';
 part 'model/investment_contract_schema.dart';

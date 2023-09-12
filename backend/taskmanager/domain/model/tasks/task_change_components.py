@@ -5,28 +5,22 @@ from typing import Optional
 
 from eventsourcing.domain import Aggregate, event, ProgrammingError
 from eventsourcing.persistence import Transcoding
+from pydantic import BaseModel
 
+from stationmanager.domain.model.assigned_component import AssignedComponentWarranty
 from taskmanager.application.model.task_change_component.schema import TaskChangeComponentRequestCompleted
 from taskmanager.domain.model.task_component_state import TaskComponentState
 from taskmanager.domain.model.task_state import TaskState
 
 
-class AddComponentRequest:
-    id: str
-    new_asset_id: str
-    assigned_component_id: Optional[str]
+class AddComponentRequest(BaseModel):
+    id: uuid.UUID
+    new_asset_id: uuid.UUID
+    assigned_component_id: Optional[uuid.UUID]
     state: TaskComponentState
-
-    def __init__(self, id: uuid.UUID, new_asset_id: uuid.UUID, state: TaskComponentState,
-                 assigned_component_id: Optional[uuid.UUID] = None
-                 ):
-        self.id = str(id)
-        self.new_asset_id = str(new_asset_id)
-        if assigned_component_id:
-            self.assigned_component_id = str(assigned_component_id)
-        else:
-            self.assigned_component_id = None
-        self.state = state
+    replaced_component_id: Optional[uuid.UUID]
+    warranty: AssignedComponentWarranty
+    service_contracts_id: list[uuid.UUID]
 
 
 class AddComponentRequestAsStr(Transcoding):
@@ -34,23 +28,18 @@ class AddComponentRequestAsStr(Transcoding):
     name = "AddComponentRequest"
 
     def encode(self, obj: AddComponentRequest) -> str:
-        return json.dumps(obj.__dict__)
+        return obj.json()
 
     def decode(self, data: str) -> AddComponentRequest:
-        return json.loads(data, object_hook=lambda d: AddComponentRequest(**d))
+        return AddComponentRequest.parse_obj(json.loads(data))
 
 
-class RemoveComponentRequest:
-    id: str
-    assigned_component_id: Optional[str]
+class RemoveComponentRequest(BaseModel):
+    id: uuid.UUID
+    assigned_component_id: Optional[uuid.UUID]
     state: TaskComponentState
 
-    def __init__(self, id: uuid.UUID, state: TaskComponentState,
-                 assigned_component_id: uuid.UUID
-                 ):
-        self.id = str(id)
-        self.assigned_component_id = str(assigned_component_id)
-        self.state = state
+
 
 
 class RemoveComponentRequestAsStr(Transcoding):
@@ -58,10 +47,10 @@ class RemoveComponentRequestAsStr(Transcoding):
     name = "RemoveComponentRequest"
 
     def encode(self, obj: RemoveComponentRequest) -> str:
-        return json.dumps(obj.__dict__)
+        return obj.json()
 
     def decode(self, data: str) -> RemoveComponentRequest:
-        return json.loads(data, object_hook=lambda d: RemoveComponentRequest(**d))
+        return RemoveComponentRequest.parse_obj(json.loads(data))
 
 
 class TaskChangeComponents(Aggregate):
@@ -72,7 +61,6 @@ class TaskChangeComponents(Aggregate):
         station_id: uuid.UUID
         components_to_add: list[AddComponentRequest]
         components_to_remove: list[RemoveComponentRequest]
-        warranty_period_days: int
         created_at: datetime.datetime
 
     class TaskChangeComponentsComponentAssigned(Aggregate.Event):
@@ -112,19 +100,15 @@ class TaskChangeComponents(Aggregate):
     @event(TaskChangeComponentsCreated)
     def __init__(self, name: str, description: str, station_id: uuid.UUID, status: TaskState,
                  components_to_add: list[AddComponentRequest], components_to_remove: list[RemoveComponentRequest],
-                 created_at: datetime, warranty_period_days: int):
+                 created_at: datetime):
         self.name = name
         self.description = description
         self.status = status
         self.station_id = station_id
         self.components_to_add = components_to_add
         self.components_to_remove = components_to_remove
-        self.warranty_period_days = warranty_period_days
-        self.created_at = created_at
 
-        if len(components_to_add) > 0:
-            if warranty_period_days <= 0:
-                raise AttributeError("warranty_period_until param must be set when new component are installed")
+        self.created_at = created_at
 
     @event(TaskChangeComponentsComponentAssigned)
     def assign_component(self, asset_id, assigned_component_id: uuid.UUID):
@@ -189,25 +173,25 @@ class TaskChangeComponents(Aggregate):
             raise ProgrammingError("Task is already completed or removed")
         for i in items:
             for cta in self.components_to_add:
-                if uuid.UUID(cta.id) == i.id:
+                if cta.id == i.id:
                     if cta.state == TaskComponentState.ALLOCATED and cta.assigned_component_id is not None:
                         self._complete_add_item(i.id, cta.new_asset_id, cta.assigned_component_id, i.serial_number)
             for ctr in self.components_to_remove:
-                if uuid.UUID(ctr.id) == i.id:
+                if ctr.id == i.id:
                     if ctr.state == TaskComponentState.INSTALLED:
                         self._complete_remove_item(i.id, ctr.assigned_component_id)
 
     @event(TaskComponentInstalled)
     def _complete_add_item(self, added_task_item_id: uuid.UUID, asset_id, assigned_component_id, serial_number):
         for cta in self.components_to_add:
-            if uuid.UUID(cta.id) == added_task_item_id:
+            if cta.id == added_task_item_id:
                 cta.state = TaskComponentState.INSTALLED
                 return
 
     @event(TaskComponentRemoved)
     def _complete_remove_item(self, removed_task_item_id, assigned_component_id):
         for ctr in self.components_to_remove:
-            if uuid.UUID(ctr.id) == removed_task_item_id:
+            if ctr.id == removed_task_item_id:
                 ctr.state = TaskComponentState.REMOVED
                 return
 

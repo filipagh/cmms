@@ -216,6 +216,10 @@ class ApiClient {
           return AssignedComponentSchema.fromJson(value);
         case 'AssignedComponentState':
           return AssignedComponentStateTypeTransformer().decode(value);
+        case 'ComponentWarranty':
+          return ComponentWarranty.fromJson(value);
+        case 'ComponentWarrantySource':
+          return ComponentWarrantySourceTypeTransformer().decode(value);
         case 'HTTPValidationError':
           return HTTPValidationError.fromJson(value);
         case 'InvestmentContractNewSchema':

@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 
 import base.database
 from base.database import Base
-from stationmanager.domain.model.assigned_component import AssignedComponentState
+from stationmanager.domain.model.assigned_component import AssignedComponentState, ComponentWarrantySource
 
 
 class AssignedComponentModel(Base):
@@ -18,8 +18,14 @@ class AssignedComponentModel(Base):
     status = Column('assigned_component_status', Enum(AssignedComponentState), nullable=False)
     task_id = Column(postgresql.UUID(as_uuid=True), nullable=True)
     installed_at = Column(DateTime, nullable=True)
-    warranty_period_days = Column(postgresql.INTEGER, nullable=True)
-    warranty_period_until = Column(Date, nullable=True)
+
+    component_warranty_until = Column(Date, nullable=True)
+    component_warranty_source = Column('component_warranty_source', Enum(ComponentWarrantySource), nullable=True)
+    component_warranty_id = Column(postgresql.UUID(as_uuid=True), nullable=True)
+    prepaid_service_until = Column(Date, nullable=True)
+    service_contract_until = Column(Date, nullable=True)
+    service_contract_id = Column(postgresql.UUID(as_uuid=True), nullable=True)
+
     removed_at = Column(DateTime, nullable=True)
     serial_number = Column(postgresql.TEXT, nullable=True)
 

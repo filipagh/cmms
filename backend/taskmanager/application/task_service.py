@@ -10,7 +10,7 @@ from eventsourcing.utils import EnvType
 
 from base import main
 from stationmanager.application.station_projector import StationProjector
-from stationmanager.domain.model.assigned_component import AssignedComponent
+from stationmanager.domain.model.assigned_component import AssignedComponent, AssignedComponentWarranty
 from stationmanager.domain.model.station import Station
 from storagemanager.application.storage_item_service import StorageItemService
 from storagemanager.domain.model.sotrageitem import StorageItem
@@ -41,10 +41,15 @@ class TaskService(ProcessApplication):
             raise AttributeError("station does not exist")
 
         def add_com_to_domain_model(com: TaskComponentAddNewSchema):
-            return AddComponentRequest(uuid.uuid4(), com.new_asset_id, TaskComponentState.AWAITING)
+            return AddComponentRequest(id=uuid.uuid4(), new_asset_id=com.new_asset_id,
+                                       state=TaskComponentState.AWAITING,
+                                       warranty=AssignedComponentWarranty(**(com.warranty.dict())),
+                                       replaced_component_id=com.replaced_component_id,
+                                       service_contracts_id=com.service_contracts_id)
 
         def remove_com_to_domain_model(com: TaskComponentRemoveNewSchema):
-            return RemoveComponentRequest(uuid.uuid4(), TaskComponentState.INSTALLED, com.assigned_component_id)
+            return RemoveComponentRequest(id=uuid.uuid4(), state=TaskComponentState.INSTALLED,
+                                          assigned_component_id=com.assigned_component_id)
 
         add = list(map(lambda x: add_com_to_domain_model(x), new_task.add))
         remove = list(map(lambda x: remove_com_to_domain_model(x), new_task.remove))
@@ -54,8 +59,9 @@ class TaskService(ProcessApplication):
             status = TaskState.OPEN
         else:
             status = TaskState.READY
-        task = TaskChangeComponents(new_task.name, new_task.description, new_task.station_id, status,
-                                    add, remove, now, new_task.warranty_period_days)
+        task = TaskChangeComponents(name=new_task.name, description=new_task.description,
+                                    station_id=new_task.station_id, status=status,
+                                    components_to_add=add, components_to_remove=remove, created_at=now)
         self.save(task)
         return task.id
 

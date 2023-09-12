@@ -29,7 +29,7 @@ class ServiceContractProjector(ProcessApplication):
                 components_id_list=component_list
             ))
 
-        service_contract_repo.save_new(
+        service_contract_repo.save(
             ServiceContractModel(id=domain_event.originator_id,
                                  created_at=domain_event.create_timestamp().date(),
                                  name=domain_event.name,
@@ -38,12 +38,57 @@ class ServiceContractProjector(ProcessApplication):
                                  station_id_list=station_col
                                  ))
 
+    @policy.register(ServiceContract.ComponentAddedToContract)
+    def _(self, domain_event: ServiceContract.ComponentAddedToContract, process_event):
+        model = service_contract_repo.get_contract_by_id(domain_event.originator_id)
+
+        contract_model = ComponentServiceContractModel(station_id=domain_event.station_id,
+                                                       component_id=domain_event.component_id)
+        for station in model.station_id_list:
+            if station.station_id == domain_event.station_id:
+                station.components_id_list.append(
+                    contract_model)
+                service_contract_repo.save(model)
+                return
+        model.station_id_list.append(StationServiceContractModel(
+            station_id=domain_event.station_id,
+            contract_id=domain_event.originator_id,
+            components_id_list=[contract_model]
+        ))
+
+        service_contract_repo.save(model)
+
+    @policy.register(ServiceContract.ComponentRemovedFromContract)
+    def _(self, domain_event: ServiceContract.ComponentRemovedFromContract, process_event):
+        model = service_contract_repo.get_contract_by_id(domain_event.originator_id)
+        for station in model.station_id_list:
+            if station.station_id == domain_event.station_id:
+                for component in station.components_id_list:
+                    if component.component_id == domain_event.component_id:
+                        station.components_id_list.remove(component)
+                        if station.components_id_list == []:
+                            model.station_id_list.remove(station)
+                        break
+                break
+
+        service_contract_repo.save(model)
+
+
+
+
+
     def get_by_id(self, contract_id: uuid.UUID) -> ServiceContractSchema:
         return _model_to_schema(service_contract_repo.get_contract_by_id(contract_id))
 
     def get_by_station(self, station_id: uuid.UUID) -> list[ServiceContractSchema]:
         col = []
         for i in service_contract_repo.get_contract_by_station_id(station_id):
+            col.append(_model_to_schema(i))
+        return col
+
+    def get_by_component(self, component_id: uuid.UUID) -> list[ServiceContractSchema]:
+        col = []
+        for i in service_contract_repo.get_contract_by_component_id(component_id):
             col.append(_model_to_schema(i))
         return col
 

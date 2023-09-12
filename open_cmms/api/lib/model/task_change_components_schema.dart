@@ -16,7 +16,6 @@ class TaskChangeComponentsSchema {
     required this.stationId,
     required this.name,
     required this.description,
-    required this.warrantyPeriodDays,
     required this.id,
     required this.state,
     required this.createdAt,
@@ -29,8 +28,6 @@ class TaskChangeComponentsSchema {
   String name;
 
   String description;
-
-  int warrantyPeriodDays;
 
   String id;
 
@@ -47,7 +44,6 @@ class TaskChangeComponentsSchema {
      other.stationId == stationId &&
      other.name == name &&
      other.description == description &&
-     other.warrantyPeriodDays == warrantyPeriodDays &&
      other.id == id &&
      other.state == state &&
      other.createdAt == createdAt &&
@@ -60,7 +56,6 @@ class TaskChangeComponentsSchema {
     (stationId.hashCode) +
     (name.hashCode) +
     (description.hashCode) +
-    (warrantyPeriodDays.hashCode) +
     (id.hashCode) +
     (state.hashCode) +
     (createdAt.hashCode) +
@@ -68,14 +63,14 @@ class TaskChangeComponentsSchema {
     (remove.hashCode);
 
   @override
-  String toString() => 'TaskChangeComponentsSchema[stationId=$stationId, name=$name, description=$description, warrantyPeriodDays=$warrantyPeriodDays, id=$id, state=$state, createdAt=$createdAt, add=$add, remove=$remove]';
+  String toString() =>
+      'TaskChangeComponentsSchema[stationId=$stationId, name=$name, description=$description, id=$id, state=$state, createdAt=$createdAt, add=$add, remove=$remove]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
     json[r'station_id'] = this.stationId;
     json[r'name'] = this.name;
     json[r'description'] = this.description;
-    json[r'warranty_period_days'] = this.warrantyPeriodDays;
     json[r'id'] = this.id;
     json[r'state'] = this.state;
     json[r'created_at'] = this.createdAt.toUtc().toIso8601String();
@@ -106,7 +101,6 @@ class TaskChangeComponentsSchema {
         stationId: mapValueOfType<String>(json, r'station_id')!,
         name: mapValueOfType<String>(json, r'name')!,
         description: mapValueOfType<String>(json, r'description')!,
-        warrantyPeriodDays: mapValueOfType<int>(json, r'warranty_period_days')!,
         id: mapValueOfType<String>(json, r'id')!,
         state: TaskState.fromJson(json[r'state'])!,
         createdAt: mapDateTime(json, r'created_at', '')!,
@@ -168,7 +162,6 @@ class TaskChangeComponentsSchema {
     'station_id',
     'name',
     'description',
-    'warranty_period_days',
     'id',
     'state',
     'created_at',

@@ -13,6 +13,7 @@ All URIs are relative to *http://localhost*
  [**getContractServiceContractContractGet**](ServiceContractApi.md#getcontractservicecontractcontractget)                                                                                           | **GET** /service-contract/contract                             | Get Contract                         
  [**getContractsServiceContractContractsGet**](ServiceContractApi.md#getcontractsservicecontractcontractsget)                                                                                       | **GET** /service-contract/contracts                            | Get Contracts                        
  [**getServiceContractContractForStationGet**](ServiceContractApi.md#getservicecontractcontractforstationget)                                                                                       | **GET** /service-contract/contract_for_station                 | Get                                  
+ [**getServiceContractContractsForComponentGet**](ServiceContractApi.md#getservicecontractcontractsforcomponentget)                                                                                 | **GET** /service-contract/contracts_for_component              | Get                                  
  [**getStationsWithoutContractExportServiceContractStationsWithoutContractExportXslGet**](ServiceContractApi.md#getstationswithoutcontractexportservicecontractstationswithoutcontractexportxslget) | **GET** /service-contract/stations_without_contract/export_xsl | Get Stations Without Contract Export 
  [**getStationsWithoutContractServiceContractStationsWithoutContractGet**](ServiceContractApi.md#getstationswithoutcontractservicecontractstationswithoutcontractget)                               | **GET** /service-contract/stations_without_contract            | Get Stations Without Contract        
  [**searchServiceContractContractsSearchGet**](ServiceContractApi.md#searchservicecontractcontractssearchget)                                                                                       | **GET** /service-contract/contracts_search                     | Search                               
@@ -202,6 +203,65 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **stationId** | **String**|  | 
+
+### Return type
+
+[**List<ServiceContractSchema>**](ServiceContractSchema.md)
+
+### Authorization
+
+[user_session](../README.md#user_session), [api_key](../README.md#api_key), [OAuth2AuthorizationCodeBearer](../README.md#OAuth2AuthorizationCodeBearer)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getServiceContractContractsForComponentGet**
+
+> List<ServiceContractSchema> getServiceContractContractsForComponentGet(componentId)
+
+Get
+
+### Example
+
+```dart
+import 'package:BackendAPI/api.dart';
+
+// TODO Configure API key authorization: user_session
+//defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKeyPrefix = 'Bearer';
+// TODO Configure API key authorization: api_key
+//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKey = 'YOUR_API_KEY';
+// uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+//defaultApiClient.getAuthentication<ApiKeyAuth>('api_key').apiKeyPrefix = 'Bearer';
+// TODO Configure OAuth2 access token for authorization: OAuth2AuthorizationCodeBearer
+//defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
+
+final api_instance = ServiceContractApi();
+final componentId = 38400000 - 8
+cf0-11
+bd-b23e-10
+b96e4ef00d; // String | 
+
+try {
+final result = api_instance.getServiceContractContractsForComponentGet(componentId);
+print(result);
+} catch
+(
+e) {
+print('Exception when calling ServiceContractApi->getServiceContractContractsForComponentGet: $e\n');
+}
+```
+
+### Parameters
+
+ Name            | Type       | Description | Notes 
+-----------------|------------|-------------|-------
+ **componentId** | **String** |             |
 
 ### Return type
 

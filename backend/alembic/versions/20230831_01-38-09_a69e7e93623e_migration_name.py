@@ -32,7 +32,7 @@ def upgrade() -> None:
                     unique=False)
     op.create_index(op.f('ix_component_service_contracts_station_id'), 'component_service_contracts', ['station_id'],
                     unique=False)
-    # ### end Alembic commands ###
+    ### end Alembic commands ###
 
 
 def downgrade() -> None:
@@ -41,4 +41,4 @@ def downgrade() -> None:
     op.drop_index(op.f('ix_component_service_contracts_contract_id'), table_name='component_service_contracts')
     op.drop_index(op.f('ix_component_service_contracts_component_id'), table_name='component_service_contracts')
     op.drop_table('component_service_contracts')
-    # ### end Alembic commands ###
+    ### end Alembic commands ###

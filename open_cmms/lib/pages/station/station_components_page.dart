@@ -10,7 +10,11 @@ import 'package:open_cmms/snacbars.dart';
 import 'package:open_cmms/states/asset_types_state.dart';
 import 'package:open_cmms/states/auth_state.dart';
 import 'package:open_cmms/states/station/components_state.dart';
-import 'package:open_cmms/widgets/forms/components/set_components_instation_form.dart';
+import 'package:open_cmms/widgets/forms/components/add_component_to_station_form.dart';
+import 'package:open_cmms/widgets/forms/components/component_picker.dart';
+import 'package:open_cmms/widgets/forms/components/remove_component_from_station_form.dart';
+import 'package:open_cmms/widgets/forms/components/replace_station_components_form.dart';
+import 'package:open_cmms/widgets/forms/components/set_component_warranty_form.dart';
 
 import '../../widgets/dialog_form.dart';
 import '../../widgets/forms/components/edit_station_components_form.dart';
@@ -55,15 +59,46 @@ class StationComponentsPage extends StatelessWidget
                   if (authState.isAdmin.isTrue) ...[
                     ElevatedButton(
                         onPressed: () async {
-                          if (await showFormDialog(
-                              SetStationComponentsForm.editComponentsInStation(
-                                  station: station))) {
-                            components.load();
-                            showOk("Komponenty boli nastavené");
-                          }
+                          await showFormDialog(ComponentPickerForm(
+                            hideArchivedAssets: false,
+                          )).then((value) async {
+                            if (value != null) {
+                              await showFormDialog(AddComponentToStationForm(
+                                station: station,
+                                asset: value,
+                              )).then((value) {
+                                if (value != null) {
+                                  components.load();
+                                  showOk("Komponenty boli nastavené");
+                                }
+                              });
+                            }
+                          });
                         },
-                        child: Text('Nastaviť komponenty'))
+                        child: Text('Pridat nainstalovany komponent'))
                   ],
+                  // if (authState.isAdmin.isTrue) ...[
+                  //   ElevatedButton(
+                  //       onPressed: () async {
+                  //         if (await showFormDialog(
+                  //             SetStationComponentsForm.editComponentsInStation(
+                  //                 station: station))) {
+                  //           components.load();
+                  //           showOk("Komponenty boli nastavené");
+                  //         }
+                  //       },
+                  //       child: Text('Nastaviť komponenty'))
+                  // ],
+                  VerticalDivider(),
+                  ElevatedButton(
+                      onPressed: () async {
+                        if (await showFormDialog(
+                            ReplaceStationComponentsForm(station: station))) {
+                          components.load();
+                          showOk("Úloha bola vytvorená");
+                        }
+                      },
+                      child: Text('Vymeniť komponenty')),
                   VerticalDivider(),
                   ElevatedButton(
                       onPressed: () async {
@@ -141,16 +176,30 @@ class StationComponentsPage extends StatelessWidget
                               Spacer(),
                               Column(
                                 children: [
-                                  if (item.assignedComponent
-                                          .warrantyPeriodUntil !=
-                                      null) ...[
-                                    Text("Záruka do " +
-                                            item.assignedComponent
-                                                .warrantyPeriodUntil!
-                                                .toIso8601String()
-                                                .substring(0, 10) ??
-                                        '')
-                                  ],
+                                  Row(
+                                    children: [
+                                      Text("Záruka na komponent " +
+                                          (item.assignedComponent
+                                                  .componentWarrantyUntil
+                                                  ?.toIso8601String()
+                                                  .substring(0, 10) ??
+                                              '-')),
+                                      VerticalDivider(),
+                                      Text("Predplateny servis " +
+                                          (item.assignedComponent
+                                                  .prepaidServiceUntil
+                                                  ?.toIso8601String()
+                                                  .substring(0, 10) ??
+                                              '-')),
+                                      VerticalDivider(),
+                                      Text("Technicky servis " +
+                                          (item.assignedComponent
+                                                  .serviceContractUntil
+                                                  ?.toIso8601String()
+                                                  .substring(0, 10) ??
+                                              '-')),
+                                    ],
+                                  ),
                                   if (item.assignedComponent.serialNumber !=
                                       null) ...[
                                     Text("seriové číslo: " +
@@ -185,7 +234,43 @@ class StationComponentsPage extends StatelessWidget
           ],
         ));
       case AssignedComponentState.installed:
-        return Text('inštalované dňa: ${component.installedAt}');
+        return Row(
+          children: [
+            Text('inštalované dňa: ${component.installedAt}'),
+            if (authState.isAdmin.isTrue) ...[
+              Row(
+                children: [
+                  ElevatedButton.icon(
+                      onPressed: () async {
+                        await showFormDialog(
+                                SetComponentWarrantyForm(component: component))
+                            .then((value) {
+                          if (value) {
+                            components.load();
+                            showOk("zaruky boly zmenene");
+                          }
+                        });
+                      },
+                      icon: Icon(Icons.auto_fix_normal),
+                      label: Text("zmenit zaruku")),
+                  IconButton(
+                      color: Colors.red,
+                      onPressed: () async {
+                        await showFormDialog(RemoveComponentToStationForm(
+                                station: station, component: component))
+                            .then((value) {
+                          if (value) {
+                            components.load();
+                            showOk("Komponent bol odinštalovaný");
+                          }
+                        });
+                      },
+                      icon: Icon(Icons.delete_forever)),
+                ],
+              )
+            ]
+          ],
+        );
       // return Text('installed on: ' + component.installed.toString());
       case AssignedComponentState.willBeRemoved:
         return Column(

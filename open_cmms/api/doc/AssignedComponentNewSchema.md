@@ -6,11 +6,13 @@ import 'package:BackendAPI/api.dart';
 ```
 
 ## Properties
-Name | Type | Description | Notes
------------- | ------------- | ------------- | -------------
-**assetId** | **String** |  | 
-**stationId** | **String** |  | 
-**serialNumber** | **String** |  | [optional] 
+
+ Name                   | Type             | Description | Notes                 
+------------------------|------------------|-------------|-----------------------
+ **assetId**            | **String**       |             |
+ **stationId**          | **String**       |             |
+ **serialNumber**       | **String**       |             | [optional]            
+ **serviceContractsId** | **List<String>** |             | [default to const []] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

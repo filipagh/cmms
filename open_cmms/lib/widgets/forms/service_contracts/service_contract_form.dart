@@ -9,6 +9,8 @@ import 'package:open_cmms/snacbars.dart';
 import 'package:open_cmms/states/asset_types_state.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 
+import '../util/date_utils.dart';
+
 class ServiceContractForm extends StatefulWidget implements hasFormTitle {
   ServiceContractForm(
       {Key? key,
@@ -346,8 +348,10 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
                               .createContractServiceContractCreateContractPost(
                                   ServiceContractNewSchema(
                                       name: name.value.text,
-                                      validFrom: dateFromDT!,
-                                      validUntil: dateDueDT!,
+                                      validFrom:
+                                          convertDatetimeToUtc(dateFromDT!),
+                                      validUntil:
+                                          convertDatetimeToUtc(dateDueDT!),
                                       stationsList: list))
                               .then((value) {
                             Get.back();

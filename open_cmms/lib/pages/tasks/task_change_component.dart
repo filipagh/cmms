@@ -377,11 +377,12 @@ class TaskChangeComponentsPage extends StatelessWidget {
                   Row(
                     children: [
                       Text("Zaruka do : " +
-                          (comp.warrantyPeriodUntil
+                          (comp.componentWarrantyUntil
                                   ?.toIso8601String()
                                   .substring(0, 10) ??
                               "")),
-                      task.value!.createdAt.isBefore(comp.warrantyPeriodUntil!)
+                      task.value!.createdAt
+                              .isBefore(comp.componentWarrantyUntil!)
                           ? const Icon(Icons.check)
                           : const Icon(Icons.close)
                     ],

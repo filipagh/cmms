@@ -39,6 +39,13 @@ def get(station_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_auth(read_pe
     return projector.get_by_station(station_id)
 
 
+@service_contract_router.get("/contracts_for_component",
+                             response_model=list[schema.ServiceContractSchema])
+def get(component_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_auth(read_permission))):
+    projector: ServiceContractProjector = main.runner.get(ServiceContractProjector)
+    return projector.get_by_component(component_id)
+
+
 @service_contract_router.get("/contract",
                              response_model=schema.ServiceContractSchema)
 def get_contract(contract_id: uuid.UUID, _user: FiefUserInfo = Depends(custom_auth(read_permission))):

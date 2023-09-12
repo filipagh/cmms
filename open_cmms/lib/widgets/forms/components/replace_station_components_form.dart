@@ -2,20 +2,20 @@ import 'package:BackendAPI/api.dart' as schema;
 import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:open_cmms/snacbars.dart';
+import 'package:open_cmms/service/backend_api/service_contract_service.dart';
 import 'package:open_cmms/states/asset_types_state.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
-import 'package:open_cmms/widgets/forms/components/component_picker.dart';
 import 'package:open_cmms/widgets/forms/components/set_new_component_warranty_form.dart';
 import 'package:open_cmms/widgets/forms/tasks/create_change_components_task.dart';
 
+import '../../../service/backend_api/assigned_components_service.dart';
 import '../../../states/station/components_state.dart';
 
-class EditStationComponentsForm extends StatelessWidget
+class ReplaceStationComponentsForm extends StatelessWidget
     implements hasFormTitle {
   final schema.StationSchema station;
 
-  EditStationComponentsForm({Key? key, required this.station})
+  ReplaceStationComponentsForm({Key? key, required this.station})
       : super(key: key) {
     try {
       _assignedComponentState = Get.find(tag: station.id);
@@ -47,14 +47,14 @@ class EditStationComponentsForm extends StatelessWidget
       constraints: BoxConstraints(maxWidth: 500),
       child: Column(
         children: [
-          ElevatedButton(
-              onPressed: () {
-                showFormDialog<AssetSchema>(ComponentPickerForm())
-                    .then((value) {
-                  items.insert(0, FormItem(value!));
-                });
-              },
-              child: Text('Pridat komponent')),
+          // ElevatedButton(
+          //     onPressed: () {
+          //       showFormDialog<AssetSchema>(ComponentPickerForm())
+          //           .then((value) {
+          //         items.insert(0, FormItem(value!));
+          //       });
+          //     },
+          //     child: Text('Pridat komponent')),
           Container(
             width: 500,
             height: Get.height - 300,
@@ -99,22 +99,21 @@ class EditStationComponentsForm extends StatelessWidget
                                     List<TaskComponentAddNewSchema> add = [];
 
                                     var newItems = getNewItems();
-                                    if (newItems.length > 0) {
-                                      ComponentWarranty? varranty =
-                                          await showFormDialog(
-                                              SetNewComponentWarrantyForm());
-                                      if (varranty == null) {
-                                        showError(
-                                            "musite zvolit zaruku pre nove komponenty");
-                                        return;
-                                      }
 
-                                      newItems.forEach((element) {
-                                        add.add(TaskComponentAddNewSchema(
-                                            newAssetId: element.asset.id,
-                                            warranty: varranty));
-                                      });
-                                    }
+                                    newItems.forEach((element) async {
+                                      add.add(TaskComponentAddNewSchema(
+                                          newAssetId: element.asset.id,
+                                          warranty: element.warranty,
+                                          serviceContractsId:
+                                              (await ServiceContractService()
+                                                          .getServiceContractContractsForComponentGet(
+                                                              element
+                                                                  .assignedComponent
+                                                                  .id))
+                                                      ?.map((e) => e.id)
+                                                      .toList() ??
+                                                  []));
+                                    });
 
                                     List<TaskComponentRemoveNewSchema> remove =
                                         [];
@@ -245,8 +244,15 @@ class EditStationComponentsForm extends StatelessWidget
     });
   }
 
-  removeItem(FormItem item) {
+  removeItem(FormItem item) async {
     item.status = FormItemStatus.nowremoved;
+    var warranty = await AssignedComponentService()
+        .getReplacmentWarrantyAssignedComponentsReplacmentWarranryGet(
+            componentId: item.assignedComponent.id);
+    await showFormDialog(SetNewComponentWarrantyForm(
+      suggestedWarranty: warranty,
+    ));
+    items.insert(items.indexOf(item), FormItem(item.asset, item, warranty!));
     items.refresh();
   }
 
@@ -269,13 +275,25 @@ enum FormItemStatus {
 }
 
 class FormItem {
-  AssignedComponentSchema? assignedComponent;
+  late AssignedComponentSchema assignedComponent;
   late AssetSchema asset;
   late FormItemStatus status;
+  late ComponentWarranty warranty;
 
-  FormItem.new(this.asset) {
+  FormItem.new(this.asset, FormItem replace, this.warranty) {
     status = FormItemStatus.nowadded;
+    assignedComponent = replace.assignedComponent;
   }
 
-  FormItem.installed(this.assignedComponent, this.status, this.asset) {}
+  FormItem.installed(this.assignedComponent, this.status, this.asset) {
+    warranty = ComponentWarranty(
+        componentWarrantyUntil: assignedComponent.componentWarrantyUntil,
+        componentWarrantySource: assignedComponent.componentWarrantySource,
+        componentWarrantyId: assignedComponent.componentWarrantyId,
+        componentPrepaidServiceUntil: assignedComponent.prepaidServiceUntil,
+        componentTechnicalWarrantyId: assignedComponent.serviceContractId,
+        componentTechnicalWarrantyUntil: assignedComponent.serviceContractUntil,
+        componentWarrantyDays: 0,
+        componentPrepaidServiceDays: 0);
+  }
 }

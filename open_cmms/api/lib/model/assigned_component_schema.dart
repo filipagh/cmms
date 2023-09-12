@@ -21,8 +21,12 @@ class AssignedComponentSchema {
     this.taskId,
     required this.installedAt,
     this.removedAt,
-    required this.warrantyPeriodDays,
-    this.warrantyPeriodUntil,
+    this.componentWarrantyUntil,
+    required this.componentWarrantySource,
+    this.componentWarrantyId,
+    this.prepaidServiceUntil,
+    this.serviceContractUntil,
+    this.serviceContractId,
   });
 
   String assetId;
@@ -59,7 +63,15 @@ class AssignedComponentSchema {
   ///
   DateTime? removedAt;
 
-  int warrantyPeriodDays;
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  DateTime? componentWarrantyUntil;
+
+  ComponentWarrantySource componentWarrantySource;
 
   ///
   /// Please note: This property should have been non-nullable! Since the specification file
@@ -67,7 +79,31 @@ class AssignedComponentSchema {
   /// source code must fall back to having a nullable type.
   /// Consider adding a "default:" property in the specification file to hide this note.
   ///
-  DateTime? warrantyPeriodUntil;
+  String? componentWarrantyId;
+
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  DateTime? prepaidServiceUntil;
+
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  DateTime? serviceContractUntil;
+
+  ///
+  /// Please note: This property should have been non-nullable! Since the specification file
+  /// does not include a default value (using the "default:" property), however, the generated
+  /// source code must fall back to having a nullable type.
+  /// Consider adding a "default:" property in the specification file to hide this note.
+  ///
+  String? serviceContractId;
 
   @override
   bool operator ==(Object other) => identical(this, other) || other is AssignedComponentSchema &&
@@ -79,8 +115,12 @@ class AssignedComponentSchema {
      other.taskId == taskId &&
      other.installedAt == installedAt &&
      other.removedAt == removedAt &&
-     other.warrantyPeriodDays == warrantyPeriodDays &&
-     other.warrantyPeriodUntil == warrantyPeriodUntil;
+          other.componentWarrantyUntil == componentWarrantyUntil &&
+          other.componentWarrantySource == componentWarrantySource &&
+          other.componentWarrantyId == componentWarrantyId &&
+          other.prepaidServiceUntil == prepaidServiceUntil &&
+          other.serviceContractUntil == serviceContractUntil &&
+          other.serviceContractId == serviceContractId;
 
   @override
   int get hashCode =>
@@ -93,11 +133,16 @@ class AssignedComponentSchema {
     (taskId == null ? 0 : taskId!.hashCode) +
     (installedAt.hashCode) +
     (removedAt == null ? 0 : removedAt!.hashCode) +
-    (warrantyPeriodDays.hashCode) +
-    (warrantyPeriodUntil == null ? 0 : warrantyPeriodUntil!.hashCode);
+      (componentWarrantyUntil == null ? 0 : componentWarrantyUntil!.hashCode) +
+      (componentWarrantySource.hashCode) +
+      (componentWarrantyId == null ? 0 : componentWarrantyId!.hashCode) +
+      (prepaidServiceUntil == null ? 0 : prepaidServiceUntil!.hashCode) +
+      (serviceContractUntil == null ? 0 : serviceContractUntil!.hashCode) +
+      (serviceContractId == null ? 0 : serviceContractId!.hashCode);
 
   @override
-  String toString() => 'AssignedComponentSchema[assetId=$assetId, stationId=$stationId, serialNumber=$serialNumber, id=$id, status=$status, taskId=$taskId, installedAt=$installedAt, removedAt=$removedAt, warrantyPeriodDays=$warrantyPeriodDays, warrantyPeriodUntil=$warrantyPeriodUntil]';
+  String toString() =>
+      'AssignedComponentSchema[assetId=$assetId, stationId=$stationId, serialNumber=$serialNumber, id=$id, status=$status, taskId=$taskId, installedAt=$installedAt, removedAt=$removedAt, componentWarrantyUntil=$componentWarrantyUntil, componentWarrantySource=$componentWarrantySource, componentWarrantyId=$componentWarrantyId, prepaidServiceUntil=$prepaidServiceUntil, serviceContractUntil=$serviceContractUntil, serviceContractId=$serviceContractId]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -121,12 +166,34 @@ class AssignedComponentSchema {
     } else {
       json[r'removed_at'] = null;
     }
-    json[r'warranty_period_days'] = this.warrantyPeriodDays;
-    if (this.warrantyPeriodUntil != null) {
-      json[r'warranty_period_until'] =
-          _dateFormatter.format(this.warrantyPeriodUntil!.toUtc());
+    if (this.componentWarrantyUntil != null) {
+      json[r'component_warranty_until'] =
+          _dateFormatter.format(this.componentWarrantyUntil!.toUtc());
     } else {
-      json[r'warranty_period_until'] = null;
+      json[r'component_warranty_until'] = null;
+    }
+    json[r'component_warranty_source'] = this.componentWarrantySource;
+    if (this.componentWarrantyId != null) {
+      json[r'component_warranty_id'] = this.componentWarrantyId;
+    } else {
+      json[r'component_warranty_id'] = null;
+    }
+    if (this.prepaidServiceUntil != null) {
+      json[r'prepaid_service_until'] =
+          _dateFormatter.format(this.prepaidServiceUntil!.toUtc());
+    } else {
+      json[r'prepaid_service_until'] = null;
+    }
+    if (this.serviceContractUntil != null) {
+      json[r'service_contract_until'] =
+          _dateFormatter.format(this.serviceContractUntil!.toUtc());
+    } else {
+      json[r'service_contract_until'] = null;
+    }
+    if (this.serviceContractId != null) {
+      json[r'service_contract_id'] = this.serviceContractId;
+    } else {
+      json[r'service_contract_id'] = null;
     }
     return json;
   }
@@ -158,8 +225,15 @@ class AssignedComponentSchema {
         taskId: mapValueOfType<String>(json, r'task_id'),
         installedAt: mapDateTime(json, r'installed_at', '')!,
         removedAt: mapDateTime(json, r'removed_at', ''),
-        warrantyPeriodDays: mapValueOfType<int>(json, r'warranty_period_days')!,
-        warrantyPeriodUntil: mapDateTime(json, r'warranty_period_until', ''),
+        componentWarrantyUntil:
+            mapDateTime(json, r'component_warranty_until', ''),
+        componentWarrantySource: ComponentWarrantySource.fromJson(
+            json[r'component_warranty_source'])!,
+        componentWarrantyId:
+            mapValueOfType<String>(json, r'component_warranty_id'),
+        prepaidServiceUntil: mapDateTime(json, r'prepaid_service_until', ''),
+        serviceContractUntil: mapDateTime(json, r'service_contract_until', ''),
+        serviceContractId: mapValueOfType<String>(json, r'service_contract_id'),
       );
     }
     return null;
@@ -218,7 +292,7 @@ class AssignedComponentSchema {
     'id',
     'status',
     'installed_at',
-    'warranty_period_days',
+    'component_warranty_source',
   };
 }
 

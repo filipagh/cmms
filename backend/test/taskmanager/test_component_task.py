@@ -10,13 +10,13 @@ from assetmanager.application.model.schema import AssetCategoryNewSchema, AssetN
 from assetmanager.infrastructure.rest_router import create_new_asset, create_new_category
 from roadsegmentmanager.application.model.schema import RoadSegmentNewSchema
 from stationmanager.application.model.schema import StationNewSchema
-from stationmanager.domain.model.assigned_component import AssignedComponentState
+from stationmanager.domain.model.assigned_component import AssignedComponentState, ComponentWarrantySource
 from stationmanager.infrastructure.station_rest_router import create_station
 from storagemanager.application.model.schema import AssetItemToAdd
 from storagemanager.application.storage_manager_loader import load_all_storage_items
 from storagemanager.infrastructure.rest_router import store_new_assets
 from taskmanager.application.model.task_change_component.schema import TaskChangeComponentsNewSchema, \
-    TaskComponentAddNewSchema, TaskChangeComponentRequestCompleted
+    TaskComponentAddNewSchema, TaskChangeComponentRequestCompleted, ComponentWarranty
 from taskmanager.domain.model.task_component_state import TaskComponentState
 from taskmanager.domain.model.task_state import TaskState
 from test.db_test_util import db_app_setup, db_app_clean
@@ -42,8 +42,12 @@ async def create_add_new_component_task():
                          description="desription"))
     task_id = task_router.create_component_task(
         new_task=TaskChangeComponentsNewSchema(station_id=station_id, name="name", description="description",
-                                               warranty_period_days=100,
-                                               add=[TaskComponentAddNewSchema(new_asset_id=asset_id)], remove=[]))
+                                               add=[TaskComponentAddNewSchema(new_asset_id=asset_id,
+                                                                              warranty=ComponentWarranty(
+                                                                                  component_warranty_days=100,
+                                                                                  component_warranty_source=ComponentWarrantySource.COMPANY_WARRANTY,
+                                                                                  component_prepaid_service_days=0))],
+                                               remove=[]))
     task = task_router.load(task_id)
     assert task.state == TaskState.OPEN
     assert len(task.add) == 1

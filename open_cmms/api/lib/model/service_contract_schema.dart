@@ -40,7 +40,7 @@ class ServiceContractSchema {
      other.validUntil == validUntil &&
           other.stationsList == stationsList &&
           other.id == id &&
-     other.createdAt == createdAt;
+          other.createdAt == createdAt;
 
   @override
   int get hashCode =>
@@ -50,7 +50,7 @@ class ServiceContractSchema {
     (validUntil.hashCode) +
       (stationsList.hashCode) +
       (id.hashCode) +
-    (createdAt.hashCode);
+      (createdAt.hashCode);
 
   @override
   String toString() =>

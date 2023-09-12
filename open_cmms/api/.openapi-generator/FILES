@@ -22,6 +22,8 @@ doc/AssignedComponentSchema.md
 doc/AssignedComponentState.md
 doc/AssignedComponentsApi.md
 doc/AuthApi.md
+doc/ComponentWarranty.md
+doc/ComponentWarrantySource.md
 doc/DefaultApi.md
 doc/HTTPValidationError.md
 doc/InvestmentContractApi.md
@@ -118,6 +120,8 @@ lib/model/assigned_component_id_schema.dart
 lib/model/assigned_component_new_schema.dart
 lib/model/assigned_component_schema.dart
 lib/model/assigned_component_state.dart
+lib/model/component_warranty.dart
+lib/model/component_warranty_source.dart
 lib/model/http_validation_error.dart
 lib/model/investment_contract_new_schema.dart
 lib/model/investment_contract_schema.dart

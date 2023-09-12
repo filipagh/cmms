@@ -6,10 +6,11 @@ import 'package:BackendAPI/api.dart';
 ```
 
 ## Properties
+
  Name             | Type                                                                                          | Description | Notes                 
 ------------------|-----------------------------------------------------------------------------------------------|-------------|-----------------------
- **name**         | **String**                                                                                    |             | 
- **validFrom**    | [**DateTime**](DateTime.md)                                                                   |             | 
+ **name**         | **String**                                                                                    |             |
+ **validFrom**    | [**DateTime**](DateTime.md)                                                                   |             |
  **validUntil**   | [**DateTime**](DateTime.md)                                                                   |             |
  **stationsList** | [**List<ServiceContractStationComponentsSchema>**](ServiceContractStationComponentsSchema.md) |             | [default to const []] 
 
