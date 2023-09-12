@@ -74,7 +74,8 @@ def test_try_delete_station_with_components(mocker):
     cat = a_api.create_new_category(new_category=AssetCategoryNewSchema(name="category", description="")).id
     asset = a_api.create_new_asset(new_asset=AssetNewSchema(name="asset", category_id=cat, telemetry=[])).id
     as_api.create_installed_component(new_components=[
-        AssignedComponentNewSchema(asset_id=asset, station_id=station_id, serial_number="asset")],
+        AssignedComponentNewSchema(asset_id=asset, station_id=station_id, serial_number="asset",
+                                   service_contracts_id=[])],
         components_warranty_source=ComponentWarrantySource.NAN, component_warranty_until=None, paid_service_until=None,
         installation_date=datetime.now())
     try:
