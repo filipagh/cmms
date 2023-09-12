@@ -10,6 +10,7 @@ import 'package:open_cmms/widgets/forms/tasks/complete_change_components_task.da
 import 'package:open_cmms/widgets/forms/util/text_edit_form.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../service/backend_api/investment_contract_service.dart';
 import '../../service/backend_api/redmine_service.dart';
 import '../../snacbars.dart';
 import '../../states/asset_types_state.dart';
@@ -25,11 +26,16 @@ class TaskChangeComponentsPage extends StatelessWidget {
   final Rxn<TaskChangeComponentsSchema> task =
       Rxn<TaskChangeComponentsSchema>();
   final Rxn<RedmineIssueDataSchema> redmineData = Rxn<RedmineIssueDataSchema>();
+  Rxn<List<InvestmentContractSchema>> investmentContracts =
+      Rxn<List<InvestmentContractSchema>>();
 
   TaskChangeComponentsPage({
     Key? key,
     required this.taskId,
   }) : super(key: key) {
+    InvestmentContractService()
+        .getContractsInvestmentContractContractsGet(onlyActive: false)
+        .then((value) => investmentContracts.value = value);
     TasksService().loadByIdTaskManagerGetTaskGet(taskId).then((value) {
       taskProjection = value;
       try {
@@ -162,7 +168,6 @@ class TaskChangeComponentsPage extends StatelessWidget {
                     ],
                     const Divider(),
                     buildTaskHeader(),
-
                     Expanded(
                         child: Container(
                             height: 300,
@@ -374,17 +379,50 @@ class TaskChangeComponentsPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(getComponentStatusText(removeCom.state)),
-                  Row(
+                  Column(
                     children: [
-                      Text("Zaruka do : " +
-                          (comp.componentWarrantyUntil
-                                  ?.toIso8601String()
-                                  .substring(0, 10) ??
-                              "")),
-                      task.value!.createdAt
-                              .isBefore(comp.componentWarrantyUntil!)
-                          ? const Icon(Icons.check)
-                          : const Icon(Icons.close)
+                      Row(
+                        children: [
+                          Column(
+                            children: [
+                              Text("Záruka na komponent"),
+                              Text((comp.componentWarrantyUntil
+                                      ?.toIso8601String()
+                                      .substring(0, 10) ??
+                                  '-')),
+                              Obx(() {
+                                return Text("zmluva: " +
+                                    (investmentContracts.value
+                                            ?.firstWhereOrNull((element) =>
+                                                element.id ==
+                                                comp.componentWarrantyId)
+                                            ?.identifier ??
+                                        '-'));
+                              })
+                            ],
+                          ),
+                          VerticalDivider(),
+                          Column(
+                            children: [
+                              Text("Predplateny servis "),
+                              Text((comp.prepaidServiceUntil
+                                      ?.toIso8601String()
+                                      .substring(0, 10) ??
+                                  '-')),
+                            ],
+                          ),
+                          VerticalDivider(),
+                          Column(
+                            children: [
+                              Text("Technicky servis "),
+                              Text((comp.serviceContractUntil
+                                      ?.toIso8601String()
+                                      .substring(0, 10) ??
+                                  '-')),
+                            ],
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ],
@@ -395,7 +433,6 @@ class TaskChangeComponentsPage extends StatelessWidget {
 
     return col;
   }
-
 
   IconData getComponentStatusIcon(TaskComponentState state, goalState) {
     switch (state) {

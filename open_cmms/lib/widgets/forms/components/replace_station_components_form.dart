@@ -168,7 +168,7 @@ class ReplaceStationComponentsForm extends StatelessWidget
           child: ListTile(
             trailing: IconButton(
               onPressed: () => removeItem(item),
-              icon: Icon(Icons.delete),
+              icon: Icon(Icons.refresh),
             ),
             title: Text(_assets.getAssetById(item.asset.id)!.name),
             subtitle: Text(serialNumberPrefix +
