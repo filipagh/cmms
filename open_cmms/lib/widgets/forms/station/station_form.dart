@@ -6,18 +6,20 @@ import 'package:open_cmms/widgets/dialog_form.dart';
 
 import '../../../snacbars.dart';
 
-class StationForm extends StatefulWidget implements hasFormTitle {
+class StationForm extends StatefulWidget implements FormWithLoadingIndicator {
   final RoadSegmentSchema roadSegment;
 
-  const StationForm(this.roadSegment, {Key? key}) : super(key: key);
+  StationForm(this.roadSegment, {Key? key}) : super(key: key);
 
   @override
   String getTitle() {
     return "Vytvorit stanicu";
   }
+  @override
+  RxBool isProcessing = false.obs;
 
   @override
-  StationForm getInstance() {
+  StationForm getContent() {
     return this;
   }
 
@@ -124,6 +126,7 @@ class _StationFormState extends State<StationForm> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState?.save();
+                        widget.isProcessing.value = true;
                         StationService()
                             .createStationStationCreateStationPost(
                                 StationNewSchema(

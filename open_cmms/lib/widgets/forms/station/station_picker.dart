@@ -5,7 +5,7 @@ import 'package:open_cmms/widgets/dialog_form.dart';
 
 import '../../../states/stations_list_state.dart';
 
-class StationPickerForm extends StatelessWidget implements hasFormTitle {
+class StationPickerForm extends StatelessWidget implements PopupForm {
   final StationsListState stationListState = Get.put(StationsListState());
 
   StationPickerForm({Key? key}) : super(key: key);
@@ -57,7 +57,7 @@ class StationPickerForm extends StatelessWidget implements hasFormTitle {
   }
 
   @override
-  Widget getInstance() {
+  Widget getContent() {
     return this;
   }
 

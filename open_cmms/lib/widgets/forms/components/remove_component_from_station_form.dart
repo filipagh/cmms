@@ -7,7 +7,7 @@ import 'package:open_cmms/states/asset_types_state.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 
 class RemoveComponentToStationForm extends StatelessWidget
-    implements hasFormTitle {
+    implements FormWithLoadingIndicator {
   final schema.StationSchema station;
   final schema.AssignedComponentSchema component;
   final AssetTypesState _assetTypes = Get.find();
@@ -23,9 +23,12 @@ class RemoveComponentToStationForm extends StatelessWidget
   }
 
   @override
-  Widget getInstance() {
+  Widget getContent() {
     return this;
   }
+
+  @override
+  RxBool isProcessing = false.obs;
 
   Rxn<DateTime> uninstallDate = Rxn<DateTime>();
   var uninstallDateText = TextEditingController();
@@ -96,6 +99,7 @@ class RemoveComponentToStationForm extends StatelessWidget
                           if (!_formKey.currentState!.validate()) {
                             return;
                           }
+                          isProcessing.value = true;
                           await AssignedComponentService()
                               .removeInstalledComponentAssignedComponentsRemoveInstalledComponentPost(
                                   uninstallDate.value!, [

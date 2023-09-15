@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:open_cmms/service/backend_api/RoadSegmentManager.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 
-class RoadSegmentPickerForm extends StatelessWidget implements hasFormTitle {
+class RoadSegmentPickerForm extends StatelessWidget implements PopupForm {
   RoadSegmentPickerForm({Key? key}) : super(key: key);
 
   String getTitle() {
@@ -12,7 +12,7 @@ class RoadSegmentPickerForm extends StatelessWidget implements hasFormTitle {
   }
 
   @override
-  Widget getInstance() {
+  Widget getContent() {
     return this;
   }
 

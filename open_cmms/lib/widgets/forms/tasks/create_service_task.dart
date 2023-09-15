@@ -5,11 +5,12 @@ import 'package:open_cmms/service/backend_api/tasks/tasks_on_site_service.dart';
 import 'package:open_cmms/service/backend_api/tasks/tasks_remote_service.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 
-class CreateServiceTaskForm extends StatefulWidget implements hasFormTitle {
+class CreateServiceTaskForm extends StatefulWidget
+    implements FormWithLoadingIndicator {
   final StationSchema station;
   final TaskType taskType;
 
-  const CreateServiceTaskForm(
+  CreateServiceTaskForm(
       {Key? key, required this.station, required this.taskType})
       : super(key: key);
 
@@ -17,9 +18,12 @@ class CreateServiceTaskForm extends StatefulWidget implements hasFormTitle {
   State<CreateServiceTaskForm> createState() => _CreateServiceTaskFormState();
 
   @override
-  Widget getInstance() {
+  Widget getContent() {
     return this;
   }
+
+  @override
+  RxBool isProcessing = false.obs;
 
   String getTitleString() {
     switch (taskType) {
@@ -81,6 +85,7 @@ class _CreateServiceTaskFormState extends State<CreateServiceTaskForm> {
             ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
+                    widget.isProcessing.value = true;
                     if (widget.taskType == TaskType.onSiteService) {
                       TasksOnSiteService()
                           .createTaskServiceOnSiteCreateServiceOnSideTaskPost([

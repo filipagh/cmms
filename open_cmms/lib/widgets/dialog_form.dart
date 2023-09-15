@@ -1,31 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-abstract class hasFormTitle {
+abstract class PopupForm {
   String getTitle();
 
-  Widget getInstance();
+  Widget getContent();
 }
 
-Future<T?> showFormDialog<T>(hasFormTitle form) async {
+abstract class FormWithLoadingIndicator extends PopupForm {
+  late final RxBool isProcessing;
+}
+
+Future<T?> showFormDialog<T>(PopupForm form) async {
   return await Get.defaultDialog(
     title: form.getTitle(),
-
     content: IntrinsicHeight(
-      child: ConstrainedBox(
-        constraints: BoxConstraints(
-            maxHeight: Get.height - 50,
-            maxWidth: Get.width - 200,
-            minWidth: 500),
-        child: form.getInstance(),
-      ),
-    ),
-    // confirm: TextButton(
-    //     onPressed: () {
-    //
-    //       form.submit() ? Get.back() : null;
-    //
-    //     },
-    //     child: Text("submit"))
+        child: ConstrainedBox(
+      constraints: BoxConstraints(
+          maxHeight: Get.height - 50, maxWidth: Get.width - 200, minWidth: 500),
+      child: form is FormWithLoadingIndicator
+          ? Obx(() {
+              if (form.isProcessing.value) {
+                return CircularProgressIndicator();
+              } else {
+                return form.getContent();
+              }
+            })
+          : form.getContent(),
+    )),
   );
 }

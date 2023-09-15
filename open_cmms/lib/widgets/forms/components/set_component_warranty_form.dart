@@ -7,13 +7,15 @@ import 'package:open_cmms/service/backend_api/service_contract_service.dart';
 import 'package:open_cmms/snacbars.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 import 'package:open_cmms/widgets/forms/service_contracts/component_select_service_contract_form.dart';
+import 'package:open_cmms/widgets/forms/util/contract_types_localization.dart';
 import 'package:open_cmms/widgets/forms/util/date_utils.dart';
 
 import '../../../service/backend_api/investment_contract_service.dart';
 import '../../../states/asset_types_state.dart';
 import '../investment_contract/investment_contract_picker.dart';
 
-class SetComponentWarrantyForm extends StatelessWidget implements hasFormTitle {
+class SetComponentWarrantyForm extends StatelessWidget
+    implements FormWithLoadingIndicator {
   final schema.AssignedComponentSchema component;
   final AssetTypesState _assetTypes = Get.find();
   late AssetSchema asset = _assetTypes.getAssetById(component.assetId)!;
@@ -44,14 +46,17 @@ class SetComponentWarrantyForm extends StatelessWidget implements hasFormTitle {
   }
 
   @override
-  Widget getInstance() {
+  RxBool isProcessing = false.obs;
+
+  @override
+  Widget getContent() {
     return this;
   }
 
   final sourceOptions = ComponentWarrantySource.values
       .map((e) => DropdownMenuItem<ComponentWarrantySource>(
             value: e,
-            child: Text(e.value),
+            child: Text(localize(e)),
           ))
       .toList();
 
@@ -233,6 +238,7 @@ class SetComponentWarrantyForm extends StatelessWidget implements hasFormTitle {
                           if (!_formKey.currentState!.validate()) {
                             return;
                           }
+                          isProcessing.value = true;
                           await AssignedComponentService()
                               .overrideWarrantyAssignedComponentsOverrideWarrantyPost(
                                   component.id, warrantySource.value,

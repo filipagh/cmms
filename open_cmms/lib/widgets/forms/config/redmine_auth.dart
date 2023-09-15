@@ -5,14 +5,14 @@ import 'package:open_cmms/snacbars.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 import 'package:open_cmms/widgets/forms/config/redmine_setup.dart';
 
-class Redmine_auth_form extends StatefulWidget implements hasFormTitle {
+class Redmine_auth_form extends StatefulWidget implements PopupForm {
   Redmine_auth_form({Key? key}) : super(key: key);
 
   @override
   State<Redmine_auth_form> createState() => _Redmine_auth_formState();
 
   @override
-  Widget getInstance() {
+  Widget getContent() {
     return this;
   }
 

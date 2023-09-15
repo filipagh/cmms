@@ -12,7 +12,7 @@ import 'package:open_cmms/widgets/forms/tasks/create_change_components_task.dart
 import '../../../states/station/components_state.dart';
 
 class EditStationComponentsForm extends StatelessWidget
-    implements hasFormTitle {
+    implements FormWithLoadingIndicator {
   final schema.StationSchema station;
 
   EditStationComponentsForm({Key? key, required this.station})
@@ -27,12 +27,15 @@ class EditStationComponentsForm extends StatelessWidget
     }
   }
 
+  @override
+  RxBool isProcessing = false.obs;
+
   String getTitle() {
     return "Zmena komponentov v stanici: ${station.name}";
   }
 
   @override
-  Widget getInstance() {
+  Widget getContent() {
     return this;
   }
 
@@ -123,7 +126,7 @@ class EditStationComponentsForm extends StatelessWidget
                                           assignedComponentId:
                                               element.assignedComponent!.id));
                                     });
-
+                                    isProcessing.value = true;
                                     var result = await showFormDialog(
                                         CreateChangeComponentsTaskForm(
                                             station: station,

@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:open_cmms/states/asset_telemetry_state.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 
-class TelemetryPickerForm extends StatelessWidget implements hasFormTitle {
+class TelemetryPickerForm extends StatelessWidget implements PopupForm {
   TelemetryPickerForm({Key? key}) : super(key: key) {
     AssetTelemetryState _telemetryState = Get.find();
     options = _telemetryState.options.value;
@@ -21,7 +21,7 @@ class TelemetryPickerForm extends StatelessWidget implements hasFormTitle {
   }
 
   @override
-  Widget getInstance() {
+  Widget getContent() {
     return this;
   }
 

@@ -3,19 +3,26 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/snacbars.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
+import 'package:open_cmms/widgets/forms/util/date_utils.dart';
 
-class SerialNumberForm extends StatelessWidget implements hasFormTitle {
-  SerialNumberForm({Key? key, required this.asset}) : super(key: key);
+class InstallComponentForm extends StatelessWidget implements PopupForm {
+  TextEditingController installDateText = TextEditingController();
+
+  InstallComponentForm(
+      {Key? key, required this.asset, required this.taskItemId})
+      : super(key: key);
 
   AssetSchema asset;
+  late String taskItemId;
   String serialNumber = "";
+  DateTime? install_date;
 
   String getTitle() {
-    return "Vložte sériové číslo";
+    return "Údaje o inštalácií komponentu ${asset.name}";
   }
 
   @override
-  Widget getInstance() {
+  Widget getContent() {
     return this;
   }
 
@@ -26,89 +33,63 @@ class SerialNumberForm extends StatelessWidget implements hasFormTitle {
       children: [
         Text("Vložte sériové číslo"),
         Form(
-          child: TextField(
-            autofocus: true,
-            onChanged: (v) {
-              serialNumber = v;
-            },
-            decoration: InputDecoration(labelText: 'Sériové číslo'),
+          child: Column(
+            children: [
+              TextField(
+                autofocus: true,
+                onChanged: (v) {
+                  serialNumber = v;
+                },
+                decoration: InputDecoration(labelText: 'Sériové číslo'),
+              ),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: "Dátum inštalácie komponentu",
+                ),
+                readOnly: true,
+                controller: installDateText,
+                validator: (v) {
+                  return (v == null || v.isEmpty) ? "zvoľte dátum" : null;
+                },
+                onTap: () {
+                  var now = DateTime.now();
+                  showDatePicker(
+                          context: context,
+                          firstDate:
+                              now.subtract(const Duration(days: 365 * 20)),
+                          lastDate: now,
+                          initialDate: now)
+                      .then((value) {
+                    if (value == null) {
+                      return;
+                    }
+                    install_date = value;
+                    installDateText.text =
+                        value.toIso8601String().split("T").first;
+                  });
+                },
+              )
+            ],
           ),
         ),
         TextButton(
             onPressed: () {
+              if (install_date == null) {
+                showError("Dátum inštalácie nesmie byť prázdny");
+                return;
+              }
               if (serialNumber == null || serialNumber.isEmpty) {
                 showError("Sériové číslo nesmie byť prázdne");
                 return;
               }
-              Get.back(result: serialNumber);
+              Get.back(
+                  result: TaskChangeComponentRequestCompleted(
+                      id: taskItemId,
+                      serialNumber: serialNumber,
+                      completedAt: convertDatetimeToUtc(install_date!)));
             },
             child: Text("uloziť")),
       ],
     );
-
-    //
-    //   ConstrainedBox(
-    //   constraints: BoxConstraints(maxWidth: 500),
-    //   child: Form(
-    //     key: _formKey,
-    //     child: Column(
-    //       children: [
-    //         ElevatedButton(onPressed: () {}, child: Text('add component')),
-    //         Container(
-    //           width: 500,
-    //           height: 600,
-    //           child: Obx(() {
-    //             return ListView.builder(
-    //                 itemCount: editItems.length,
-    //                 itemBuilder: (BuildContext context, int index) {
-    //                   return buildCardFromFormItem(editItems[index]);
-    //                 });
-    //           }),
-    //         ),
-    //         // TextFormField(
-    //         //   onSaved: (value) {
-    //         //     name = value!;
-    //         //   },
-    //         //   initialValue:
-    //         //       widget.editItem == null ? "" : widget.editItem!.name,
-    //         //   decoration: InputDecoration(labelText: 'name'),
-    //         //   validator: (value) {
-    //         //     return value == null || value.isEmpty ? "add name" : null;
-    //         //   },
-    //         // ),
-    //         // TextFormField(
-    //         //   onSaved: (value) {
-    //         //     description = value!;
-    //         //   },
-    //         //   initialValue:
-    //         //       widget.editItem == null ? "" : widget.editItem!.text,
-    //         //   decoration: InputDecoration(labelText: 'description'),
-    //         // ),
-    //         // TextFormField(
-    //         //   onSaved: (value) {
-    //         //     ssud = value!;
-    //         //   },
-    //         //   initialValue:
-    //         //       widget.editItem == null ? "" : widget.editItem!.ssud,
-    //         //   decoration: InputDecoration(labelText: 'ssud'),
-    //         // ),
-    //
-    //         TextButton(
-    //             onPressed: () {
-    //               // if (_formKey.currentState!.validate()) {
-    //               //   _formKey.currentState?.save();
-    //               //   if (widget.editItem != null) {
-    //               //     widget._roadSegmentState.editRoadSegment(widget.editItem!.id, name, description,ssud);
-    //               //   } else {
-    //               //     widget._roadSegmentState.createNewRoadSegment( name, description,ssud);
-    //               //   }
-    //               //   Get.back();
-    //               // }
-    //             },
-    //             child: Text("submit")),
-    //       ],
-    //     ),
-    //   ),
-    // );
   }
 }

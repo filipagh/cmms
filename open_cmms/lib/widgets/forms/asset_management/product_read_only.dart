@@ -5,7 +5,7 @@ import 'package:open_cmms/widgets/dialog_form.dart';
 
 import '../../../states/asset_types_state.dart';
 
-class ProductFormReadOnly extends StatefulWidget implements hasFormTitle {
+class ProductFormReadOnly extends StatefulWidget implements PopupForm {
   final AssetTypesState assetTypes = Get.find();
   late final AssetSchema? item;
   late final AssetCategorySchema parent;
@@ -23,7 +23,7 @@ class ProductFormReadOnly extends StatefulWidget implements hasFormTitle {
   }
 
   @override
-  StatefulWidget getInstance() {
+  StatefulWidget getContent() {
     return this;
   }
 }

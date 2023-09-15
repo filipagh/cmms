@@ -10,7 +10,7 @@ import 'package:open_cmms/widgets/forms/tasks/create_service_task.dart';
 
 import '../../../states/asset_types_state_dummy.dart';
 
-class CreateTaskForm extends StatelessWidget implements hasFormTitle {
+class CreateTaskForm extends StatelessWidget implements PopupForm {
   final StationSchema station;
   final ItemsState_dummy _itemsState = Get.find();
   final AssetTypesStateDummy _typeState = Get.find();
@@ -57,7 +57,7 @@ class CreateTaskForm extends StatelessWidget implements hasFormTitle {
   }
 
   @override
-  Widget getInstance() {
+  Widget getContent() {
     return this;
   }
 

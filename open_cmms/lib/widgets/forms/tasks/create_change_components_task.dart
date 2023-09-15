@@ -8,7 +8,7 @@ import 'package:open_cmms/widgets/dialog_form.dart';
 import '../../../states/station/components_state.dart';
 
 class CreateChangeComponentsTaskForm extends StatefulWidget
-    implements hasFormTitle {
+    implements FormWithLoadingIndicator {
   StationSchema station;
   List<TaskComponentAddNewSchema> add;
   List<TaskComponentRemoveNewSchema> remove;
@@ -36,7 +36,7 @@ class CreateChangeComponentsTaskForm extends StatefulWidget
       _CreateChangeComponentsTaskFormState();
 
   @override
-  Widget getInstance() {
+  Widget getContent() {
     return this;
   }
 
@@ -44,6 +44,9 @@ class CreateChangeComponentsTaskForm extends StatefulWidget
   String getTitle() {
     return "Zmena komponentov pre stanicu: ${station.name}";
   }
+
+  @override
+  RxBool isProcessing = false.obs;
 }
 
 class _CreateChangeComponentsTaskFormState
@@ -114,9 +117,9 @@ class _CreateChangeComponentsTaskFormState
                 ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
+                        widget.isProcessing.value = true;
                         TasksService()
                             .createComponentTaskTaskManagerCreateChangeComponentTaskPost(
-                                // todo warANT
                                 TaskChangeComponentsNewSchema(
                                     stationId: widget.station.id,
                                     name: taskName.text,

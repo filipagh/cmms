@@ -7,7 +7,7 @@ import '../../../states/asset_types_state.dart';
 
 const EMPTY_CATEGORY = "NEW_CATEGORY";
 
-class CategoryForm extends StatefulWidget implements hasFormTitle {
+class CategoryForm extends StatefulWidget implements PopupForm {
   final AssetTypesState assetTypes = Get.find();
   late final AssetCategorySchema? editItem;
   late final AssetCategorySchema? parent;
@@ -41,7 +41,7 @@ class CategoryForm extends StatefulWidget implements hasFormTitle {
   }
 
   @override
-  StatefulWidget getInstance() {
+  StatefulWidget getContent() {
     return this;
   }
 }

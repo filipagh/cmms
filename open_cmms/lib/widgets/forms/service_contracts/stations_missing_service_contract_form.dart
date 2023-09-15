@@ -8,7 +8,7 @@ import 'package:open_cmms/service/backend_api/station_service.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 
 class StationsMissingServiceContractForm extends StatelessWidget
-    implements hasFormTitle {
+    implements PopupForm {
   StationsMissingServiceContractForm({Key? key, required this.station_list})
       : super(key: key) {
     RoadSegmentService()
@@ -101,7 +101,7 @@ class StationsMissingServiceContractForm extends StatelessWidget
   }
 
   @override
-  Widget getInstance() {
+  Widget getContent() {
     return this;
   }
 

@@ -6,7 +6,7 @@ import 'package:open_cmms/widgets/dialog_form.dart';
 
 import '../../../states/asset_types_state.dart';
 
-class ComponentPickerForm extends StatelessWidget implements hasFormTitle {
+class ComponentPickerForm extends StatelessWidget implements PopupForm {
   final bool hideArchivedAssets;
 
   ComponentPickerForm({Key? key, this.hideArchivedAssets = true})
@@ -18,7 +18,7 @@ class ComponentPickerForm extends StatelessWidget implements hasFormTitle {
   }
 
   @override
-  Widget getInstance() {
+  Widget getContent() {
     return this;
   }
 

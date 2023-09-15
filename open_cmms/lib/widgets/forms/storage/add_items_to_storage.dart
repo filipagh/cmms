@@ -18,7 +18,8 @@ class _Item {
   _Item(this.storageItem, this.item);
 }
 
-class AddItemsToStorage extends StatelessWidget implements hasFormTitle {
+class AddItemsToStorage extends StatelessWidget
+    implements FormWithLoadingIndicator {
   final ItemsStorageState _itemsState = Get.find();
   final AssetTypesState _typeState = Get.find();
 
@@ -54,7 +55,7 @@ class AddItemsToStorage extends StatelessWidget implements hasFormTitle {
                 },
                 child: const Text("Zrušiť")),
             ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   var valid = true;
                   List<AssetItemToAdd> items = [];
                   for (var e in _items) {
@@ -70,11 +71,12 @@ class AddItemsToStorage extends StatelessWidget implements hasFormTitle {
                   if (!valid) {
                     return;
                   }
-                  _itemsState.addToStorage(items).then((value) {
+                  isProcessing.value = true;
+                  await _itemsState.addToStorage(items).then((value) {
                     _itemsState.reloadData();
+                    Get.back();
                     showOk("Komponenty boli naskladnené");
                   });
-                  Get.back();
                 },
                 child: const Text("Potvrdiť")),
           ],
@@ -84,9 +86,12 @@ class AddItemsToStorage extends StatelessWidget implements hasFormTitle {
   }
 
   @override
-  Widget getInstance() {
+  Widget getContent() {
     return this;
   }
+
+  @override
+  RxBool isProcessing = false.obs;
 
   @override
   String getTitle() {

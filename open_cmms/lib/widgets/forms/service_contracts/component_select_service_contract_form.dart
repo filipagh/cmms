@@ -5,7 +5,7 @@ import 'package:open_cmms/service/backend_api/service_contract_service.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 
 class ComponentsSelectServiceContractForm extends StatefulWidget
-    implements hasFormTitle {
+    implements PopupForm {
   ComponentsSelectServiceContractForm(
       {Key? key,
       required List<String> selectedContractsId,
@@ -32,7 +32,7 @@ class ComponentsSelectServiceContractForm extends StatefulWidget
   }
 
   @override
-  Widget getInstance() {
+  Widget getContent() {
     return this;
   }
 }

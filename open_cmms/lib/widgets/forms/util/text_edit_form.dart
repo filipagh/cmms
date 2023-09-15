@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 
-class TextEditForm extends StatelessWidget implements hasFormTitle {
+class TextEditForm extends StatelessWidget implements PopupForm {
   final String title;
   final String text;
 
@@ -41,7 +41,7 @@ class TextEditForm extends StatelessWidget implements hasFormTitle {
   }
 
   @override
-  Widget getInstance() {
+  Widget getContent() {
     return this;
   }
 

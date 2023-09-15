@@ -3,16 +3,17 @@ import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/service/backend_api/service_contract_service.dart';
+import 'package:open_cmms/snacbars.dart';
 import 'package:open_cmms/states/asset_types_state.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
-import 'package:open_cmms/widgets/forms/components/set_new_component_warranty_form.dart';
+import 'package:open_cmms/widgets/forms/components/suggest_component_warranty_form.dart';
 import 'package:open_cmms/widgets/forms/tasks/create_change_components_task.dart';
 
 import '../../../service/backend_api/assigned_components_service.dart';
 import '../../../states/station/components_state.dart';
 
 class ReplaceStationComponentsForm extends StatelessWidget
-    implements hasFormTitle {
+    implements PopupForm {
   final schema.StationSchema station;
 
   ReplaceStationComponentsForm({Key? key, required this.station})
@@ -32,7 +33,7 @@ class ReplaceStationComponentsForm extends StatelessWidget
   }
 
   @override
-  Widget getInstance() {
+  Widget getContent() {
     return this;
   }
 
@@ -122,7 +123,6 @@ class ReplaceStationComponentsForm extends StatelessWidget
                                           assignedComponentId:
                                               element.assignedComponent!.id));
                                     });
-
                                     var result = await showFormDialog(
                                         CreateChangeComponentsTaskForm(
                                             station: station,
@@ -245,14 +245,22 @@ class ReplaceStationComponentsForm extends StatelessWidget
   }
 
   removeItem(FormItem item) async {
-    item.status = FormItemStatus.nowremoved;
     var warranty = await AssignedComponentService()
         .getReplacmentWarrantyAssignedComponentsReplacmentWarranryGet(
             componentId: item.assignedComponent.id);
-    await showFormDialog(SetNewComponentWarrantyForm(
+    if (warranty == null) {
+      showError("Nepodarilo sa načítať novu záruku komponentu");
+      return;
+    }
+    warranty = await showFormDialog(SuggestComponentWarrantyForm(
       suggestedWarranty: warranty,
     ));
-    items.insert(items.indexOf(item), FormItem(item.asset, item, warranty!));
+    if (warranty == null) {
+      showError("musíte zadať záruku");
+      return;
+    }
+    item.status = FormItemStatus.nowremoved;
+    items.insert(items.indexOf(item), FormItem(item.asset, item, warranty));
     items.refresh();
   }
 

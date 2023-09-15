@@ -1,5 +1,4 @@
 import 'package:BackendAPI/api.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/service/backend_api/auth_service.dart';
@@ -7,7 +6,8 @@ import 'package:open_cmms/widgets/dialog_form.dart';
 
 import '../../../snacbars.dart';
 
-class ChangeRoleForm extends StatelessWidget implements hasFormTitle {
+class ChangeRoleForm extends StatelessWidget
+    implements FormWithLoadingIndicator {
   final UserSchema user;
 
   late Rx<Role> role;
@@ -15,6 +15,9 @@ class ChangeRoleForm extends StatelessWidget implements hasFormTitle {
   ChangeRoleForm({Key? key, required this.user}) : super(key: key) {
     role = user.role.obs;
   }
+
+  @override
+  RxBool isProcessing = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +44,7 @@ class ChangeRoleForm extends StatelessWidget implements hasFormTitle {
             ElevatedButton(
                 onPressed: () async {
                   if (role.value != user.role) {
+                    isProcessing.value = true;
                     await AuthService().updateUserRoleAuthUserUserIdRolePost(
                         user.id, role.value);
                     Get.back();
@@ -58,7 +62,7 @@ class ChangeRoleForm extends StatelessWidget implements hasFormTitle {
   }
 
   @override
-  Widget getInstance() {
+  Widget getContent() {
     return this;
   }
 

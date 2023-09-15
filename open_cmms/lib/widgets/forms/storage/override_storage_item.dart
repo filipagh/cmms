@@ -6,12 +6,12 @@ import 'package:open_cmms/widgets/dialog_form.dart';
 
 import '../../../snacbars.dart';
 
-class OverrideStorageItem extends StatefulWidget implements hasFormTitle {
+class OverrideStorageItem extends StatefulWidget
+    implements FormWithLoadingIndicator {
   final StorageItemSchema item;
   final AssetSchema asset;
 
-  const OverrideStorageItem(this.item, this.asset, {Key? key})
-      : super(key: key);
+  OverrideStorageItem(this.item, this.asset, {Key? key}) : super(key: key);
 
   @override
   String getTitle() {
@@ -19,9 +19,12 @@ class OverrideStorageItem extends StatefulWidget implements hasFormTitle {
   }
 
   @override
-  OverrideStorageItem getInstance() {
+  OverrideStorageItem getContent() {
     return this;
   }
+
+  @override
+  RxBool isProcessing = false.obs;
 
   @override
   State<OverrideStorageItem> createState() => _OverrideStorageItemState();
@@ -78,6 +81,7 @@ class _OverrideStorageItemState extends State<OverrideStorageItem> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState?.save();
+                        widget.isProcessing.value = true;
                         StorageManagerService()
                             .storeItemOverrideStorageManagerStoreItemOverridePost(
                                 StorageItemOverrideSchema(
