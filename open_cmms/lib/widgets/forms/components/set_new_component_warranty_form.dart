@@ -4,50 +4,26 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:open_cmms/snacbars.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
+import 'package:open_cmms/widgets/forms/util/contract_types_localization.dart';
 
-import '../../../service/backend_api/investment_contract_service.dart';
 import '../investment_contract/investment_contract_picker.dart';
 
-class SetNewComponentWarrantyForm extends StatelessWidget
-    implements hasFormTitle {
-  SetNewComponentWarrantyForm({Key? key, ComponentWarranty? suggestedWarranty})
-      : super(key: key) {
-    if (suggestedWarranty != null) {
-      warrantySource.value = suggestedWarranty.componentWarrantySource;
-      suggestedWarranty.componentWarrantyId != null
-          ? InvestmentContractService()
-              .getContractInvestmentContractContractGet(
-                  suggestedWarranty.componentWarrantyId!)
-              .then((value) => warrantyContract.value = value)
-          : null;
-      if (suggestedWarranty.componentWarrantyDays != 0) {
-        setComponentWarranty(DateTime.now()
-            .add(Duration(days: suggestedWarranty.componentWarrantyDays)));
-      } else {
-        setComponentWarranty(suggestedWarranty.componentWarrantyUntil);
-      }
-      if (suggestedWarranty.componentPrepaidServiceDays != 0) {
-        setPrepaidWarranty(DateTime.now().add(
-            Duration(days: suggestedWarranty.componentPrepaidServiceDays)));
-      } else {
-        setPrepaidWarranty(suggestedWarranty.componentPrepaidServiceUntil);
-      }
-    }
-  }
+class SetNewComponentWarrantyForm extends StatelessWidget implements PopupForm {
+  SetNewComponentWarrantyForm({Key? key}) : super(key: key);
 
   String getTitle() {
     return "Zadaj zaruku pre nove komponenty";
   }
 
   @override
-  Widget getInstance() {
+  Widget getContent() {
     return this;
   }
 
   final sourceOptions = ComponentWarrantySource.values
       .map((e) => DropdownMenuItem<ComponentWarrantySource>(
             value: e,
-            child: Text(e.value),
+            child: Text(localize(e)),
           ))
       .toList();
 
@@ -97,6 +73,9 @@ class SetNewComponentWarrantyForm extends StatelessWidget
                             setPrepaidWarranty(DateTime.now().add(
                                 Duration(days: value.warrantyPeriodDays!)));
                           });
+                        }
+                        if (v == ComponentWarrantySource.COMPANY_WARRANTY) {
+                          warrantyContract.value = null;
                         }
                         if (v == ComponentWarrantySource.NAN) {
                           warrantyContract.value = null;

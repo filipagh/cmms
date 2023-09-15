@@ -8,9 +8,10 @@ import 'package:open_cmms/widgets/forms/components/serial_number_form.dart';
 
 import '../../../snacbars.dart';
 import '../../../states/station/components_state.dart';
+import '../util/date_utils.dart';
 
 class CompleteChangeComponentsTaskForm extends StatelessWidget
-    implements hasFormTitle {
+    implements FormWithLoadingIndicator {
   String stationId;
   TaskChangeComponentsSchema task;
   final AssetTypesState _assets = Get.find();
@@ -30,9 +31,12 @@ class CompleteChangeComponentsTaskForm extends StatelessWidget
   }
 
   @override
-  Widget getInstance() {
+  Widget getContent() {
     return this;
   }
+
+  @override
+  RxBool isProcessing = false.obs;
 
   @override
   String getTitle() {
@@ -55,6 +59,7 @@ class CompleteChangeComponentsTaskForm extends StatelessWidget
                 child: Text("Zrusit")),
             ElevatedButton(
                 onPressed: () {
+                  isProcessing.value = true;
                   TasksService()
                       .completeTaskItemsTaskManagerTaskIdCompeteTaskItmesPost(
                           task.id, completedItems)
@@ -102,10 +107,12 @@ class CompleteChangeComponentsTaskForm extends StatelessWidget
                   if (asDoneObject != null) {
                     completedItems.remove(asDoneObject);
                   } else {
-                    completedItems.add(TaskChangeComponentRequestCompleted(
-                        id: element.id,
-                        serialNumber: await showFormDialog(
-                            SerialNumberForm(asset: assetSchema))));
+                    var component = await showFormDialog(InstallComponentForm(
+                        asset: assetSchema, taskItemId: element.id));
+                    if (component == null) {
+                      return;
+                    }
+                    completedItems.add(component);
                   }
                   completedItems.obs.refresh();
                 },
@@ -153,7 +160,9 @@ class CompleteChangeComponentsTaskForm extends StatelessWidget
                         } else {
                           completedItems.add(
                               TaskChangeComponentRequestCompleted(
-                                  id: element.id));
+                                  id: element.id,
+                                  completedAt:
+                                      convertDatetimeToUtc(DateTime.now())));
                         }
 
                         completedItems.obs.refresh();

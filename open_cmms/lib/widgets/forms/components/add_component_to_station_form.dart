@@ -6,12 +6,13 @@ import 'package:open_cmms/service/backend_api/assigned_components_service.dart';
 import 'package:open_cmms/snacbars.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 import 'package:open_cmms/widgets/forms/service_contracts/component_select_service_contract_form.dart';
+import 'package:open_cmms/widgets/forms/util/contract_types_localization.dart';
 import 'package:open_cmms/widgets/forms/util/date_utils.dart';
 
 import '../investment_contract/investment_contract_picker.dart';
 
 class AddComponentToStationForm extends StatelessWidget
-    implements hasFormTitle {
+    implements FormWithLoadingIndicator {
   final schema.StationSchema station;
   final schema.AssetSchema asset;
 
@@ -24,14 +25,17 @@ class AddComponentToStationForm extends StatelessWidget
   }
 
   @override
-  Widget getInstance() {
+  Widget getContent() {
     return this;
   }
+
+  @override
+  RxBool isProcessing = false.obs;
 
   final sourceOptions = ComponentWarrantySource.values
       .map((e) => DropdownMenuItem<ComponentWarrantySource>(
             value: e,
-            child: Text(e.value),
+            child: Text(localize(e)),
           ))
       .toList();
 
@@ -258,6 +262,7 @@ class AddComponentToStationForm extends StatelessWidget
                           if (!_formKey.currentState!.validate()) {
                             return;
                           }
+                          isProcessing.value = true;
                           await AssignedComponentService()
                               .createInstalledComponentAssignedComponentsCreateInstalledComponentPost(
                             warrantySource.value,

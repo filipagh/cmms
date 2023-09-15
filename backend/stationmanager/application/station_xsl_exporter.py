@@ -29,38 +29,37 @@ def export_xslx(station_id):
     # bold = workbook.add_format({"bold": True})
 
     # Write some simple text.
-    worksheet.write("A1", "Informacie o stanici")
+    worksheet.write("A1", "Informácie o stanici")
 
     worksheet.write("A2", "Meno stanice")
     worksheet.write("B2", station.name)
 
-    worksheet.write("A3", "Km cestneho useku")
+    worksheet.write("A3", "Km cestného úseku")
     worksheet.write("B3", station.km_of_road)
 
-    worksheet.write("A4", "Km cestneho useku poznamka")
+    worksheet.write("A4", "Poznámka k pozícii since")
     worksheet.write("B4", station.km_of_road_note)
 
-    worksheet.write("A5", "Gps dlzka")
+    worksheet.write("A5", "Gps dĺžka")
     worksheet.write("B5", station.longitude)
-    worksheet.write("A6", "Gps sirka")
+    worksheet.write("A6", "Gps šírka")
     worksheet.write("B6", station.latitude)
-    worksheet.write("A7", "nadmorska vyska")
+    worksheet.write("A7", "Nadmorská výska")
     worksheet.write("B7", station.see_level)
 
-
-    worksheet.write("A8", "poznamka")
+    worksheet.write("A8", "Poznámka")
     worksheet.write("B8", station.description)
     worksheet.write("A9", "ID")
     worksheet.write("B9", str(station.id))
 
     worksheet.write("A11", "komponenty")
 
-
-    worksheet.write("A12", "Nazov")
-    worksheet.write("B12", "Seriove cislo")
-    worksheet.write("C12", "Datum instalacie")
-    worksheet.write("D12", "Zaruka do")
-
+    worksheet.write("A12", "Názov")
+    worksheet.write("B12", "Sériove číslo")
+    worksheet.write("C12", "Dátum inštalácie")
+    worksheet.write("D12", "Záruka na komponent do")
+    worksheet.write("E12", "Predplatený servis")
+    worksheet.write("F12", "Technický servis")
 
     index = 12
     for component in components:
@@ -71,26 +70,24 @@ def export_xslx(station_id):
                     asset = a
                     break
 
-            worksheet.write("A"+str(index), asset.name)
-            worksheet.write("B"+str(index), component.serial_number)
-            worksheet.write("C"+str(index), component.installed_at.__str__())
-            worksheet.write("D"+str(index), component.warranty_period_until.__str__())
+            worksheet.write("A" + str(index), asset.name)
+            worksheet.write("B" + str(index), component.serial_number)
+            worksheet.write("C" + str(index), component.installed_at.__str__())
+            worksheet.write("D" + str(index), component.component_warranty_until.__str__())
+            worksheet.write("E" + str(index), component.prepaid_service_until.__str__())
+            worksheet.write("F" + str(index), component.service_contract_until.__str__())
 
     index += 2
 
-    worksheet.write("A"+str(index), "Historia akcii")
+    worksheet.write("A" + str(index), "Historia akcii")
     index += 1
-    worksheet.write("A"+str(index), "Cas")
-    worksheet.write("B"+str(index), "Text")
-
-
+    worksheet.write("A" + str(index), "Cas")
+    worksheet.write("B" + str(index), "Text")
 
     for log in history:
         index += 1
-        worksheet.write("A"+str(index), log.datetime.__str__())
-        worksheet.write("B"+str(index), log.text)
-
-
+        worksheet.write("A" + str(index), log.datetime.__str__())
+        worksheet.write("B" + str(index), log.text)
 
     # Text with formatting.
     # worksheet.write("A2", "World", bold)

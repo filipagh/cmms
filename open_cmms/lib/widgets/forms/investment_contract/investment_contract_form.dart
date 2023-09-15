@@ -6,8 +6,9 @@ import 'package:open_cmms/service/backend_api/investment_contract_service.dart';
 import 'package:open_cmms/snacbars.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 
-class InvestmentContractForm extends StatefulWidget implements hasFormTitle {
-  const InvestmentContractForm({Key? key}) : super(key: key);
+class InvestmentContractForm extends StatefulWidget
+    implements FormWithLoadingIndicator {
+  InvestmentContractForm({Key? key}) : super(key: key);
 
   @override
   State<InvestmentContractForm> createState() => _InvestmentContractFormState();
@@ -18,7 +19,10 @@ class InvestmentContractForm extends StatefulWidget implements hasFormTitle {
   }
 
   @override
-  Widget getInstance() {
+  RxBool isProcessing = false.obs;
+
+  @override
+  Widget getContent() {
     return this;
   }
 }
@@ -150,6 +154,7 @@ class _InvestmentContractFormState extends State<InvestmentContractForm> {
               ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
+                      widget.isProcessing.value = true;
                       InvestmentContractService()
                           .createContractInvestmentContractCreateContractPost(
                               InvestmentContractNewSchema(

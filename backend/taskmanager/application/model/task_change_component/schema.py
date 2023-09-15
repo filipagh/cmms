@@ -52,6 +52,7 @@ class TaskChangeComponentRequestId(BaseModel):
 
 class TaskChangeComponentRequestCompleted(TaskChangeComponentRequestId):
     serial_number: Optional[str]
+    completed_at: datetime.date
 
 
 class AddComponentRequestSchema(TaskChangeComponentRequestId):

@@ -220,16 +220,13 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getServiceContractContractsForComponentGet**
-
 > List<ServiceContractSchema> getServiceContractContractsForComponentGet(componentId)
 
 Get
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
-
 // TODO Configure API key authorization: user_session
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKey = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -242,18 +239,13 @@ import 'package:BackendAPI/api.dart';
 //defaultApiClient.getAuthentication<OAuth>('OAuth2AuthorizationCodeBearer').accessToken = 'YOUR_ACCESS_TOKEN';
 
 final api_instance = ServiceContractApi();
-final componentId = 38400000 - 8
-cf0-11
-bd-b23e-10
-b96e4ef00d; // String | 
+final componentId = 38400000-8cf0-11bd-b23e-10b96e4ef00d; // String | 
 
 try {
-final result = api_instance.getServiceContractContractsForComponentGet(componentId);
-print(result);
-} catch
-(
-e) {
-print('Exception when calling ServiceContractApi->getServiceContractContractsForComponentGet: $e\n');
+    final result = api_instance.getServiceContractContractsForComponentGet(componentId);
+    print(result);
+} catch (e) {
+    print('Exception when calling ServiceContractApi->getServiceContractContractsForComponentGet: $e\n');
 }
 ```
 

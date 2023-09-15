@@ -6,6 +6,7 @@ import 'package:BackendAPI/api.dart';
 ```
 
 ## Properties
+
  Name                    | Type                                          | Description | Notes                 
 -------------------------|-----------------------------------------------|-------------|-----------------------
  **newAssetId**          | **String**                                    |             |

@@ -6,7 +6,8 @@ import 'package:open_cmms/snacbars.dart';
 
 import '../../dialog_form.dart';
 
-class Redmine_setup_form extends StatefulWidget implements hasFormTitle {
+class Redmine_setup_form extends StatefulWidget
+    implements FormWithLoadingIndicator {
   Redmine_setup_form({Key? key, required this.redmineAuthResponseSchema})
       : super(key: key);
 
@@ -16,9 +17,12 @@ class Redmine_setup_form extends StatefulWidget implements hasFormTitle {
   State<Redmine_setup_form> createState() => _Redmine_setup_formState();
 
   @override
-  Widget getInstance() {
+  Widget getContent() {
     return this;
   }
+
+  @override
+  RxBool isProcessing = false.obs;
 
   @override
   String getTitle() {
@@ -122,6 +126,7 @@ class _Redmine_setup_formState extends State<Redmine_setup_form> {
           onPressed: () {
             if (_formKey.currentState!.validate()) {
               _formKey.currentState!.save();
+              widget.isProcessing.value = true;
               RedmineService()
                   .authRedmineSetupPost(RedmineSetupRequestSchema(
                 redmineUrl: widget.redmineAuthResponseSchema.redmineUrl,
@@ -134,6 +139,7 @@ class _Redmine_setup_formState extends State<Redmine_setup_form> {
                 Get.close(2);
                 showOk("Redmine setup bol úspešne uložený");
               }, onError: (error) {
+                widget.isProcessing.value = true;
                 showError(
                     "Redmine setup sa nepodarilo uložiť " + error.toString());
               });

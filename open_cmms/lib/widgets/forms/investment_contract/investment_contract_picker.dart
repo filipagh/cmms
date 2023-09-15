@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:open_cmms/service/backend_api/investment_contract_service.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 
-class InvestmentContractPicker extends StatelessWidget implements hasFormTitle {
+class InvestmentContractPicker extends StatelessWidget implements PopupForm {
   final bool onlyActive;
   Rxn<List<InvestmentContractSchema>> contracts =
       Rxn<List<InvestmentContractSchema>>();
@@ -22,7 +22,7 @@ class InvestmentContractPicker extends StatelessWidget implements hasFormTitle {
   }
 
   @override
-  Widget getInstance() {
+  Widget getContent() {
     return this;
   }
 

@@ -13,7 +13,6 @@ class Forbidden extends StatelessWidget {
   AuthState authState = Get.find();
 
   @override
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(),

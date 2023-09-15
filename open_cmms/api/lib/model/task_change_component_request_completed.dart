@@ -15,6 +15,7 @@ class TaskChangeComponentRequestCompleted {
   TaskChangeComponentRequestCompleted({
     required this.id,
     this.serialNumber,
+    required this.completedAt,
   });
 
   String id;
@@ -27,19 +28,24 @@ class TaskChangeComponentRequestCompleted {
   ///
   String? serialNumber;
 
+  DateTime completedAt;
+
   @override
   bool operator ==(Object other) => identical(this, other) || other is TaskChangeComponentRequestCompleted &&
      other.id == id &&
-     other.serialNumber == serialNumber;
+          other.serialNumber == serialNumber &&
+          other.completedAt == completedAt;
 
   @override
   int get hashCode =>
     // ignore: unnecessary_parenthesis
     (id.hashCode) +
-    (serialNumber == null ? 0 : serialNumber!.hashCode);
+      (serialNumber == null ? 0 : serialNumber!.hashCode) +
+      (completedAt.hashCode);
 
   @override
-  String toString() => 'TaskChangeComponentRequestCompleted[id=$id, serialNumber=$serialNumber]';
+  String toString() =>
+      'TaskChangeComponentRequestCompleted[id=$id, serialNumber=$serialNumber, completedAt=$completedAt]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
@@ -49,6 +55,7 @@ class TaskChangeComponentRequestCompleted {
     } else {
       json[r'serial_number'] = null;
     }
+    json[r'completed_at'] = _dateFormatter.format(this.completedAt.toUtc());
     return json;
   }
 
@@ -73,6 +80,7 @@ class TaskChangeComponentRequestCompleted {
       return TaskChangeComponentRequestCompleted(
         id: mapValueOfType<String>(json, r'id')!,
         serialNumber: mapValueOfType<String>(json, r'serial_number'),
+        completedAt: mapDateTime(json, r'completed_at', '')!,
       );
     }
     return null;
@@ -127,6 +135,7 @@ class TaskChangeComponentRequestCompleted {
   /// The list of required keys that must be present in a JSON.
   static const requiredKeys = <String>{
     'id',
+    'completed_at',
   };
 }
 

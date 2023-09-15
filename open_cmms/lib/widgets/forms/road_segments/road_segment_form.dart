@@ -7,7 +7,8 @@ import 'package:open_cmms/widgets/dialog_form.dart';
 
 import '../../../snacbars.dart';
 
-class RoadSegmentForm extends StatefulWidget implements hasFormTitle {
+class RoadSegmentForm extends StatefulWidget
+    implements FormWithLoadingIndicator {
   late final RoadSegmentModel? editItem;
 
   RoadSegmentForm.createNew({Key? key}) : super(key: key) {
@@ -20,6 +21,9 @@ class RoadSegmentForm extends StatefulWidget implements hasFormTitle {
   }
 
   @override
+  RxBool isProcessing = false.obs;
+
+  @override
   State<RoadSegmentForm> createState() => RoadSegmentFormState();
 
   @override
@@ -30,7 +34,7 @@ class RoadSegmentForm extends StatefulWidget implements hasFormTitle {
   }
 
   @override
-  StatefulWidget getInstance() {
+  StatefulWidget getContent() {
     return this;
   }
 }
@@ -87,6 +91,7 @@ class RoadSegmentFormState extends State<RoadSegmentForm> {
                       //todo edit
                       // widget._roadSegmentState.editRoadSegment(widget.editItem!.id, name, description,ssud);
                     } else {
+                      widget.isProcessing.value = true;
                       RoadSegmentService()
                           .createRoadSegmentRoadSegmentManagerCreateRoadSegmentPost(
                               RoadSegmentNewSchema(name: name, ssud: ssud))

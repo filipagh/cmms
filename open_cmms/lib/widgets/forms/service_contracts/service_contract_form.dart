@@ -11,7 +11,8 @@ import 'package:open_cmms/widgets/dialog_form.dart';
 
 import '../util/date_utils.dart';
 
-class ServiceContractForm extends StatefulWidget implements hasFormTitle {
+class ServiceContractForm extends StatefulWidget
+    implements FormWithLoadingIndicator {
   ServiceContractForm(
       {Key? key,
       ServiceContractSchema? contract,
@@ -91,7 +92,10 @@ class ServiceContractForm extends StatefulWidget implements hasFormTitle {
   }
 
   @override
-  Widget getInstance() {
+  RxBool isProcessing = false.obs;
+
+  @override
+  Widget getContent() {
     return this;
   }
 }
@@ -344,6 +348,7 @@ class _ServiceContractFormState extends State<ServiceContractForm> {
                                   ServiceContractStationComponentsSchema(
                                       stationId: element,
                                       componentIdList: values)));
+                          widget.isProcessing.value = true;
                           ServiceContractService()
                               .createContractServiceContractCreateContractPost(
                                   ServiceContractNewSchema(

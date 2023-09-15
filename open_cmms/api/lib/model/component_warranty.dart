@@ -240,3 +240,4 @@ class ComponentWarranty {
     'component_prepaid_service_days',
   };
 }
+
