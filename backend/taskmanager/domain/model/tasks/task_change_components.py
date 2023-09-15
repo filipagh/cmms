@@ -40,8 +40,6 @@ class RemoveComponentRequest(BaseModel):
     state: TaskComponentState
 
 
-
-
 class RemoveComponentRequestAsStr(Transcoding):
     type = RemoveComponentRequest
     name = "RemoveComponentRequest"
@@ -88,6 +86,7 @@ class TaskChangeComponents(Aggregate):
         asset_id: uuid.UUID
         assigned_component_id: uuid.UUID
         serial_number: Optional[str]
+        installed_at: Optional[datetime.date]
 
     class TaskComponentRemoved(Aggregate.Event):
         removed_task_item_id: uuid.UUID
@@ -175,14 +174,16 @@ class TaskChangeComponents(Aggregate):
             for cta in self.components_to_add:
                 if cta.id == i.id:
                     if cta.state == TaskComponentState.ALLOCATED and cta.assigned_component_id is not None:
-                        self._complete_add_item(i.id, cta.new_asset_id, cta.assigned_component_id, i.serial_number)
+                        self._complete_add_item(i.id, cta.new_asset_id, cta.assigned_component_id, i.serial_number,
+                                                i.completed_at)
             for ctr in self.components_to_remove:
                 if ctr.id == i.id:
                     if ctr.state == TaskComponentState.INSTALLED:
                         self._complete_remove_item(i.id, ctr.assigned_component_id)
 
     @event(TaskComponentInstalled)
-    def _complete_add_item(self, added_task_item_id: uuid.UUID, asset_id, assigned_component_id, serial_number):
+    def _complete_add_item(self, added_task_item_id: uuid.UUID, asset_id, assigned_component_id, serial_number,
+                           installed_at):
         for cta in self.components_to_add:
             if cta.id == added_task_item_id:
                 cta.state = TaskComponentState.INSTALLED

@@ -120,7 +120,9 @@ class AssignedComponentsService(ProcessApplication):
     @policy.register(TaskChangeComponents.TaskComponentInstalled)
     def _(self, domain_event: TaskChangeComponents.TaskComponentInstalled, process_event):
         component: AssignedComponent = self.repository.get(domain_event.assigned_component_id)
-        component.install_component(domain_event.originator_id, domain_event.timestamp, domain_event.serial_number)
+        component.install_component(domain_event.originator_id,
+                                    datetime.combine(domain_event.installed_at, datetime.min.time()),
+                                    domain_event.serial_number)
         self.save(component)
 
     @policy.register(TaskChangeComponents.TaskComponentRemoved)
