@@ -131,16 +131,13 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getReplacmentWarrantyAssignedComponentsReplacmentWarranryGet**
-
 > ComponentWarranty getReplacmentWarrantyAssignedComponentsReplacmentWarranryGet(componentId)
 
 Get Replacment Warranty
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
-
 // TODO Configure API key authorization: user_session
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKey = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed
@@ -197,10 +194,8 @@ print('Exception when calling AssignedComponentsApi->getReplacmentWarrantyAssign
 Override Warranty
 
 ### Example
-
 ```dart
 import 'package:BackendAPI/api.dart';
-
 // TODO Configure API key authorization: user_session
 //defaultApiClient.getAuthentication<ApiKeyAuth>('user_session').apiKey = 'YOUR_API_KEY';
 // uncomment below to setup prefix (e.g. Bearer) for API key, if needed

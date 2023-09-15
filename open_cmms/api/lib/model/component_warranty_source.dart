@@ -95,3 +95,4 @@ class ComponentWarrantySourceTypeTransformer {
   /// Singleton [ComponentWarrantySourceTypeTransformer] instance.
   static ComponentWarrantySourceTypeTransformer? _instance;
 }
+

@@ -132,3 +132,4 @@ class ServiceContractStationComponentsSchema {
     'component_id_list',
   };
 }
+
