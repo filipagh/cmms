@@ -207,7 +207,7 @@ class TaskChangeComponentsPage extends StatelessWidget {
             Text("Stanica: " + taskProjection!.stationName),
             IconButton(
                 onPressed: () {
-                  Get.toNamed(StationBasePage.ENDPOINT +
+                  Get.offAllNamed(StationBasePage.ENDPOINT +
                       "/" +
                       taskProjection!.stationId);
                 },

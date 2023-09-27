@@ -203,9 +203,7 @@ class ReplaceStationComponentsForm extends StatelessWidget
               icon: Icon(Icons.close),
             ),
             title: Text(item.asset.name),
-            subtitle: Text(serialNumberPrefix +
-                (item.assignedComponent?.serialNumber ??
-                    serialNumberWillAddTechnic)),
+            subtitle: Text(serialNumberWillAddTechnic),
           ),
         );
       case FormItemStatus.nowremoved:
