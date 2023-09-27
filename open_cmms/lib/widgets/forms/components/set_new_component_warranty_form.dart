@@ -125,9 +125,7 @@ class SetNewComponentWarrantyForm extends StatelessWidget implements PopupForm {
                             decoration: const InputDecoration(
                                 label: Text("dĺžka záruky v dňoch")),
                             validator: (v) {
-                              return (v == null ||
-                                      v.isEmpty ||
-                                      int.parse(v) <= 0)
+                              return ((int.tryParse(v ?? "0") ?? 0) < 0)
                                   ? "zvoľte kladnú dĺžku záruky"
                                   : null;
                             },

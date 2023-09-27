@@ -5,6 +5,7 @@ import 'package:open_cmms/widgets/dialog_form.dart';
 import 'package:open_cmms/widgets/forms/components/set_new_component_warranty_form.dart';
 
 import '../../../service/backend_api/investment_contract_service.dart';
+import '../util/contract_types_localization.dart';
 
 class SuggestComponentWarrantyForm extends StatelessWidget
     implements PopupForm {
@@ -42,7 +43,7 @@ class SuggestComponentWarrantyForm extends StatelessWidget
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text("Typ zaruky: " +
-                  suggestedWarranty.componentWarrantySource.toString()),
+                  localize(suggestedWarranty.componentWarrantySource)),
               Obx(() => Text(
                   "Zmluva: ${warrantyContract.value?.identifier ?? "žiadna"}")),
               Divider(),
