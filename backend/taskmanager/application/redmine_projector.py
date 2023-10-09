@@ -46,7 +46,7 @@ class RedmineProjector(ProcessApplication):
             note += "Pridať:\n"
             add_list = []
             for comp in event.components_to_add:
-                asset = asset_manager_loader.load_asset_by_id(uuid.UUID(comp.new_asset_id))
+                asset = asset_manager_loader.load_asset_by_id(comp.new_asset_id)
                 add_list.append(asset.name)
             note += ",".join(add_list) + "\n"
         if event.components_to_remove:
@@ -102,7 +102,7 @@ class RedmineProjector(ProcessApplication):
             self.log_error_redmine_projection(e)
 
     def log_error_redmine_projection(self, e):
-        logging.error("Error while creating redmine task: " + str(e))
+        logging.exception("Error while processing redmine notification", e)
 
     @policy.register(TaskChangeComponents.TaskCanceled)
     def _(self, domain_event: TaskChangeComponents.TaskCanceled, process_event):

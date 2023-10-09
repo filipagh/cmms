@@ -141,15 +141,18 @@ class TaskChangeComponentsPage extends StatelessWidget {
                                   backgroundColor:
                                       MaterialStateColor.resolveWith(
                                           (x) => Colors.red)),
-                              onPressed: () {
+                              onPressed: () async {
+                                if (await showAlert(
+                                "Naozaj chcete úlohu zrušiť?") ==
+                                false) return;
                                 TasksService()
                                     .cancelTaskTaskManagerTaskIdDelete(taskId)
                                     .then((value) {
-                                  showOk("úloha bola zrusená");
+                                  showOk("úloha bola zrušená");
                                   loadTaskItems();
                                 });
                               },
-                              child: const Text("Zrusit ulohu")),
+                              child: const Text("Zrušiť úlohu")),
                           const VerticalDivider(),
                           ElevatedButton(
                               style: ButtonStyle(
@@ -273,7 +276,7 @@ class TaskChangeComponentsPage extends StatelessWidget {
   }
 
   String buildDescription() {
-    var description = task.value!.description;
+    var description = this.redmineData.value?.description ?? task.value!.description;
     return description.isEmpty ? "Bez popisu" : description;
   }
 

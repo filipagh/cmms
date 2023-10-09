@@ -134,6 +134,8 @@ class EditStationComponentsForm extends StatelessWidget
                                             remove: remove));
                                     if (result != null) {
                                       Get.back(result: result);
+                                    } else {
+                                      isProcessing.value = false;
                                     }
                                   },
                             child: Text("pokračovať"))

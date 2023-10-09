@@ -109,7 +109,10 @@ class TaskOnSiteServicePage extends StatelessWidget {
                         style: ButtonStyle(
                             backgroundColor: MaterialStateColor.resolveWith(
                                 (x) => Colors.red)),
-                        onPressed: () {
+                        onPressed: () async {
+                          if (await showAlert(
+                          "Naozaj chcete úlohu zrušiť?") ==
+                          false) return;
                           getService()
                               .cancelTaskServiceOnSiteTaskIdDelete(taskId)
                               .then((value) {
@@ -122,7 +125,10 @@ class TaskOnSiteServicePage extends StatelessWidget {
                         style: ButtonStyle(
                             backgroundColor: MaterialStateColor.resolveWith(
                                 (x) => Colors.green)),
-                        onPressed: () {
+                        onPressed: () async {
+                          if (await showAlert(
+                          "Naozaj chcete úlohu dokončiť?") ==
+                          false) return;
                           getService()
                               .completeTaskServiceOnSiteTaskIdCompleteGet(
                                   taskId)
@@ -235,7 +241,7 @@ class TaskOnSiteServicePage extends StatelessWidget {
   }
 
   String buildDescription() {
-    var description = task.value!.description;
+    var description = this.redmineData.value?.description ?? task.value!.description;
     return description.isEmpty ? "Bez popisu" : description;
   }
 
