@@ -84,6 +84,8 @@ class CompleteChangeComponentsTaskForm extends StatelessWidget
     tiles.add(ListTile(
       title: Text("Pridat komponenty:"),
     ));
+    tiles.add(Divider());
+
     task.add.forEach((element) {
       if (element.state == TaskComponentState.installed) {
         return;
@@ -94,35 +96,41 @@ class CompleteChangeComponentsTaskForm extends StatelessWidget
         TaskChangeComponentRequestCompleted? asDoneObject = completedItems
             .toList()
             .firstWhereOrNull((item) => item.id == element.id);
-        return ListTile(
-          title: Text(assetSchema!.name),
-          subtitle: asDoneObject != null
-              ? Text("sériové čislo: " + (asDoneObject.serialNumber ?? ""))
-              : null,
-          selectedTileColor: Colors.green[200],
-          selected: asDoneObject != null,
-          onTap: element.state != TaskComponentState.allocated
-              ? null
-              : () async {
-                  if (asDoneObject != null) {
-                    completedItems.remove(asDoneObject);
-                  } else {
-                    var component = await showFormDialog(InstallComponentForm(
-                        asset: assetSchema, taskItemId: element.id));
-                    if (component == null) {
-                      return;
+        return Card(
+          color: element.state != TaskComponentState.allocated ? Colors.grey[100] : null,
+          child: ListTile(
+            enabled: element.state == TaskComponentState.allocated,
+            title: Center(child: Text(assetSchema!.name)),
+            subtitle: asDoneObject != null
+                ? Text("sériové čislo: " + (asDoneObject.serialNumber ?? ""))
+                : null,
+            selectedTileColor: Colors.green[200],
+            selected: asDoneObject != null,
+            onTap: element.state != TaskComponentState.allocated
+                ? null
+                : () async {
+                    if (asDoneObject != null) {
+                      completedItems.remove(asDoneObject);
+                    } else {
+                      var component = await showFormDialog(InstallComponentForm(
+                          asset: assetSchema, taskItemId: element.id));
+                      if (component == null) {
+                        return;
+                      }
+                      completedItems.add(component);
                     }
-                    completedItems.add(component);
-                  }
-                  completedItems.obs.refresh();
-                },
+                    completedItems.obs.refresh();
+                  },
+          ),
         );
       }));
     });
 
+    tiles.add(Divider());
     tiles.add(ListTile(
       title: Text("Odobrat komponenty:"),
     ));
+    tiles.add(Divider());
     task.remove.forEach((element) {
       if (element.state == TaskComponentState.removed) {
         return;
@@ -147,26 +155,28 @@ class CompleteChangeComponentsTaskForm extends StatelessWidget
               TaskChangeComponentRequestCompleted? asDoneObject = completedItems
                   .toList()
                   .firstWhereOrNull((item) => element.id == item.id);
-              return ListTile(
-                title: Text(title),
-                subtitle: Text("sériové čislo: " + (comp?.serialNumber ?? "")),
-                selectedTileColor: Colors.green[200],
-                selected: asDoneObject != null,
-                onTap: element.state != TaskComponentState.installed
-                    ? null
-                    : () {
-                        if (asDoneObject != null) {
-                          completedItems.remove(asDoneObject);
-                        } else {
-                          completedItems.add(
-                              TaskChangeComponentRequestCompleted(
-                                  id: element.id,
-                                  completedAt:
-                                      convertDatetimeToUtc(DateTime.now())));
-                        }
+              return Card(
+                child: ListTile(
+                  title: Center(child: Text(title)),
+                  subtitle: Center(child: Text("sériové čislo: " + (comp?.serialNumber ?? ""))),
+                  selectedTileColor: Colors.green[200],
+                  selected: asDoneObject != null,
+                  onTap: element.state != TaskComponentState.installed
+                      ? null
+                      : () {
+                          if (asDoneObject != null) {
+                            completedItems.remove(asDoneObject);
+                          } else {
+                            completedItems.add(
+                                TaskChangeComponentRequestCompleted(
+                                    id: element.id,
+                                    completedAt:
+                                        convertDatetimeToUtc(DateTime.now())));
+                          }
 
-                        completedItems.obs.refresh();
-                      },
+                          completedItems.obs.refresh();
+                        },
+                ),
               );
             },
           );
