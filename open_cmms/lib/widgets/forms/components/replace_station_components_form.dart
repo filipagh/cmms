@@ -101,8 +101,8 @@ class ReplaceStationComponentsForm extends StatelessWidget
 
                                     var newItems = getNewItems();
 
-                                    newItems.forEach((element) async {
-                                      add.add(TaskComponentAddNewSchema(
+                                    for (var element in newItems) {
+                                       add.add(TaskComponentAddNewSchema(
                                           newAssetId: element.asset.id,
                                           warranty: element.warranty,
                                           serviceContractsId:
@@ -114,14 +114,14 @@ class ReplaceStationComponentsForm extends StatelessWidget
                                                       ?.map((e) => e.id)
                                                       .toList() ??
                                                   []));
-                                    });
+                                    }
 
                                     List<TaskComponentRemoveNewSchema> remove =
                                         [];
                                     getToRemoveItems().forEach((element) {
                                       remove.add(TaskComponentRemoveNewSchema(
                                           assignedComponentId:
-                                              element.assignedComponent!.id));
+                                              element.assignedComponent.id));
                                     });
                                     var result = await showFormDialog(
                                         CreateChangeComponentsTaskForm(
