@@ -112,7 +112,10 @@ class TaskRemoteServicePage extends StatelessWidget {
                         style: ButtonStyle(
                             backgroundColor: MaterialStateColor.resolveWith(
                                 (x) => Colors.red)),
-                        onPressed: () {
+                        onPressed: () async {
+                          if (await showAlert(
+                          "Naozaj chcete úlohu zrušiť?") ==
+                          false) return;
                           getService()
                               .cancelTaskServiceRemoteTaskIdDelete(taskId)
                               .then((value) {
@@ -125,7 +128,10 @@ class TaskRemoteServicePage extends StatelessWidget {
                         style: ButtonStyle(
                             backgroundColor: MaterialStateColor.resolveWith(
                                 (x) => Colors.green)),
-                        onPressed: () {
+                        onPressed: () async {
+                          if (await showAlert(
+                          "Naozaj chcete úlohu dokončiť?") ==
+                          false) return;
                           getService()
                               .completeTaskServiceRemoteTaskIdCompleteGet(
                                   taskId)
@@ -228,8 +234,9 @@ class TaskRemoteServicePage extends StatelessWidget {
                 // )
               ],
             ),
+            Obx(() =>
             Text(buildDescription(),
-                style: const TextStyle(height: 3), maxLines: 10)
+                style: const TextStyle(height: 3), maxLines: 10))
           ],
         ),
         const Divider(),
@@ -238,7 +245,7 @@ class TaskRemoteServicePage extends StatelessWidget {
   }
 
   String buildDescription() {
-    var description = task.value!.description;
+    var description = this.redmineData.value?.description ?? task.value!.description;
     return description.isEmpty ? "Bez popisu" : description;
   }
 

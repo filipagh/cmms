@@ -115,7 +115,10 @@ class IssuesPage extends StatelessWidget {
                                               MainAxisAlignment.end,
                                           children: [
                                             ElevatedButton(
-                                              onPressed: () {
+                                              onPressed: () async {
+                                                if (await showAlert(
+                                                "Naozaj chcete úlohu zrušiť?") ==
+                                                false) return;
                                                 IssuesService()
                                                     .resolveIssueIssuesResolveTaskIdPost(
                                                         element.id)
