@@ -2,7 +2,6 @@ import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:open_cmms/models/task_component.dart';
 import 'package:open_cmms/snacbars.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 import 'package:open_cmms/widgets/forms/components/component_picker.dart';
@@ -98,14 +97,6 @@ class AddItemsToStorage extends StatelessWidget
     return "Naskladniť komponenty";
   }
 
-  buildComponentsString(List<TaskComponent>? taskComponent) {
-    var string = '';
-    taskComponent?.forEach((element) {
-      string =
-          string + ' ' + _typeState.getAssetTypeById(element.productId)!.name;
-    });
-    return string.trim();
-  }
 
   _Item? _buildItem(AssetSchema product) {
     var exist =

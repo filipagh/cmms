@@ -1,7 +1,6 @@
 import 'package:BackendAPI/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:open_cmms/models/road_segment_model.dart';
 import 'package:open_cmms/service/backend_api/RoadSegmentManager.dart';
 import 'package:open_cmms/widgets/dialog_form.dart';
 
@@ -9,16 +8,8 @@ import '../../../snacbars.dart';
 
 class RoadSegmentForm extends StatefulWidget
     implements FormWithLoadingIndicator {
-  late final RoadSegmentModel? editItem;
 
-  RoadSegmentForm.createNew({Key? key}) : super(key: key) {
-    editItem = null;
-  }
-
-  RoadSegmentForm.editItem({Key? key, required RoadSegmentModel editItem})
-      : super(key: key) {
-    editItem = editItem;
-  }
+  RoadSegmentForm.createNew({Key? key}) : super(key: key);
 
   @override
   RxBool isProcessing = false.obs;
@@ -28,9 +19,7 @@ class RoadSegmentForm extends StatefulWidget
 
   @override
   String getTitle() {
-    return editItem == null
-        ? "Vytvoriť cestný segment"
-        : "Editovať cestný segment : ${editItem!.name}";
+    return "Vytvoriť cestný segment";
   }
 
   @override
@@ -58,48 +47,30 @@ class RoadSegmentFormState extends State<RoadSegmentForm> {
               onSaved: (value) {
                 name = value!;
               },
-              initialValue:
-                  widget.editItem == null ? "" : widget.editItem!.name,
               decoration: const InputDecoration(labelText: 'názov'),
               validator: (value) {
                 return value == null || value.isEmpty ? "pridať názov" : null;
               },
             ),
-            //todo
-            // TextFormField(
-            //   onSaved: (value) {
-            //     description = value!;
-            //   },
-            //   initialValue:
-            //       widget.editItem == null ? "" : widget.editItem!.text,
-            //   decoration: InputDecoration(labelText: 'description'),
-            // ),
             TextFormField(
               onSaved: (value) {
                 ssud = value!;
               },
-              initialValue:
-                  widget.editItem == null ? "" : widget.editItem!.ssud,
               decoration: const InputDecoration(labelText: 'SSUD / SSUR'),
             ),
-
             TextButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     _formKey.currentState?.save();
-                    if (widget.editItem != null) {
-                      //todo edit
-                      // widget._roadSegmentState.editRoadSegment(widget.editItem!.id, name, description,ssud);
-                    } else {
-                      widget.isProcessing.value = true;
-                      RoadSegmentService()
-                          .createRoadSegmentRoadSegmentManagerCreateRoadSegmentPost(
-                              RoadSegmentNewSchema(name: name, ssud: ssud))
-                          .then((value) {
-                        Get.back();
-                        showOk("Cestný segment vytvorený");
-                      });
-                    }
+
+                    widget.isProcessing.value = true;
+                    RoadSegmentService()
+                        .createRoadSegmentRoadSegmentManagerCreateRoadSegmentPost(
+                            RoadSegmentNewSchema(name: name, ssud: ssud))
+                        .then((value) {
+                      Get.back();
+                      showOk("Cestný segment vytvorený");
+                    });
                   }
                 },
                 child: const Text("vytvorit")),

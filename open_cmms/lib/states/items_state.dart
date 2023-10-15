@@ -38,32 +38,4 @@ class ItemsStorageState extends GetxController {
   Future<List<AssetItemToAdd>?> addToStorage(List<AssetItemToAdd> list) async {
    return await StorageManagerService().storeNewAssetsStorageManagerStoreNewAssetsPost(list);
   }
-
-
-  //
-  // Item getById(String id) {
-  //   return _itemsMap[id]!;
-  //
-  // }
-  //
-  // void addUsedComponent(productId) {
-  //   _itemsMap[productId]!.used++;
-  // }
-  // void addAllocatedComponent(productId) {
-  //   _itemsMap[productId]!.allocated++;
-  // }
-  //
-  // void removeAllocated(String productId) {
-  //   _itemsMap[productId]!.allocated--;
-  // }
-  //
-  // void removeUsed(String productId) {
-  //   _itemsMap[productId]!.used--;
-  // }
-  //
-  // void addToStorage(String productId) {
-  //   _itemsMap[productId]!.inStorage++;
-  //   update([productId]);
-  // }
-  // //
 }
